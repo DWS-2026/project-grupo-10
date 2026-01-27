@@ -3,10 +3,10 @@
 ## 👥 Miembros del Equipo
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
 |:--- |:--- |:--- |
-| Adrián | a.bellon.2024@alumnos.urjc.es | pi0lin |
-| Javier | j.gonzaleza.2024@alumnos.urjc.es | Batcat248 |
-| [Nombre 3] | [email3]@alumnos.urjc.es | [User3] |
-| [Nombre 4] | [email4]@alumnos.urjc.es | [User4] |
+| Adrián Bellon | a.bellon.2024@alumnos.urjc.es | pi0lin |
+| Javier González | j.gonzaleza.2024@alumnos.urjc.es | Batcat248 |
+| Lucia Zapata | l.zapata.2024@alumnos.urjc.es | [User3] |
+| Diego Consuegra | d.consuegra.2024@alumnos.urjc.es | [User4] |
 
 ---
 
