@@ -1,0 +1,116 @@
+/* Prueba */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav .logo {
+    width: 120px;
+    height: 50px;
+    background-image: url('../images/logo.png'); /* tu logo aquí */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffd700; /* Amarillo elegante */
+}
+
+nav .perfil {
+    background-color: #ffd700;
+    color: #0f2027;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+nav .perfil:hover {
+    background-color: #e6c200;
+}
+
+/* Hero section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background: url('../images/banner.jpg') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    text-shadow: 1px 1px 10px rgba(0,0,0,0.7);
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 30px;
+    background-color: #ffd700;
+    color: #0f2027;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.hero button:hover {
+    background-color: #e6c200;
+}
+
+/* Secciones de contenido */
+section {
+    padding: 4rem 3rem;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #203a43;
+}
