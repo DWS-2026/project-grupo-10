@@ -17,7 +17,7 @@
 
 Nuestra aplicación consiste en una web para una academia de actividades deportivas denominada Olympo Academy. El objetivo de la aplicación será la gestión de reservas de las instalaciones que escogan los usuarios.
 Pertenece al sector deportivo.
-Algunas funcionalidades que aporta la aplicación al usuario son: consultar horarios, inscibirse a clases deportivas, 
+Algunas funcionalidades que aporta la aplicación al usuario son: consultar horarios, inscibirse a clases deportivas o reservar instalaciones.
 
 ### **Entidades**
 Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:
