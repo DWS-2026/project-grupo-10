@@ -1,4 +1,4 @@
-# OLYMPO ACADEMY
+# Olympo Academy
 
 ## 👥 Miembros del Equipo
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
@@ -13,6 +13,8 @@
 ## 🎭 **Preparación: Definición del Proyecto**
 
 ### **Descripción del Tema**
+[Escribe aquí una descripción breve y concisa de qué trata tu aplicación, el sector al que pertenece y qué valor aporta al usuario]. 
+
 Nuestra aplicación consiste en una web para una academia de actividades deportivas denominada Olympo Academy. El objetivo de la aplicación será la gestión de reservas de las instalaciones que escogan los usuarios.
 Pertenece al sector deportivo.
 Algunas funcionalidades que aporta la aplicación al usuario son: consultar horarios, inscibirse a clases deportivas o reservar instalaciones.
@@ -23,35 +25,36 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 1. **[Entidad 1]**: Usuario
 2. **[Entidad 2]**: Instalacion Deportiva
 3. **[Entidad 3]**: Reserva
-4. **[Entidad 4]**: Actividad
+4. **[Entidad 4]**: Clase
+5. **[Entidad 5]**: Valoracion
 
 **Relaciones entre entidades:**
-- [Ej: Usuario - Pedido: Un usuario puede tener múltiples pedidos (1:N)]
-- [Ej: Pedido - Producto: Un pedido puede contener múltiples productos y un producto puede estar en múltiples pedidos (N:M)]
-- [Ej: Producto - Categoría: Un producto pertenece a una categoría (N:1)]
-- [Descripción de otras relaciones relevantes]
+- Usuario - Reserva: Un usuario puede hacer múltiples reservas (1:N)
+- Reserva - Clase : Una reserva tiene una clase 
+- Reserva -Instalación: Una reserva tiene una intalación
+- Clase - Instalación : Cada clase va asociada a una instalación 
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
 
 * **Usuario Anónimo**: 
-  - Permisos: [Ej: Visualización de catálogo, búsqueda de productos, registro]
+  - Permisos: Visualización de distintas clases, instalaciones y horarios, registro
   - No es dueño de ninguna entidad
 
 * **Usuario Registrado**: 
-  - Permisos: [Ej: Gestión de perfil, realizar pedidos, crear valoraciones]
-  - Es dueño de: [Ej: Sus propios Pedidos, su Perfil de Usuario, sus Valoraciones]
+  - Permisos: Gestión de perfil, realizar reservas, hacer valoraciones.
+  - Es dueño de: Sus propias reservas, su Perfil de Usuario, sus Valoraciones
 
 * **Administrador**: 
-  - Permisos: [Ej: Gestión completa de productos (CRUD), visualización de estadísticas, moderación de contenido]
-  - Es dueño de: [Ej: Productos, Categorías, puede gestionar todos los Pedidos y Usuarios]
+  - Permisos: Gestión completa de productos, visualización de estadísticas, moderación de contenido
+  - Es dueño de: Instalaciones, Clases, puede gestionar las reservas y Usuarios
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:
 
-- **[Entidad con imágenes 1]**: [Ej: Usuario - Una imagen de avatar por usuario]
-- **[Entidad con imágenes 2]**: [Ej: Producto - Múltiples imágenes por producto (galería)]
-- **[Entidad con imágenes 3]**: [Ej: Categoría - Una imagen representativa por categoría]
+- **[Entidad con imágenes 1]**: Usuario - Una imagen de avatar por usuario
+- **[Entidad con imágenes 2]**: Instalaciones - Múltiples imágenes por instalación (galería)
+
 
 ---
 
