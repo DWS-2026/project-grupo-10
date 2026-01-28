@@ -6,7 +6,7 @@
 | Adrián Bellon | a.bellon.2024@alumnos.urjc.es | pi0lin |
 | Javier González | j.gonzaleza.2024@alumnos.urjc.es | Batcat248 |
 | Lucia Zapata | l.zapata.2024@alumnos.urjc.es | Luxx67 |
-| Diego Consuegra | d.consuegra.2024@alumnos.urjc.es | [User4] |
+| Diego Consuegra | d.consuegra.2024@alumnos.urjc.es | K0nzu |
 
 ---
 
