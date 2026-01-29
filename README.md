@@ -13,8 +13,6 @@
 ## 🎭 **Preparación: Definición del Proyecto**
 
 ### **Descripción del Tema**
-[Escribe aquí una descripción breve y concisa de qué trata tu aplicación, el sector al que pertenece y qué valor aporta al usuario]. 
-
 Nuestra aplicación consiste en una web para una academia de actividades deportivas denominada Olympo Academy. El objetivo de la aplicación será la gestión de reservas de las instalaciones que escogan los usuarios.
 Pertenece al sector deportivo.
 Algunas funcionalidades que aporta la aplicación al usuario son: consultar horarios, inscibirse a clases deportivas o reservar instalaciones.
@@ -35,7 +33,7 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 - Clase - Instalación : Cada clase va asociada a una instalación 
 
 ### **Permisos de los Usuarios**
-Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
+Descripción de los permisos de cada tipo de usuario e indica de que entidades es dueño:
 
 * **Usuario Anónimo**: 
   - Permisos: Visualización de distintas clases, instalaciones y horarios, registro
