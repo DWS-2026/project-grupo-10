@@ -27,7 +27,7 @@ Indicar las entidades principales que gestionará la aplicación y las relacione
 
 **Relaciones entre entidades:**
 - Usuario - Reserva: Un usuario puede hacer múltiples reservas (1:N)
-- Reserva - Espacio : Una reserva tiene una clase 
+- Reserva - Espacio : Una reserva tiene un espacio
 - Usuario - Valoracion: Un usuario puede hacer múltiples valoraciones (1:N)
 
 ### **Permisos de los Usuarios**
