@@ -13,8 +13,6 @@
 ## 🎭 **Preparación: Definición del Proyecto**
 
 ### **Descripción del Tema**
-[Escribe aquí una descripción breve y concisa de qué trata tu aplicación, el sector al que pertenece y qué valor aporta al usuario]. 
-
 Nuestra aplicación consiste en una web para una academia de actividades deportivas denominada Olympo Academy. El objetivo de la aplicación será la gestión de reservas de las instalaciones que escogan los usuarios.
 Pertenece al sector deportivo.
 Algunas funcionalidades que aporta la aplicación al usuario son: consultar horarios, inscibirse a clases deportivas o reservar instalaciones.
@@ -23,22 +21,20 @@ Algunas funcionalidades que aporta la aplicación al usuario son: consultar hora
 Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:
 
 1. **[Entidad 1]**: Usuario
-2. **[Entidad 2]**: Instalacion Deportiva
+2. **[Entidad 2]**: Espacio
 3. **[Entidad 3]**: Reserva
-4. **[Entidad 4]**: Clase
-5. **[Entidad 5]**: Valoracion
+4. **[Entidad 4]**: Valoracion
 
 **Relaciones entre entidades:**
 - Usuario - Reserva: Un usuario puede hacer múltiples reservas (1:N)
-- Reserva - Clase : Una reserva tiene una clase 
-- Reserva -Instalación: Una reserva tiene una intalación
-- Clase - Instalación : Cada clase va asociada a una instalación 
+- Reserva - Espacio : Una reserva tiene una clase 
+- Usuario - Valoracion: Un usuario puede hacer múltiples valoraciones (1:N)
 
 ### **Permisos de los Usuarios**
-Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
+Descripción de los permisos de cada tipo de usuario e indica de que entidades es dueño:
 
 * **Usuario Anónimo**: 
-  - Permisos: Visualización de distintas clases, instalaciones y horarios, registro
+  - Permisos: Visualización de distintos espacios, horarios y registro
   - No es dueño de ninguna entidad
 
 * **Usuario Registrado**: 
@@ -47,7 +43,7 @@ Describir los permisos de cada tipo de usuario e indicar de qué entidades es du
 
 * **Administrador**: 
   - Permisos: Gestión completa de productos, visualización de estadísticas, moderación de contenido
-  - Es dueño de: Instalaciones, Clases, puede gestionar las reservas y Usuarios
+  - Es dueño de: Espacios, valoraciones, puede gestionar las reservas y Usuarios
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:
