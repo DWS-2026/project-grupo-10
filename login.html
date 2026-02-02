@@ -20,7 +20,7 @@
               Es necesario autenticarse como socio para poder hacer una reserva
             </p>
 
-            <form action="/login" method="post" novalidate>
+           <form action="reservas.html" method="get"> <!-- este form es temporal hasta que hagamos la validación con js-->
               <div class="mb-3">
                 <label for="usuario" class="form-label">Usuario</label>
                 <input
@@ -47,11 +47,9 @@
               </div>
 
               <div class="d-grid">
-                <a href="reservas.html" class ="btn btn-primary btn-lg">
-                  Acceder
-                </a>
+                <button type="submit" class="btn btn-primary btn-lg"> Acceder </button> <!-- ponemos un boton en lugar de <a> ya que queremos enviar datos-->
               </div>
-            </form>
+   
 
             <hr class="my-4" />
             <p class="mb-0 text-center">

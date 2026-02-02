@@ -20,7 +20,7 @@
               Al crear una cuenta, serás socio y tendrás ventajas como inscribirte a nuestras clases de aquagym!!!
             </p>
             
-            <form action="login.html" method="get" novalidate>
+            <form action="login.html" method="get"> <!-- este form es temporal hasta que hagamos la validación con js-->
               <div class="mb-3">
                 <label for="nombreCompleto" class="form-label">Nombre y Apellidos</label>
                 <input
@@ -95,12 +95,11 @@
 
 
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">
-                  Completar registro
-                </button>
+                <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg"> Completar Registro </button> <!-- ponemos un boton en lugar de <a> ya que queremos enviar datos-->
               </div>
-            </form>
-            
+              </div>
+
             <hr class="my-4" />
                 <p class="text-center mb-0">
                 ¿Ya tienes cuenta?
