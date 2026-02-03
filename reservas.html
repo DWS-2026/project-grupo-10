@@ -3,19 +3,28 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Práctica DWS · Olympo Academy · Register</title>
-    <link rel="icon" type="image/png" href="/images/logoSinFondo.png" />
-    <!-- Hoja de estilos Agency/Bootstrap -->
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Práctica DWS, Olympo Academy</title>
+    <link rel="icon" type="image/png" href="images/logoSinFondo.png" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="styles.css" rel="stylesheet" />
+<!-- TU CSS PERSONALIZADO -->
+<link href="ourStyles.css" rel="stylesheet" />
 </head>
 
 <body class="bg-light backgroundLogin">
     <div class="container main-container"></div>
-    <!-- Navbar from index-->
+    <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand"><img src="/images/logoSinFondo.png" alt="..." /></a>
+            <a class="navbar-brand" href="index.html"><img src="images/logoSinFondo.png" alt="..." /></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
@@ -23,14 +32,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#index.html#clases">Nuestras Clases</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#index.html#instalaciones">Nuestras Instalaciones</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#team">Nuestro Equipo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#nosotros">Sobre nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#instalaciones">Instalaciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#equipo">Equipo</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.html#dudas">Consulta tus dudas</a></li>
                     <li class="nav-item"><a class="nav-link" href="reseñas.html">Reseñas</a></li>
                     <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>
                     <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="userProfile.html">Mi Perfil</a></li>
                 </ul>
             </div>
         </div>
@@ -44,38 +53,43 @@
         </div>
     </header>
     <!-- clases -->
-    <section class="page-section bg-light" id="portfolio">
+    <section class="page-section bg-light" id="clases">
         <div class="container">
-             <div class="text-center">
+            <div class="text-center">
                 <h2 class="section-heading text-uppercase">Clases</h2>
                 <h3 class="section-subheading text-muted">Descubre nuestras clases</h3>
             </div>
             <div class="row">
 
+
+
+
                 <!-- Clase 1: Clase Tenis -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/instalaciones/tenis.png" alt="Pista de Tenis"
+                        <img class="img-fluid rounded mb-3" src="images/instalaciones/tenis.png" alt="Pista de Tenis"
                             style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Clases de Tenis</div>
                             <div class="portfolio-caption-subheading text-muted">Clases de tenis adaptada a su nivel
                             </div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
 
+
+
                 <!-- Instalación 2: clases de Pádel -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/instalaciones/padel.png" alt="Pista de Pádel"
+                        <img class="img-fluid rounded mb-3" src="images/instalaciones/padel.png" alt="Pista de Pádel"
                             style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Clases de Pádel</div>
                             <div class="portfolio-caption-subheading text-muted">Clases de pádel adaptada a su nivel
                             </div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -83,13 +97,13 @@
                 <!-- Instalación 3: Crossfit -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/instalaciones/gym_Olympo.png"
+                        <img class="img-fluid rounded mb-3" src="images/instalaciones/gym_Olympo.png"
                             alt="Sala de Entrenamiento" style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Clases de Crossfit</div>
                             <div class="portfolio-caption-subheading text-muted"> Clases de crossfit realizadas en el
                                 gimnasio</div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -97,12 +111,12 @@
                 <!-- Instalación 4: clases de Fútbol -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/instalaciones/futbol.jpeg"
-                            alt="Campo de Fútbol" style="width:100%; height:200px; object-fit:cover;" />
+                        <img class="img-fluid rounded mb-3" src="images/instalaciones/futbol.jpeg" alt="Campo de Fútbol"
+                            style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Entrenamientos de Fútbol</div>
                             <div class="portfolio-caption-subheading text-muted">Entrenamiento de fútbol </div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -110,12 +124,12 @@
                 <!-- Instalación 5: Entrenamientos de Baloncesto -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/instalaciones/baloncesto.jpeg"
+                        <img class="img-fluid rounded mb-3" src="images/instalaciones/baloncesto.jpeg"
                             alt="Pista de Baloncesto" style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Entrenamientos de Baloncesto</div>
                             <div class="portfolio-caption-subheading text-muted">Entrenamiento de baloncesto</div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -123,13 +137,13 @@
                 <!-- Instalación 6: Clases de Natación -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/instalaciones/natacion.png" alt="Piscina"
+                        <img class="img-fluid rounded mb-3" src="images/instalaciones/natacion.png" alt="Piscina"
                             style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Clases de Natación</div>
                             <div class="portfolio-caption-subheading text-muted">Clases de natación para adultos y niños
                             </div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -139,7 +153,7 @@
     </section>
 
     <!-- Instalaciones -->
-    <section class="page-section bg-light" id="portfolio">
+    <section class="page-section bg-light" id="intalaciones">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Instalaciones</h2>
@@ -150,13 +164,14 @@
                 <!-- Instalación 1: Pista de Tenis -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/Instalaciones/tenis.png"
-                            alt="Pista de Tenis" style="width:100%; height:200px; object-fit:cover;" />
+                        <img class="img-fluid rounded mb-3" src="images/Instalaciones/tenis.png" alt="Pista de Tenis"
+                            style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Pista de tenis</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de elegir si quieres material.
+                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
+                                elegir si quieres material.
                                 Además debes indicar el tiempo de reserva que puede ser hasta 1h y media</div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -164,26 +179,28 @@
                 <!-- Instalación 2: Pista de Pádel -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/Instalaciones/padel.png"
-                            alt="Pista de Pádel" style="width:100%; height:200px; object-fit:cover;" />
+                        <img class="img-fluid rounded mb-3" src="images/Instalaciones/padel.png" alt="Pista de Pádel"
+                            style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Pista de Pádel</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de elegir si quieres material.
+                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
+                                elegir si quieres material.
                                 Además debes indicar el tiempo de reserva que puede ser hasta 1h y media</div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
                 <!-- Instalación 3: Sala de Entrenamiento -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/Instalaciones/gym_Olympo.png"
+                        <img class="img-fluid rounded mb-3" src="images/Instalaciones/gym_Olympo.png"
                             alt="Sala de Entrenamiento" style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Gimnasio</div>
-                            <div class="portfolio-caption-subheading text-muted">Las reservas del gimnasio podrán ser de hasta 2 horas. Durante la sesión estarán 
+                            <div class="portfolio-caption-subheading text-muted">Las reservas del gimnasio podrán ser de
+                                hasta 2 horas. Durante la sesión estarán
                                 disponibles personal por si tienes alguna consulta.</div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -191,13 +208,14 @@
                 <!-- Instalación 4: Campo de Fútbol -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/Instalaciones/futbol.jpeg"
-                            alt="Campo de Fútbol" style="width:100%; height:200px; object-fit:cover;" />
+                        <img class="img-fluid rounded mb-3" src="images/Instalaciones/futbol.jpeg" alt="Campo de Fútbol"
+                            style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Campo de Fútbol</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de elegir si quieres material.
+                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
+                                elegir si quieres material.
                                 Además debes indicar el tiempo de reserva que puede ser hasta 2h </div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -205,13 +223,14 @@
                 <!-- Instalación 5: Pista de Baloncesto -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/Instalaciones/baloncesto.jpeg"
+                        <img class="img-fluid rounded mb-3" src="images/Instalaciones/baloncesto.jpeg"
                             alt="Pista de Baloncesto" style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Pista de Baloncesto</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de elegir si quieres material.
+                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
+                                elegir si quieres material.
                                 Además debes indicar el tiempo de reserva que puede ser hasta 2h </div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -219,13 +238,14 @@
                 <!-- Instalación 6: Piscina -->
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3" src="/images/instalaciones/natacion.png" alt="Piscina"
+                        <img class="img-fluid rounded mb-3" src="images/instalaciones/natacion.png" alt="Piscina"
                             style="width:100%; height:200px; object-fit:cover;" />
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Nado libre </div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de elegir si quieres material.
-                                 Además deberas alegir la duración de la actividad que puede ser hasta 1h </div>
-                            <button class="btn btn-primary">Reservar</button>
+                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
+                                elegir si quieres material.
+                                Además deberas alegir la duración de la actividad que puede ser hasta 1h </div>
+                            <a href="#popup-reserva" class="btn btn-primary">Reservar</a>
                         </div>
                     </div>
                 </div>
@@ -260,6 +280,140 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+    <!-- Popup General para Reservas -->
+    <div id="popup-reserva" class="popup">
+        <div class="popup-content">
+            <a href="#" class="close">&times;</a>
+            <h3>Reservar Actividad</h3>
+
+            <!-- Formulario de reserva -->
+            <form>
+                <!-- 1. NIVEL - 3 cuadrados -->
+                <div class="seccion-formulario">
+                    <label class="titulo-seccion">Selecciona tu nivel *</label>
+                    <div class="opciones-grid">
+                        <!-- Bajo -->
+                        <label class="opcion-nivel">
+                            <input type="radio" name="nivel" value="bajo" required>
+                            <div class="cuadrado-nivel">
+                                <span class="emoji-nivel">👶</span>
+                                <span class="texto-nivel">Bajo</span>
+                                <span class="descripcion-nivel">Principiante</span>
+                            </div>
+                        </label>
+
+                        <!-- Medio -->
+                        <label class="opcion-nivel">
+                            <input type="radio" name="nivel" value="medio">
+                            <div class="cuadrado-nivel">
+                                <span class="emoji-nivel">👍</span>
+                                <span class="texto-nivel">Medio</span>
+                                <span class="descripcion-nivel">Intermedio</span>
+                            </div>
+                        </label>
+
+                        <!-- Alto -->
+                        <label class="opcion-nivel">
+                            <input type="radio" name="nivel" value="alto">
+                            <div class="cuadrado-nivel">
+                                <span class="emoji-nivel">🏆</span>
+                                <span class="texto-nivel">Alto</span>
+                                <span class="descripcion-nivel">Avanzado</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 2. MATERIAL - Checkbox -->
+                <div class="seccion-formulario">
+                    <label class="opcion-material">
+                        <input type="checkbox" name="material">
+                        <span class="checkmark"></span>
+                        <span class="texto-material">Necesito material deportivo</span>
+                    </label>
+                    <small class="texto-ayuda">(Raquetas, pelotas, aletas, etc.)</small>
+                </div>
+
+                <!-- 3. HORAS - 5 botones -->
+                <div class="seccion-formulario">
+                    <label class="titulo-seccion">Selecciona la hora *</label>
+                    <div class="opciones-grid-horas">
+                        <!-- Hora 1 -->
+                        <label class="opcion-hora">
+                            <input type="radio" name="hora" value="09:00" required>
+                            <div class="cuadrado-hora">09:00</div>
+                        </label>
+
+                        <!-- Hora 2 -->
+                        <label class="opcion-hora">
+                            <input type="radio" name="hora" value="11:00">
+                            <div class="cuadrado-hora">11:00</div>
+                        </label>
+
+                        <!-- Hora 3 -->
+                        <label class="opcion-hora">
+                            <input type="radio" name="hora" value="16:00">
+                            <div class="cuadrado-hora">16:00</div>
+                        </label>
+
+                        <!-- Hora 4 -->
+                        <label class="opcion-hora">
+                            <input type="radio" name="hora" value="18:00">
+                            <div class="cuadrado-hora">18:00</div>
+                        </label>
+
+                        <!-- Hora 5 -->
+                        <label class="opcion-hora">
+                            <input type="radio" name="hora" value="20:00">
+                            <div class="cuadrado-hora">20:00</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 4. DURACIÓN - 3 botones -->
+                <div class="seccion-formulario">
+                    <label class="titulo-seccion">Duración *</label>
+                    <div class="opciones-grid">
+                        <!-- 30 min -->
+                        <label class="opcion-duracion">
+                            <input type="radio" name="duracion" value="30" required>
+                            <div class="cuadrado-duracion">
+                                <span class="tiempo-duracion">30 min</span>
+                                
+                            </div>
+                        </label>
+
+                        <!-- 1 hora -->
+                        <label class="opcion-duracion">
+                            <input type="radio" name="duracion" value="60">
+                            <div class="cuadrado-duracion">
+                                <span class="tiempo-duracion">1 hora</span>
+                                
+                            </div>
+                        </label>
+
+                        <!-- 1h 30min -->
+                        <label class="opcion-duracion">
+                            <input type="radio" name="duracion" value="90">
+                            <div class="cuadrado-duracion">
+                                <span class="tiempo-duracion">1h 30min</span>
+                                
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 5. BOTONES FINALES -->
+                <div class="botones-popup">
+                    <a href="#" class="btn-cancelar">Cancelar</a>
+                    <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>

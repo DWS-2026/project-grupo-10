@@ -11,19 +11,7 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-.backgroundLogin {
-  background-image: url("/images/portada.jpg");
-  background-size: cover;
-  /* Hace que la imagen cubra toda la pantalla */
-  background-repeat: no-repeat;
-  /* Evita que se repita */
-  background-position: center;
-  /* Centra la imagen */
-  background-attachment: fixed;
-  /* (Opcional) efecto fondo fijo */
-
-}
-
+ 
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -13211,7 +13199,3 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-#reseñas-page {
-  padding-top: 80px;
-  background-color: #ffffff;
-}
