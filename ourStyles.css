@@ -1,0 +1,13 @@
+.backgroundLogin{
+  background-image: url("/images/portada.jpg");
+  background-size: cover;        /* Hace que la imagen cubra toda la pantalla */
+  background-repeat: no-repeat;  /* Evita que se repita */
+  background-position: center;   /* Centra la imagen */
+  background-attachment: fixed;  /* (Opcional) efecto fondo fijo */
+ }
+
+.facilitiesFormat{
+  width: 100%;
+  height: 200px !important;
+  object-fit: cover;
+}
