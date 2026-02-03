@@ -100,67 +100,250 @@
         </div>
     </section>
 
-    <!-- ================= CREAR / EDITAR INSTALACIÓN ================= -->
-    <section class="mb-5">
-        <h2 class="mb-3">Crear / Editar Instalación</h2>
+   <!-- ================= CREAR / EDITAR INSTALACIÓN ================= -->
+<section class="mb-5">
+    <h2 class="mb-3">Instalaciones</h2>
 
-        <div class="card p-4">
-            <form>
-                <div class="mb-3">
-                    <label class="form-label">Nombre *</label>
-                    <input type="text" class="form-control" placeholder="Pista Central" required>
-                </div>
+    <!-- Botones principales -->
+    <div class="d-flex gap-3 mb-4">
+        <a class="btn btn-success">Crear nueva instalación</a>
+        <a class="btn btn-warning">Editar instalaciones</a>
+    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Tipo *</label>
-                    <select class="form-select" required>
-                        <option value="">Seleccionar</option>
-                        <option>Pista</option>
-                        <option>Piscina</option>
-                        <option>Sala</option>
-                    </select>
-                </div>
+    <!-- ================= CREAR INSTALACIÓN ================= -->
+    <h4 class="mb-3">Crear nueva instalación</h4>
 
-                <div class="mb-3">
-                    <label class="form-label">Descripción *</label>
-                    <textarea class="form-control" rows="3" required></textarea>
-                </div>
+    <div class="card p-4 mb-5">
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Nombre *</label>
+                <input type="text" class="form-control" placeholder="Pista Central" required>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Foto</label>
-                    <input type="file" class="form-control">
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Tipo *</label>
+                <select class="form-select" required>
+                    <option value="">Seleccionar</option>
+                    <option>Pista</option>
+                    <option>Piscina</option>
+                    <option>Sala</option>
+                </select>
+            </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Disponibilidad *</label>
-                    <select class="form-select" required>
-                        <option value="1">Disponible</option>
-                        <option value="0">No disponible</option>
-                    </select>
-                    <div class="form-text text-warning">
-                        ⚠️ Cambiar la disponibilidad puede afectar a las reservas activas.
-                    </div>
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Descripción *</label>
+                <textarea class="form-control" rows="3" required></textarea>
+            </div>
 
-                <div class="d-flex gap-2">
-                    <button class="btn btn-success">Guardar</button>
-                    <button class="btn btn-secondary">Cancelar</button>
+            <div class="mb-3">
+                <label class="form-label">Foto</label>
+                <input type="file" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Disponibilidad *</label>
+                <select class="form-select" required>
+                    <option value="1">Disponible</option>
+                    <option value="0">No disponible</option>
+                </select>
+                <div class="form-text text-warning">
+                    ⚠️ Cambiar la disponibilidad puede afectar a las reservas activas.
                 </div>
-            </form>
+            </div>
+
+            <button class="btn btn-success">Guardar</button>
+        </form>
+    </div>
+
+    <!-- ================= LISTA PARA EDITAR ================= -->
+    <h4 class="mb-3">Editar instalaciones</h4>
+
+    <div class="list-group mb-4">
+
+        <!-- Pistas de Tenis -->
+        <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1">Pistas de Tenis</h5>
+                <p class="mb-1">
+                    Disponemos de pistas de todo tipo, tierra batida traída directamente de Roland Garros; 
+                    pistas de hierba natural cuidada a diario por nuestros técnicos; y pistas duras para jugadores 
+                    más ágiles. También disponemos de pistas cubiertas por si hace mal tiempo.
+                </p>
+            </div>
+            <a class="btn btn-warning btn-sm">Editar</a>
         </div>
-    </section>
+
+        <!-- Pista de Pádel -->
+        <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1">Pista de Pádel</h5>
+                <p class="mb-1">
+                    Pistas de pádel de última generación, con cerramientos de cristal templado y césped técnico 
+                    de alto rendimiento. Diseñadas para ofrecer un juego fluido, seguro y adaptado tanto a 
+                    entrenamientos como a competición.
+                </p>
+            </div>
+            <a class="btn btn-warning btn-sm">Editar</a>
+        </div>
+
+        <!-- Sala de Entrenamiento -->
+        <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1">Sala de Entrenamiento</h5>
+                <p class="mb-1">
+                    Sala de entrenamiento equipada con maquinaria profesional para preparación física, fuerza y 
+                    acondicionamiento funcional. Espacio amplio y versátil, supervisado por técnicos especializados 
+                    para optimizar el rendimiento y prevenir lesiones.
+                </p>
+            </div>
+            <a class="btn btn-warning btn-sm">Editar</a>
+        </div>
+
+        <!-- Campo de Fútbol -->
+        <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1">Campo de Fútbol</h5>
+                <p class="mb-1">
+                    Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado. Preparado para 
+                    entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y natural.
+                </p>
+            </div>
+            <a class="btn btn-warning btn-sm">Editar</a>
+        </div>
+
+        <!-- Pista de Baloncesto -->
+        <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1">Pista de Baloncesto</h5>
+                <p class="mb-1">
+                    Pista de baloncesto completamente equipada, con pavimento deportivo y señalización oficial. 
+                    Ideal para entrenamientos, tecnificación y actividades formativas.
+                </p>
+            </div>
+            <a class="btn btn-warning btn-sm">Editar</a>
+        </div>
+
+        <!-- Piscina -->
+        <div class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1">Piscina</h5>
+                <p class="mb-1">
+                    Piscina deportiva acondicionada para entrenamiento, recuperación y actividades acuáticas. 
+                    Control de temperatura, calidad del agua y mantenimiento diario para garantizar comodidad y 
+                    seguridad durante todo el año.
+                </p>
+            </div>
+            <a class="btn btn-warning btn-sm">Editar</a>
+        </div>
+
+    </div>
+
+    <!-- ================= FORMULARIO EDITAR ================= -->
+    <h4 class="mb-3">Formulario de edición</h4>
+
+    <div class="card p-4">
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Nombre *</label>
+                <input type="text" class="form-control" placeholder="Nombre de la instalación" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tipo *</label>
+                <select class="form-select" required>
+                    <option>Pista</option>
+                    <option>Piscina</option>
+                    <option>Sala</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Descripción *</label>
+                <textarea class="form-control" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Foto</label>
+                <input type="file" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Disponibilidad *</label>
+                <select class="form-select" required>
+                    <option value="1">Disponible</option>
+                    <option value="0">No disponible</option>
+                </select>
+            </div>
+
+            <button class="btn btn-success">Guardar cambios</button>
+        </form>
+    </div>
+
+</section>
 
     <!-- ================= ELIMINAR INSTALACIÓN ================= -->
-    <section>
+    <section class="mb-5">
         <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
 
         <div class="alert alert-warning">
             ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
         </div>
 
-        <button class="btn btn-danger">
-            Eliminar instalación
-        </button>
+        <div class="list-group">
+            <!-- Instalación 1 -->
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">Pistas de Tenis</h5>
+                    <p class="mb-1">Disponemos de pistas de todo tipo, tierra batida traída directamente de Roland Garros; pistas de hierba natural cuidada a diario por nuestros técnicos; y pistas duras para jugadores más ágiles. También disponemos de pistas cubiertas por si hace mal tiempo.</p>
+                </div>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+
+            <!-- Instalación 2 -->
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">Pista de Pádel</h5>
+                    <p class="mb-1">Pistas de pádel de última generación, con cerramientos de cristal templado y césped técnico de alto rendimiento. Diseñadas para ofrecer un juego fluido, seguro y adaptado tanto a entrenamientos como a competición.</p>
+                </div>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+
+            <!-- Instalación 3 -->
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">Sala de Entrenamiento</h5>
+                    <p class="mb-1">Sala de entrenamiento equipada con maquinaria profesional para preparación física, fuerza y acondicionamiento funcional. Espacio amplio y versátil, supervisado por técnicos especializados para optimizar el rendimiento y prevenir lesiones.</p>
+                </div>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+
+            <!-- Instalación 4 -->
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">Campo de Fútbol</h5>
+                    <p class="mb-1">Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado. Preparado para entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y natural.</p>
+                </div>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+
+            <!-- Instalación 5 -->
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">Pista de Baloncesto</h5>
+                    <p class="mb-1">Pista de baloncesto completamente equipada, con pavimento deportivo y señalización oficial. Ideal para entrenamientos, tecnificación y actividades formativas.</p>
+                </div>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+
+            <!-- Instalación 6 -->
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">Piscina</h5>
+                    <p class="mb-1">Piscina deportiva acondicionada para entrenamiento, recuperación y actividades acuáticas. Control de temperatura, calidad del agua y mantenimiento diario para garantizar comodidad y seguridad durante todo el año.</p>
+                </div>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+        </div>
     </section>
 
 </div>
