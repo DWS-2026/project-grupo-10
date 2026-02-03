@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+<div class="container py-5">
+
+    <h1 class="text-center mb-5">Panel de Administración</h1>
+
+    <!-- ================= USUARIOS ================= -->
+    <section class="mb-5">
+        <h2 class="mb-3">Usuarios</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Nº Reservas</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Usuario 1 -->
+                    <tr>
+                        <td>Juan Pérez</td>
+                        <td>juan@email.com</td>
+                        <td>5</td>
+                        <td class="d-flex gap-2">
+                            <button class="btn btn-warning btn-sm">Gestionar</button>
+                            <button class="btn btn-secondary btn-sm">Bloquear</button>
+                            <button class="btn btn-danger btn-sm">Eliminar</button>
+                        </td>
+                    </tr>
+
+                    <!-- Usuario 2 -->
+                    <tr>
+                        <td>Ana López</td>
+                        <td>ana@email.com</td>
+                        <td>0</td>
+                        <td class="d-flex gap-2">
+                            <button class="btn btn-warning btn-sm">Gestionar</button>
+                            <button class="btn btn-secondary btn-sm">Bloquear</button>
+                            <button class="btn btn-danger btn-sm">Eliminar</button>
+                        </td>
+                    </tr>
+
+                    <!-- Usuario 3 -->
+                    <tr>
+                        <td>Carlos Ruiz</td>
+                        <td>carlos@email.com</td>
+                        <td>2</td>
+                        <td class="d-flex gap-2">
+                            <button class="btn btn-warning btn-sm">Gestionar</button>
+                            <button class="btn btn-secondary btn-sm">Bloquear</button>
+                            <button class="btn btn-danger btn-sm">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ================= PERFIL USUARIO (ADMIN) ================= -->
+    <section class="mb-5">
+        <h2 class="mb-3">Perfil del Usuario (como lo ve el admin en el modo de gestión del perfil de un usuario)</h2>
+
+        <div class="card p-4">
+            <div class="text-center mb-4">
+                <img src="/images/fotoPerfilweb.webp"
+                     class="rounded-circle"
+                     width="120"
+                     height="120"
+                     alt="Foto usuario">
+            </div>
+
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" value="Juan Pérez" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="juan@email.com" required>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success">Guardar cambios</button>
+                    <button class="btn btn-danger">Eliminar usuario</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ================= CREAR / EDITAR INSTALACIÓN ================= -->
+    <section class="mb-5">
+        <h2 class="mb-3">Crear / Editar Instalación</h2>
+
+        <div class="card p-4">
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Nombre *</label>
+                    <input type="text" class="form-control" placeholder="Pista Central" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Tipo *</label>
+                    <select class="form-select" required>
+                        <option value="">Seleccionar</option>
+                        <option>Pista</option>
+                        <option>Piscina</option>
+                        <option>Sala</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descripción *</label>
+                    <textarea class="form-control" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Foto</label>
+                    <input type="file" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Disponibilidad *</label>
+                    <select class="form-select" required>
+                        <option value="1">Disponible</option>
+                        <option value="0">No disponible</option>
+                    </select>
+                    <div class="form-text text-warning">
+                        ⚠️ Cambiar la disponibilidad puede afectar a las reservas activas.
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success">Guardar</button>
+                    <button class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ================= ELIMINAR INSTALACIÓN ================= -->
+    <section>
+        <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
+
+        <div class="alert alert-warning">
+            ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
+        </div>
+
+        <button class="btn btn-danger">
+            Eliminar instalación
+        </button>
+    </section>
+
+</div>
+
+</body>
+</html>
