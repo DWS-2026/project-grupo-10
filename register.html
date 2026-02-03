@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Práctica DWS · Olympo Academy · Register</title>
   <link rel="icon" type="image/png" href="/images/logoSinFondo.png" />
-  <!-- Hoja de estilos Agency/Bootstrap (tu archivo) -->
+  <!-- Stylesheet Agency/Bootstrap (tu archivo) -->
   <link rel="stylesheet" href="styles.css" />
   <link href="ourStyles.css" rel="stylesheet" />
 </head>
@@ -21,13 +21,13 @@
               Al crear una cuenta, serás socio y tendrás ventajas como inscribirte a nuestras clases de aquagym!!!
             </p>
             
-            <form action="login.html" method="get"> <!-- este form es temporal hasta que hagamos la validación con js-->
+            <form action="login.html" method="get"> <!-- this is a temporary form , until we work with js-->
               <div class="mb-3">
-                <label for="nombreCompleto" class="form-label">Nombre y Apellidos</label>
+                <label for="fullName" class="form-label">Nombre y Apellidos</label>
                 <input
                   type="text"
-                  id="nombreCompleto"
-                  name="nombreCompleto"
+                  id="fullName"
+                  name="fullName"
                   class="form-control"
                   placeholder="Juan Velázquez"
                   autocomplete="name"
@@ -36,7 +36,7 @@
                 />
                 <div class="form-text">Introduce tu nombre y apellidos</div>
               </div>
-              <!-- Correo-->
+              <!-- Email-->
               <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input
@@ -50,19 +50,18 @@
                   required
                 />
               </div>
-              <!-- Teléfono -->
+              <!-- Phone Number -->
               <div class="mb-3">
-                <label for="telefono" class="form-label">Número de Teléfono(opcional)</label>
+                <label for="phone" class="form-label">Número de Teléfono(opcional)</label>
                 <input
                   type="tel"
-                  id="telefono"
-                  name="telefono"
+                  id="phone"
+                  name="phone"
                   class="form-control"
                   placeholder="+34 621 234 456"
                   autocomplete="tel"
                   maxlength="15"
-                  pattern="^[0-9+\s()-]{6,20}$"
-                />
+                  pattern="^[0-9+\s()-]{6,20}$" />  <!-- this is a regular expression (regex)-->
               </div>
 
               <div class="mb-3">
@@ -97,7 +96,7 @@
 
               <div class="d-grid">
                 <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg"> Completar Registro </button> <!-- ponemos un boton en lugar de <a> ya que queremos enviar datos-->
+                <button type="submit" class="btn btn-primary btn-lg"> Completar Registro </button> <!-- we use <button> instead of <a> because we want to send data-->
               </div>
               </div>
 
