@@ -1,1 +1,76 @@
-<!-- en este apartado iran los detalles del perfil del usuario-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <!-- DATOS DEL USUARIO -->
+    <section id="perfil-usuario">
+        <h2>Mi Perfil</h2>
+
+        <!-- Foto de perfil -->
+        <img src="foto-usuario.jpg" alt="Foto de perfil">
+
+        <p><strong>Nombre:</strong> Juan Pérez</p>
+        <p><strong>Email:</strong> juanperez@email.com</p>
+
+        <div class="acciones-usuario">
+            <button type="button">Editar datos</button>
+            <button type="button">Cambiar contraseña</button>
+        </div>
+    </section>
+
+    <!-- RESERVAS FUTURAS -->
+    <section id="reservas-futuras">
+        <h2>Reservas Futuras</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Servicio</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>20/03/2026</td>
+                    <td>Clase AquaGy</td>
+                    <td>Confirmada</td>
+                    <td>
+                        <button type="button">Cancelar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- RESERVAS PASADAS -->
+    <section id="reservas-pasadas">
+        <h2>Reservas Pasadas</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Servicio</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10/01/2025</td>
+                    <td>Pista Centro</td>
+                    <td>Finalizada</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</body>
+</html>
