@@ -105,7 +105,7 @@
             <!-- Instalación 1: Pista de Tenis -->
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="portfolio-item">
-                    <a class="portfolio-link" href="#modalPistaTenis">
+                    <a class="portfolio-link" data-bs-toggle="modal"href="#modalPistaTenis">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
@@ -126,7 +126,7 @@
             <!-- Instalación 2: Pista de Pádel -->
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="portfolio-item">
-                    <a class="portfolio-link" href="#modalPistaPadel">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalPistaPadel">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
@@ -137,7 +137,8 @@
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Pistas de Pádel</div>
-                        <div class="portfolio-caption-subheading text-muted">Descripción</div>
+                        <div class="portfolio-caption-subheading text-muted">Pistas de pádel de última generación, con cerramientos de cristal templado y césped técnico de alto rendimiento. 
+                            Diseñadas para ofrecer un juego fluido, seguro y adaptado tanto a entrenamientos como a competición.</div>
                     </div>
                 </div>
             </div>
@@ -145,7 +146,7 @@
             <!-- Instalación 3: Sala de Entrenamiento -->
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="portfolio-item">
-                    <a class="portfolio-link" href="#modalSalaEntrenamiento">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalSalaEntrenamiento">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
@@ -156,7 +157,8 @@
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Sala de Entrenamiento</div>
-                        <div class="portfolio-caption-subheading text-muted">Descripción</div>
+                        <div class="portfolio-caption-subheading text-muted">Sala de entrenamiento equipada con maquinaria profesional para preparación física, fuerza y acondicionamiento funcional. 
+                            Espacio amplio y versátil, supervisado por técnicos especializados para optimizar el rendimiento y prevenir lesiones.</div>
                     </div>
                 </div>
             </div>
@@ -164,7 +166,7 @@
             <!-- Instalación 4: Campo de Fútbol -->
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="portfolio-item">
-                    <a class="portfolio-link" href="#modalCampoFutbol">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalCampoFutbol">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
@@ -175,7 +177,8 @@
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Campos de Fútbol</div>
-                        <div class="portfolio-caption-subheading text-muted">Descripción</div>
+                        <div class="portfolio-caption-subheading text-muted">Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado. Preparado para 
+                            entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y natural.</div>
                     </div>
                 </div>
             </div>
@@ -183,7 +186,7 @@
             <!-- Instalación 5: Pista de Baloncesto -->
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="portfolio-item">
-                    <a class="portfolio-link" href="#modalPistaBaloncesto">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalPistaBaloncesto">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
@@ -194,7 +197,8 @@
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Pistas de Baloncesto</div>
-                        <div class="portfolio-caption-subheading text-muted">Descripción</div>
+                        <div class="portfolio-caption-subheading text-muted">Pista de baloncesto completamente equipada, con pavimento deportivo y señalización oficial. 
+                            Ideal para entrenamientos, tecnificación y actividades formativas.</div>
                     </div>
                 </div>
             </div>
@@ -202,7 +206,7 @@
             <!-- Instalación 6: Piscina -->
             <div class="col-lg-4 col-sm-6 mb-4">
                 <div class="portfolio-item">
-                    <a class="portfolio-link" href="#modalPiscina">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalPiscina">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
@@ -213,7 +217,8 @@
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Piscina</div>
-                        <div class="portfolio-caption-subheading text-muted">Descripción</div>
+                        <div class="portfolio-caption-subheading text-muted">Piscina deportiva acondicionada para entrenamiento, recuperación y actividades acuáticas. 
+                            Control de temperatura, calidad del agua y mantenimiento diario para garantizar comodidad y seguridad durante todo el año.</div>
                     </div>
                 </div>
             </div>
@@ -363,24 +368,13 @@
 
 <!-- Modal Pistas de Tenis -->
 <div class="portfolio-modal modal fade" id="modalPistaTenis" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="modal-body text-center">
-              <h2 class="text-uppercase">Pistas de Tenis</h2>
-              <p class="item-intro text-muted">Descripción</p>
-              <img class="img-fluid rounded mb-3" src="/images/instalaciones/tenis.png" alt="Pista de Tenis" style="width:100%; height:auto; object-fit:cover;" />
-              <p>Descripción</p>
-              <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                <i class="fas fa-xmark me-1"></i>
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 bg-transparent">
+      <div class="modal-body p-0 d-flex justify-content-center">
+        <img src="/images/instalaciones/tenis.png" 
+             class="img-fluid" 
+             style="max-width:800px; width:100%; height:auto;" 
+             alt="Pista de Tenis" />
       </div>
     </div>
   </div>
@@ -388,24 +382,13 @@
 
 <!-- Modal Pistas de Pádel -->
 <div class="portfolio-modal modal fade" id="modalPistaPadel" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="modal-body text-center">
-              <h2 class="text-uppercase">Pistas de Pádel</h2>
-              <p class="item-intro text-muted">Descripción</p>
-              <img class="img-fluid rounded mb-3" src="/images/instalaciones/padel.png" alt="Pista de Pádel" style="width:100%; height:auto; object-fit:cover;" />
-              <p>Descripción</p>
-              <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                <i class="fas fa-xmark me-1"></i>
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 bg-transparent">
+      <div class="modal-body p-0 d-flex justify-content-center">
+        <img src="/images/instalaciones/padel.png" 
+             class="img-fluid" 
+             style="max-width:800px; width:100%; height:auto;" 
+             alt="Pista de Pádel" />
       </div>
     </div>
   </div>
@@ -413,24 +396,13 @@
 
 <!-- Modal Sala de Entrenamiento -->
 <div class="portfolio-modal modal fade" id="modalSalaEntrenamiento" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="modal-body text-center">
-              <h2 class="text-uppercase">Sala de Entrenamiento</h2>
-              <p class="item-intro text-muted">Descripción</p>
-              <img class="img-fluid rounded mb-3" src="/images/instalaciones/gym_Olympo.png" alt="Sala de Entrenamiento" style="width:100%; height:auto; object-fit:cover;" />
-              <p>Descripción</p>
-              <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                <i class="fas fa-xmark me-1"></i>
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 bg-transparent">
+      <div class="modal-body p-0 d-flex justify-content-center">
+        <img src="/images/instalaciones/gym_Olympo.png" 
+             class="img-fluid" 
+             style="max-width:800px; width:100%; height:auto;" 
+             alt="Sala de Entrenamiento" />
       </div>
     </div>
   </div>
@@ -438,24 +410,13 @@
 
 <!-- Modal Campos de Fútbol -->
 <div class="portfolio-modal modal fade" id="modalCampoFutbol" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="modal-body text-center">
-              <h2 class="text-uppercase">Campos de Fútbol</h2>
-              <p class="item-intro text-muted">Descripción</p>
-              <img class="img-fluid rounded mb-3" src="/images/instalaciones/futbol.jpeg" alt="Campo de Fútbol" style="width:100%; height:auto; object-fit:cover;" />
-              <p>Descripción</p>
-              <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                <i class="fas fa-xmark me-1"></i>
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 bg-transparent">
+      <div class="modal-body p-0 d-flex justify-content-center">
+        <img src="/images/instalaciones/futbol.jpeg" 
+             class="img-fluid" 
+             style="max-width:800px; width:100%; height:auto;" 
+             alt="Campo de Fútbol" />
       </div>
     </div>
   </div>
@@ -463,24 +424,13 @@
 
 <!-- Modal Pistas de Baloncesto -->
 <div class="portfolio-modal modal fade" id="modalPistaBaloncesto" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="modal-body text-center">
-              <h2 class="text-uppercase">Pistas de Baloncesto</h2>
-              <p class="item-intro text-muted">Descripción</p>
-              <img class="img-fluid rounded mb-3" src="/images/instalaciones/baloncesto.jpeg" alt="Pista de Baloncesto" style="width:100%; height:auto; object-fit:cover;" />
-              <p>Descripción</p>
-              <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                <i class="fas fa-xmark me-1"></i>
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 bg-transparent">
+      <div class="modal-body p-0 d-flex justify-content-center">
+        <img src="/images/instalaciones/baloncesto.jpeg" 
+             class="img-fluid" 
+             style="max-width:800px; width:100%; height:auto;" 
+             alt="Pista de Baloncesto" />
       </div>
     </div>
   </div>
@@ -488,24 +438,13 @@
 
 <!-- Modal Piscina -->
 <div class="portfolio-modal modal fade" id="modalPiscina" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="modal-body text-center">
-              <h2 class="text-uppercase">Piscina</h2>
-              <p class="item-intro text-muted">Descripción</p>
-              <img class="img-fluid rounded mb-3" src="/images/instalaciones/natacion.png" alt="Piscina" style="width:100%; height:auto; object-fit:cover;" />
-              <p>Descripción</p>
-              <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                <i class="fas fa-xmark me-1"></i>
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 bg-transparent">
+      <div class="modal-body p-0 d-flex justify-content-center">
+        <img src="/images/instalaciones/natacion.png" 
+             class="img-fluid" 
+             style="max-width:800px; width:100%; height:auto;" 
+             alt="Piscina" />
       </div>
     </div>
   </div>
