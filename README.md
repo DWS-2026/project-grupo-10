@@ -90,10 +90,12 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 > [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
 
 #### **5. Registro 
+![Registro](images/screens/register.png)
 
+> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
 
 #### **6. Mi Perfil 
-![Perfil](images/screens/profile.png)
+![Perfil](images/screens/userProfile.png)
 
 > [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
 
