@@ -14,11 +14,11 @@
 <div class="container py-5">
 
     <!-- User's Data -->
-    <section id="perfil-usuario" class="mb-5 text-center">
+    <section id="user-profile" class="mb-5 text-center">
         <h2 class="mb-4">Mi Perfil</h2>
 
-        <img src="/images/fotoPerfilweb.webp"
-             alt="Foto de perfil"
+        <img src="images/fotoPerfilweb.webp"
+             alt="Profile photo"
              class="rounded-circle mb-3"
              width="150"
              height="150">
@@ -27,14 +27,14 @@
         <p><strong>Email:</strong> juanperez@email.com</p>
 
         <div class="d-flex justify-content-center gap-2 mt-3">
-            <a href="#editar-datos" class="btn btn-warning">Editar datos</a>
-            <a href="#cambiar-pass" class="btn btn-secondary">Cambiar contraseña</a>
-            <a href="#cambiar-foto" class="btn btn-info text-white">Cambiar foto</a>
+            <a href="#edit-data" class="btn btn-warning">Editar datos</a>
+            <a href="#change-pass" class="btn btn-secondary">Cambiar contraseña</a>
+            <a href="#change-photo" class="btn btn-info text-white">Cambiar foto</a>
         </div>
     </section>
 
-    <!-- Future Reservations -->
-    <section id="reservas-futuras" class="mb-5">
+    <!-- Future Bookings -->
+    <section id="future-bookings" class="mb-5">
         <h2 class="mb-3">Reservas Futuras</h2>
 
         <div class="table-responsive">
@@ -50,10 +50,10 @@
                 <tbody>
                     <tr>
                         <td>20/03/2026</td>
-                        <td>Clase AquaGym</td>
+                        <td>Clase de natacion</td>
                         <td class="text-success fw-bold">Confirmada</td>
                         <td>
-                        <a href="#cancelar-reserva-1" class="btn btn-danger btn-sm">Cancelar</a>
+                        <a href="#change-profile" class="btn btn-danger btn-sm">Cancelar</a>
                         </td>
                     </tr>
                 </tbody>
@@ -61,8 +61,8 @@
         </div>
     </section>
 
-    <!-- Past Reservations -->
-    <section id="reservas-pasadas">
+    <!-- Past Bookings -->
+    <section id="past-bookings">
         <h2 class="mb-3">Reservas Pasadas</h2>
 
         <div class="table-responsive">
@@ -77,7 +77,7 @@
                 <tbody>
                     <tr>
                         <td>10/01/2025</td>
-                        <td>Pista Centro</td>
+                        <td>Pista de tenis</td>
                         <td class="text-dark fw-bold">Finalizada</td>
                     </tr>
                 </tbody>
@@ -86,7 +86,7 @@
     </section>
 
        <!-- My reviews-->
-<section id="mis-reseñas" class="mt-5">
+<section id="my-reviews" class="mt-5">
     <h2 class="mb-3">Mis Reseñas</h2>
 
     <div class="mb-3">
@@ -96,7 +96,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
-                    <a href="#eliminar-resena-1" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a href="#delete-review" class="btn btn-danger btn-sm">Eliminar</a>
                 </div>
                 <div class="mb-1">
                     <i class="fas fa-star text-warning"></i>
@@ -116,7 +116,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
-                    <a href="#eliminar-resena-2" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a href="#delete-review" class="btn btn-danger btn-sm">Eliminar</a>
                 </div>
                 <div class="mb-1">
                     <i class="fas fa-star text-warning"></i>
@@ -137,7 +137,7 @@
 <!--Profile Popups-->
 
 <!-- Data Editing -->
-<div id="editar-datos" class="popup">
+<div id="edit-data" class="popup">
     <div class="popup-content">
         <a href="#" class="close">&times;</a>
         <h3>Editar Datos</h3>
@@ -159,7 +159,7 @@
 </div>
 
 <!-- Change password -->
-<div id="cambiar-pass" class="popup">
+<div id="change-pass" class="popup">
     <div class="popup-content">
         <a href="#" class="close">&times;</a>
         <h3>Cambiar Contraseña</h3>
@@ -181,7 +181,7 @@
 </div>
 
 <!-- Cancel reservation -->
-<div id="cancelar-reserva-1" class="popup">
+<div id="change-profile" class="popup">
     <div class="popup-content">
         <a href="#" class="close">&times;</a>
         <h3>Cancelar Reserva</h3>
@@ -194,8 +194,8 @@
     </div>
 </div>
 
-<!-- Delete review 1 -->
-<div id="eliminar-resena-1" class="popup">
+<!-- Delete review  -->
+<div id="delete-review" class="popup">
     <div class="popup-content">
         <a href="#" class="close">&times;</a>
         <h3>Eliminar Reseña</h3>
@@ -208,21 +208,9 @@
     </div>
 </div>
 
-<!-- Delete review 2 -->
-<div id="eliminar-resena-2" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Eliminar Reseña</h3>
-        <p>¿Seguro que quieres eliminar esta reseña?</p>
 
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
 <!-- Change Profile Picture -->
-<div id="cambiar-foto" class="popup">
+<div id="change-photo" class="popup">
     <div class="popup-content">
         <a href="#" class="close">&times;</a>
 
@@ -231,7 +219,7 @@
         <form>
             <div class="mb-3">
                 <label class="form-label">Foto actual</label><br>
-                <img src="/images/fotoPerfilweb.webp" 
+                <img src="images/fotoPerfilweb.webp" 
                      width="120" 
                      height="120" 
                      class="rounded-circle mb-3">
