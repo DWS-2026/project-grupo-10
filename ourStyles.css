@@ -16,6 +16,12 @@
   padding-top: 80px;
 }
 
+.background2{
+    background: linear-gradient(to bottom, #ffffff, #ffffff);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 /* Popup estilo flotante - AÑADE !important */
 .popup {
     display: none !important;
