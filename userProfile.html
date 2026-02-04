@@ -27,8 +27,9 @@
         <p><strong>Email:</strong> juanperez@email.com</p>
 
         <div class="d-flex justify-content-center gap-2 mt-3">
-            <button class="btn btn-warning">Editar datos</button>
-            <button class="btn btn-secondary">Cambiar contraseña</button>
+            <a href="#editar-datos" class="btn btn-warning">Editar datos</a>
+            <a href="#cambiar-pass" class="btn btn-secondary">Cambiar contraseña</a>
+            <a href="#cambiar-foto" class="btn btn-info text-white">Cambiar foto</a>
         </div>
     </section>
 
@@ -52,9 +53,7 @@
                         <td>Clase AquaGym</td>
                         <td class="text-success fw-bold">Confirmada</td>
                         <td>
-                            <button class="btn btn-danger btn-sm">
-                                Cancelar
-                            </button>
+                        <a href="#cancelar-reserva-1" class="btn btn-danger btn-sm">Cancelar</a>
                         </td>
                     </tr>
                 </tbody>
@@ -86,52 +85,166 @@
         </div>
     </section>
 
-        <!-- MIS RESEÑAS -->
-    <section id="mis-reseñas" class="mt-5">
-        <h2 class="mb-3">Mis Reseñas</h2>
+       <!-- MIS RESEÑAS -->
+<section id="mis-reseñas" class="mt-5">
+    <h2 class="mb-3">Mis Reseñas</h2>
 
-        <div class="mb-3">
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                    <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
-                    <button class="btn btn-danger btn-sm">Eliminar</button>
-            </div>
-                    <div class="mb-1">
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star-half-alt text-warning"></i>
-                    </div>
-                    <p class="card-text mb-0">
-                        El gimnasio es increíble, los entrenadores son muy atentos y las facilities siempre limpias.
-                    </p>
-                </div>
-            </div>
+    <div class="mb-3">
 
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
+        <!-- Reseña 1 -->
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
                     <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
-                    <button class="btn btn-danger btn-sm">Eliminar</button>
+                    <a href="#eliminar-resena-1" class="btn btn-danger btn-sm">Eliminar</a>
                 </div>
-                    <div class="mb-1">
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="fas fa-star text-warning"></i>
-                        <i class="far fa-star text-warning"></i>
-                        <i class="far fa-star text-warning"></i>
-                    </div>
-                    <p class="card-text mb-0">
-                        Buenas facilities, aunque me gustaría que ampliaran los horarios de algunas clases.
-                    </p>
+                <div class="mb-1">
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star-half-alt text-warning"></i>
                 </div>
+                <p class="card-text mb-0">
+                    El gimnasio es increíble, los entrenadores son muy atentos y las instalaciones están siempre limpias.
+                </p>
             </div>
         </div>
-    </section>
 
+        <!-- Reseña 2 -->
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
+                    <a href="#eliminar-resena-2" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+                <div class="mb-1">
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="far fa-star text-warning"></i>
+                    <i class="far fa-star text-warning"></i>
+                </div>
+                <p class="card-text mb-0">
+                    Buenas instalaciones, aunque me gustaría que ampliaran los horarios de algunas clases.
+                </p>
+            </div>
+        </div>
 
+    </div>
+</section>
+
+<!-- ================= POPUPS PERFIL ================= -->
+
+<!-- EDITAR DATOS -->
+<div id="editar-datos" class="popup">
+    <div class="popup-content">
+        <a href="#" class="close">&times;</a>
+        <h3>Editar Datos</h3>
+
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" value="Juan Pérez">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" value="juanperez@email.com">
+            </div>
+
+            <button class="btn btn-success">Guardar cambios</button>
+        </form>
+    </div>
+</div>
+
+<!-- CAMBIAR CONTRASEÑA -->
+<div id="cambiar-pass" class="popup">
+    <div class="popup-content">
+        <a href="#" class="close">&times;</a>
+        <h3>Cambiar Contraseña</h3>
+
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Contraseña actual</label>
+                <input type="password" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nueva contraseña</label>
+                <input type="password" class="form-control">
+            </div>
+
+            <button class="btn btn-success">Actualizar contraseña</button>
+        </form>
+    </div>
+</div>
+
+<!-- CANCELAR RESERVA -->
+<div id="cancelar-reserva-1" class="popup">
+    <div class="popup-content">
+        <a href="#" class="close">&times;</a>
+        <h3>Cancelar Reserva</h3>
+        <p>¿Seguro que quieres cancelar la reserva del <strong>20/03/2026</strong>?</p>
+
+        <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-danger">Sí, cancelar</button>
+            <a href="#" class="btn btn-secondary">Volver</a>
+        </div>
+    </div>
+</div>
+
+<!-- ELIMINAR RESEÑA 1 -->
+<div id="eliminar-resena-1" class="popup">
+    <div class="popup-content">
+        <a href="#" class="close">&times;</a>
+        <h3>Eliminar Reseña</h3>
+        <p>¿Seguro que quieres eliminar esta reseña?</p>
+
+        <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-danger">Sí, eliminar</button>
+            <a href="#" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</div>
+
+<!-- ELIMINAR RESEÑA 2 -->
+<div id="eliminar-resena-2" class="popup">
+    <div class="popup-content">
+        <a href="#" class="close">&times;</a>
+        <h3>Eliminar Reseña</h3>
+        <p>¿Seguro que quieres eliminar esta reseña?</p>
+
+        <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-danger">Sí, eliminar</button>
+            <a href="#" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</div>
+<!-- CAMBIAR FOTO DE PERFIL -->
+<div id="cambiar-foto" class="popup">
+    <div class="popup-content">
+        <a href="#" class="close">&times;</a>
+
+        <h3>Cambiar Foto de Perfil</h3>
+
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Foto actual</label><br>
+                <img src="/images/fotoPerfilweb.webp" 
+                     width="120" 
+                     height="120" 
+                     class="rounded-circle mb-3">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Subir nueva foto</label>
+                <input type="file" class="form-control" required>
+            </div>
+
+            <button class="btn btn-success mt-2">Guardar nueva foto</button>
+        </form>
+    </div>
 </div>
 
 </body>
