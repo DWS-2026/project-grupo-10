@@ -16,6 +16,9 @@
   padding-top: 80px;
 }
 
+.footerBackground{
+    background: #222;
+}
 .background2{
     background: linear-gradient(to bottom, #ffffff, #ffffff);
     background-size: cover;
