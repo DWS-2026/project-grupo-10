@@ -69,40 +69,40 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 
-#### **1. Pagina Principal/ Home**
-![Página Principal](images/screens/login.png)
+#### **1. Pagina Principal/ HomE**
+![Página Principal](images/screens/index.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> Página de inicio que muestra información sobre la academia, su equipo y las instalaciones disponibles. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados.
 
 #### **2. Reseñas
 ![Reseñas](images/screens/reseñas.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> Página de reseñas/valoraciones de los usuarios. Para poder añadir una nueva reseña debes estar autenticado en la web con tus credenciales.
 
 #### **3. Reservas
 ![Reservas](images/screens/reservas.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> Página de reservas, solamente disponible para usuarios registrados. Permite reservar tanto una clase como una instalación.
 
 #### **4. Login 
 ![Login](images/screens/login.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> Página que permite la autenticación de usuarios. Además dispone de una opción para usuarios anónimos para poder ser dados de alta. Redirige a la página principal dado que no sabemos si el usuario desea realizar una compra o no.
 
 #### **5. Registro 
 ![Registro](images/screens/register.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> Esta página permite hacer socios a nuevos usuarios, que tendrán que rellenar un formulario con los datos solicitados. Una vez registrado, redirige a la página de login.
 
 #### **6. Mi Perfil 
 ![Perfil](images/screens/userProfile.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> Esta pagina solo es visible para usuarios registrados. Permite visualizar y modificar los datos del usuario(email, contraseña...), gestionar tus reservas y tus reseñas publicadas.
 
 #### **7. Panel del Administrador
 ![Admin](images/screens/admin_screen.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+> Esta sección solo está disponible para el usuario admin, el cual pasará el login como un usuario normal pero al ser admin tendrá ciertos privilegios como: gestión de usuarios e instalaciones.
 
 #### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
 
