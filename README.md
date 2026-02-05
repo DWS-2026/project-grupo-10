@@ -51,13 +51,15 @@ Our application is a website for a sports academy called Olympo Academy. The goa
 ## 🛠 **Práctica 1: Maquetación de páginas con HTML y CSS**
 
 ### **Vídeo de Demostración**
-📹 **[Enlace al vídeo en YouTube](https://www.youtube.com/watch?v=x91MPoITQ3I)**
+📹 **[Enlace al vídeo en YouTube](https://youtu.be/Tnnp94HLKz0)**
 > Video showing the main features of the web application.
 
 ### **Diagrama de Navegación**
 ![Diagrama de Navegación](images/navigation-diagram.png)
 
 > The user can access all sections from the homepage through the navigation bar/menu. An anonymous user will only have access to public pages and will not be able to access the admin panel or user profile. To access the user profile and, consequently, book classes/facilities, leave reviews, or edit their user profile, it is necessary to first register or log in on the respective page. Once logged in as an academy user, they will be able to carry out the activities mentioned above. On the other hand, the administrator can access their panel from the main page, where they can perform any privileged activity.
+
+NOTE: Not all arrows have been added to the diagram, but from the admin panel you can access all the pages of the website.
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 
