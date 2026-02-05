@@ -87,12 +87,12 @@ Our application is a website for a sports academy called Olympo Academy. The goa
 > This page allows new users to become members, who will need to fill out a form with the requested information. Once registered, it redirects to the login page.
 
 #### **6. Mi Perfil** 
-![Perfil](images/screens/user.png)
+![Perfil](images/screens/profile.png)
 
 > This page is only visible to registered users. It allows you to view and edit user information (email, password, etc.), manage your bookings, and your published reviews.
 
 #### **7. Panel del Administrador**
-![Admin](images/screens/admin.png)
+![Admin](images/screens/admin_screen.png)
 
 > This section is only available to the admin user, who will log in like a regular user but, as an admin, will have certain privileges such as managing users and facilities.
 
