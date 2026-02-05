@@ -12,6 +12,12 @@
   object-fit: cover;
 }
 
+.modal-style{
+    max-width:800px; 
+    width:100%; 
+    height:auto;
+}
+
 .minimal-nav {
     padding: 0 !important;
     margin: 0 !important;
