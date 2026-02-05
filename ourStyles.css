@@ -48,6 +48,10 @@
     background: #222;
 }
 
+.footer-container {
+    min-height:80px;
+}
+
 .background2 {
     background: linear-gradient(to bottom, #ffffff, #ffffff);
     background-size: cover;
