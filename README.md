@@ -13,43 +13,37 @@
 ## 🎭 **Preparación: Definición del Proyecto**
 
 ### **Descripción del Tema**
-Nuestra aplicación consiste en una web para una academia de actividades deportivas denominada Olympo Academy. El objetivo de la aplicación será la gestión de reservas de las instalaciones que escogan los usuarios.
-Pertenece al sector deportivo.
-Algunas funcionalidades que aporta la aplicación al usuario son: consultar horarios, inscibirse a clases deportivas o reservar instalaciones.
+Our application is a website for a sports academy called Olympo Academy. The goal of the application will be to manage reservations for the facilities chosen by users. It belongs to the sports sector. Some features that the application offers to users are: checking schedules, signing up for sports classes, or reserving facilities.
 
 ### **Entidades**
-Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:
 
-1. **[Entidad 1]**: Usuario
-2. **[Entidad 2]**: Espacio
-3. **[Entidad 3]**: Reserva
-4. **[Entidad 4]**: Valoracion
+1. **[Entidad 1]**: User
+2. **[Entidad 2]**: Space
+3. **[Entidad 3]**: Reservation
+4. **[Entidad 4]**: Rating
 
 **Relaciones entre entidades:**
-- Usuario - Reserva: Un usuario puede hacer múltiples reservas (1:N)
-- Reserva - Espacio : Una reserva tiene un espacio
-- Usuario - Valoracion: Un usuario puede hacer múltiples valoraciones (1:N)
+- User - Reservation: A user can make multiple reservations (1:N)
+- Reservation - Space: A reservation has a space
+- User - Rating: A user can make multiple ratings (1:N)
 
 ### **Permisos de los Usuarios**
-Descripción de los permisos de cada tipo de usuario e indica de que entidades es dueño:
 
-* **Usuario Anónimo**: 
-  - Permisos: Visualización de distintos espacios, horarios y registro
-  - No es dueño de ninguna entidad
+* **Anonymous User**:
+- Permissions: Viewing of different spaces, schedules, and records
+- Is not the owner of any entity
 
-* **Usuario Registrado**: 
-  - Permisos: Gestión de perfil, realizar reservas, hacer valoraciones.
-  - Es dueño de: Sus propias reservas, su Perfil de Usuario, sus Valoraciones
+* **Registered User**:
+- Permissions: Manage profile, make reservations, leave reviews.
+- Owns: Their own reservations, User Profile, Reviews
 
-* **Administrador**: 
-  - Permisos: Gestión completa de productos, visualización de estadísticas, moderación de contenido
-  - Es dueño de: Espacios, valoraciones, puede gestionar las reservas y Usuarios
+* **Administrator**:
+- Permissions: Full product management, statistics viewing, content moderation
+- Owns: Spaces, reviews, can manage bookings and Users
 
-### **Imágenes**
-Indicar qué entidades tendrán asociadas una o varias imágenes:
-
-- **[Entidad con imágenes 1]**: Usuario - Una imagen de avatar por usuario
-- **[Entidad con imágenes 2]**: Instalaciones - Múltiples imágenes por instalación (galería)
+### **Images**
+- **[Entidad con imágenes 1]**: User - One avatar image per user
+- **[Entidad con imágenes 2]**: Facilities - Multiple images per facility (gallery)
 
 
 ---
@@ -58,53 +52,49 @@ Indicar qué entidades tendrán asociadas una o varias imágenes:
 
 ### **Vídeo de Demostración**
 📹 **[Enlace al vídeo en YouTube](https://www.youtube.com/watch?v=x91MPoITQ3I)**
-> Vídeo mostrando las principales funcionalidades de la aplicación web.
+> Video showing the main features of the web application.
 
 ### **Diagrama de Navegación**
-Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicación:
-
 ![Diagrama de Navegación](images/navigation-diagram.png)
 
-> [Descripción opcional del flujo de navegación: Ej: "El usuario puede acceder desde la página principal a todas las secciones mediante el menú de navegación. Los usuarios anónimos solo tienen acceso a las páginas públicas, mientras que los registrados pueden acceder a su perfil y panel de usuario."]
+> The user can access all sections from the homepage through the navigation bar/menu. An anonymous user will only have access to public pages and will not be able to access the admin panel or user profile. To access the user profile and, consequently, book classes/facilities, leave reviews, or edit their user profile, it is necessary to first register or log in on the respective page. Once logged in as an academy user, they will be able to carry out the activities mentioned above. On the other hand, the administrator can access their panel from the main page, where they can perform any privileged activity.
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 
-#### **1. Pagina Principal/ HomE**
+#### **1. Pagina Principal/ Home**
 ![Página Principal](images/screens/index.png)
 
-> Página de inicio que muestra información sobre la academia, su equipo y las instalaciones disponibles. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados.
+> Homepage that displays information about the academy, its team and the available facilities. Includes a navigation bar and access to registration/login for unauthenticated users.
 
-#### **2. Reseñas
+#### **2. Reseñas**
 ![Reseñas](images/screens/reseñas.png)
 
-> Página de reseñas/valoraciones de los usuarios. Para poder añadir una nueva reseña debes estar autenticado en la web con tus credenciales.
+> User reviews/rating page. To add a new review, you must be logged in to the website with your credentials.
 
-#### **3. Reservas
+#### **3. Reservas**
 ![Reservas](images/screens/reservas.png)
 
-> Página de reservas, solamente disponible para usuarios registrados. Permite reservar tanto una clase como una instalación.
+> Booking page, only available to registered users. Allows you to book both a class and a facility.
 
-#### **4. Login 
+#### **4. Login**
 ![Login](images/screens/login.png)
 
-> Página que permite la autenticación de usuarios. Además dispone de una opción para usuarios anónimos para poder ser dados de alta. Redirige a la página principal dado que no sabemos si el usuario desea realizar una compra o no.
+> Page that allows user authentication. It also has an option for anonymous users to register. It redirects to the main page since we don't know if the user wants to make a purchase or not.
 
-#### **5. Registro 
+#### **5. Registro**
 ![Registro](images/screens/register.png)
 
-> Esta página permite hacer socios a nuevos usuarios, que tendrán que rellenar un formulario con los datos solicitados. Una vez registrado, redirige a la página de login.
+> This page allows new users to become members, who will need to fill out a form with the requested information. Once registered, it redirects to the login page.
 
-#### **6. Mi Perfil 
+#### **6. Mi Perfil** 
 ![Perfil](images/screens/userProfile.png)
 
-> Esta pagina solo es visible para usuarios registrados. Permite visualizar y modificar los datos del usuario(email, contraseña...), gestionar tus reservas y tus reseñas publicadas.
+> This page is only visible to registered users. It allows you to view and edit user information (email, password, etc.), manage your bookings, and your published reviews.
 
-#### **7. Panel del Administrador
+#### **7. Panel del Administrador**
 ![Admin](images/screens/admin_screen.png)
 
-> Esta sección solo está disponible para el usuario admin, el cual pasará el login como un usuario normal pero al ser admin tendrá ciertos privilegios como: gestión de usuarios e instalaciones.
-
-#### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
+> This section is only available to the admin user, who will log in like a regular user but, as an admin, will have certain privileges such as managing users and facilities.
 
 ### **Participación de Miembros en la Práctica 1**
 
