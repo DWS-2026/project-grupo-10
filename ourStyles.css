@@ -12,6 +12,26 @@
   object-fit: cover;
 }
 
+.minimal-nav {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.minimal-nav .container { /* this removes margins */
+    padding-left: 0 !important;
+    margin-left: 0.000001 !important;
+}
+.minimal-nav .navbar-brand {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+.minimal-nav .navbar-brand img {
+    height: 70px;
+}
+
+.admin-page {
+    padding-top: 100px;
+}
+
 #reviews {
   padding-top: 80px;
 }
@@ -19,6 +39,7 @@
 .footerBackground{
     background: #222;
 }
+
 .background2{
     background: linear-gradient(to bottom, #ffffff, #ffffff);
     background-size: cover;
@@ -340,4 +361,8 @@
     text-decoration: none;
     color: #333;
 }
+
 }
+
+
+

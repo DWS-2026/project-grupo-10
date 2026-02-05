@@ -89,7 +89,7 @@ NOTE: Not all arrows have been added to the diagram, but from the admin panel yo
 > This page allows new users to become members, who will need to fill out a form with the requested information. Once registered, it redirects to the login page.
 
 #### **6. Mi Perfil** 
-![Perfil](images/screens/userProfile.png)
+![Perfil](images/screens/profile.png)
 
 > This page is only visible to registered users. It allows you to view and edit user information (email, password, etc.), manage your bookings, and your published reviews.
 
