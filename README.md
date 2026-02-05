@@ -51,7 +51,7 @@ Our application is a website for a sports academy called Olympo Academy. The goa
 ## 🛠 **Práctica 1: Maquetación de páginas con HTML y CSS**
 
 ### **Vídeo de Demostración**
-📹 **[Enlace al vídeo en YouTube](https://www.youtube.com/watch?v=x91MPoITQ3I)**
+📹 **[Enlace al vídeo en YouTube](https://youtu.be/Tnnp94HLKz0)**
 > Video showing the main features of the web application.
 
 ### **Diagrama de Navegación**
