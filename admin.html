@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,744 +8,756 @@
     <link rel="icon" type="image/png" href="/images/logoSinFondo.png" />
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="ourStyles.css">
-    
+
 </head>
 
 <body class="background2 admin-page">
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">
-            <img src="images/logoSinFondo.png" alt="Logo">
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logoSinFondo.png" alt="Logo">
+            </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
-            aria-expanded="false" aria-label="Toggle navigation">
-            Menu <i class="fas fa-bars ms-1"></i>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fas fa-bars ms-1"></i>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="index.html#facilities">Instalaciones</a></li>
-                <li class="nav-item"><a class="nav-link" href="index.html#team">Equipo</a></li>
-                <li class="nav-item"><a class="nav-link" href="index.html#doubts">Dudas</a></li>
-                <li class="nav-item"><a class="nav-link" href="reseñas.html">Reseñas</a></li>
-                <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>
-                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="userProfile.html">Mi Perfil</a></li>
-                <li class="nav-item"><a class="nav-link" href="admin.html">Panel de Administración</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<div class="container py-5 ">
-    <h1 class="text-center mb-5">Panel de Administración</h1>
-
-   <!--Users-->
-<section class="mb-5">
-    <h2 class="mb-3">Usuarios</h2>
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Nº Reservas</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <!-- User 1 -->
-                <tr>
-                    <td>Juan Pérez</td>
-                    <td>juan@email.com</td>
-                    <td>5</td>
-                    <td class="d-flex gap-2">
-                        <a href="#manage-juan" class="btn btn-warning btn-sm">Gestionar</a>
-                        <a href="#block-juan" class="btn btn-secondary btn-sm">Bloquear</a>
-                        <a href="#eliminate-juan" class="btn btn-danger btn-sm">Eliminar</a>
-                    </td>
-                </tr>
-
-                <!-- User 2 -->
-                <tr>
-                    <td>Ana López</td>
-                    <td>ana@email.com</td>
-                    <td>0</td>
-                    <td class="d-flex gap-2">
-                        <a href="#manage-ana" class="btn btn-warning btn-sm">Gestionar</a>
-                        <a href="#block-ana" class="btn btn-secondary btn-sm">Bloquear</a>
-                        <a href="#eliminate-ana" class="btn btn-danger btn-sm">Eliminar</a>
-                    </td>
-                </tr>
-
-                <!-- User 3 -->
-                <tr>
-                    <td>Carlos Ruiz</td>
-                    <td>carlos@email.com</td>
-                    <td>2</td>
-                    <td class="d-flex gap-2">
-                        <a href="#manage-carlos" class="btn btn-warning btn-sm">Gestionar</a>
-                        <a href="#block-carlos" class="btn btn-secondary btn-sm">Bloquear</a>
-                        <a href="#eliminate-carlos" class="btn btn-danger btn-sm">Eliminar</a>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<!-- User Management Popups -->
-
-<!-- Manage Juan -->
-<div id="manage-juan" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-
-        <h3>Gestionar Usuario</h3>
-
-        <div class="text-center mb-4">
-            <img src="images/fotoPerfilweb.webp"
-                 class="rounded-circle"
-                 width="120"
-                 height="120"
-                 alt="User photo">
-        </div>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" value="Juan Pérez" required>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html#facilities">Instalaciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#team">Equipo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#doubts">Dudas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reseñas.html">Reseñas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="userProfile.html">Mi Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin.html">Panel de Administración</a></li>
+                </ul>
             </div>
+        </div>
+    </nav>
 
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" value="juan@email.com" required>
+    <div class="container py-5 ">
+        <h1 class="text-center mb-5">Panel de Administración</h1>
+
+        <!--Users-->
+        <section class="mb-5">
+            <h2 class="mb-3">Usuarios</h2>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Nº Reservas</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <!-- User 1 -->
+                        <tr>
+                            <td>Juan Pérez</td>
+                            <td>juan@email.com</td>
+                            <td>5</td>
+                            <td class="d-flex gap-2">
+                                <a href="#manage-juan" class="btn btn-warning btn-sm">Gestionar</a>
+                                <a href="#block-juan" class="btn btn-secondary btn-sm">Bloquear</a>
+                                <a href="#eliminate-juan" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+
+                        <!-- User 2 -->
+                        <tr>
+                            <td>Ana López</td>
+                            <td>ana@email.com</td>
+                            <td>0</td>
+                            <td class="d-flex gap-2">
+                                <a href="#manage-ana" class="btn btn-warning btn-sm">Gestionar</a>
+                                <a href="#block-ana" class="btn btn-secondary btn-sm">Bloquear</a>
+                                <a href="#eliminate-ana" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+
+                        <!-- User 3 -->
+                        <tr>
+                            <td>Carlos Ruiz</td>
+                            <td>carlos@email.com</td>
+                            <td>2</td>
+                            <td class="d-flex gap-2">
+                                <a href="#manage-carlos" class="btn btn-warning btn-sm">Gestionar</a>
+                                <a href="#block-carlos" class="btn btn-secondary btn-sm">Bloquear</a>
+                                <a href="#eliminate-carlos" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
             </div>
+        </section>
 
-            <div class="d-flex gap-2 mt-3">
-                <button class="btn btn-success">Guardar cambios</button>
-                <a href="#eliminate-juan" class="btn btn-danger">Eliminar usuario</a>
+        <!-- User Management Popups -->
+
+        <!-- Manage Juan -->
+        <div id="manage-juan" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+
+                <h3>Gestionar Usuario</h3>
+
+                <div class="text-center mb-4">
+                    <img src="images/fotoPerfilweb.webp" class="rounded-circle" width="120" height="120"
+                        alt="User photo">
+                </div>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" value="Juan Pérez" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="juan@email.com" required>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-success">Guardar cambios</button>
+                        <a href="#eliminate-juan" class="btn btn-danger">Eliminar usuario</a>
+                    </div>
+                </form>
+
+                <div class="d-flex gap-2 mt-3">
+                    <a href="#block-juan" class="btn btn-warning">Bloquear</a>
+                </div>
+
             </div>
-        </form>
-
-        <div class="d-flex gap-2 mt-3">
-            <a href="#block-juan" class="btn btn-warning">Bloquear</a>
-        </div>
-
-    </div>
-</div>
-
-<!-- Confirm Juan's block -->
-<div id="block-juan" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Bloquear usuario?</h3>
-        <p>¿Seguro que quieres bloquear a <strong>Juan Pérez</strong>?</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-warning">Sí, bloquear</button>
-            <a href="#manage-juan" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Confirm Juan's elimination -->
-<div id="eliminate-juan" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar usuario?</h3>
-        <p>Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#manage-juan" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Manage Ana -->
-<div id="manage-ana" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-
-        <h3>Gestionar Usuario</h3>
-
-        <div class="text-center mb-4">
-            <img src="images/fotoPerfilweb.webp"
-                 class="rounded-circle"
-                 width="120"
-                 height="120"
-                 alt="User photo">
         </div>
 
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" value="Ana López" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" value="ana@email.com" required>
-            </div>
-
-            <div class="d-flex gap-2 mt-3">
-                <button class="btn btn-success">Guardar cambios</button>
-                <a href="#eliminate-ana" class="btn btn-danger">Eliminar usuario</a>
-            </div>
-        </form>
-
-        <div class="d-flex gap-2 mt-3">
-            <a href="#block-ana" class="btn btn-warning">Bloquear</a>
-        </div>
-
-    </div>
-</div>
-
-<!-- Confirm Ana's block -->
-<div id="block-ana" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Bloquear usuario?</h3>
-        <p>¿Seguro que quieres bloquear a <strong>Ana López</strong>?</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-warning">Sí, bloquear</button>
-            <a href="#manage-ana" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Confirm Ana's elimination -->
-<div id="eliminate-ana" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar usuario?</h3>
-        <p>Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#manage-ana" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Manage Carlos -->
-<div id="manage-carlos" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-
-        <h3>Gestionar Usuario</h3>
-
-        <div class="text-center mb-4">
-            <img src="images/fotoPerfilweb.webp"
-                 class="rounded-circle"
-                 width="120"
-                 height="120"
-                 alt="User photo">
-        </div>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" value="Carlos Ruiz" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" value="carlos@email.com" required>
-            </div>
-
-            <div class="d-flex gap-2 mt-3">
-                <button class="btn btn-success">Guardar cambios</button>
-                <a href="#eliminate-carlos" class="btn btn-danger">Eliminar usuario</a>
-            </div>
-        </form>
-
-        <div class="d-flex gap-2 mt-3">
-            <a href="#block-carlos" class="btn btn-warning">Bloquear</a>
-        </div>
-
-    </div>
-</div>
-
-<!-- Confirm Carlos's block -->
-<div id="block-carlos" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Bloquear usuario?</h3>
-        <p>¿Seguro que quieres bloquear a <strong>Carlos Ruiz</strong>?</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-warning">Sí, bloquear</button>
-            <a href="#manage-carlos" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Confirm Carlos's elimination -->
-<div id="eliminate-carlos" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar usuario?</h3>
-        <p>Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#manage-carlos" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Create/Edit Facilities -->
-<section class="mb-5">
-    <h2 class="mb-3">Instalaciones</h2>
-
-    <!-- Main Buttons -->
-    <div class="d-flex gap-3 mb-4">
-        <a href="#creation-popup" class="btn btn-success">Crear nueva instalación</a>
-        <a href="#list-edit-popup" class="btn btn-warning">Editar instalaciones</a>
-    </div>
-</section>
-
-<!-- Create Installation Popup -->
-<div id="creation-popup" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Crear Instalación</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre *</label>
-                <input type="text" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Tipo *</label>
-                <select class="form-select" required>
-                    <option>Pista</option>
-                    <option>Piscina</option>
-                    <option>Sala</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descripción *</label>
-                <textarea class="form-control" rows="3" required></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Plazas disponibles *</label>
-                <input type="number" class="form-control" min="1" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto *</label>
-                <input type="file" class="form-control" required>
-            </div>
-
-            <button class="btn btn-success">Guardar</button>
-        </form>
-    </div>
-</div>
-
-<!-- Facilities List Popup -->
-<div id="list-edit-popup" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Selecciona una instalación</h3>
-
-        <div class="list-group">
-            <a href="#edit-tennis" class="list-group-item list-group-item-action">Pistas de Tenis</a>
-            <a href="#edit-padel" class="list-group-item list-group-item-action">Pista de Pádel</a>
-            <a href="#edit-room" class="list-group-item list-group-item-action">Sala de Entrenamiento</a>
-            <a href="#edit-soccer" class="list-group-item list-group-item-action">Campo de Fútbol</a>
-            <a href="#edit-basket" class="list-group-item list-group-item-action">Pista de Baloncesto</a>
-            <a href="#edit-swimming pool" class="list-group-item list-group-item-action">Piscina</a>
-        </div>
-    </div>
-</div>
-
-<!-- Editing Popups -->
-
-<!-- Tennis -->
-<div id="edit-tennis" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Editar: Pistas de Tenis</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre *</label>
-                <input type="text" class="form-control" value="Pistas de Tenis">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descripción *</label>
-                <textarea class="form-control" rows="4">Disponemos de pistas de todo tipo, tierra batida traída directamente de Roland Garros; pistas de hierba natural cuidada a diario por nuestros técnicos; y pistas duras para jugadores más ágiles. También disponemos de pistas cubiertas por si hace mal tiempo.</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Plazas disponibles *</label>
-                <input type="number" class="form-control" value="20" min="1">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto actual</label>
-                <input type="file" class="form-control">
-            </div>
-
-            <button class="btn btn-success">Guardar cambios</button>
-        </form>
-    </div>
-</div>
-
-<!-- Padel -->
-<div id="edit-padel" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Editar: Pista de Pádel</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre *</label>
-                <input type="text" class="form-control" value="Pista de Pádel">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descripción *</label>
-                <textarea class="form-control" rows="4">Pistas de pádel de última generación, con cerramientos de cristal templado y césped técnico de alto rendimiento. Diseñadas para ofrecer un juego fluido, seguro y adaptado tanto a entrenamientos como a competición.</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Plazas disponibles *</label>
-                <input type="number" class="form-control" value="4" min="1">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto actual</label>
-                <input type="file" class="form-control">
-            </div>
-
-            <button class="btn btn-success">Guardar cambios</button>
-        </form>
-    </div>
-</div>
-
-<!-- Room -->
-<div id="edit-room" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Editar: Sala de Entrenamiento</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre *</label>
-                <input type="text" class="form-control" value="Sala de Entrenamiento">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descripción *</label>
-                <textarea class="form-control" rows="4">Sala de entrenamiento equipada con maquinaria profesional para preparación física, fuerza y acondicionamiento funcional. Espacio amplio y versátil, supervisado por técnicos especializados para optimizar el rendimiento y prevenir lesiones.</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Plazas disponibles *</label>
-                <input type="number" class="form-control" value="15" min="1">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto actual</label>
-                <input type="file" class="form-control">
-            </div>
-
-            <button class="btn btn-success">Guardar cambios</button>
-        </form>
-    </div>
-</div>
-
-<!-- Soccer -->
-<div id="edit-soccer" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Editar: Campo de Fútbol</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre *</label>
-                <input type="text" class="form-control" value="Campo de Fútbol">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descripción *</label>
-                <textarea class="form-control" rows="4">Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado. Preparado para entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y natural.</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Plazas disponibles *</label>
-                <input type="number" class="form-control" value="22" min="1">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto actual</label>
-                <input type="file" class="form-control">
-            </div>
-
-            <button class="btn btn-success">Guardar cambios</button>
-        </form>
-    </div>
-</div>
-
-<!-- Basketball -->
-<div id="edit-basket" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Editar: Pista de Baloncesto</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre *</label>
-                <input type="text" class="form-control" value="Pista de Baloncesto">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descripción *</label>
-                <textarea class="form-control" rows="4">Pista de baloncesto completamente equipada, con pavimento deportivo y señalización oficial. Ideal para entrenamientos, tecnificación y actividades formativas.</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Plazas disponibles *</label>
-                <input type="number" class="form-control" value="10" min="1">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto actual</label>
-                <input type="file" class="form-control">
-            </div>
-
-            <button class="btn btn-success">Guardar cambios</button>
-        </form>
-    </div>
-</div>
-
-<!-- Swimming Pool -->
-<div id="edit-swimming pool" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Editar: Piscina</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre *</label>
-                <input type="text" class="form-control" value="Piscina">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descripción *</label>
-                <textarea class="form-control" rows="4">Piscina deportiva acondicionada para entrenamiento, recuperación y actividades acuáticas. Control de temperatura, calidad del agua y mantenimiento diario para garantizar comodidad y seguridad durante todo el año.</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Plazas disponibles *</label>
-                <input type="number" class="form-control" value="30" min="1">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Foto actual</label>
-                <input type="file" class="form-control">
-            </div>
-
-            <button class="btn btn-success">Guardar cambios</button>
-        </form>
-    </div>
-</div>
-
-<!-- Delete facilities -->
-<section class="mb-5">
-    <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
-
-    <div class="alert alert-warning">
-        ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
-    </div>
-
-    <div class="list-group">
-
-        <!-- Facility 1 -->
-        <div class="list-group-item d-flex justify-content-between align-items-start">
-            <div>
-                <h5 class="mb-1">Pistas de Tenis</h5>
-                <p class="mb-1">Disponemos de pistas de todo tipo, tierra batida traída directamente de Roland Garros; pistas de hierba natural cuidada a diario por nuestros técnicos; y pistas duras para jugadores más ágiles. También disponemos de pistas cubiertas por si hace mal tiempo.</p>
-            </div>
-            <a href="#eliminate-tennis" class="btn btn-danger btn-sm">Eliminar</a>
-        </div>
-
-        <!-- Facility 2 -->
-        <div class="list-group-item d-flex justify-content-between align-items-start">
-            <div>
-                <h5 class="mb-1">Pista de Pádel</h5>
-                <p class="mb-1">Pistas de pádel de última generación, con cerramientos de cristal templado y césped técnico de alto rendimiento. Diseñadas para ofrecer un juego fluido, seguro y adaptado tanto a entrenamientos como a competición.</p>
-            </div>
-            <a href="#eliminate-padel" class="btn btn-danger btn-sm">Eliminar</a>
-        </div>
-
-        <!-- Facility 3 -->
-        <div class="list-group-item d-flex justify-content-between align-items-start">
-            <div>
-                <h5 class="mb-1">Sala de Entrenamiento</h5>
-                <p class="mb-1">Sala de entrenamiento equipada con maquinaria profesional para preparación física, fuerza y acondicionamiento funcional. Espacio amplio y versátil, supervisado por técnicos especializados para optimizar el rendimiento y prevenir lesiones.</p>
-            </div>
-            <a href="#eliminate-room" class="btn btn-danger btn-sm">Eliminar</a>
-        </div>
-
-        <!-- Facility 4 -->
-        <div class="list-group-item d-flex justify-content-between align-items-start">
-            <div>
-                <h5 class="mb-1">Campo de Fútbol</h5>
-                <p class="mb-1">Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado. Preparado para entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y natural.</p>
-            </div>
-            <a href="#eliminate-soccer" class="btn btn-danger btn-sm">Eliminar</a>
-        </div>
-
-        <!-- Facility 5 -->
-        <div class="list-group-item d-flex justify-content-between align-items-start">
-            <div>
-                <h5 class="mb-1">Pista de Baloncesto</h5>
-                <p class="mb-1">Pista de baloncesto completamente equipada, con pavimento deportivo y señalización oficial. Ideal para entrenamientos, tecnificación y actividades formativas.</p>
-            </div>
-            <a href="#eliminate-basket" class="btn btn-danger btn-sm">Eliminar</a>
-        </div>
-
-        <!-- Facility 6 -->
-        <div class="list-group-item d-flex justify-content-between align-items-start">
-            <div>
-                <h5 class="mb-1">Piscina</h5>
-                <p class="mb-1">Piscina deportiva acondicionada para entrenamiento, recuperación y actividades acuáticas. Control de temperatura, calidad del agua y mantenimiento diario para garantizar comodidad y seguridad durante todo el año.</p>
-            </div>
-            <a href="#eliminate-swimming pool" class="btn btn-danger btn-sm">Eliminar</a>
-        </div>
-
-    </div>
-</section>
-
-<!-- Delete facilities confirmation popup -->
-
-<!-- Tennis -->
-<div id="eliminate-tennis" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar instalación?</h3>
-        <p>¿Seguro que quieres eliminar <strong>Pistas de Tenis</strong>? Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Padel -->
-<div id="eliminate-padel" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar instalación?</h3>
-        <p>¿Seguro que quieres eliminar <strong>Pista de Pádel</strong>? Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Room -->
-<div id="eliminate-room" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar instalación?</h3>
-        <p>¿Seguro que quieres eliminar <strong>Sala de Entrenamiento</strong>? Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Soccer -->
-<div id="eliminate-soccer" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar instalación?</h3>
-        <p>¿Seguro que quieres eliminar <strong>Campo de Fútbol</strong>? Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Basketball -->
-<div id="eliminate-basket" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar instalación?</h3>
-        <p>¿Seguro que quieres eliminar <strong>Pista de Baloncesto</strong>? Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Swimming Pool -->
-<div id="eliminate-swimming pool" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>¿Eliminar instalación?</h3>
-        <p>¿Seguro que quieres eliminar <strong>Piscina</strong>? Esta acción no se puede deshacer.</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-<!-- Footer-->
-    <footer class="footer py-4 footerBackground">
-        <div class="container-fluid">
-            <div class="row align-items-end">
-            <!-- Text on the left -->
-            <div class="col-lg-4 text-lg-start text-white">
-                &#127936; Olympo Academy 2026 &#128509;
-            </div>
-
-            <!-- Icons in the lower right corner -->
-            <div class="col-lg-4 ms-lg-auto d-flex align-items-end justify-content-end">
-                <div class="d-flex gap-3 text-white">
-                    Síganos
-                    <a class="btn btn-dark btn-social" href="https://x.com" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="btn btn-dark btn-social" href="https://www.facebook.com" aria-label="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="btn btn-dark btn-social" href="https://es.linkedin.com/?mcid=6968657504633266178&src=go-pa&trk=sem-ga_campid.18146679037_asid.140850334975_crid.694860685343_kw.linkedin_d.c_tid.kwd-148086543_n.g_mt.e_geo.9198450&cid=&gclsrc=aw.ds&gad_source=1&gad_campaignid=18146679037" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
+        <!-- Confirm Juan's block -->
+        <div id="block-juan" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Bloquear usuario?</h3>
+                <p>¿Seguro que quieres bloquear a <strong>Juan Pérez</strong>?</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-warning">Sí, bloquear</button>
+                    <a href="#manage-juan" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
+        </div>
+
+        <!-- Confirm Juan's elimination -->
+        <div id="eliminate-juan" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar usuario?</h3>
+                <p>Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#manage-juan" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Ana -->
+        <div id="manage-ana" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+
+                <h3>Gestionar Usuario</h3>
+
+                <div class="text-center mb-4">
+                    <img src="images/fotoPerfilweb.webp" class="rounded-circle" width="120" height="120"
+                        alt="User photo">
+                </div>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" value="Ana López" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="ana@email.com" required>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-success">Guardar cambios</button>
+                        <a href="#eliminate-ana" class="btn btn-danger">Eliminar usuario</a>
+                    </div>
+                </form>
+
+                <div class="d-flex gap-2 mt-3">
+                    <a href="#block-ana" class="btn btn-warning">Bloquear</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Confirm Ana's block -->
+        <div id="block-ana" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Bloquear usuario?</h3>
+                <p>¿Seguro que quieres bloquear a <strong>Ana López</strong>?</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-warning">Sí, bloquear</button>
+                    <a href="#manage-ana" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm Ana's elimination -->
+        <div id="eliminate-ana" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar usuario?</h3>
+                <p>Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#manage-ana" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Carlos -->
+        <div id="manage-carlos" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+
+                <h3>Gestionar Usuario</h3>
+
+                <div class="text-center mb-4">
+                    <img src="images/fotoPerfilweb.webp" class="rounded-circle" width="120" height="120"
+                        alt="User photo">
+                </div>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" value="Carlos Ruiz" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="carlos@email.com" required>
+                    </div>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-success">Guardar cambios</button>
+                        <a href="#eliminate-carlos" class="btn btn-danger">Eliminar usuario</a>
+                    </div>
+                </form>
+
+                <div class="d-flex gap-2 mt-3">
+                    <a href="#block-carlos" class="btn btn-warning">Bloquear</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Confirm Carlos's block -->
+        <div id="block-carlos" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Bloquear usuario?</h3>
+                <p>¿Seguro que quieres bloquear a <strong>Carlos Ruiz</strong>?</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-warning">Sí, bloquear</button>
+                    <a href="#manage-carlos" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm Carlos's elimination -->
+        <div id="eliminate-carlos" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar usuario?</h3>
+                <p>Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#manage-carlos" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create/Edit Facilities -->
+        <section class="mb-5">
+            <h2 class="mb-3">Instalaciones</h2>
+
+            <!-- Main Buttons -->
+            <div class="d-flex gap-3 mb-4">
+                <a href="#creation-popup" class="btn btn-success">Crear nueva instalación</a>
+                <a href="#list-edit-popup" class="btn btn-warning">Editar instalaciones</a>
+            </div>
+        </section>
+
+        <!-- Create Installation Popup -->
+        <div id="creation-popup" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Crear Instalación</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tipo *</label>
+                        <select class="form-select" required>
+                            <option>Pista</option>
+                            <option>Piscina</option>
+                            <option>Sala</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plazas disponibles *</label>
+                        <input type="number" class="form-control" min="1" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto *</label>
+                        <input type="file" class="form-control" required>
+                    </div>
+
+                    <button class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Facilities List Popup -->
+        <div id="list-edit-popup" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Selecciona una instalación</h3>
+
+                <div class="list-group">
+                    <a href="#edit-tennis" class="list-group-item list-group-item-action">Pistas de Tenis</a>
+                    <a href="#edit-padel" class="list-group-item list-group-item-action">Pista de Pádel</a>
+                    <a href="#edit-room" class="list-group-item list-group-item-action">Sala de Entrenamiento</a>
+                    <a href="#edit-soccer" class="list-group-item list-group-item-action">Campo de Fútbol</a>
+                    <a href="#edit-basket" class="list-group-item list-group-item-action">Pista de Baloncesto</a>
+                    <a href="#edit-swimming pool" class="list-group-item list-group-item-action">Piscina</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editing Popups -->
+
+        <!-- Tennis -->
+        <div id="edit-tennis" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar: Pistas de Tenis</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" value="Pistas de Tenis">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-control"
+                            rows="4">Disponemos de pistas de todo tipo, tierra batida traída directamente de Roland Garros; pistas de hierba natural cuidada a diario por nuestros técnicos; y pistas duras para jugadores más ágiles. También disponemos de pistas cubiertas por si hace mal tiempo.</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plazas disponibles *</label>
+                        <input type="number" class="form-control" value="20" min="1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto actual</label>
+                        <input type="file" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Padel -->
+        <div id="edit-padel" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar: Pista de Pádel</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" value="Pista de Pádel">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-control"
+                            rows="4">Pistas de pádel de última generación, con cerramientos de cristal templado y césped técnico de alto rendimiento. Diseñadas para ofrecer un juego fluido, seguro y adaptado tanto a entrenamientos como a competición.</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plazas disponibles *</label>
+                        <input type="number" class="form-control" value="4" min="1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto actual</label>
+                        <input type="file" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Room -->
+        <div id="edit-room" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar: Sala de Entrenamiento</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" value="Sala de Entrenamiento">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-control"
+                            rows="4">Sala de entrenamiento equipada con maquinaria profesional para preparación física, fuerza y acondicionamiento funcional. Espacio amplio y versátil, supervisado por técnicos especializados para optimizar el rendimiento y prevenir lesiones.</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plazas disponibles *</label>
+                        <input type="number" class="form-control" value="15" min="1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto actual</label>
+                        <input type="file" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Soccer -->
+        <div id="edit-soccer" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar: Campo de Fútbol</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" value="Campo de Fútbol">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-control"
+                            rows="4">Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado. Preparado para entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y natural.</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plazas disponibles *</label>
+                        <input type="number" class="form-control" value="22" min="1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto actual</label>
+                        <input type="file" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Basketball -->
+        <div id="edit-basket" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar: Pista de Baloncesto</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" value="Pista de Baloncesto">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-control"
+                            rows="4">Pista de baloncesto completamente equipada, con pavimento deportivo y señalización oficial. Ideal para entrenamientos, tecnificación y actividades formativas.</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plazas disponibles *</label>
+                        <input type="number" class="form-control" value="10" min="1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto actual</label>
+                        <input type="file" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Swimming Pool -->
+        <div id="edit-swimming pool" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar: Piscina</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" value="Piscina">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-control"
+                            rows="4">Piscina deportiva acondicionada para entrenamiento, recuperación y actividades acuáticas. Control de temperatura, calidad del agua y mantenimiento diario para garantizar comodidad y seguridad durante todo el año.</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Plazas disponibles *</label>
+                        <input type="number" class="form-control" value="30" min="1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto actual</label>
+                        <input type="file" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Delete facilities -->
+        <section class="mb-5">
+            <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
+
+            <div class="alert alert-warning">
+                ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
+            </div>
+
+            <div class="list-group">
+
+                <!-- Facility 1 -->
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">Pistas de Tenis</h5>
+                        <p class="mb-1">Disponemos de pistas de todo tipo, tierra batida traída directamente de Roland
+                            Garros; pistas de hierba natural cuidada a diario por nuestros técnicos; y pistas duras para
+                            jugadores más ágiles. También disponemos de pistas cubiertas por si hace mal tiempo.</p>
+                    </div>
+                    <a href="#eliminate-tennis" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+
+                <!-- Facility 2 -->
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">Pista de Pádel</h5>
+                        <p class="mb-1">Pistas de pádel de última generación, con cerramientos de cristal templado y
+                            césped técnico de alto rendimiento. Diseñadas para ofrecer un juego fluido, seguro y
+                            adaptado tanto a entrenamientos como a competición.</p>
+                    </div>
+                    <a href="#eliminate-padel" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+
+                <!-- Facility 3 -->
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">Sala de Entrenamiento</h5>
+                        <p class="mb-1">Sala de entrenamiento equipada con maquinaria profesional para preparación
+                            física, fuerza y acondicionamiento funcional. Espacio amplio y versátil, supervisado por
+                            técnicos especializados para optimizar el rendimiento y prevenir lesiones.</p>
+                    </div>
+                    <a href="#eliminate-room" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+
+                <!-- Facility 4 -->
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">Campo de Fútbol</h5>
+                        <p class="mb-1">Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado.
+                            Preparado para entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y
+                            natural.</p>
+                    </div>
+                    <a href="#eliminate-soccer" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+
+                <!-- Facility 5 -->
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">Pista de Baloncesto</h5>
+                        <p class="mb-1">Pista de baloncesto completamente equipada, con pavimento deportivo y
+                            señalización oficial. Ideal para entrenamientos, tecnificación y actividades formativas.</p>
+                    </div>
+                    <a href="#eliminate-basket" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+
+                <!-- Facility 6 -->
+                <div class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-1">Piscina</h5>
+                        <p class="mb-1">Piscina deportiva acondicionada para entrenamiento, recuperación y actividades
+                            acuáticas. Control de temperatura, calidad del agua y mantenimiento diario para garantizar
+                            comodidad y seguridad durante todo el año.</p>
+                    </div>
+                    <a href="#eliminate-swimming pool" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Delete facilities confirmation popup -->
+
+        <!-- Tennis -->
+        <div id="eliminate-tennis" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar instalación?</h3>
+                <p>¿Seguro que quieres eliminar <strong>Pistas de Tenis</strong>? Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Padel -->
+        <div id="eliminate-padel" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar instalación?</h3>
+                <p>¿Seguro que quieres eliminar <strong>Pista de Pádel</strong>? Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room -->
+        <div id="eliminate-room" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar instalación?</h3>
+                <p>¿Seguro que quieres eliminar <strong>Sala de Entrenamiento</strong>? Esta acción no se puede
+                    deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Soccer -->
+        <div id="eliminate-soccer" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar instalación?</h3>
+                <p>¿Seguro que quieres eliminar <strong>Campo de Fútbol</strong>? Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Basketball -->
+        <div id="eliminate-basket" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar instalación?</h3>
+                <p>¿Seguro que quieres eliminar <strong>Pista de Baloncesto</strong>? Esta acción no se puede deshacer.
+                </p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Swimming Pool -->
+        <div id="eliminate-swimming pool" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar instalación?</h3>
+                <p>¿Seguro que quieres eliminar <strong>Piscina</strong>? Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer-->
+    <footer class="footer py-4 footerBackground">
+        <div class="container">
+            <div class="footer-container row align-items-end">
+                <!-- Text on the left -->
+                <div class="col-lg-4 text-lg-start text-white">
+                    &#127936; Olympo Academy 2026 &#128509;
+                </div>
+
+                <!-- Icons in the lower right corner -->
+                <div class="col-lg-4 ms-lg-auto d-flex align-items-end justify-content-end">
+                    <div class="d-flex gap-3 text-white">
+                        Síganos
+                        <a class="btn btn-dark btn-social" href="https://x.com" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="btn btn-dark btn-social" href="https://www.facebook.com" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="btn btn-dark btn-social"
+                            href="https://es.linkedin.com/?mcid=6968657504633266178&src=go-pa&trk=sem-ga_campid.18146679037_asid.140850334975_crid.694860685343_kw.linkedin_d.c_tid.kwd-148086543_n.g_mt.e_geo.9198450&cid=&gclsrc=aw.ds&gad_source=1&gad_campaignid=18146679037"
+                            aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
 </body>
+
 </html>
