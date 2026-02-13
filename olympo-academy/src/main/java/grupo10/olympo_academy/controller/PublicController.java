@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PublicController {
 
-    @GetMapping("/reservas")
-    public String getReservas() {
-        return "reservas";
+    @GetMapping("/bookings")
+    public String getbookings() {
+        return "bookings";
     }
     @GetMapping("/index")
     public String getIndex () {
         return "index";
     }
-    @GetMapping("/reseñas")
-    public String getReseñas() {
-        return "reseñas";
+    @GetMapping("/reviews")
+    public String getreviews() {
+        return "reviews";
     }
    
     
