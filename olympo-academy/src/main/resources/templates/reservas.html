@@ -14,36 +14,12 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
  <link rel="stylesheet" href="styles.css" />
- <link href="ourStyles.css" rel="stylesheet" />
+ <link href="/ourStyles.css" rel="stylesheet" />
 </head>
 
 <body class="bg-light backgroundLogin">
     <div class="container main-container"></div>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="images/logoSinFondo.png" alt="..." />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="index.html#facilities">Instalaciones</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#equipo">Equipo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#dudas">Dudas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reseñas.html">Reseñas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="userProfile.html">Mi Perfil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin.html">Panel de Administración</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+     {{>header}}
 
     <!-- Masthead-->
     <header class="masthead ">
@@ -243,33 +219,7 @@
         </div>
     </section>
 
-    <!-- Footer-->
-    <footer class="footer py-4 footerBackground">
-        <div class="container">
-            <div class="footer-container row align-items-end">
-            <!-- Text on the left -->
-            <div class="col-lg-4 text-lg-start text-white">
-                &#127936; Olympo Academy 2026 &#128509;
-            </div>
-
-            <!-- Icons in the lower right corner -->
-            <div class="col-lg-4 ms-lg-auto d-flex align-items-end justify-content-end">
-                <div class="d-flex gap-3 text-white">
-                    Síganos
-                    <a class="btn btn-dark btn-social" href="https://x.com" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="btn btn-dark btn-social" href="https://www.facebook.com" aria-label="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="btn btn-dark btn-social" href="https://es.linkedin.com/?mcid=6968657504633266178&src=go-pa&trk=sem-ga_campid.18146679037_asid.140850334975_crid.694860685343_kw.linkedin_d.c_tid.kwd-148086543_n.g_mt.e_geo.9198450&cid=&gclsrc=aw.ds&gad_source=1&gad_campaignid=18146679037" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
-            </div>
-            </div>
-        </div>
-    </footer>
+    {{>footer}}
 
 
     <!-- General Popup for Bookings -->
