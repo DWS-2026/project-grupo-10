@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Práctica DWS · Olympo Academy · Mi Perfil</title>
     <link rel="icon" type="image/png" href="images/logoSinFondo.png" />
- <link rel="stylesheet" href="styles.css" />
- <link href="/ourStyles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="/ourStyles.css" rel="stylesheet" />
 </head>
 
 <body class="background2">
-     <!-- minimal navbar -->
+    <!-- minimal navbar -->
     <nav class="navbar navbar-light bg-transparent minimal-nav">
         <div class="container">
             <a class="navbar-brand" href="/index">
@@ -18,230 +19,227 @@
             </a>
         </div>
     </nav>
-    
-<div class="container py-5">
 
-    <!-- User's Data -->
-    <section id="user-profile" class="mb-5 text-center">
-        <h2 class="mb-4">Mi Perfil</h2>
+    <div class="container py-5">
 
-        <img src="images/fotoPerfilweb.webp"
-             alt="Profile photo"
-             class="rounded-circle mb-3"
-             width="150"
-             height="150">
+        <!-- User's Data -->
+        <section id="user-profile" class="mb-5 text-center">
+            <h2 class="mb-4">Mi Perfil</h2>
 
-        <p><strong>Nombre:</strong> Juan Pérez</p>
-        <p><strong>Email:</strong> juanperez@email.com</p>
+            <img src="images/fotoPerfilweb.webp" alt="Profile photo" class="rounded-circle mb-3" width="150"
+                height="150">
 
-        <div class="d-flex justify-content-center gap-2 mt-3">
-            <a href="#edit-data" class="btn btn-warning">Editar datos</a>
-            <a href="#change-pass" class="btn btn-secondary">Cambiar contraseña</a>
-            <a href="#change-photo" class="btn btn-info text-white">Cambiar foto</a>
-        </div>
-    </section>
+            <p><strong>Nombre:</strong> Juan Pérez</p>
+            <p><strong>Email:</strong> juanperez@email.com</p>
 
-    <!-- Future Bookings -->
-    <section id="future-bookings" class="mb-5">
-        <h2 class="mb-3">Reservas Futuras</h2>
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <a href="#edit-data" class="btn btn-warning">Editar datos</a>
+                <a href="#change-pass" class="btn btn-secondary">Cambiar contraseña</a>
+                <a href="#change-photo" class="btn btn-info text-white">Cambiar foto</a>
+            </div>
+        </section>
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Servicio</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>20/03/2026</td>
-                        <td>Clase de natacion</td>
-                        <td class="text-success fw-bold">Confirmada</td>
-                        <td>
-                        <a href="#change-profile" class="btn btn-danger btn-sm">Cancelar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+        <!-- Future Bookings -->
+        <section id="future-bookings" class="mb-5">
+            <h2 class="mb-3">Reservas Futuras</h2>
 
-    <!-- Past Bookings -->
-    <section id="past-bookings">
-        <h2 class="mb-3">Reservas Pasadas</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Servicio</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>20/03/2026</td>
+                            <td>Clase de natacion</td>
+                            <td class="text-success fw-bold">Confirmada</td>
+                            <td>
+                                <a href="#change-profile" class="btn btn-danger btn-sm">Cancelar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Servicio</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>10/01/2025</td>
-                        <td>Pista de tenis</td>
-                        <td class="text-dark fw-bold">Finalizada</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+        <!-- Past Bookings -->
+        <section id="past-bookings">
+            <h2 class="mb-3">Reservas Pasadas</h2>
 
-       <!-- My reviews-->
-<section id="my-reviews" class="mt-5">
-    <h2 class="mb-3">Mis reviews</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Servicio</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10/01/2025</td>
+                            <td>Pista de tenis</td>
+                            <td class="text-dark fw-bold">Finalizada</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-    <div class="mb-3">
+        <!-- My reviews-->
+        <section id="my-reviews" class="mt-5">
+            <h2 class="mb-3">Mis reviews</h2>
 
-        <!-- Review 1 -->
-        <div class="card mb-3 shadow-sm">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
-                    <a href="#delete-review" class="btn btn-danger btn-sm">Eliminar</a>
+            <div class="mb-3">
+
+                <!-- Review 1 -->
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
+                            <a href="#delete-review" class="btn btn-danger btn-sm">Eliminar</a>
+                        </div>
+                        <div class="mb-1">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                        </div>
+                        <p class="card-text mb-0">
+                            El gimnasio es increíble, los entrenadores son muy atentos y las instalaciones están siempre
+                            limpias.
+                        </p>
+                    </div>
                 </div>
-                <div class="mb-1">
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star-half-alt text-warning"></i>
+
+                <!-- Review 2-->
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
+                            <a href="#delete-review" class="btn btn-danger btn-sm">Eliminar</a>
+                        </div>
+                        <div class="mb-1">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                        </div>
+                        <p class="card-text mb-0">
+                            Buenas instalaciones, aunque me gustaría que ampliaran los horarios de algunas clases.
+                        </p>
+                    </div>
                 </div>
-                <p class="card-text mb-0">
-                    El gimnasio es increíble, los entrenadores son muy atentos y las instalaciones están siempre limpias.
-                </p>
+
+            </div>
+        </section>
+
+        <!--Profile Popups-->
+
+        <!-- Data Editing -->
+        <div id="edit-data" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar Datos</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" value="Juan Pérez">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="juanperez@email.com">
+                    </div>
+
+                    <button class="btn btn-success">Guardar cambios</button>
+                </form>
             </div>
         </div>
 
-        <!-- Review 2-->
-        <div class="card mb-3 shadow-sm">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h6 class="card-subtitle mb-1 text-muted">Juan Pérez</h6>
-                    <a href="#delete-review" class="btn btn-danger btn-sm">Eliminar</a>
+        <!-- Change password -->
+        <div id="change-pass" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Cambiar Contraseña</h3>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña actual</label>
+                        <input type="password" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Nueva contraseña</label>
+                        <input type="password" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">Actualizar contraseña</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cancel reservation -->
+        <div id="change-profile" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Cancelar Reserva</h3>
+                <p>¿Seguro que quieres cancelar la reserva del <strong>20/03/2026</strong>?</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, cancelar</button>
+                    <a href="#" class="btn btn-secondary">Volver</a>
                 </div>
-                <div class="mb-1">
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="fas fa-star text-warning"></i>
-                    <i class="far fa-star text-warning"></i>
-                    <i class="far fa-star text-warning"></i>
+            </div>
+        </div>
+
+        <!-- Delete review  -->
+        <div id="delete-review" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Eliminar Reseña</h3>
+                <p>¿Seguro que quieres eliminar esta reseña?</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-danger">Sí, eliminar</button>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
                 </div>
-                <p class="card-text mb-0">
-                    Buenas instalaciones, aunque me gustaría que ampliaran los horarios de algunas clases.
-                </p>
             </div>
         </div>
 
-    </div>
-</section>
 
-<!--Profile Popups-->
+        <!-- Change Profile Picture -->
+        <div id="change-photo" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
 
-<!-- Data Editing -->
-<div id="edit-data" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Editar Datos</h3>
+                <h3>Cambiar Foto de Perfil</h3>
 
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" value="Juan Pérez">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Foto actual</label><br>
+                        <img src="images/fotoPerfilweb.webp" width="120" height="120" class="rounded-circle mb-3">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Subir nueva foto</label>
+                        <input type="file" class="form-control" required>
+                    </div>
+
+                    <button class="btn btn-success mt-2">Guardar nueva foto</button>
+                </form>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" value="juanperez@email.com">
-            </div>
-
-            <button class="btn btn-success">Guardar cambios</button>
-        </form>
-    </div>
-</div>
-
-<!-- Change password -->
-<div id="change-pass" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Cambiar Contraseña</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Contraseña actual</label>
-                <input type="password" class="form-control">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Nueva contraseña</label>
-                <input type="password" class="form-control">
-            </div>
-
-            <button class="btn btn-success">Actualizar contraseña</button>
-        </form>
-    </div>
-</div>
-
-<!-- Cancel reservation -->
-<div id="change-profile" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Cancelar Reserva</h3>
-        <p>¿Seguro que quieres cancelar la reserva del <strong>20/03/2026</strong>?</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, cancelar</button>
-            <a href="#" class="btn btn-secondary">Volver</a>
         </div>
     </div>
-</div>
-
-<!-- Delete review  -->
-<div id="delete-review" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-        <h3>Eliminar Reseña</h3>
-        <p>¿Seguro que quieres eliminar esta reseña?</p>
-
-        <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-danger">Sí, eliminar</button>
-            <a href="#" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </div>
-</div>
-
-
-<!-- Change Profile Picture -->
-<div id="change-photo" class="popup">
-    <div class="popup-content">
-        <a href="#" class="close">&times;</a>
-
-        <h3>Cambiar Foto de Perfil</h3>
-
-        <form>
-            <div class="mb-3">
-                <label class="form-label">Foto actual</label><br>
-                <img src="images/fotoPerfilweb.webp" 
-                     width="120" 
-                     height="120" 
-                     class="rounded-circle mb-3">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Subir nueva foto</label>
-                <input type="file" class="form-control" required>
-            </div>
-
-            <button class="btn btn-success mt-2">Guardar nueva foto</button>
-        </form>
-    </div>
-</div>
-
+    {{>footer}}
 </body>
+
 </html>
