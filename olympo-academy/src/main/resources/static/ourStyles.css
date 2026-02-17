@@ -390,3 +390,65 @@
     }
 
 }
+
+/* ===== EROR PAGE ===== */
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.error-content {
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Centered logo and size */
+.error-logo {
+    margin-bottom: 2rem;
+}
+
+.error-logo img {
+    height: 8rem;  
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.error-logo img:hover {
+    transform: scale(1.05);
+}
+
+/* error text "title" */
+.error-message h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #030303;  
+    margin-bottom: 0.5rem;
+    font-family: 'Roboto', sans-serif;
+}
+/* error text "subtitle" */
+.error-message p {
+    font-size: 1.1rem;
+    color: #606060;  
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
+}
+/* phones */
+@media (max-width: 480px) {
+    .error-logo img {
+        height: 6rem;
+    }
+    
+    .error-message h1 {
+        font-size: 1.5rem;
+    }
+    
+    .error-message p {
+        font-size: 1rem;
+    }
+}
