@@ -9,17 +9,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 
 @Entity
-
 public class Facility {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;         
 
     private String name;      
     private String description; 
 
-    @Lob
-    private Blob image; 
+    //@Lob
+    //private Blob image; 
 
     public Facility() {}
 
@@ -47,12 +46,12 @@ public class Facility {
         this.description = description;
     }
 
-    public Blob getImage() {
-        return image;
-    }
+    //public Blob getImage() {
+   //     return image;
+   // }
 
-    public void setImage(Blob image) {
-        this.image = image;
-    }    
+    //public void setImage(Blob image) {
+    //    this.image = image;
+    //}    
 
 }

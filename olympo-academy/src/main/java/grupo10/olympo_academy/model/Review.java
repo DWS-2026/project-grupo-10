@@ -16,8 +16,8 @@ public class Review {
     private int rating;       
     private String comment;   
     private String date;      
-    private User user;       
-    private Facility facility; 
+    //private User user;       
+    //private Facility facility; 
 
     public Review () {}
 
@@ -52,8 +52,8 @@ public class Review {
     public void setDate(String date) {
         this.date = date;
     }
-
-    public User getUser() {
+    
+    /* public User getUser() {
         return user;
     }
 
@@ -67,6 +67,6 @@ public class Review {
 
     public void setFacility(Facility facility) {
         this.facility = facility;
-    }
+    } */
     
 }

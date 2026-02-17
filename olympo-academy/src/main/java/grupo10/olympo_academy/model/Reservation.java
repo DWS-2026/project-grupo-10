@@ -21,8 +21,8 @@ public class Reservation {
     private boolean material;
     private String difficulty;
 
-    private User user;         
-    private Facility facility; 
+/*     private User user;         
+    private Facility facility;  */
 
     public Reservation() {}
 
@@ -74,7 +74,7 @@ public class Reservation {
         this.difficulty = difficulty;
     }
 
-    public User getUser() {
+ /*    public User getUser() {
         return user;
     }
 
@@ -88,6 +88,6 @@ public class Reservation {
 
     public void setFacility(Facility facility) {
         this.facility = facility;
-    }
+    } */
 
 }
