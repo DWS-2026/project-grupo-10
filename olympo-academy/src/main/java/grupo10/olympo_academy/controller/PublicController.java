@@ -17,8 +17,12 @@ public class PublicController {
         return "index";
     }
     @GetMapping("/reviews")
-    public String getreviews() {
+    public String getReviews() {
         return "reviews";
+    }
+    @GetMapping("/error")
+    public String getError() {
+        return "error";
     }
    
     
