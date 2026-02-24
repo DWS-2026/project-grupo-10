@@ -17,8 +17,8 @@ public class Facility {
     private String name;      
     private String description; 
 
-    //@Lob
-    //private Blob image; 
+    @Lob
+    private Blob image; 
 
     public Facility() {}
 
@@ -46,12 +46,12 @@ public class Facility {
         this.description = description;
     }
 
-    //public Blob getImage() {
-   //     return image;
-   // }
+    public Blob getImage() {
+        return image;
+    }
 
-    //public void setImage(Blob image) {
-    //    this.image = image;
-    //}    
+    public void setImage(Blob image) {
+        this.image = image;
+    }    
 
 }

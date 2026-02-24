@@ -20,9 +20,12 @@ public class Reservation {
     private int duration;  
     private boolean material;
     private String difficulty;
+    
+    @OneToOne
+    private User user; 
 
-/*     private User user;         
-    private Facility facility;  */
+    @OneToOne
+    private Facility facility;
 
     public Reservation() {}
 
