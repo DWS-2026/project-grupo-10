@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 
@@ -20,9 +21,12 @@ public class Reservation {
     private int duration;  
     private boolean material;
     private String difficulty;
+    
+    @OneToOne
+    private User user; 
 
-/*     private User user;         
-    private Facility facility;  */
+    @OneToOne
+    private Facility facility;
 
     public Reservation() {}
 
