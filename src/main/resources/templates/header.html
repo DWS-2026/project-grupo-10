@@ -1,26 +1,65 @@
 <!-- Navigation-->
-<header> 
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href = "/index"><img src="/images/logoSinFondo.png" alt="..."/></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars ms-1"></i>
+        <div class="container d-flex align-items-center">
+
+            <!-- icon -->
+            <a class="navbar-brand" href="/index">
+                <img src="/images/logoSinFondo.png" alt="..." />
+            </a>
+
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fas fa-bars ms-1"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+
+            <div class="collapse navbar-collapse flex-grow-1" id="navbarResponsive">
+
+                <ul class="navbar-nav mx-auto text-uppercase py-4 py-lg-0">
                     <li class="nav-item"><a class="nav-link" href="/index#facilities">Instalaciones</a></li>
                     <li class="nav-item"><a class="nav-link" href="/index#team">Equipo</a></li>
                     <li class="nav-item"><a class="nav-link" href="/index#doubts">Dudas</a></li>
                     <li class="nav-item"><a class="nav-link" href="/reviews">Reseñas</a></li>
                     <li class="nav-item"><a class="nav-link" href="/bookings">Reservas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/userProfile">Mi Perfil</a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin">Panel de Administración</a></li>
-
                 </ul>
+
+             
+                <div class="d-none d-lg-flex align-items-center ms-3">
+                    <div class="user-menu-icon" id="userMenuBtn" role="button" tabindex="0">
+                        <img src="/images/fotoPerfilweb.webp" alt="user menu">
+                    </div>
+                </div>
+
+               
+                <div class="d-lg-none mt-2 w-100">
+                    <button class="btn btn-outline-light w-100" id="userMenuBtnMobile">
+                        Mi cuenta
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 </header>
+
+<!-- Lateral Panel -->
+<div id="userSidePanel" class="side-panel">
+    <div class="panel-header">
+        <h2>Accesos</h2>
+        <span id="closePanelBtn" class="close-btn">✕</span>
+    </div>
+
+    
+<a href="/login" class="login-btn" style="text-decoration:none; display:block;">
+    Iniciar sesión o crear cuenta →
+</a>
+
+
+    <div class="panel-links">
+        <a href="/purchases">Mis compras →</a>
+        <a href="/coupons">Cupones y promociones →</a>
+        <a href="/userProfile">Mi cuenta →</a>
+        <a href="/plus">Olympo Plus →</a>
+    </div>
+</div>

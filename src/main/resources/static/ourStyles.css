@@ -452,3 +452,90 @@
         font-size: 1rem;
     }
 }
+
+/* new user profile icon in navigation bar */
+
+.user-menu-icon img {
+    width: 28px;
+    cursor: pointer;
+}
+
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100vh;
+    background: #ffffff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    transition: right 0.3s ease;
+    padding: 20px;
+    z-index: 2000;
+}
+
+.side-panel.open {
+    right: 0;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.login-btn {
+    margin-top: 20px;
+    width: 100%;
+    background: black;
+    color: white;
+    padding: 12px;
+    border-radius: 100px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.panel-links a {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+}
+
+.user-menu-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+#mainNav .navbar-collapse {
+    min-width: 0;
+}
+
+#mainNav .navbar-nav {
+    gap: 1.25rem; /* space between items */
+}
+
+
+.navbar-brand img {
+    max-height: 40px;
+    height: auto;
+}
+
+.user-menu-icon img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
