@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 
@@ -18,10 +18,10 @@ public class Review {
     private String comment;   
     private String date;      
     
-    @OneToOne
+    @ManyToOne
     private User user;    
 
-    @OneToOne
+    @ManyToOne
     private Facility facility; 
 
     public Review () {}
