@@ -1,7 +1,7 @@
 <!-- Footer-->
-    <footer class="footer py-4 footerBackground">
-        <div class="container">
-            <div class="footer-container row align-items-end">
+<footer class="footer py-4 footerBackground">
+    <div class="container">
+        <div class="footer-container row align-items-end">
             <!-- Text on the left -->
             <div class="col-lg-4 text-lg-start text-white">
                 &#127936; Olympo Academy 2026 &#128509;
@@ -17,11 +17,22 @@
                     <a class="btn btn-dark btn-social" href="https://www.facebook.com" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a class="btn btn-dark btn-social" href="https://es.linkedin.com/?mcid=6968657504633266178&src=go-pa&trk=sem-ga_campid.18146679037_asid.140850334975_crid.694860685343_kw.linkedin_d.c_tid.kwd-148086543_n.g_mt.e_geo.9198450&cid=&gclsrc=aw.ds&gad_source=1&gad_campaignid=18146679037" aria-label="LinkedIn">
+                    <a class="btn btn-dark btn-social"
+                        href="https://es.linkedin.com/?mcid=6968657504633266178&src=go-pa&trk=sem-ga_campid.18146679037_asid.140850334975_crid.694860685343_kw.linkedin_d.c_tid.kwd-148086543_n.g_mt.e_geo.9198450&cid=&gclsrc=aw.ds&gad_source=1&gad_campaignid=18146679037"
+                        aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                 </div>
             </div>
-            </div>
         </div>
-    </footer>
+    </div>
+</footer>
+<script>
+    document.getElementById("userMenuBtn").addEventListener("click", function () {
+        document.getElementById("userSidePanel").classList.add("open");
+    });
+
+    document.getElementById("closePanelBtn").addEventListener("click", function () {
+        document.getElementById("userSidePanel").classList.remove("open");
+    });
+</script>
