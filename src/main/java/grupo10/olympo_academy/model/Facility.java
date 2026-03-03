@@ -1,13 +1,10 @@
 package grupo10.olympo_academy.model;
 
-
-import java.sql.Blob;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Facility {
@@ -18,8 +15,8 @@ public class Facility {
     private String name;      
     private String description; 
 
-    @Lob
-    private Blob image; 
+    @OneToOne
+    private Image facilityImage; 
 
     public Facility() {}
 
@@ -47,12 +44,12 @@ public class Facility {
         this.description = description;
     }
 
-    public Blob getImage() {
-        return image;
+    public Image getFacilityImage() {
+        return facilityImage;
     }
 
-    public void setImage(Blob image) {
-        this.image = image;
+    public void setFacilityImage(Image facilityImage) {
+        this.facilityImage = facilityImage;
     }    
 
 }

@@ -1,6 +1,5 @@
 package grupo10.olympo_academy.model;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,8 +26,8 @@ public class User {
     private String password;
     private String role;
 
-    @Lob
-    private Blob profileImage;
+    @OneToOne
+    private Image profileImage;
 
     @OneToMany(cascade = CascadeType.ALL)
 	private List<Reservation> reservations = new ArrayList<>();
@@ -70,11 +69,11 @@ public class User {
         this.role = role;
     }
 
-    public Blob getProfileImage() {
+    public Image getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(Blob profileImage) {
+    public void setProfileImage(Image profileImage) {
         this.profileImage = profileImage;
     }
 
