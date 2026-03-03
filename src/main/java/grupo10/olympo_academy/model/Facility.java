@@ -1,5 +1,6 @@
 package grupo10.olympo_academy.model;
 
+
 import java.sql.Blob;
 
 import jakarta.persistence.Entity;

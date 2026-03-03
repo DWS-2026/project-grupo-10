@@ -1,4 +1,4 @@
-package grupo10.olympo_academy.repositories;
+package grupo10.olympo_academy.repository;
 
 import java.util.List;
 
