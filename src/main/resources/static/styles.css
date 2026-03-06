@@ -12691,7 +12691,9 @@ p {
 }
 
 #mainNav .navbar-brand img {
-  height: 2rem;
+    height: 6rem !important;
+  width: auto !important;  /* Mantiene la proporción */
+  max-height: none !important;  /* Elimina límites */
 }
 
 #mainNav .navbar-nav .nav-item .nav-link {
@@ -12721,7 +12723,7 @@ p {
   }
 
   #mainNav .navbar-brand img {
-    height: 5.5rem;
+     height: 6rem !important;
     transition: height 0.3s ease-in-out;
   }
 
@@ -12732,7 +12734,7 @@ p {
   }
 
   #mainNav.navbar-shrink .navbar-brand {
-    font-size: 1.25em;
+    font-size: 1.5em;
   }
 
   #mainNav.navbar-shrink .navbar-brand svg,

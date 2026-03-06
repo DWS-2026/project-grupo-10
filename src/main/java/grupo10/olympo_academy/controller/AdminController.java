@@ -10,4 +10,5 @@ public class AdminController {
     public String getAdmin() {
         return "admin";
     }
+
 }

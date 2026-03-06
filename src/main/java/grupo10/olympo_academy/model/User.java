@@ -26,6 +26,7 @@ public class User {
     private int phone;
     private String password;
     private String role;
+    private String username;
 
     @OneToOne
     private Image profileImage;
@@ -44,6 +45,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserName() {
+        return username;
+    }
+
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
