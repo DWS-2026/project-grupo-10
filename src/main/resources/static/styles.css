@@ -12751,7 +12751,7 @@ p {
 
 /* ----- MASTHEAD FULL SCREEN----- */
 header.masthead {
-  background-image: url("/images/portada.jpg");
+  background-image: url("/assets/images/portada.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
