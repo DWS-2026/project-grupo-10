@@ -1,5 +1,5 @@
 .backgroundLogin {
-    background-image: url("./images/portada.jpg");
+    background-image: url("/assets/images/portada.jpg");
     background-size: cover;
     /* It makes the image cover the entire screen */
     background-repeat: no-repeat;

@@ -223,7 +223,7 @@
 
                 <h3>Cambiar Foto de Perfil</h3>
 
-                <form>
+                <form  method = post enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Foto actual</label><br>
                         <img src="images/fotoPerfilweb.webp" width="120" height="120" class="rounded-circle mb-3">
@@ -231,7 +231,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Subir nueva foto</label>
-                        <input type="file" class="form-control" required>
+                        <input type="file" name="profileImge" class="form-control" required>
                     </div>
 
                     <button class="btn btn-success mt-2">Guardar nueva foto</button>
