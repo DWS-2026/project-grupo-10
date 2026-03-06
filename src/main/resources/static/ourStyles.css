@@ -456,7 +456,7 @@
 /* new user profile icon in navigation bar */
 
 .user-menu-icon img {
-    width: 28px;
+    width: 5rem;
     cursor: pointer;
 }
 
@@ -533,8 +533,8 @@
 }
 
 .user-menu-icon img {
-    width: 30px;
-    height: 30px;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
