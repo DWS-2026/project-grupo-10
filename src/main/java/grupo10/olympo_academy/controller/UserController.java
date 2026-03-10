@@ -1,21 +1,27 @@
 package grupo10.olympo_academy.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.services.UserService;
+
 @Controller
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+    
     @GetMapping("/login")
     public String getLogin() {
         return "login";
     }
     
-    
-    @PostMapping("/login") // <-- processes the form submission
+    @PostMapping("/login") 
     public String postLogin(
             @RequestParam String user,
             @RequestParam String password,
@@ -31,14 +37,35 @@ public class UserController {
             return "login";
         }
     }
-    
-    @GetMapping("/register")
-    public String getRegister() {
-        return "register";
-    }
 
     @GetMapping("/userProfile")
     public String getUserProfile() {
         return "userProfile";
     }
+
+    // Mostrar página de registro
+    @GetMapping("/register")
+    public String showRegister(){
+        return "register";
+    }
+
+    // Procesar registro
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String fullName,
+                               @RequestParam String email,
+                               @RequestParam String password){
+
+        User user = new User();
+
+        user.setName(fullName);
+        user.setEmail(email);
+        user.setUsername(email);
+        user.setPassword(password);
+
+        userService.registerUser(user);
+
+        return "redirect:/login";
+    }
+
 }
+

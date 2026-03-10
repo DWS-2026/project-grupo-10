@@ -20,7 +20,7 @@ public class ReviewController {
     public String listReviews(Model model) {
         model.addAttribute("reviews", reviewService.getAllReviews());
         model.addAttribute("review", new Review());
-        return "reviews"; // reviews.html
+        return "reviews"; 
     }
 
     // Guardar reseña
