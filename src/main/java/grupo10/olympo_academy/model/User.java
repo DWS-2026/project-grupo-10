@@ -23,6 +23,7 @@ public class User {
     private Long id;
     private String name;
     private String email;
+    private int phone;
     private String password;
     private String role;
     private String username;
@@ -92,6 +93,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 }
 

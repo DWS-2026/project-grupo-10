@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Práctica DWS · Olympo Academy · Register</title>
   <link rel="icon" type="image/png" href="images/logoSinFondo.png" />
-  <!-- Stylesheet Agency/Bootstrap (tu archivo) -->
- <link rel="stylesheet" href="styles.css" />
- <link href="/ourStyles.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link href="/ourStyles.css" rel="stylesheet" />
 </head>
+
 <body class="bg-light backgroundLogin">
 
   <main class="container py-5">
@@ -18,7 +19,7 @@
           <div class="card-body p-4 p-md-5">
             <h1 class="h2 text-center mb-2">Formulario de inscripción</h1>
             <p class="text-muted text-center mb-4">
-              Al crear una cuenta, serás socio y tendrás ventajas como inscribirte a nuestras clases de natacion!!!
+              Al crear una cuenta, serás socio y tendrás ventajas como inscribirte a nuestras clases de natación!!!
             </p>
             
             <form action="/register" method="post"> 
@@ -27,7 +28,7 @@
                 <input
                   type="text"
                   id="fullName"
-                  name="fullName"
+                  name="name"
                   class="form-control"
                   placeholder="Juan Velázquez"
                   autocomplete="name"
@@ -36,7 +37,7 @@
                 />
                 <div class="form-text">Introduce tu nombre y apellidos</div>
               </div>
-              <!-- Email-->
+
               <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input
@@ -50,9 +51,9 @@
                   required
                 />
               </div>
-              <!-- Phone Number -->
+
               <div class="mb-3">
-                <label for="phone" class="form-label">Número de Teléfono(opcional)</label>
+                <label for="phone" class="form-label">Número de Teléfono (opcional)</label>
                 <input
                   type="tel"
                   id="phone"
@@ -61,7 +62,8 @@
                   placeholder="+34 621 234 456"
                   autocomplete="tel"
                   maxlength="15"
-                  pattern="^[0-9+\s()-]{6,20}$" />  <!-- this is a regular expression (regex)-->
+                  pattern="^[0-9+\s()-]{6,20}$"
+                />
               </div>
 
               <div class="mb-3">
@@ -78,7 +80,7 @@
                 />
               </div>
 
-               <div class="mb-3">
+              <div class="mb-3">
                 <label for="password2" class="form-label">Repite la contraseña</label>
                 <input
                   type="password"
@@ -90,21 +92,24 @@
                   maxlength="20"
                   required
                 />
-                <div class="form-text">Debe coincidir con la anterior </div>
+                <div class="form-text">Debe coincidir con la anterior</div>
               </div>
-
 
               <div class="d-grid">
-                <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg"> Completar Registro </button> <!-- we use <button> instead of <a> because we want to send data-->
-              </div>
+                <button type="submit" class="btn btn-primary btn-lg">
+                  Completar Registro
+                </button>
               </div>
 
-            <hr class="my-4" />
-                <p class="text-center mb-0">
+              <hr class="my-4" />
+
+              <p class="text-center mb-0">
                 ¿Ya tienes cuenta?
                 <a class="btn btn-link p-0 align-baseline" href="/login">Inicia sesión</a>
-                </p>
+              </p>
+
+            </form>
+
           </div>
         </div>
       </div>
@@ -113,4 +118,3 @@
 
 </body>
 </html>
-``
