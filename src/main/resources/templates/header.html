@@ -9,8 +9,8 @@
             </a>
 
             <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
                 Menu <i class="fas fa-bars ms-1"></i>
             </button>
 
@@ -25,15 +25,15 @@
                     <li class="nav-item"><a class="nav-link" href="/admin">Panel de Administración</a></li>
                 </ul>
 
-             
+
                 <div class="d-none d-lg-flex align-items-center ms-3">
                     <div class="user-menu-icon" id="userMenuBtn" role="button" tabindex="0">
                         <img src="/assets/images/fotoPerfilweb.webp" alt="user menu">
                     </div>
                 </div>
 
-                
-               
+
+
                 <div class="d-lg-none mt-2 w-100">
                     <button class="btn btn-outline-light w-100" id="userMenuBtnMobile">
                         Mi cuenta
@@ -51,16 +51,19 @@
         <span id="closePanelBtn" class="close-btn">✕</span>
     </div>
 
-    
-<a href="/login" class="login-btn" style="text-decoration:none; display:block;">
-    Iniciar sesión o crear cuenta →
-</a>
+    {{^user}}
+    <a href="/login" class="login-btn" style="text-decoration:none; display:block;">
+        Iniciar sesión o crear cuenta →
+    </a>
+    {{/user}}
 
 
     <div class="panel-links">
         <a href="/purchases">Mis compras →</a>
-        <a href="/coupons">Cupones y promociones →</a>
         <a href="/userProfile">Mi cuenta →</a>
         <a href="/plus">Olympo Plus →</a>
+        {{#user}}
+        <a href="/logout">Cerrar sesión →</a>
+        {{/user}}
     </div>
 </div>

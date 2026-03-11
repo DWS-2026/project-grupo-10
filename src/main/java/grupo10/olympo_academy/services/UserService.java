@@ -13,32 +13,38 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findByUsername(String username){
+    public User login(String email, String rawPassword) {
 
-        return userRepository.findByUsername(username);
+        Optional<User> opt = userRepository.findByEmail(email);
 
-    }
+        if (opt.isEmpty()) {
+            return null;
+        }
 
-    public Optional<User> findByEmail(String email){
+        User user = opt.get();
+        // esto cambiará cuando usemos spring-security y el password se guarde hasheado
+        if (user.getPassword().equals(rawPassword)) {
+            return user;
+        }
 
-        return userRepository.findByEmail(email);
+        return null;
 
     }
 
     public User register(User user) throws Exception {
 
-        // Comprobar si el email ya existe
+        // check if email is already registered
         Optional<User> existing = userRepository.findByEmail(user.getEmail());
         if (existing.isPresent()) {
             throw new Exception("El email ya está registrado");
         }
 
-        // Asignar rol básico por defecto
+        // set default role if not provided
         if (user.getRole() == null || user.getRole().isEmpty()) {
             user.setRole("USER");
         }
 
         return userRepository.save(user);
     }
-        
+
 }

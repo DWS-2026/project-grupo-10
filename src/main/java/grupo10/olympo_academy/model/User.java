@@ -23,7 +23,7 @@ public class User {
     private Long id;
     private String name;
     private String email;
-    private int phone;
+    private String phone;
     private String password;
     private String role;
     private String username;
@@ -95,11 +95,11 @@ public class User {
         this.id = id;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 }

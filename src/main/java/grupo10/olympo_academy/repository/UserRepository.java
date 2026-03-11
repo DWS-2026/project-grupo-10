@@ -9,8 +9,5 @@ import grupo10.olympo_academy.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
-
-    // Necesario para comprobar si un email ya existe
     Optional<User> findByEmail(String email);
 }
