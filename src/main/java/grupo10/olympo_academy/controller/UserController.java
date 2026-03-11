@@ -3,6 +3,7 @@ package grupo10.olympo_academy.controller;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.UserService;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Redirect root to index
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/index";
+    }
+
+    /////////////////////////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////
     @GetMapping("/login")
     public String getLogin() {
         return "login";
@@ -37,16 +45,28 @@ public class UserController {
 
         // keep user session
         session.setAttribute("usuarioLogeado", user);
+
+        // check if there's a redirect URL saved in session
+        String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
+        if (redirectUrl != null) {
+            session.removeAttribute("redirectAfterLogin"); // clean up session
+            return "redirect:" + redirectUrl;
+        }
+
         return "redirect:/userProfile";
     }
 
     @GetMapping("/userProfile")
-    public String getProfile(HttpSession session) {
+    public String getProfile(HttpSession session, Model model) {
 
+        User user = (User) session.getAttribute("usuarioLogeado");
+        
         // check if user is logged in
-        if (session.getAttribute("usuarioLogeado") == null) {
+        if (user == null) {
             return "redirect:/login";
         }
+        
+        model.addAttribute("user", user);
         return "userProfile";
     }
 
@@ -58,6 +78,8 @@ public class UserController {
         return "redirect:/index";
     }
 
+    /////////////////////////////////////////////////////////////////// REGISTER //////////////////////////////////////////////////////
+    
     @GetMapping("/register")
     public String showRegister() {
         return "register";
@@ -81,9 +103,6 @@ public class UserController {
             return "register";
         }
     }
-    // Redirect root to index
-    @GetMapping("/")
-    public String root() {
-        return "redirect:/index";
-    }
 }
+    
+   

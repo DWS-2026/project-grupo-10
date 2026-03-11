@@ -40,10 +40,6 @@
     padding-top: 100px;
 }
 
-#reviews {
-    padding-top: 80px;
-}
-
 .footerBackground {
     background: #222;
 }
@@ -539,3 +535,22 @@
     object-fit: cover;
     cursor: pointer;
 }
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  margin-top: 80px; 
+}
+
+
+
