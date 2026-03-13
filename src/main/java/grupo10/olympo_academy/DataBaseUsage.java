@@ -1,5 +1,6 @@
 package grupo10.olympo_academy;
 
+import grupo10.olympo_academy.repository.ImageRepository;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,7 @@ import org.springframework.core.io.Resource;
 
 @Component
 public class DataBaseUsage implements CommandLineRunner {
-
-    private final FacilityRepository facilityRepository;
+    
     @Autowired
     private FacilityService facilityService;
     @Autowired
@@ -29,10 +29,16 @@ public class DataBaseUsage implements CommandLineRunner {
     @Autowired
     private ClassesRepository classesRepository;
     @Autowired
+    private FacilityRepository facilityRepository;
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @Autowired
     private ImageService imageService;
 
-    DataBaseUsage(FacilityRepository facilityRepository) {
+    DataBaseUsage(FacilityRepository facilityRepository, ImageRepository imageRepository) {
         this.facilityRepository = facilityRepository;
+        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -44,6 +50,10 @@ public class DataBaseUsage implements CommandLineRunner {
         }
         if(facilityRepository.count() > 0) {
             System.out.println("La base de datos ya contiene datos. No se cargaron instalaciones.");
+            return;
+        }
+        if (imageRepository.count() > 0) {
+            System.out.println("La base de datos ya contiene datos. No se cargaron imágenes.");
             return;
         }
 
