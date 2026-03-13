@@ -70,7 +70,7 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         // Redirect to a mapped page (index) instead of root "/" which has no controller
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     /////////////////////////////////////////////////////////////////// REGISTER //////////////////////////////////////////////////////

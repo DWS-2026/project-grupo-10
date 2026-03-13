@@ -7,27 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import grupo10.olympo_academy.services.FacilityService;
-import grupo10.olympo_academy.services.ClassesService;
-
 
 @Controller
 public class FacilityController {
 
     @Autowired
     private FacilityService facilityService;
-    @Autowired
-    private ClassesService classesService;
 
     @GetMapping("/bookings")
     public String getBooking() {
         return "bookings";
-    }
-
-    @GetMapping("/" )
-    public String getIndex(Model model) {
-        model.addAttribute("facilities", facilityService.getAllFacilities());
-        model.addAttribute("classes", classesService.getAllClasses());
-        return "index";
     }
 
     @GetMapping("/facilities/{id}")
@@ -36,6 +25,5 @@ public class FacilityController {
 
         return "facility";
     }
-   
 
 }

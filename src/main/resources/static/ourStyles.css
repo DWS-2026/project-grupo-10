@@ -33,7 +33,9 @@
 }
 
 .minimal-nav .navbar-brand img {
-    height: 70px;
+    height: 100px !important;
+    width: auto !important;  /* Mantiene la proporción */
+    max-width: 100%; 
 }
 
 .admin-page {
@@ -524,7 +526,7 @@
 
 
 .navbar-brand img {
-    max-height: 40px;
+    max-height: 70px;
     height: auto;
 }
 
