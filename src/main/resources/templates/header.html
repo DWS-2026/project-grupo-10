@@ -63,7 +63,10 @@
         <a href="/userProfile">Mi cuenta →</a>
         <a href="/plus">Olympo Plus →</a>
         {{#user}}
-        <a href="/logout">Cerrar sesión →</a>
+        <form action="/logout" method="get">
+            <button type="submit" class="btn btn-link p-0">Cerrar sesión →</button>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+        </form>
         {{/user}}
     </div>
 </div>

@@ -39,6 +39,21 @@
               </div>
 
               <div class="mb-3">
+                <label for="username" class="form-label">Nombre de Usuario</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  class="form-control"
+                  placeholder="rafael123"
+                  autocomplete="name"
+                  required
+                  minlength="3"
+                />
+                <div class="form-text">Introduce tu nombre de usuario</div>
+              </div>
+
+              <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input
                   type="email"
@@ -107,7 +122,7 @@
                 ¿Ya tienes cuenta?
                 <a class="btn btn-link p-0 align-baseline" href="/login">Inicia sesión</a>
               </p>
-
+              <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
 
           </div>
