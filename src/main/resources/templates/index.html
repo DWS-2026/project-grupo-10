@@ -5,21 +5,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Práctica DWS, Olympo Academy</title>
-    <link rel="icon" type="image/png" href="/assets/images/logoSinFondo.png"/>
+    <link rel="icon" type="image/png" href="/images/logoSinFondo.png" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-  <link rel="stylesheet" href="styles.css" />
-  <link href="/ourStyles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link href="/ourStyles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top" >
-    
+<body id="page-top">
+
     {{>header}}
-    
+
     <!-- Masthead-->
     <header class="masthead">
         <div class="container">
@@ -28,15 +28,18 @@
             <a class="btn btn-primary btn-xl text-uppercase" href="#aboutUs">Quiénes somos</a>
         </div>
     </header>
+    
     <!-- About us-->
     <section class="page-section" id="aboutUs">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Sobre nosotros</h2>
                 <h3 class="section-subheading text-muted">
-                    Olympo Academy se extiende sobre más de 5 hectáreas de instalaciones deportivas de primer nivel, 
-                    donde conviven campos, pistas y espacios de entrenamiento rodeados de naturaleza. Un entorno exclusivo, 
-                    tranquilo y abierto, pensado para desconectar del ruido diario, respirar aire puro y centrarte en lo más 
+                    Olympo Academy se extiende sobre más de 5 hectáreas de instalaciones deportivas de primer nivel,
+                    donde conviven campos, pistas y espacios de entrenamiento rodeados de naturaleza. Un entorno
+                    exclusivo,
+                    tranquilo y abierto, pensado para desconectar del ruido diario, respirar aire puro y centrarte en lo
+                    más
                     importante: tu bienestar y tu progreso.
                 </h3>
             </div>
@@ -47,8 +50,9 @@
                         <i class="fas fa-dumbbell fa-stack-1x fa-inverse"></i>
                     </span>
                     <h4 class="my-3">Superación</h4>
-                    <p class="text-muted">Creemos en tu potencial. Con el acompañamiento adecuado, la constancia y un 
-                        entorno que impulsa, lo conseguirás. Cada entrenamiento es un paso más hacia tu mejor versión.</p>
+                    <p class="text-muted">Creemos en tu potencial. Con el acompañamiento adecuado, la constancia y un
+                        entorno que impulsa, lo conseguirás. Cada entrenamiento es un paso más hacia tu mejor versión.
+                    </p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
@@ -56,7 +60,7 @@
                         <i class="fas fa-heartbeat fa-stack-1x fa-inverse"></i>
                     </span>
                     <h4 class="my-3">Salud y bienestar</h4>
-                    <p class="text-muted">El deporte es equilibrio. En Olympo Academy fomentamos un estilo de vida 
+                    <p class="text-muted">El deporte es equilibrio. En Olympo Academy fomentamos un estilo de vida
                         saludable, donde cuerpo y mente avanzan juntos en un espacio que cuida de ti.</p>
                 </div>
                 <div class="col-md-4">
@@ -65,145 +69,58 @@
                         <i class="fas fa-crown fa-stack-1x fa-inverse"></i>
                     </span>
                     <h4 class="my-3">Exclusividad y excelencia</h4>
-                    <p class="text-muted">Instalaciones de alto nivel, atención personalizada y un entorno privilegiado. 
+                    <p class="text-muted">Instalaciones de alto nivel, atención personalizada y un entorno privilegiado.
                         Porque entrenar bien no es solo esforzarse, es hacerlo en el mejor lugar posible.</p>
                 </div>
             </div>
         </div>
     </section>
-   <!-- facilities -->
-<section class="page-section bg-light" id="facilities">
-    <div class="container">
-        <div class="text-center">
-            <h2 class="section-heading text-uppercase">Instalaciones</h2>
-            <h3 class="section-subheading text-muted">Descubre nuestras instalaciones</h3>
+    
+    <!-- facilities -->
+    <section class="page-section bg-light" id="facilities">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Instalaciones</h2>
+                <h3 class="section-subheading text-muted">Descubre nuestras instalaciones</h3>
+            </div>
+            <div class="row">
+                {{#facilities}}
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="portfolio-item">
+                        <img class="img-fluid rounded mb-3 facilitiesFormat" src="/facility/image/{{id}}" alt="{{name}}" />
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">{{name}}</div>
+                            <div class="portfolio-caption-subheading text-muted">{{description}}</div>
+                        </div>
+                    </div>
+                </div>
+                {{/facilities}}
+            </div>
         </div>
-        <div class="row">
-
-            <!-- Facility 1: Tennis Court -->
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal"href="#modalTennisCourt">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <img class="img-fluid rounded mb-3 facilitiesFormat" 
-                             src="/assets/images/instalaciones/tenis.png" 
-                             alt=" Tennis Court" 
-                        />
-                    </a>
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Pistas de Tenis</div>
-                        <div class="portfolio-caption-subheading text-muted">Disponemos de pistas de todo tipo, tierra batida traída directamente de Roland Garros; pistas de hierba
-                            natural cuidada a diario por nuestros técnicos; y pistas duras para jugadores más ágiles. También disponemos de pistas cubiertas por si hace mal tiempo
+    </section>
+    
+    <!-- clases -->
+    <section class="page-section bg-light" id="clases">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Clases</h2>
+                <h3 class="section-subheading text-muted">Descubre nuestras clases</h3>
+            </div>
+            <div class="row">
+                {{#classes}}
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="portfolio-item">
+                        <img class="commonTarjet rounded mb-3" src="/class/image/{{id}}" alt="{{name}}" />
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">{{name}}</div>
+                            <div class="portfolio-caption-subheading text-muted">{{description}}</div>
                         </div>
                     </div>
                 </div>
+                {{/classes}}
             </div>
-
-            <!-- Facility 2: Padel court -->
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalPadelCourt">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <img class="img-fluid rounded mb-3 facilitiesFormat" 
-                             src="images/instalaciones/padel.png" 
-                             alt="Padel Court" 
-                        />
-                    </a>
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Pistas de Pádel</div>
-                        <div class="portfolio-caption-subheading text-muted">Pistas de pádel de última generación, con cerramientos de cristal templado y césped técnico de alto rendimiento. 
-                            Diseñadas para ofrecer un juego fluido, seguro y adaptado tanto a entrenamientos como a competición.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Facility 3: Training room -->
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalTrainingRoom">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <img class="img-fluid rounded mb-3 facilitiesFormat" 
-                             src="images/instalaciones/gym_Olympo.png" 
-                             alt="Training Room" 
-                        />
-                    </a>
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Sala de Entrenamiento</div>
-                        <div class="portfolio-caption-subheading text-muted">Sala de entrenamiento equipada con maquinaria profesional para preparación física, fuerza y acondicionamiento funcional. 
-                            Espacio amplio y versátil, supervisado por técnicos especializados para optimizar el rendimiento y prevenir lesiones.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Facility 4: Soccer field -->
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalSoccerField">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <img class="img-fluid rounded mb-3 facilitiesFormat" 
-                             src="images/instalaciones/futbol.jpeg" 
-                             alt="Soccer Field" 
-                        />
-                    </a>
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Campos de Fútbol</div>
-                        <div class="portfolio-caption-subheading text-muted">Campo de fútbol reglamentario con superficie cuidada y drenaje optimizado. Preparado para 
-                            entrenamientos técnicos, tácticos y sesiones físicas en un entorno amplio y natural.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Facility 5: Basketball court -->
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalBasketballCourt">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <img class="img-fluid rounded mb-3 facilitiesFormat" 
-                             src="images/instalaciones/baloncesto.jpeg" 
-                             alt="Basketball Court" 
-                        />
-                    </a>
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Pistas de Baloncesto</div>
-                        <div class="portfolio-caption-subheading text-muted">Pista de baloncesto completamente equipada, con pavimento deportivo y señalización oficial. 
-                            Ideal para entrenamientos, tecnificación y actividades formativas.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Facility 6: Swimming Pool -->
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#modalPool">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <img class="img-fluid rounded mb-3 facilitiesFormat" 
-                             src="images/instalaciones/natacion.png" 
-                             alt="Swimming Pool" 
-                        />
-                    </a>
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Piscina</div>
-                        <div class="portfolio-caption-subheading text-muted">Piscina deportiva acondicionada para entrenamiento, recuperación y actividades acuáticas. 
-                            Control de temperatura, calidad del agua y mantenimiento diario para garantizar comodidad y seguridad durante todo el año.</div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Team-->
     <section class="page-section bg-light" id="team">
@@ -212,41 +129,25 @@
                 <h2 class="section-heading text-uppercase">Equipo</h2>
             </div>
             <div class="row">
+                {{#team}}
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <h4>Diego Consuegra </h4>
-                        <p class="text-muted">d.consuegra.2024@alumnos.urjc.es</p>
+                        <h4>{{name}}</h4>
+                        <p class="text-muted">{{email}}</p>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <h4>Lucía Zapata </h4>
-                        <p class="text-muted">l.zapata.2024@alumnos.urjc.es</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <h4>Javier Gonzalez</h4>
-                        <p class="text-muted">j.gonzaleza.2024@alumnos.urjc.es</p>
-                        
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <h4>Adrián Bellón </h4>
-                        <p class="text-muted">a.bellon.2024@alumnos.urjc.es</p> 
-                    </div>
-                </div>
+                {{/team}}
             </div>
         </div>
     </section>
+    
     <!-- Solve your doubts -->
     <section class="page-section" id="doubts">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Consulta tus dudas</h2>
             </div>
-            
+
             <form id="contactForm">
                 <div class="row align-items-stretch mb-5">
                     <div class="col-md-6">
@@ -281,101 +182,21 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Submit Button-->
-                <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase"
-                        id="submitButton" type="submit">Send Message</button></div>
+                <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" id="submitButton"
+                        type="submit">Send Message</button></div>
             </form>
         </div>
     </section>
 
     {{>footer}}
 
-  <!-- Modals facilities -->
-
-<!-- Modal Tennis Court -->
-<div class="portfolio-modal modal fade" id="modalTennisCourt" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 bg-transparent">
-      <div class="modal-body p-0 d-flex justify-content-center">
-        <img src="images/instalaciones/tenis.png" 
-             class="img-fluid modal-style" 
-             alt="Tennis Court" />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Padel Court -->
-<div class="portfolio-modal modal fade" id="modalPadelCourt" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 bg-transparent">
-      <div class="modal-body p-0 d-flex justify-content-center">
-        <img src="images/instalaciones/padel.png" 
-             class="img-fluid modal-style"  
-             alt="Padel Court" />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Training Room -->
-<div class="portfolio-modal modal fade" id="modalTrainingRoom" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 bg-transparent">
-      <div class="modal-body p-0 d-flex justify-content-center">
-        <img src="images/instalaciones/gym_Olympo.png" 
-             class="img-fluid modal-style" 
-             alt="Training Room" />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Soccer -->
-<div class="portfolio-modal modal fade" id="modalSoccerField" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 bg-transparent">
-      <div class="modal-body p-0 d-flex justify-content-center">
-        <img src="images/instalaciones/futbol.jpeg" 
-             class="img-fluid modal-style" 
-             alt="Soccer Field" />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Basketball Court -->
-<div class="portfolio-modal modal fade" id="modalBasketballCourt" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 bg-transparent">
-      <div class="modal-body p-0 d-flex justify-content-center">
-        <img src="images/instalaciones/baloncesto.jpeg" 
-             class="img-fluid modal-style" 
-             alt="Basketball Court" />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Swimming Pool -->
-<div class="portfolio-modal modal fade" id="modalPool" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content border-0 bg-transparent">
-      <div class="modal-body p-0 d-flex justify-content-center">
-        <img src="images/instalaciones/natacion.png" 
-             class="img-fluid modal-style" 
-             alt="Swimming Pool" />
-      </div>
-    </div>
-  </div>
-</div>
-
-
+    
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <script src="/js/scripts.js"></script>
 </body>
 
 </html>
