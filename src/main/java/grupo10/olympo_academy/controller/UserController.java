@@ -17,12 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Redirect root to index
-    @GetMapping("/")
-    public String root() {
-        return "redirect:/index";
-    }
-
+  
     /////////////////////////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////
     @GetMapping("/login")
     public String getLogin() {
@@ -102,6 +97,11 @@ public class UserController {
             model.addAttribute("error", e.getMessage());
             return "register";
         }
+    }
+
+    @GetMapping("/admin")
+    public String getAdmin() {
+        return "admin";
     }
 }
     
