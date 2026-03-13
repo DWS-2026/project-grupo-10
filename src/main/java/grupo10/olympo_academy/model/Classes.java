@@ -24,7 +24,7 @@ public class Classes {
 
 
     @OneToOne
-	private Image image;
+	private Image classesImage;
 
     @OneToOne
     private Facility facility;
@@ -101,4 +101,12 @@ public class Classes {
     public void setDifficulty(List<String> difficulty) {
         this.difficulty = difficulty;
     }
+    public Image getClassesImage() {
+        return classesImage;
+    }
+
+    public void setClassesImage(Image classesImage) {
+        this.classesImage = classesImage;
+    }    
+
 }

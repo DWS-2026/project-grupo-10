@@ -1,13 +1,9 @@
 package grupo10.olympo_academy.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -15,84 +11,98 @@ import jakarta.persistence.OneToOne;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;         
-
-    private LocalDate date;    
-    private LocalTime startTime; 
-    private int duration;  
-    private boolean material;
-    private String difficulty;
-    
-    @ManyToOne
-    private User user; 
+    private Long id;  
+    private String name;
+    @OneToOne
+    private User user;
 
     @OneToOne
     private Facility facility;
-
+    @OneToOne
+    private Classes classes;
+    
+    private String day;
+    private String startTime;
+    private int duration;
+    private String status;
+    private Boolean material;
+ 
     public Reservation() {}
 
-    public Long getId() {
+     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
-    public LocalDate getDate() {
-        return date;
+     public Classes getClasses() {
+        return classes;
+    }
+    
+    public void setClasses(Classes classes) {
+        this.classes = classes;
+    }
+     public Facility getFacility() {
+        return facility;
+    }
+    
+    public void setFacility(Facility facility) {
+        this.facility = facility;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public String getName() {
+        return name;
     }
 
-    public LocalTime getStartTime() {
-        return startTime;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public boolean isMaterial() {
-        return material;
-    }
-
-    public void setMaterial(boolean material) {
-        this.material = material;
-    }
-
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
-
- /*    public User getUser() {
+    public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
     }
-
-    public Facility getFacility() {
-        return facility;
+     public String getDay() {
+        return day;
+    }
+    public void setDay(String day) {
+        this.day = day;
     }
 
-    public void setFacility(Facility facility) {
-        this.facility = facility;
-    } */
+       public String getStartTime() {
+        return startTime;
+    }
 
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+     public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Boolean material) {
+        this.material = material;
+    }  
+
+
+     
 }
