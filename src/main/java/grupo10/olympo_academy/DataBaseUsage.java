@@ -105,9 +105,9 @@ public class DataBaseUsage implements CommandLineRunner {
             classesService.saveClass(class5);
             classesService.saveClass(class6);
 
-        User user1 = new User("user1", "pass", "user1@example.com", "user1", "user", "USER");
-        User user2 = new User("user2", "pass", "user2@example.com", "user2", "user", "USER");
-        User admin = new User("admin", "pass", "admin@example.com", "potato", "admin", "USER", "ADMIN");
+        User user1 = new User("user1", "user1@example.com", "pass1", "user1", "user", "USER");
+        User user2 = new User("user2", "user2@example.com", "pass2", "user2", "user", "USER");
+        User admin = new User("admin", "admin@example.com", "passadmin", "potato", "admin", "USER", "ADMIN");
 
         userService.register(user1);
         userService.register(user2);
