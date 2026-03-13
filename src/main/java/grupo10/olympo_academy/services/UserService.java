@@ -1,7 +1,10 @@
 package grupo10.olympo_academy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 import grupo10.olympo_academy.model.User;
@@ -12,6 +15,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+	private PasswordEncoder passwordEncoder;
 
     public User login(String email, String rawPassword) {
 
@@ -40,10 +46,10 @@ public class UserService {
         }
 
         // set default role if not provided
-        if (user.getRole() == null || user.getRole().isEmpty()) {
-            user.setRole("USER");
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(List.of("USER"));
         }
-
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

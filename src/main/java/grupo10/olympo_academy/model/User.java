@@ -24,8 +24,8 @@ public class User {
     private String name;
     private String email;
     private String phone;
-    private String password;
-    private String role;
+    private String encodedPassword;
+    private List<String> roles;
     private String username;
 
     @OneToOne
@@ -38,6 +38,15 @@ public class User {
 	private List<Review> reviews = new ArrayList<>();
 
     public User() {}
+
+    public User(String name, String email, String phone, String password, String username, String... roles) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.encodedPassword = password;
+        this.username = username;
+        this.roles = List.of(roles);
+    }
 
     public String getName() {
         return name;
@@ -64,19 +73,19 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return encodedPassword;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.encodedPassword = password;
     }
 
-    public String getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public Image getProfileImage() {

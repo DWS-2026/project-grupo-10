@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
+import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.FacilityRepository;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
+import grupo10.olympo_academy.services.UserService;
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.repository.ClassesRepository;
 
@@ -32,6 +34,8 @@ public class DataBaseUsage implements CommandLineRunner {
     private FacilityRepository facilityRepository;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ImageService imageService;
@@ -100,6 +104,14 @@ public class DataBaseUsage implements CommandLineRunner {
             classesService.saveClass(class4);
             classesService.saveClass(class5);
             classesService.saveClass(class6);
+
+        User user1 = new User("user1", "pass", "user1@example.com", "user1", "user", "USER");
+        User user2 = new User("user2", "pass", "user2@example.com", "user2", "user", "USER");
+        User admin = new User("admin", "pass", "admin@example.com", "potato", "admin", "USER", "ADMIN");
+
+        userService.register(user1);
+        userService.register(user2);
+        userService.register(admin);
 
     }
 
