@@ -39,6 +39,21 @@ public class GlobalModelAttributes {
         }
     }
 
+    @ModelAttribute("isAdmin")
+    public boolean addIsAdmin(Principal principal) {
+        if (principal == null) {
+            return false;
+        }
+
+        try {
+            return userService.findByEmail(principal.getName())
+                    .getRoles()
+                    .contains("ADMIN");
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
     @ModelAttribute("token")
     public String addCsrfToken(HttpServletRequest request) {
         CsrfToken csrf = (CsrfToken) request.getAttribute("_csrf");

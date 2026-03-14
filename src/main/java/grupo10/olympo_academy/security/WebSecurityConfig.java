@@ -49,9 +49,11 @@ public class WebSecurityConfig {
 							"/images/**",
 							"/assets/**"
 						).permitAll()
+					// PROTECTED PAGES
 					.requestMatchers("/userProfile").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/bookings").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/reviews").hasAnyRole("USER", "ADMIN")
+					.requestMatchers("/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated()
 			)
 
