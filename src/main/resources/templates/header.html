@@ -61,9 +61,8 @@
     <div class="panel-links">
         <a href="/purchases">Mis compras →</a>
         <a href="/userProfile">Mi cuenta →</a>
-        <a href="/plus">Olympo Plus →</a>
         {{#user}}
-        <form action="/logout" method="get">
+        <form action="/logout" method="post">
             <button type="submit" class="btn btn-link p-0">Cerrar sesión →</button>
             <input type="hidden" name="_csrf" value="{{token}}"/>
         </form>
