@@ -95,6 +95,7 @@
                     <button class="btn btn-success" type="submit">Guardar cambios</button>
                     <a href="#delete-{{id}}" class="btn btn-danger">Eliminar usuario</a>
                 </div>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
 
             <div class="d-flex gap-2 mt-3">
@@ -179,7 +180,7 @@
                     <label class="form-label">Foto *</label>
                     <input type="file" name="photoFile" class="form-control">
                 </div>
-
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button class="btn btn-success" type="submit">Guardar</button>
             </form>
         </div>
@@ -240,6 +241,7 @@
                     <input type="file" name="photoFile" class="form-control">
                 </div>
 
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button class="btn btn-success" type="submit">Guardar cambios</button>
             </form>
         </div>
@@ -283,7 +285,7 @@
                     <label class="form-label">Capacidad *</label>
                     <input type="number" name="capacity" class="form-control" min="1" required>
                 </div>
-
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button class="btn btn-success" type="submit">Guardar</button>
             </form>
         </div>
@@ -338,7 +340,7 @@
                     <label class="form-label">Capacidad *</label>
                     <input type="number" name="capacity" class="form-control" value="{{capacity}}" min="1">
                 </div>
-
+                <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button class="btn btn-success" type="submit">Guardar cambios</button>
             </form>
 

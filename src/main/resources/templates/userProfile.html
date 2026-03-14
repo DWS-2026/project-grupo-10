@@ -109,7 +109,7 @@
                         <label class="form-label">Email</label>
                         <input type="email" class="form-control" value="juanperez@email.com">
                     </div>
-
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button class="btn btn-success">Guardar cambios</button>
                 </form>
             </div>
@@ -132,6 +132,7 @@
                         <input type="password" class="form-control">
                     </div>
 
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button class="btn btn-success">Actualizar contraseña</button>
                 </form>
             </div>
@@ -183,7 +184,8 @@
                         <label class="form-label">Subir nueva foto</label>
                         <input type="file" name="profileImge" class="form-control" required>
                     </div>
-
+                    
+                    <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button class="btn btn-success mt-2">Guardar nueva foto</button>
                 </form>
             </div>
