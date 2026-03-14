@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Práctica DWS · Olympo Academy · Mi Perfil</title>
     <link rel="icon" type="image/png" href="/assets/images/logoSinFondo.png" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <link href="/ourStyles.css" rel="stylesheet" />
 </head>
 
@@ -29,8 +29,8 @@
             <img src="/assets/images/fotoPerfilweb.webp" alt="Profile photo" class="rounded-circle mb-3" width="150"
                 height="150">
 
-            <p><strong>Nombre:</strong> Juan Pérez</p>
-            <p><strong>Email:</strong> juanperez@email.com</p>
+            <p><strong>Nombre:</strong> {{principal.username}}</p>
+            <p><strong>Email:</strong> {{principal.email}}</p>
 
             <div class="d-flex justify-content-center gap-2 mt-3">
                 <a href="#edit-data" class="btn btn-warning">Editar datos</a>
@@ -184,7 +184,7 @@
                         <label class="form-label">Subir nueva foto</label>
                         <input type="file" name="profileImge" class="form-control" required>
                     </div>
-                    
+
                     <input type="hidden" name="_csrf" value="{{token}}"/>
                     <button class="btn btn-success mt-2">Guardar nueva foto</button>
                 </form>
