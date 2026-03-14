@@ -3,10 +3,7 @@ package grupo10.olympo_academy.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
-
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.UserRepository;
 
@@ -17,39 +14,33 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-	private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+    // With Spring security, we don´t need to implement the login logic ourselves
 
-    public User login(String email, String rawPassword) {
-
-        Optional<User> opt = userRepository.findByEmail(email);
-
-        if (opt.isEmpty()) {
-            return null;
-        }
-
-        User user = opt.get();
-        // esto cambiará cuando usemos spring-security y el password se guarde hasheado
-        if (user.getPassword().equals(rawPassword)) {
-            return user;
-        }
-
-        return null;
-
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    // Method to register a new user
     public User register(User user) throws Exception {
 
-        // check if email is already registered
-        Optional<User> existing = userRepository.findByEmail(user.getEmail());
-        if (existing.isPresent()) {
-            throw new Exception("El email ya está registrado");
+        // Check if email is already registered
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new Exception("Email ya registrado");
+        }
+        // Unique username
+        if (userRepository.findByUsername(user.getUserName()).isPresent()) {
+            throw new Exception("Username ya registrado");
         }
 
         // set default role if not provided
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             user.setRoles(List.of("USER"));
         }
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // Encrypt the password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return userRepository.save(user);
     }
 

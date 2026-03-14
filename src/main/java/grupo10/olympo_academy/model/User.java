@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +27,7 @@ public class User {
     private String email;
     private String phone;
     private String encodedPassword;
+    @ElementCollection(fetch = FetchType.EAGER) // we use EAGER because we know we have to load few roles per user, and we need them for authentication
     private List<String> roles;
     private String username;
 

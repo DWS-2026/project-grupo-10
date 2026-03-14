@@ -2,7 +2,7 @@ package grupo10.olympo_academy.controller;
 
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.UserService;
-import jakarta.servlet.http.HttpSession;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,64 +17,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-  
-    /////////////////////////////////////////////////////////////////// LOGIN //////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////// LOGIN /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
     @GetMapping("/login")
     public String getLogin() {
         return "login";
     }
 
-    // call to UserService 
-    @PostMapping("/login")
-    public String postLogin(@RequestParam String email,
-                            @RequestParam String password,
-                            Model model,
-                            HttpSession session) {
-
-        User user = userService.login(email, password);
-
-        if (user == null) {
-            model.addAttribute("loginError", "Usuario o contraseña incorrectos");
-            return "login";
-        }
-
-        // keep user session
-        session.setAttribute("usuarioLogeado", user);
-
-        // check if there's a redirect URL saved in session
-        String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
-        if (redirectUrl != null) {
-            session.removeAttribute("redirectAfterLogin"); // clean up session
-            return "redirect:" + redirectUrl;
-        }
-
-        return "redirect:/userProfile";
-    }
-
+    /////////////////////////////////////////////////////////////////////// USER PROFILE //////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/userProfile")
-    public String getProfile(HttpSession session, Model model) {
+    public String getProfile(Model model, Principal principal) {
 
-        User user = (User) session.getAttribute("usuarioLogeado");
-        
-        // check if user is logged in
-        if (user == null) {
-            return "redirect:/login";
-        }
-        
+        // Spring Security provides user email through Principal object, we can use it to fetch the user details from the database
+        String email = principal.getName();
+
+        User user =  userService.findByEmail(email);
+
         model.addAttribute("user", user);
+
         return "userProfile";
     }
 
-    // Logout
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        // Redirect to a mapped page (index) instead of root "/" which has no controller
-        return "redirect:/";
-    }
 
-    /////////////////////////////////////////////////////////////////// REGISTER //////////////////////////////////////////////////////
-    
+    /////////////////////////////////////////////////////////////////// REGISTER  /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
     @GetMapping("/register")
     public String showRegister() {
         return "register";
@@ -82,8 +46,8 @@ public class UserController {
 
     @PostMapping("/register")
     public String processRegister(User user,
-                                  @RequestParam String password2,
-                                  Model model) {
+            @RequestParam String password2,
+            Model model) {
 
         if (!user.getPassword().equals(password2)) {
             model.addAttribute("error", "Las contraseñas no coinciden.");
@@ -91,7 +55,7 @@ public class UserController {
         }
 
         try {
-            userService.register(user); 
+            userService.register(user);
             return "redirect:/login?registered";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -99,10 +63,9 @@ public class UserController {
         }
     }
 
+    ////////////////////////////////////////////////////////////////// ADMIN  /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
     @GetMapping("/admin")
     public String getAdmin() {
         return "admin";
     }
 }
-    
-   

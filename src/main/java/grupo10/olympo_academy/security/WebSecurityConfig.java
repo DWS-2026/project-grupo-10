@@ -25,8 +25,7 @@ public class WebSecurityConfig {
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailService);
-		authProvider.setPasswordEncoder(passwordEncoder());
-
+		authProvider.setPasswordEncoder(passwordEncoder());	
 		return authProvider;
 	}
 
@@ -38,19 +37,29 @@ public class WebSecurityConfig {
 		http
 			.authorizeHttpRequests(authorize -> authorize
 					// PUBLIC PAGES
-					.requestMatchers("/**").permitAll()
-                    //.requestMatchers("/books/*").permitAll()
-					// PRIVATE PAGES
-					.requestMatchers("/newbook").hasAnyRole("USER")
-                    .requestMatchers("/editbook/*").hasAnyRole("USER")
-                    .requestMatchers("/editbook").hasAnyRole("USER")
-					.requestMatchers("/removebook/*").hasAnyRole("ADMIN")
+						.requestMatchers("/", "/index", "/login", "/register", "/error").permitAll()
+
+						// STATIC RESOURCES (CSS/JS/IMAGES)
+						.requestMatchers(
+							"/styles.css",
+							"/ourStyles.css",
+							"/favicon.ico",
+							"/css/**",
+							"/js/**",
+							"/images/**",
+							"/assets/**"
+						).permitAll()
+					.requestMatchers("/userProfile").hasAnyRole("USER", "ADMIN")
+					.requestMatchers("/bookings").hasAnyRole("USER", "ADMIN")
+					.requestMatchers("/reviews").hasAnyRole("USER", "ADMIN")
+					.anyRequest().authenticated()
 			)
+
 			.formLogin(formLogin -> formLogin
 					.loginPage("/login")
 					.usernameParameter("email")
-					.failureUrl("/error")
-					.defaultSuccessUrl("/")
+					.defaultSuccessUrl("/userProfile") // no funciona el login
+					.failureUrl("/login?error")
 					.permitAll()
 			)
 			.logout(logout -> logout
