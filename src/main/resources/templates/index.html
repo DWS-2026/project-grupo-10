@@ -28,7 +28,7 @@
             <a class="btn btn-primary btn-xl text-uppercase" href="#aboutUs">Quiénes somos</a>
         </div>
     </header>
-    
+
     <!-- About us-->
     <section class="page-section" id="aboutUs">
         <div class="container">
@@ -75,7 +75,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- facilities -->
     <section class="page-section bg-light" id="facilities">
         <div class="container">
@@ -87,7 +87,9 @@
                 {{#facilities}}
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="img-fluid rounded mb-3 facilitiesFormat" src="/images/id/{{id}}" alt="{{name}}" />
+                        <img class="img-fluid rounded mb-3 facilitiesFormat" src="/images/id/{{facilityImage.id}}"
+                            alt="{{name}}" />
+
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">{{name}}</div>
                             <div class="portfolio-caption-subheading text-muted">{{description}}</div>
@@ -98,7 +100,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- clases -->
     <section class="page-section bg-light" id="clases">
         <div class="container">
@@ -140,7 +142,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Solve your doubts -->
     <section class="page-section" id="doubts">
         <div class="container">
@@ -182,7 +184,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <input type="hidden" name="_csrf" value="{{token}}" />
                 <!-- Submit Button-->
                 <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase" id="submitButton"
                         type="submit">Send Message</button></div>
@@ -192,7 +194,7 @@
 
     {{>footer}}
 
-    
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

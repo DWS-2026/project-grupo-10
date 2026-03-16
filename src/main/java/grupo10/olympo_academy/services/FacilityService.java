@@ -22,4 +22,9 @@ public class FacilityService {
     public Facility saveFacility(Facility facility) {
         return facilityRepository.save(facility);
     }
+
+    public void deleteFacility(Long id) {
+    facilityRepository.deleteById(id);
+}
+
 }

@@ -1,6 +1,8 @@
-package grupo10.olympo_academy.model;
+ package grupo10.olympo_academy.model;
 
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,20 +19,22 @@ public class Facility {
     private String name;      
     private String description; 
     private boolean material;
+    private String type;
 
     @OneToMany
     private List <Review> reviews;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     private Image facilityImage; 
 
     public Facility() {
     }
 
-    public Facility(String name, String description/*, Image facilityImage*/) {
+    public Facility(String name, String type, String description, Image facilityImage) {
         this.name = name;
+        this.type = type;
         this.description = description;
-        //this.facilityImage = facilityImage;
+        this.facilityImage = facilityImage;
     }
 
     public Long getId() {
@@ -71,6 +75,14 @@ public class Facility {
 
     public void setMaterial(Boolean material) {
         this.material = material;
-    }  
+    }
+
+       public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
 }

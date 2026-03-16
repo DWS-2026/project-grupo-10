@@ -2,6 +2,7 @@ package grupo10.olympo_academy;
 
 import grupo10.olympo_academy.repository.ImageRepository;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -59,19 +60,19 @@ public class DataBaseUsage implements CommandLineRunner {
         if (hasFacilities) {
             System.out.println("La base de datos ya contiene instalaciones. No se cargaron instalaciones.");
         } else {
-            Facility facility1 = new Facility("Pista de Tenis", "Pista de tenis de superficie dura con iluminación");
+            Facility facility1 = new Facility("Pista de Tenis","Pista", "Pista de tenis de superficie dura con iluminación", null);
             setFacilityImage(facility1, "static/assets/images/instalaciones/tenis.png");
-            Facility facility2 = new Facility("Pista de Padel", "Pista de padel con superficie de concreto");
+            Facility facility2 = new Facility("Pista de Padel","Pista","Pista de padel con superficie de concreto", null);
             setFacilityImage(facility2, "static/assets/images/instalaciones/padel.png");
-            Facility facility3 = new Facility("Gimnasio",
-                    "Gimnasio completamente equipado con máquinas de última generación");
+            Facility facility3 = new Facility("Gimnasio","Pista","Gimnasio completamente equipado con máquinas de última generación", null);
             setFacilityImage(facility3, "static/assets/images/instalaciones/gym_Olympo.png");
-            Facility facility4 = new Facility("Piscina ", "Piscina semiolímpica con temperatura controlada");
+            Facility facility4 = new Facility("Piscina ","`Piscina", "Piscina semiolímpica con temperatura controlada", null);
             setFacilityImage(facility4, "static/assets/images/instalaciones/natacion.png");
-            Facility facility5 = new Facility("Pista de Baloncesto", "Pista cubierta con piso de parquet");
+            Facility facility5 = new Facility("Pista de Baloncesto","Pista","Pista cubierta con piso de parquet", null);
             setFacilityImage(facility5, "static/assets/images/instalaciones/baloncesto.jpeg");
-            Facility facility6 = new Facility("Campo de Fútbol", "Campo de fútbol 11 con césped sintético");
+            Facility facility6 = new Facility("Campo de Fútbol","Campo","Campo de fútbol 11 con césped sintético", null);
             setFacilityImage(facility6, "static/assets/images/instalaciones/futbol.jpeg");
+
 
             // save facilities
             facilityService.saveFacility(facility1);
@@ -85,28 +86,51 @@ public class DataBaseUsage implements CommandLineRunner {
         if (hasClasses) {
             System.out.println("La base de datos ya contiene clases. No se cargaron clases.");
         } else {
-            Classes class1 = new Classes("Clase de Tenis", "Clases de tenis para principiantes y avanzados", "Javichu");
-            setClassesImage(class1, "static/assets/images/instalaciones/tenis.png");
-            Classes class2 = new Classes("Clase de Padel", "Clases de padel para todos los niveles", "Javichu");
-            setClassesImage(class2, "static/assets/images/instalaciones/padel.png");
-            Classes class3 = new Classes("Clase de CrossFit", "Clases de CrossFit para mejorar tu condición física",
-                    "Dieguss");
-            setClassesImage(class3, "static/assets/images/instalaciones/gym_Olympo.png");
-            Classes class4 = new Classes("Clase de Piscina", "Clases de natación para todas las edades", "Luxx");
-            setClassesImage(class4, "static/assets/images/instalaciones/natacion.png");
-            Classes class5 = new Classes("Clase de Baloncesto", "Clases de baloncesto para niños y adultos", "Dieguss");
-            setClassesImage(class5, "static/assets/images/instalaciones/baloncesto.jpeg");
-            Classes class6 = new Classes("Clase de Fútbol", "Clases de fútbol para  que puedas mejorar tus habilidades",
-                    "Adriii");
-            setClassesImage(class6, "static/assets/images/instalaciones/futbol.jpeg");
+           Classes class1 = new Classes("Clase de Tenis","Clases de tenis para principiantes y avanzados","Javichu");
+class1.setDifficulty(List.of("Fácil"));
+class1.setDay(List.of("Lunes", "Miércoles"));
+class1.setStartTime(List.of("10:00","18:00"));
+class1.setDuration(60);
+setClassesImage(class1, "static/assets/images/instalaciones/tenis.png");
 
-            // save classes
-            classesService.saveClass(class1);
-            classesService.saveClass(class2);
-            classesService.saveClass(class3);
-            classesService.saveClass(class4);
-            classesService.saveClass(class5);
-            classesService.saveClass(class6);
+Classes class2 = new Classes("Clase de Padel","Clases de padel para todos los niveles","Javichu");
+class2.setDifficulty(List.of("Intermedio"));
+class2.setDay(List.of("Martes", "Jueves"));
+class2.setStartTime(List.of("12:00","19:00"));
+class2.setDuration(60);
+setClassesImage(class2, "static/assets/images/instalaciones/padel.png");
+
+Classes class3 = new Classes("Clase de CrossFit","Clases de CrossFit para mejorar tu condición física","Dieguss");
+class3.setDifficulty(List.of("Difícil"));
+class3.setDay(List.of("Lunes", "Viernes"));
+class3.setStartTime(List.of("19:00","20:00"));
+class3.setDuration(45);
+setClassesImage(class3, "static/assets/images/instalaciones/gym_Olympo.png");
+
+Classes class4 = new Classes("Clase de Piscina","Clases de natación para todas las edades","Luxx");
+class4.setDifficulty(List.of("Fácil"));
+class4.setDay(List.of("Miércoles"));
+class4.setStartTime(List.of("17:00","18:30"));
+class4.setDuration(60);
+setClassesImage(class4, "static/assets/images/instalaciones/natacion.png");
+
+Classes class5 = new Classes("Clase de Baloncesto","Clases de baloncesto para niños y adultos","Dieguss");
+class5.setDifficulty(List.of("Intermedio"));
+class5.setDay(List.of("Viernes"));
+class5.setStartTime(List.of("18:00","20:00"));
+class5.setDuration(90);
+setClassesImage(class5, "static/assets/images/instalaciones/baloncesto.jpeg");
+
+Classes class6 = new Classes("Clase de Fútbol","Clases de fútbol para que puedas mejorar tus habilidades","Adriii");
+class6.setDifficulty(List.of("Intermedio"));
+class6.setDay(List.of("Sábado"));
+class6.setStartTime(List.of("11:00", "13:00"));
+class6.setDuration(90);
+setClassesImage(class6, "static/assets/images/instalaciones/futbol.jpeg");
+
+// Guardar
+classesRepository.saveAll(List.of(class1, class2, class3, class4, class5, class6));
+
         }
 
         if (hasImages) {
