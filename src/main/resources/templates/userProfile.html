@@ -32,8 +32,14 @@
         <section id="user-profile" class="mb-5 text-center">
             <h2 class="mb-4">Mi Perfil</h2>
 
-            <img src="/assets/images/fotoPerfilweb.webp" alt="Profile photo" class="rounded-circle mb-3" width="150"
+            {{#user.profileImage}}
+            <img src="/images/id/{{user.profileImage.id}}" alt="Profile photo" class="rounded-circle mb-3" width="150"
                 height="150">
+            {{/user.profileImage}}
+            
+            {{^user.profileImage}}
+            <img src="/assets/images/fotoPerfilweb.webp" class="rounded-circle mb-3" width="150" height="150">
+            {{/user.profileImage}}
 
             <p><strong>Nombre:</strong> {{user.name}}</p>
             <p><strong>Nombre de usuario:</strong> {{user.username}}</p>
@@ -195,15 +201,17 @@
 
                 <h3>Cambiar Foto de Perfil</h3>
 
-                <form method=post enctype="multipart/form-data">
+                <form method=post enctype="multipart/form-data" action="/updateProfileImage">
                     <div class="mb-3">
                         <label class="form-label">Foto actual</label><br>
-                        <img src="images/fotoPerfilweb.webp" width="120" height="120" class="rounded-circle mb-3">
+                        {{#user.profileImage}}
+                            <img src="/images/id/{{user.profileImage.id}}" width="120" height="120" class="rounded-circle mb-3">
+                        {{/user.profileImage}}
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Subir nueva foto</label>
-                        <input type="file" name="profileImge" class="form-control" required>
+                        <input type="file" name="photoFile" class="form-control" required>
                     </div>
 
                     <input type="hidden" name="_csrf" value="{{token}}" />

@@ -3,7 +3,9 @@ package grupo10.olympo_academy.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.UserRepository;
 
@@ -15,6 +17,10 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ImageService imageService;
+
     // With Spring security, we don´t need to implement the login logic ourselves
 
     public User findByEmail(String email) {
@@ -91,6 +97,16 @@ public class UserService {
         // Update the password
         user.setPassword(passwordEncoder.encode(newPassword));
         
+        return userRepository.save(user);
+    }
+
+    public User updateProfileImage(String currentUserEmail, MultipartFile photoFile) throws Exception {
+        // we ensure that the user is updating his own profile image by using the email from the session (currentUserEmail) to fetch the user from the database.
+        User user = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+
+        Image image = imageService.createImage(photoFile.getInputStream());
+        user.setProfileImage(image);
+
         return userRepository.save(user);
     }
 }

@@ -22,6 +22,13 @@
               Al crear una cuenta, serás socio y tendrás ventajas como inscribirte a nuestras clases de natación!!!
             </p>
             
+            {{#error}}
+            <div class="alert alert-danger text-center">
+              {{error}}
+              <!-- this is the error message that we will show if there is an error, it will be passed from the controller -->
+            </div>
+            {{/error}}
+
             <form action="/register" method="post"> 
               <div class="mb-3">
                 <label for="fullName" class="form-label">Nombre y Apellidos</label>

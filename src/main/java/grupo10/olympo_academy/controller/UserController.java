@@ -38,7 +38,11 @@ public class UserController {
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
     @GetMapping("/login")
-    public String getLogin() {
+    public String getLogin(@RequestParam(value = "error", required = false) String error,
+            Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Las credenciales son incorrectas, inténtalo de nuevo");
+        }
         return "login";
     }
 
@@ -103,6 +107,24 @@ public class UserController {
             return "userProfile";
         }
 
+    }
+
+    @PostMapping("/updateProfileImage")
+    public String updateProfileImage(
+            @RequestParam("photoFile") MultipartFile photoFile,
+            Model model,
+            Principal principal) {
+
+        String currentUserEmail = principal.getName();
+
+        try {
+            userService.updateProfileImage(currentUserEmail, photoFile);
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "userProfile";
+        }
+
+        return "redirect:/userProfile";
     }
 
     /////////////////////////////////////////////////////////////////// REGISTER
