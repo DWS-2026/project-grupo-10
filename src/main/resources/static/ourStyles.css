@@ -553,6 +553,15 @@ main {
   flex: 1;
   margin-top: 80px; 
 }
+/* Styles for photos of facilities and classes*/
+.hover-effect {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.hover-effect:hover {
+    transform: scale(1.05);
+}
 
 
 
