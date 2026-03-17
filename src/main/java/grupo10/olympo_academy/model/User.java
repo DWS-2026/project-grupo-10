@@ -59,7 +59,7 @@ public class User {
         this.name = name;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 

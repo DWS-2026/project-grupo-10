@@ -12,7 +12,7 @@ import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.FacilityRepository;
-import grupo10.olympo_academy.services.ClassesService;
+//import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.repository.UserRepository;
@@ -28,8 +28,8 @@ public class DataBaseUsage implements CommandLineRunner {
     
     @Autowired
     private FacilityService facilityService;
-    @Autowired
-    private ClassesService classesService;
+    //@Autowired
+    //private ClassesService classesService;
     @Autowired
     private ClassesRepository classesRepository;
     @Autowired
@@ -152,10 +152,10 @@ classesRepository.saveAll(List.of(class1, class2, class3, class4, class5, class6
 
     private void ensureUserExists(User user) throws Exception {
         boolean emailExists = userRepository.findByEmail(user.getEmail()).isPresent();
-        boolean usernameExists = userRepository.findByUsername(user.getUserName()).isPresent();
+        boolean usernameExists = userRepository.findByUsername(user.getUsername()).isPresent();
 
         if (emailExists || usernameExists) {
-            System.out.println("Usuario ya existe (email/username): " + user.getEmail() + " / " + user.getUserName());
+            System.out.println("Usuario ya existe (email/username): " + user.getEmail() + " / " + user.getUsername());
             return;
         }
 
