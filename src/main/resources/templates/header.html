@@ -61,8 +61,37 @@
 
 
     <div class="panel-links">
-        <a href="/purchases">Mis compras →</a>
         <a href="/userProfile">Mi cuenta →</a>
+        <a class="cart-link" style="cursor:pointer;">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+
+        <div class="cart-container">
+
+            <h5>Reservas pendientes</h5>
+
+            {{#cartReservations}}
+            <div class="cart-item">
+                <strong>{{facility.name}}</strong><br>
+                <small>{{date}}</small>
+            </div>
+            {{/cartReservations}}
+
+            {{^cartReservations}}
+            <p class="text-muted">No hay reservas en el carrito</p>
+            {{/cartReservations}}
+
+            <!-- Confirm button ONLY if reservations exist -->
+            {{#cartReservations}}
+            <form action="/cart/confirm" method="post">
+                <button class="btn btn-success w-100 mt-3">
+                    Terminar reservas
+                </button>
+            </form>
+            {{/cartReservations}}
+
+        </div>
+        
         {{#user}}
         <form action="/logout" method="post">
             <button type="submit" class="btn btn-link p-0">Cerrar sesión →</button>

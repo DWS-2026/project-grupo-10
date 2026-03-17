@@ -12,11 +12,12 @@ import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.FacilityRepository;
-//import grupo10.olympo_academy.services.ClassesService;
+import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.UserService;
+import jakarta.transaction.Transactional;
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.repository.ClassesRepository;
 
@@ -28,8 +29,8 @@ public class DataBaseUsage implements CommandLineRunner {
     
     @Autowired
     private FacilityService facilityService;
-    //@Autowired
-    //private ClassesService classesService;
+    @Autowired
+    private ClassesService classesService;
     @Autowired
     private ClassesRepository classesRepository;
     @Autowired
