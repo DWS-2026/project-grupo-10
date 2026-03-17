@@ -39,3 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initUserSidePanel();
     initAutoHideAlerts();
 });
+
+document.querySelector(".cart-link").onclick = function() {
+    document.querySelector(".cart-container") 
+        .classList.toggle("show");
+}
