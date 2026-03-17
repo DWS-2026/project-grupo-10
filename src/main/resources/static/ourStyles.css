@@ -563,5 +563,11 @@ main {
     transform: scale(1.05);
 }
 
+.cart-container{
+    display:none;
+}
 
+.cart-container.show{
+    display:block;
+}
 
