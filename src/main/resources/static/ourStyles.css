@@ -554,5 +554,11 @@ main {
   margin-top: 80px; 
 }
 
+.cart-container{
+    display:none;
+}
 
+.cart-container.show{
+    display:block;
+}
 
