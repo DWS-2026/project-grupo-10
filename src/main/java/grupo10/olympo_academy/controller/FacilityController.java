@@ -30,7 +30,9 @@ public class FacilityController {
     private UserService userService;
 
     @GetMapping("/bookings")
-    public String getBooking() {
+    public String getBooking(Model model) {
+        model.addAttribute("classes", classesService.getAllClasses());
+        model.addAttribute("facilities", facilityService.getAllFacilities());
         return "bookings";
     }
 

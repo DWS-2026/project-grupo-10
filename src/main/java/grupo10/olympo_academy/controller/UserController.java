@@ -62,6 +62,8 @@ public class UserController {
         User user = userService.findByEmail(email);
 
         model.addAttribute("user", user);
+        model.addAttribute("activeReservations", reservationService.getActiveReservationsByUser(user));
+        model.addAttribute("pastReservations", reservationService.getReservationsByUserAndStatus(user, "Finalizada"));
 
         return "userProfile";
     }

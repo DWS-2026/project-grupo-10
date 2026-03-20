@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Práctica DWS, Olympo Academy</title>
+    <title>PrÃ¡ctica DWS, Olympo Academy</title>
     <link rel="icon" type="image/png" href="/assets/images/logoSinFondo.png" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -36,87 +36,27 @@
                 <h3 class="section-subheading text-muted">Descubre nuestras clases</h3>
             </div>
             <div class="row">
-
-                <!-- Class 1: Tennis Class -->
+                {{#classes}}
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/tenis.png" alt="Tenis Class" />
+                        {{#classesImage}}
+                        <img class="commonTarjet rounded mb-3" src="/images/id/{{classesImage.id}}" alt="{{name}}" />
+                        {{/classesImage}}
+                        {{^classesImage}}
+                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/tenis.png" alt="{{name}}" />
+                        {{/classesImage}}
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Clases de Tenis</div>
-                            <div class="portfolio-caption-subheading text-muted">Clases de tenis adaptada a su nivel
-                            </div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
+                            <div class="portfolio-caption-heading">{{name}}</div>
+                            <div class="portfolio-caption-subheading text-muted">{{description}}</div>
+                            <a href="#booking-popup" class="btn btn-primary mt-2 booking-btn"
+                                data-type="class" data-id="{{id}}" data-name="{{name}}">Reservar</a>
                         </div>
                     </div>
                 </div>
-
-
-
-                <!-- Class 2: Padel Class -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/padel.png" alt="Padel Class" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Clases de Pádel</div>
-                            <div class="portfolio-caption-subheading text-muted">Clases de pádel adaptada a su nivel
-                            </div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 3: Crossfit Class -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/gym_Olympo.png"
-                            alt="Crossfit Class" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Clases de Crossfit</div>
-                            <div class="portfolio-caption-subheading text-muted"> Clases de crossfit realizadas en el
-                                gimnasio</div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 4: Football Training -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/futbol.jpeg" alt="Football Training" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Entrenamientos de Fútbol</div>
-                            <div class="portfolio-caption-subheading text-muted">Entrenamiento de fútbol </div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 5: Basketball Training -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/baloncesto.jpeg"
-                            alt="Basketball Training" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Entrenamientos de Baloncesto</div>
-                            <div class="portfolio-caption-subheading text-muted">Entrenamiento de baloncesto</div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Class 6: Swimming Classes -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/natacion.png" alt="Swimming Class" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Clases de Natación</div>
-                            <div class="portfolio-caption-subheading text-muted">Clases de natación para adultos y niños
-                            </div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
+                {{/classes}}
+                {{^classes}}
+                <p class="text-muted">No hay clases disponibles.</p>
+                {{/classes}}
             </div>
         </div>
     </section>
@@ -129,92 +69,27 @@
                 <h3 class="section-subheading text-muted">Descubre nuestras instalaciones</h3>
             </div>
             <div class="row">
-
-                <!-- Facilities 1: Tennis Court -->
+                {{#facilities}}
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/tenis.png" alt="Tennis Court" />
+                        {{#facilityImage}}
+                        <img class="commonTarjet rounded mb-3" src="/images/id/{{facilityImage.id}}" alt="{{name}}" />
+                        {{/facilityImage}}
+                        {{^facilityImage}}
+                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/tenis.png" alt="{{name}}" />
+                        {{/facilityImage}}
                         <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Pista de tenis</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
-                                elegir si quieres material.
-                                Además debes indicar el tiempo de reserva que puede ser hasta 1h y media</div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
+                            <div class="portfolio-caption-heading">{{name}}</div>
+                            <div class="portfolio-caption-subheading text-muted">{{description}}</div>
+                            <a href="#booking-popup" class="btn btn-primary mt-2 booking-btn"
+                                data-type="facility" data-id="{{id}}" data-name="{{name}}">Reservar</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Facilities 2: Padel Court -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/padel.png" alt="Padel Court" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Pista de Pádel</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
-                                elegir si quieres material.
-                                Además debes indicar el tiempo de reserva que puede ser hasta 1h y media</div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Facilities 3: Training Room -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/gym_Olympo.png"
-                            alt="Training Room" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Gimnasio</div>
-                            <div class="portfolio-caption-subheading text-muted">Las reservas del gimnasio podrán ser de
-                                hasta 2 horas. Durante la sesión estarán
-                                disponibles personal por si tienes alguna consulta.</div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Facilities 4: Football Field -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/futbol.jpeg" alt="Football Field" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Campo de Fútbol</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
-                                elegir si quieres material.
-                                Además debes indicar el tiempo de reserva que puede ser hasta 2h </div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Facilities 5: Basketball Court -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/baloncesto.jpeg"
-                            alt="Basketball Court" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Pista de Baloncesto</div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
-                                elegir si quieres material.
-                                Además debes indicar el tiempo de reserva que puede ser hasta 2h </div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Facilities 6: Pool -->
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="portfolio-item">
-                        <img class="commonTarjet rounded mb-3" src="/assets/images/instalaciones/natacion.png" alt="Pool" />
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Nado libre </div>
-                            <div class="portfolio-caption-subheading text-muted">Al reservar se te dará la opción de
-                                elegir si quieres material.
-                                Además deberas alegir la duración de la actividad que puede ser hasta 1h </div>
-                            <a href="#booking-popup" class="btn btn-primary mt-2">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-
+                {{/facilities}}
+                {{^facilities}}
+                <p class="text-muted">No hay instalaciones disponibles.</p>
+                {{/facilities}}
             </div>
         </div>
     </section>
@@ -229,7 +104,11 @@
             <h3>Reservar Actividad</h3>
 
             <!-- Booking Form -->
-            <form>
+            <form method="post" action="/cart/add">
+                <input type="hidden" name="classId" id="booking-class-id">
+                <input type="hidden" name="facilityId" id="booking-facility-id">
+                <input type="hidden" name="name" id="booking-name">
+
                 <!-- 1. Level-->
                 <div class="section-form">
                     <label class="section-title">Selecciona tu nivel *</label>
@@ -238,7 +117,7 @@
                         <label class="option-level">
                             <input type="radio" name="level" value="low" required>
                             <div class="level-square">
-                                <span class="emoji-level">👶</span>
+                                <span class="emoji-level">ðŸ‘¶</span>
                                 <span class="text-level">Bajo</span>
                                 <span class="description-level">Principiante</span>
                             </div>
@@ -248,7 +127,7 @@
                         <label class="option-level">
                             <input type="radio" name="level" value="intermediate">
                             <div class="level-square">
-                                <span class="emoji-level">👍</span>
+                                <span class="emoji-level">ðŸ‘</span>
                                 <span class="text-level">Medio</span>
                                 <span class="description-level">Intermedio</span>
                             </div>
@@ -258,7 +137,7 @@
                         <label class="option-level">
                             <input type="radio" name="level" value="high">
                             <div class="level-square">
-                                <span class="emoji-level">🏆</span>
+                                <span class="emoji-level">ðŸ†</span>
                                 <span class="text-level">Alto</span>
                                 <span class="description-level">Avanzado</span>
                             </div>
@@ -282,39 +161,45 @@
                     <div class="options-grid-hours">
                         <!-- Hour 1 -->
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="09:00" required>
+                            <input type="radio" name="startTime" value="09:00" required>
                             <div class="hour-square">09:00</div>
                         </label>
 
                         <!-- Hour 2 -->
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="11:00">
+                            <input type="radio" name="startTime" value="11:00">
                             <div class="hour-square">11:00</div>
                         </label>
 
                         <!-- Hour 3 -->
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="16:00">
+                            <input type="radio" name="startTime" value="16:00">
                             <div class="hour-square">16:00</div>
                         </label>
 
                         <!-- Hour 4 -->
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="18:00">
+                            <input type="radio" name="startTime" value="18:00">
                             <div class="hour-square">18:00</div>
                         </label>
 
                         <!-- Hour 5 -->
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="20:00">
+                            <input type="radio" name="startTime" value="20:00">
                             <div class="hour-square">20:00</div>
                         </label>
                     </div>
                 </div>
 
+                <!-- 3.5 DAY -->
+                <div class="section-form">
+                    <label class="section-title">Selecciona el dÃ­a *</label>
+                    <input type="date" class="form-control" name="day" required>
+                </div>
+
                 <!-- 4. DURATION - 3 buttons -->
                 <div class="section-form">
-                    <label class="section-title">Duración *</label>
+                    <label class="section-title">DuraciÃ³n *</label>
                     <div class="options-grid">
                         <!-- 30 min -->
                         <label class="duration-option">

@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 
+import java.util.Collections;
+import java.util.List;
+
+import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.services.UserService;
 
 @ControllerAdvice
@@ -58,6 +62,17 @@ public class GlobalModelAttributes {
     public String addCsrfToken(HttpServletRequest request) {
         CsrfToken csrf = (CsrfToken) request.getAttribute("_csrf");
         return csrf == null ? "" : csrf.getToken();
+    }
+
+    @ModelAttribute("cartReservations")
+    public List<Reservation> addCartReservations(HttpSession session) {
+        Object raw = session.getAttribute("cartReservations");
+        if (raw instanceof List<?>) {
+            @SuppressWarnings("unchecked")
+            List<Reservation> cart = (List<Reservation>) raw;
+            return cart;
+        }
+        return Collections.emptyList();
     }
 }
 
