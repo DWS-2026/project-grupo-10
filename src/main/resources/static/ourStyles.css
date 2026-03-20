@@ -291,7 +291,7 @@
 /* Final buttons */
 .botones-popup {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 10px;
     margin-top: 25px;
     padding-top: 20px;
@@ -300,13 +300,14 @@
 
 .btn-cancel {
     padding: 10px 20px;
-    background: #6c757d;
+    background: #dc3545;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     border: none;
     cursor: pointer;
     font-size: 14px;
+    margin-left: auto;
 }
 
 .btn-confirm {
@@ -320,7 +321,7 @@
 }
 
 .btn-cancel:hover {
-    background: #5a6268;
+    background: #c82333;
 }
 
 .btn-confirm:hover {

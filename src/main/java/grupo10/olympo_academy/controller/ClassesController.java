@@ -30,14 +30,27 @@ public class ClassesController {
   
 
     @GetMapping("/classes/{id}")
-    public String getClassById(@PathVariable Long id, Model model) {
-        model.addAttribute("class", classesService.getClassById(id));
+    public String getClassById(@PathVariable Long id, Model model, Principal principal) {
+        Classes classes = classesService.getClassById(id);
+        model.addAttribute("classes", classes);
+
+        if (classes != null) {
+            model.addAttribute("reviews", reviewService.getReviewsByClasses(id));
+            if (principal != null) {
+                try {
+                    User user = userService.findByEmail(principal.getName());
+                    model.addAttribute("myReviews", reviewService.getReviewsByUserAndClasses(user, id));
+                } catch (Exception ignored) {
+                    // ignore if user cannot be resolved
+                }
+            }
+        }
         return "classes";
     }
 
 
- /////////////////////////////////////////////////////////////
-    // Guardar reseña para una classes específica
+    /////////////////////////////////////////////////////////////
+    // Guardar reseña para una clase específica
     /////////////////////////////////////////////////////////////
     @PostMapping("/classes/{classesId}/review")
     public String saveReview(@PathVariable Long classesId,
@@ -82,6 +95,36 @@ public class ClassesController {
         reviewService.saveReview(review);
 
         // Redirigir a la página de la classes
+        return "redirect:/classes/" + classesId;
+    }
+
+    @PostMapping("/classes/{classesId}/review/delete")
+    public String deleteReview(@PathVariable Long classesId,
+                               @RequestParam Long id,
+                               Principal principal) {
+
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        User user;
+        try {
+            user = userService.findByEmail(principal.getName());
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
+
+        Review review = reviewService.getById(id);
+        if (review == null || review.getUser() == null || review.getClasses() == null) {
+            return "redirect:/classes/" + classesId;
+        }
+
+        if (!review.getUser().getId().equals(user.getId())
+                || !review.getClasses().getId().equals(classesId)) {
+            return "redirect:/classes/" + classesId;
+        }
+
+        reviewService.deleteReview(id);
         return "redirect:/classes/" + classesId;
     }
 

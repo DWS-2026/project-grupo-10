@@ -120,7 +120,7 @@
                                         <small class="text-muted">{{date}}</small>
 
                                         <div class="mt-2">
-                                            <form action="/reviews/delete" method="post">
+                                            <form action="/facilities/{{facility.id}}/review/delete" method="post">
                                                 <input type="hidden" name="_csrf" value="{{token}}" />
                                                 <input type="hidden" name="id" value="{{id}}">
                                                 <button class="btn btn-danger btn-sm">Eliminar</button>
@@ -146,13 +146,13 @@
 
     {{>footer}}
 
-    <!-- Popup for Bookings (ya tiene las clases existentes) -->
+    <!-- Popup for Facilities -->
     <div id="booking-popup" class="popup">
         <div class="popup-content">
             <a href="#" class="close">&times;</a>
             <h3>Reservar Instalación</h3>
 
-            <!-- Booking Form (mantiene tus clases existentes) -->
+            <!-- Facilities Form -->
             <form method="post" action="/cart/add">
                 <input type="hidden" name="facilityId" value="{{facility.id}}">
                 <input type="hidden" name="name" value="{{facility.name}}">

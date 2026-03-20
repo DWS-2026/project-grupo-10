@@ -74,8 +74,21 @@ function initBookingPopup() {
     });
 }
 
+function initClassDayMin() {
+    // Ensures the class date picker only allows today or future dates.
+    const input = document.getElementById('class-day');
+    if (!input) return;
+
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    input.min = `${yyyy}-${mm}-${dd}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUserSidePanel();
     initAutoHideAlerts();
     initBookingPopup();
+    initClassDayMin();
 });

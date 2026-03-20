@@ -120,7 +120,7 @@
                                         <small class="text-muted">{{date}}</small>
 
                                         <div class="mt-2">
-                                            <form action="/reviews/delete" method="post">
+                                            <form action="/classes/{{classes.id}}/review/delete" method="post">
                                                 <input type="hidden" name="_csrf" value="{{token}}" />
                                                 <input type="hidden" name="id" value="{{id}}">
                                                 <button class="btn btn-danger btn-sm">Eliminar</button>
@@ -153,7 +153,9 @@
             <h3>Reservar Actividad</h3>
 
             <!-- Booking Form  -->
-            <form>
+            <form method="post" action="/cart/add">
+                <input type="hidden" name="classId" value="{{classes.id}}">
+                <input type="hidden" name="name" value="{{classes.name}}">
                 <!-- 1. Level-->
                 <div class="section-form">
                     <label class="section-title">Selecciona tu nivel *</label>
@@ -185,35 +187,35 @@
                     </div>
                 </div>
 
-                <!-- 3. HOURS -->
+                <!-- 2. HOURS -->
                 <div class="section-form">
                     <label class="section-title">Selecciona la hora *</label>
                     <div class="options-grid-hours">
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="09:00" required>
+                            <input type="radio" name="startTime" value="09:00" required>
                             <div class="hour-square">09:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="11:00">
+                            <input type="radio" name="startTime" value="11:00">
                             <div class="hour-square">11:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="16:00">
+                            <input type="radio" name="startTime" value="16:00">
                             <div class="hour-square">16:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="18:00">
+                            <input type="radio" name="startTime" value="18:00">
                             <div class="hour-square">18:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="20:00">
+                            <input type="radio" name="startTime" value="20:00">
                             <div class="hour-square">20:00</div>
                         </label>
                     </div>
                 </div>
 
-                <!-- 4. DURATION -->
-                <div class="section-form">
+                <!-- 3. DURATION -->
+               <div class="section-form">
                     <label class="section-title">Duración *</label>
                     <div class="options-grid">
                         <label class="duration-option">
@@ -228,12 +230,14 @@
                                 <span class="duration-time">1 hora</span>
                             </div>
                         </label>
-                        <label class="duration-option">
-                            <input type="radio" name="duration" value="90">
-                            <div class="duration-square">
-                                <span class="duration-time">1h 30min</span>
-                            </div>
-                        </label>
+                    </div>
+                </div>
+                
+                <!-- 4. DAY -->
+                <div class="section-form">
+                    <label class="section-title">Selecciona el día *</label>
+                    <div class="options-grid">
+                        <input type="date" id="class-day" name="day" class="form-control" required>
                     </div>
                 </div>
 
@@ -252,5 +256,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/scripts.js"></script>
 </body>
-
 </html>
+
+

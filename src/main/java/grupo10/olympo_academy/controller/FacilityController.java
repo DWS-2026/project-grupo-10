@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
-import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
@@ -26,25 +25,29 @@ public class FacilityController {
     @Autowired
     private FacilityService facilityService;
     @Autowired
-    private ClassesService classesService;
-    @Autowired
     private ReviewService reviewService;
     @Autowired
     private UserService userService;
 
-    @GetMapping("/bookings")
-    public String getBooking(Model model) {
-        model.addAttribute("classes", classesService.getAllClasses());
-        model.addAttribute("facilities", facilityService.getAllFacilities());
-        return "bookings";
-    }
-
     @GetMapping("/facilities/{id}")
-    public String getFacilityById(@PathVariable Long id, Model model) {
-        model.addAttribute("facility", facilityService.getFacilityById(id));
+    public String getFacilityById(@PathVariable Long id, Model model, Principal principal) {
+        Facility facility = facilityService.getFacilityById(id);
+        model.addAttribute("facility", facility);
+
+        if (facility != null) {
+            model.addAttribute("reviews", reviewService.getReviewsByFacility(id));
+            if (principal != null) {
+                try {
+                    User user = userService.findByEmail(principal.getName());
+                    model.addAttribute("myReviews", reviewService.getReviewsByUserAndFacility(user, id));
+                } catch (Exception ignored) {
+                    // ignore if user cannot be resolved
+                }
+            }
+        }
         return "facility";
     }
- /////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////
     // Guardar reseña para una facility específica
     /////////////////////////////////////////////////////////////
     @PostMapping("/facilities/{facilityId}/review")
@@ -90,6 +93,36 @@ public class FacilityController {
         reviewService.saveReview(review);
 
         // Redirigir a la página de la facility
+        return "redirect:/facilities/" + facilityId;
+    }
+
+    @PostMapping("/facilities/{facilityId}/review/delete")
+    public String deleteReview(@PathVariable Long facilityId,
+                               @RequestParam Long id,
+                               Principal principal) {
+
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        User user;
+        try {
+            user = userService.findByEmail(principal.getName());
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
+
+        Review review = reviewService.getById(id);
+        if (review == null || review.getUser() == null || review.getFacility() == null) {
+            return "redirect:/facilities/" + facilityId;
+        }
+
+        if (!review.getUser().getId().equals(user.getId())
+                || !review.getFacility().getId().equals(facilityId)) {
+            return "redirect:/facilities/" + facilityId;
+        }
+
+        reviewService.deleteReview(id);
         return "redirect:/facilities/" + facilityId;
     }
 }
