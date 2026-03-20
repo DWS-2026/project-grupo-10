@@ -52,7 +52,6 @@ public class DataBaseUsage implements CommandLineRunner {
     }
 
     @Override
-    @Transactional
     public void run(String... args) throws Exception {
 
         boolean hasClasses = classesRepository.count() > 0;
