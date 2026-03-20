@@ -12,7 +12,7 @@ public class ReservationService {
   @Autowired
   private ReservationRepository reservationRepository;
 
-  public boolean hasActiveReservationsForFacility(Facility facility) {
+  public boolean hasActiveReservations(Facility facility) {
     return reservationRepository.existsByFacilityAndStatus(facility, "Activa");
   }
   public boolean hasActiveReservationsForClasses(Classes classes) {
