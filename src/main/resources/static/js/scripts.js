@@ -4,6 +4,7 @@
 function initUserSidePanel() {
     const userMenuBtn = document.getElementById('userMenuBtn');
     const closePanelBtn = document.getElementById('closePanelBtn');
+    const cartLink = document.querySelector('.cart-link');
 
     if (userMenuBtn && !userMenuBtn.dataset.listenerAttached) {
         userMenuBtn.addEventListener('click', () => {
@@ -17,6 +18,15 @@ function initUserSidePanel() {
             document.getElementById('userSidePanel')?.classList.remove('open');
         });
         closePanelBtn.dataset.listenerAttached = 'true';
+    }
+
+    if (cartLink && !cartLink.dataset.listenerAttached) {
+        cartLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            document.getElementById('userSidePanel')?.classList.add('open');
+            document.querySelector('.cart-container')?.classList.toggle('show');
+        });
+        cartLink.dataset.listenerAttached = 'true';
     }
 }
 
@@ -69,11 +79,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initAutoHideAlerts();
     initBookingPopup();
 });
-
-const cartLink = document.querySelector(".cart-link");
-if (cartLink) {
-    cartLink.onclick = function() {
-        document.querySelector(".cart-container") 
-            .classList.toggle("show");
-    };
-}

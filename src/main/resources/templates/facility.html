@@ -153,37 +153,39 @@
             <h3>Reservar Instalación</h3>
 
             <!-- Booking Form (mantiene tus clases existentes) -->
-            <form>
+            <form method="post" action="/cart/add">
+                <input type="hidden" name="facilityId" value="{{facility.id}}">
+                <input type="hidden" name="name" value="{{facility.name}}">
                 <!-- 1. Day-->
                 <div class="section-form">
                     <label class="section-title">Selecciona el día *</label>
                     <div class="options-grid">
                         <label class="option-day">
-                            <input type="radio" name="day" value="monday" required>
+                            <input type="radio" name="day" value="Lunes" required>
                             <div class="day-square">Lunes</div>
                         </label>
                         <label class="option-day">
-                            <input type="radio" name="day" value="tuesday">
+                            <input type="radio" name="day" value="Martes">
                             <div class="day-square">Martes</div>
                         </label>
                         <label class="option-day">
-                            <input type="radio" name="day" value="wednesday">
+                            <input type="radio" name="day" value="Miércoles">
                             <div class="day-square">Miércoles</div>
                         </label>
                         <label class="option-day">
-                            <input type="radio" name="day" value="thursday">
+                            <input type="radio" name="day" value="Jueves">
                             <div class="day-square">Jueves</div>
                         </label>
                         <label class="option-day">
-                            <input type="radio" name="day" value="friday">
+                            <input type="radio" name="day" value="Viernes">
                             <div class="day-square">Viernes</div>
                         </label>
                         <label class="option-day">
-                            <input type="radio" name="day" value="saturday">
+                            <input type="radio" name="day" value="Sábado">
                             <div class="day-square">Sábado</div>
                         </label>
                         <label class="option-day">
-                            <input type="radio" name="day" value="sunday">
+                            <input type="radio" name="day" value="Domingo">
                             <div class="day-square">Domingo</div>
                         </label>
                     </div>
@@ -194,23 +196,23 @@
                     <label class="section-title">Selecciona la hora *</label>
                     <div class="options-grid-hours">
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="09:00" required>
+                            <input type="radio" name="startTime" value="09:00" required>
                             <div class="hour-square">09:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="11:00">
+                            <input type="radio" name="startTime" value="11:00">
                             <div class="hour-square">11:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="16:00">
+                            <input type="radio" name="startTime" value="16:00">
                             <div class="hour-square">16:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="18:00">
+                            <input type="radio" name="startTime" value="18:00">
                             <div class="hour-square">18:00</div>
                         </label>
                         <label class="hour-option">
-                            <input type="radio" name="hour" value="20:00">
+                            <input type="radio" name="startTime" value="20:00">
                             <div class="hour-square">20:00</div>
                         </label>
                     </div>
@@ -252,8 +254,9 @@
                 <!-- 5. FINAL BUTTONS -->
                 <div class="botones-popup">
                     <a href="#" class="btn-cancel">Cancelar</a>
-                    <button type="submit" class="btn-confirm">Añadir al carrito</button>
-                    <button type="submit" class="btn-confirm">Confirmar Reserva</button>
+                    <button type="submit" class="btn-confirm" name="action" value="add">Añadir al carrito</button>
+                    <button type="submit" class="btn-confirm" name="action" value="confirm">Confirmar Reserva</button>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
                 </div>
             </form>
         </div>
@@ -264,3 +267,5 @@
 </body>
 
 </html>
+
+

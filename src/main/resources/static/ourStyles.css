@@ -1022,9 +1022,6 @@ main {
         width: 100%;
     }
 }
-.cart-container.show{
-    display:block;
-}
 
 .fixed-alert {
   position: fixed;
@@ -1034,5 +1031,15 @@ main {
   max-width: 480px;
   z-index: 10000;
 }
+
+/* Carrito de reservas */
+.cart-container {
+    display: none;
+}
+.cart-container.show{
+    display:block;
+}
+
+
 
 

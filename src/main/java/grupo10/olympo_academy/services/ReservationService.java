@@ -22,8 +22,20 @@ public class ReservationService {
     return reservationRepository.existsByClassesAndStatus(classes, "Activa");
   }
 
+  public boolean hasActiveReservationsForUser(Facility facility, User user) {
+    return reservationRepository.existsByFacilityAndStatusAndUser(facility, "Activa", user);
+  }
+
+  public boolean hasActiveReservationsForUserAndClasses(Classes classes, User user) {
+    return reservationRepository.existsByClassesAndStatusAndUser(classes, "Activa", user);
+  }
+
   public List<Reservation> saveAll(List<Reservation> reservations) {
     return reservationRepository.saveAll(reservations);
+  }
+
+  public Reservation save(Reservation reservation) {
+    return reservationRepository.save(reservation);
   }
 
   public List<Reservation> getReservationsByUser(User user) {
@@ -36,6 +48,14 @@ public class ReservationService {
 
   public List<Reservation> getReservationsByUserAndStatus(User user, String status) {
     return reservationRepository.findByUserAndStatus(user, status);
+  }
+
+  public Reservation getById(Long id) {
+    return reservationRepository.findById(id).orElse(null);
+  }
+
+  public void delete(Reservation reservation) {
+    reservationRepository.delete(reservation);
   }
 
 }

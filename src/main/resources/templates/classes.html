@@ -240,8 +240,9 @@
                 <!-- 5. FINAL BUTTONS -->
                 <div class="botones-popup">
                     <a href="#" class="btn-cancel">Cancelar</a>
-                    <button type="submit" class="btn-confirm">Añadir al carrito</button>
-                    <button type="submit" class="btn-confirm">Confirmar Reserva</button>
+                    <button type="submit" class="btn-confirm" name="action" value="add">Añadir al carrito</button>
+                    <button type="submit" class="btn-confirm" name="action" value="confirm">Confirmar Reserva</button>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
 
                 </div>
             </form>

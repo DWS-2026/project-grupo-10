@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 
@@ -13,12 +13,12 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  
     private String name;
-    @OneToOne
+    @ManyToOne
     private User user;
 
-    @OneToOne
+    @ManyToOne
     private Facility facility;
-    @OneToOne
+    @ManyToOne
     private Classes classes;
     
     private String day;

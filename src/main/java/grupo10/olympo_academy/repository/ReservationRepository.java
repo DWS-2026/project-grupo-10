@@ -11,6 +11,8 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 boolean existsByFacilityAndStatus(Facility facility, String status);
 boolean existsByClassesAndStatus(Classes classes, String status);
+boolean existsByFacilityAndStatusAndUser(Facility facility, String status, User user);
+boolean existsByClassesAndStatusAndUser(Classes classes, String status, User user);
 List<Reservation> findByUser(User user);
 List<Reservation> findByUserAndStatus(User user, String status);
 
