@@ -27,10 +27,30 @@
                     {{/isAdmin}}
                 </ul>
 
-
+                <!-- UserProfileImage in navbar -->
                 <div class="d-none d-lg-flex align-items-center ms-3">
                     <div class="user-menu-icon" id="userMenuBtn" role="button" tabindex="0">
-                        <img src="/assets/images/fotoPerfilweb.webp" alt="user menu">
+
+                        <!-- If no user is logged in -->
+                        {{^user}}
+                        <img src="/assets/images/fotoPerfilweb.webp" class="rounded-circle" width="150" height="150">
+                        {{/user}}
+
+                        <!-- When a user is logged in -->
+                        {{#user}}
+
+                        <!-- If user has a profile image -->
+                        {{#profileImage}}
+                        <img src="/images/id/{{user.profileImage.id}}" alt="user menu" class="rounded-circle" width="150" height="150">
+                        {{/profileImage}}
+
+                        <!-- If user does not have a profile image -->
+                        {{^profileImage}}
+                        <img src="/assets/images/fotoPerfilweb.webp" class="rounded-circle" width="150" height="150">
+                        {{/profileImage}}
+
+                        {{/user}}
+
                     </div>
                 </div>
 
@@ -63,7 +83,7 @@
     <div class="panel-links">
         <a href="/userProfile">Mi cuenta →</a>
         <a class="cart-link" style="cursor:pointer;">
-            <i class="fa-solid fa-cart-shopping"></i>
+            Carrito de reservas <i class="fa-solid fa-cart-shopping"></i>
         </a>
 
         <div class="cart-container">
@@ -91,11 +111,11 @@
             {{/cartReservations}}
 
         </div>
-        
+
         {{#user}}
         <form action="/logout" method="post">
             <button type="submit" class="btn btn-link p-0">Cerrar sesión →</button>
-            <input type="hidden" name="_csrf" value="{{token}}"/>
+            <input type="hidden" name="_csrf" value="{{token}}" />
         </form>
         {{/user}}
     </div>

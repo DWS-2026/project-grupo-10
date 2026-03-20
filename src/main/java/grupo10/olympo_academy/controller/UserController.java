@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -39,7 +40,11 @@ public class UserController {
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
 
     @GetMapping("/login")
-    public String getLogin() {
+    public String getLogin(@RequestParam(value = "error", required = false) String error,
+            Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Las credenciales son incorrectas, inténtalo de nuevo");
+        }
         return "login";
     }
 
@@ -58,6 +63,70 @@ public class UserController {
         model.addAttribute("user", user);
 
         return "userProfile";
+    }
+
+    @PostMapping("/updateProfile")
+    public String updateProfile(
+            @RequestParam String name,
+            //@RequestParam String email,
+            @RequestParam String username,
+            @RequestParam String phone,
+            Model model,
+            Principal principal) {
+
+        // Spring Security provides user email through Principal object, we can use it
+        // to fetch the user details from the database
+        String currentUserEmail = principal.getName();
+        
+        try {
+            userService.updateProfile(currentUserEmail, name, username, phone);
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "userProfile";
+        }
+
+        return "redirect:/userProfile";
+    }
+
+    @PostMapping("/updatePassword")
+    public String updatePassword(
+            @RequestParam String currentPassword,
+            @RequestParam String newPassword,
+            @RequestParam String confirmPassword,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            Principal principal) {
+
+        String currentUserEmail = principal.getName();
+
+        try {
+            userService.updatePassword(currentUserEmail, currentPassword, newPassword, confirmPassword);
+            redirectAttributes.addFlashAttribute("success", "Contraseña actualizada correctamente");
+            return "redirect:/userProfile";
+            
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "userProfile";
+        }
+
+    }
+
+    @PostMapping("/updateProfileImage")
+    public String updateProfileImage(
+            @RequestParam("photoFile") MultipartFile photoFile,
+            Model model,
+            Principal principal) {
+
+        String currentUserEmail = principal.getName();
+
+        try {
+            userService.updateProfileImage(currentUserEmail, photoFile);
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "userProfile";
+        }
+
+        return "redirect:/userProfile";
     }
 
     /////////////////////////////////////////////////////////////////// REGISTER
@@ -180,8 +249,8 @@ public class UserController {
             return "redirect:/admin";
         }
 
-        // Comprobar si tiene reservas activas
-        boolean hasActiveReservations = reservationService.hasActiveReservationsForFacility(facility);
+    // Comprobar si tiene reservas activas
+    boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
 
         if (hasActiveReservations) {
             model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
@@ -196,142 +265,8 @@ public class UserController {
         // Eliminar instalación
         facilityService.deleteFacility(id);
 
-        return "redirect:/admin";
-    }
-    ///////////////////////////////// Classes//////////////////////////////////////////////////////
-
-    
-@PostMapping("/admin/classes/save")
-public String processClasses(
-        Classes classes,
-        //@RequestParam String name,
-        //@RequestParam String description,
-        //@RequestParam String trainer,
-        //@RequestParam List<String> difficulty,
-        //@RequestParam List<String> day,
-        //@RequestParam List<String> startTime,
-        @RequestParam String durationRAW,
-        @RequestParam("photoFile") MultipartFile photoFile,
-        Model model) {
-
-    try {
-        /*Classes classes = new Classes();
-        classes.setName(name);
-        classes.setDescription(description);
-        classes.setTrainer(trainer);
-        classes.setStartTime(startTime);
-        classes.setDifficulty(difficulty);
-        classes.setDay(day);*/
-
-
-        int durationMinutes = convertDurationToMinutes(durationRAW);
-        classes.setDuration(durationMinutes);
-
-        if (!photoFile.isEmpty()) {
-            Image image = imageService.createImage(photoFile.getInputStream());
-           classes.setClassesImage(image);
-        }
-
-        classesService.saveClass(classes);
-
-        return "redirect:/admin";
-
-    } catch (Exception e) {
-        model.addAttribute("error", e.getMessage());
-        return "admin";
-    }
+    return "redirect:/admin";
 }
 
-
-    @PostMapping("/admin/classes/update")
-    public String updateClasses(
-            @RequestParam Long id,
-            @RequestParam String name,
-            @RequestParam String description,
-            @RequestParam String trainer,
-            @RequestParam List<String> difficulty,
-            @RequestParam List<String> day,
-            @RequestParam List<String> startTime,
-            @RequestParam String duration,
-            @RequestParam("photoFile") MultipartFile photoFile,
-            Model model) {
-
-        try {
-            // Buscamos si la instalación existe
-            Classes classes = classesService.getClassById(id);
-            if (classes == null) {
-                model.addAttribute("error", "La clase no existe");
-                return "admin";
-            }
-
-            // Actualizamos los campos
-            classes.setName(name);
-            classes.setDescription(description);
-            classes.setTrainer(trainer);
-            classes.setDifficulty(difficulty);
-            classes.setDay(day);
-            classes.setStartTime(startTime);
-
-            int durationMinutes = convertDurationToMinutes(duration);
-            classes.setDuration(durationMinutes);
-
-            // Si sube nueva imagen reemplazamos la antigua
-            if (!photoFile.isEmpty()) {
-                Image image = imageService.createImage(photoFile.getInputStream());
-                classes.setClassesImage(image);
-            }
-
-            // Guardar cambios
-            classesService.saveClass(classes);
-
-            return "redirect:/admin";
-
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "admin";
-        }
-
-    }
-
-    private int convertDurationToMinutes(String duration) {
-        switch (duration) {
-            case "1h":
-                return 60;
-            case "1:30h":
-                return 90;
-            case "2h":
-                return 120;
-            default:
-                return 60;
-        }
-    }
-
-    @GetMapping("/admin/classes/delete/{id}")
-    public String deleteClasses(@PathVariable Long id, Model model) {
-
-        Classes classes = classesService.getClassById(id);
-
-        if (classes == null) {
-            model.addAttribute("error", "La clase no existe");
-            return "redirect:/admin";
-        }
-
-        boolean hasActiveReservations = reservationService.hasActiveReservationsForClasses(classes);
-
-        if (hasActiveReservations) {
-            model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
-            return "redirect:/admin";
-        }
-
-        // Eliminar imagen asociada (opcional pero recomendable)
-        if (classes.getClassesImage() != null) {
-            imageService.deleteImage(classes.getClassesImage().getId());
-        }
-
-        // Eliminar instalación
-        classesService.deleteClass(id);
-
-        return "redirect:/admin";
-    }
 
 }

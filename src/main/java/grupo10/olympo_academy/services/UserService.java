@@ -3,7 +3,9 @@ package grupo10.olympo_academy.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.UserRepository;
 
@@ -15,6 +17,10 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ImageService imageService;
+
     // With Spring security, we don´t need to implement the login logic ourselves
 
     public User findByEmail(String email) {
@@ -29,7 +35,7 @@ public class UserService {
             throw new Exception("Email ya registrado");
         }
         // Unique username
-        if (userRepository.findByUsername(user.getUserName()).isPresent()) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new Exception("Username ya registrado");
         }
 
@@ -48,4 +54,59 @@ public class UserService {
     return userRepository.findAll();
 }
 
+    public User updateProfile(String currentUserEmail, String name, String username, String phone) throws Exception {
+        // we ensure that the user is updating their own profile by using the email from the session (currentUserEmail) to fetch the user from the database.
+        User user = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+
+        // Check if the new username is already taken by another user
+        if (!user.getUsername().equals(username) && userRepository.findByUsername(username).isPresent()) {
+            throw new Exception("Username ya registrado");
+        }
+        
+        // Check if the new email is already taken by another user
+        //if (!user.getEmail().equals(email) && userRepository.findByEmail(email).isPresent()) {
+        //   throw new Exception("Email ya registrado");
+        //}
+
+        // Check if the new phone number is already taken by another user
+        if (!user.getPhone().equals(phone) && userRepository.findByPhone(phone).isPresent()) {
+            throw new Exception("Número de teléfono ya registrado");
+        }
+
+        user.setName(name);
+        user.setUsername(username);
+        user.setPhone(phone);
+
+        return userRepository.save(user);
+    }
+
+    public User updatePassword(String currentUserEmail, String currentPassword, String newPassword, String confirmPassword) throws Exception {
+        // we ensure that the user is updating his own password by using the email from the session (currentUserEmail) to fetch the user from the database.
+        User user = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+
+        // check if users input matches his current password stored in the database
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new Exception("Contraseña actual incorrecta");
+        }
+
+        // Check if new password and confirm password match
+        if (!newPassword.equals(confirmPassword)) {
+            throw new Exception("Las nuevas contraseñas no coinciden");
+        }
+
+        // Update the password
+        user.setPassword(passwordEncoder.encode(newPassword));
+        
+        return userRepository.save(user);
+    }
+
+    public User updateProfileImage(String currentUserEmail, MultipartFile photoFile) throws Exception {
+        // we ensure that the user is updating his own profile image by using the email from the session (currentUserEmail) to fetch the user from the database.
+        User user = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+
+        Image image = imageService.createImage(photoFile.getInputStream());
+        user.setProfileImage(image);
+
+        return userRepository.save(user);
+    }
 }

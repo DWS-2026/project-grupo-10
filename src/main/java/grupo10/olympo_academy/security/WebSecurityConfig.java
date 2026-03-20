@@ -69,7 +69,7 @@ public class WebSecurityConfig {
 					.logoutSuccessUrl("/")
 					.permitAll()
 			);
-
+			//http.csrf().disable(); // DESHABILITAR CSRF PARA PRUEBAS (NO RECOMENDADO EN PRODUCCIÓN)
 		return http.build();
 	}
 }

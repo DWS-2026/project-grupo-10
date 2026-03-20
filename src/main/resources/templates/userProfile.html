@@ -15,15 +15,36 @@
 
     <div class="container py-5">
 
+        {{#error}}
+        <div id="globalAlert" class="alert alert-danger auto-hide-alert fixed-alert" role="alert"
+            data-hide-delay="5000">
+            {{.}}
+        </div>
+        {{/error}}
+
+        {{#success}}
+        <div class="alert alert-success auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+            {{.}}
+        </div>
+        {{/success}}
+
         <!-- User's Data -->
         <section id="user-profile" class="mb-5 text-center">
             <h2 class="mb-4">Mi Perfil</h2>
 
-            <img src="/assets/images/fotoPerfilweb.webp" alt="Profile photo" class="rounded-circle mb-3" width="150"
+            {{#user.profileImage}}
+            <img src="/images/id/{{user.profileImage.id}}" alt="Profile photo" class="rounded-circle mb-3" width="150"
                 height="150">
+            {{/user.profileImage}}
+            
+            {{^user.profileImage}}
+            <img src="/assets/images/fotoPerfilweb.webp" class="rounded-circle mb-3" width="150" height="150">
+            {{/user.profileImage}}
 
             <p><strong>Nombre:</strong> {{user.name}}</p>
+            <p><strong>Nombre de usuario:</strong> {{user.username}}</p>
             <p><strong>Email:</strong> {{user.email}}</p>
+            <p><strong>Número de teléfono:</strong> {{user.phone}}</p>
 
             <div class="d-flex justify-content-center gap-2 mt-3">
                 <a href="#edit-data" class="btn btn-warning">Editar datos</a>
@@ -92,17 +113,23 @@
                 <a href="#" class="close">&times;</a>
                 <h3>Editar Datos</h3>
 
-                <form>
+                <form method="post" action="/updateProfile">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" value="Juan Pérez">
+                        <input type="text" class="form-control" name="name" value={{user.name}}>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" value="juanperez@email.com">
+                        <label class="form-label">Nombre de usuario</label>
+                        <input type="text" class="form-control" name="username" value={{user.username}}>
                     </div>
-                    <input type="hidden" name="_csrf" value="{{token}}"/>
+
+                    <div class="mb-3">
+                        <label class="form-label">Numero de telefono</label>
+                        <input type="text" class="form-control" name="phone" value={{user.phone}}>
+                    </div>
+
+                    <input type="hidden" name="_csrf" value="{{token}}" />
                     <button class="btn btn-success">Guardar cambios</button>
                 </form>
             </div>
@@ -114,18 +141,25 @@
                 <a href="#" class="close">&times;</a>
                 <h3>Cambiar Contraseña</h3>
 
-                <form>
+                <form method="post" action="/updatePassword">
+
                     <div class="mb-3">
                         <label class="form-label">Contraseña actual</label>
-                        <input type="password" class="form-control">
+                        <input type="password" class="form-control" name="currentPassword" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nueva contraseña</label>
-                        <input type="password" class="form-control">
+                        <input type="password" class="form-control" name="newPassword" minlength="8" maxlength="20"
+                            required>
                     </div>
 
-                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <div class="mb-3">
+                        <label class="form-label">Repita la nueva contraseña</label>
+                        <input type="password" class="form-control" name="confirmPassword" required>
+                    </div>
+
+                    <input type="hidden" name="_csrf" value="{{token}}" />
                     <button class="btn btn-success">Actualizar contraseña</button>
                 </form>
             </div>
@@ -167,18 +201,20 @@
 
                 <h3>Cambiar Foto de Perfil</h3>
 
-                <form  method = post enctype="multipart/form-data">
+                <form method=post enctype="multipart/form-data" action="/updateProfileImage">
                     <div class="mb-3">
                         <label class="form-label">Foto actual</label><br>
-                        <img src="images/fotoPerfilweb.webp" width="120" height="120" class="rounded-circle mb-3">
+                        {{#user.profileImage}}
+                            <img src="/images/id/{{user.profileImage.id}}" width="120" height="120" class="rounded-circle mb-3">
+                        {{/user.profileImage}}
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Subir nueva foto</label>
-                        <input type="file" name="profileImge" class="form-control" required>
+                        <input type="file" name="photoFile" class="form-control" required>
                     </div>
 
-                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
                     <button class="btn btn-success mt-2">Guardar nueva foto</button>
                 </form>
             </div>

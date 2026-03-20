@@ -1022,3 +1022,17 @@ main {
         width: 100%;
     }
 }
+.cart-container.show{
+    display:block;
+}
+
+.fixed-alert {
+  position: fixed;
+  top: 120px;
+  left: 20px;
+  right: 20px;
+  max-width: 480px;
+  z-index: 10000;
+}
+
+
