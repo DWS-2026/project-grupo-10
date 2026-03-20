@@ -1,5 +1,6 @@
 package grupo10.olympo_academy.controller;
 
+import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
@@ -9,6 +10,7 @@ import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,7 @@ public class UserController {
 
     /////////////////////////////////////////////////////////////////// LOGIN
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
+
     @GetMapping("/login")
     public String getLogin(@RequestParam(value = "error", required = false) String error,
             Model model) {
@@ -131,7 +133,6 @@ public class UserController {
 
     /////////////////////////////////////////////////////////////////// REGISTER
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
     @GetMapping("/register")
     public String showRegister() {
         return "register";
@@ -157,8 +158,8 @@ public class UserController {
     }
 
     ////////////////////////////////////////////////////////////////// ADMIN
-    ////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////////
+
     @GetMapping("/admin")
     public String getAdmin(Model model) {
         model.addAttribute("users", userService.getAllUsers());
@@ -166,6 +167,8 @@ public class UserController {
         model.addAttribute("classes", classesService.getAllClasses());
         return "admin";
     }
+    //////////////////////////////////////// Facility
+    //////////////////////////////////////// //////////////////////////////////////////////////////
 
     @PostMapping("/admin/facility/save")
     public String processFacility(
@@ -248,8 +251,8 @@ public class UserController {
             return "redirect:/admin";
         }
 
-        // Comprobar si tiene reservas activas
-        boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
+    // Comprobar si tiene reservas activas
+    boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
 
         if (hasActiveReservations) {
             model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
@@ -264,7 +267,8 @@ public class UserController {
         // Eliminar instalación
         facilityService.deleteFacility(id);
 
-        return "redirect:/admin";
-    }
+    return "redirect:/admin";
+}
+
 
 }

@@ -25,4 +25,7 @@ public class ClassesService {
     public Classes saveClass(Classes classes) {
         return classesRepository.save(classes);
     }
+    public void deleteClass(Long id) {
+    classesRepository.deleteById(id);
+}
 }

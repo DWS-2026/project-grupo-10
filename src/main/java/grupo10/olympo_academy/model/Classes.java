@@ -2,11 +2,13 @@ package grupo10.olympo_academy.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -19,6 +21,7 @@ public class Classes {
     private String name;
     private String description;
     private String trainer;
+    private int availableSpots;
 
     @ElementCollection
     private List<String> difficulty;
@@ -31,18 +34,23 @@ public class Classes {
 
     private int duration;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Image classesImage;
+    
+    @OneToMany
+    private List<Review> reviews;
 
     @OneToOne
     private Facility facility;
 
-    public Classes() {}
+    public Classes() {
+    }
 
-    public Classes(String name, String description, String trainer) {
+    public Classes(String name, String description, String trainer, Image classesImage) {
         this.name = name;
         this.description = description;
         this.trainer = trainer;
+        this.classesImage= classesImage;
     }
 
     public Long getId() {
@@ -107,6 +115,13 @@ public class Classes {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+    public int getAvailableSpots() {
+        return availableSpots;
+    }
+
+    public void setAvailableSpots(int availableSpots) {
+        this.availableSpots = availableSpots;
     }
 
     public Image getClassesImage() {
