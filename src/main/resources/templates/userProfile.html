@@ -68,14 +68,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#activeReservations}}
                         <tr>
-                            <td>20/03/2026</td>
-                            <td>Clase de natacion</td>
-                            <td class="text-success fw-bold">Confirmada</td>
+                            <td>{{day}} {{startTime}}</td>
+                            <td>{{name}}</td>
+                            <td class="text-success fw-bold">{{status}}</td>
                             <td>
                                 <a href="#change-profile" class="btn btn-danger btn-sm">Cancelar</a>
                             </td>
                         </tr>
+                        {{/activeReservations}}
+                        {{^activeReservations}}
+                        <tr>
+                            <td colspan="4" class="text-muted">No tienes reservas futuras.</td>
+                        </tr>
+                        {{/activeReservations}}
                     </tbody>
                 </table>
             </div>
@@ -95,11 +102,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#pastReservations}}
                         <tr>
-                            <td>10/01/2025</td>
-                            <td>Pista de tenis</td>
-                            <td class="text-dark fw-bold">Finalizada</td>
+                            <td>{{day}} {{startTime}}</td>
+                            <td>{{name}}</td>
+                            <td class="text-dark fw-bold">{{status}}</td>
                         </tr>
+                        {{/pastReservations}}
+                        {{^pastReservations}}
+                        <tr>
+                            <td colspan="3" class="text-muted">No tienes reservas pasadas.</td>
+                        </tr>
+                        {{/pastReservations}}
                     </tbody>
                 </table>
             </div>

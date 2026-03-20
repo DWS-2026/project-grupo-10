@@ -35,12 +35,45 @@ function initAutoHideAlerts() {
     });
 }
 
+function initBookingPopup() {
+    const buttons = document.querySelectorAll('.booking-btn');
+    if (!buttons.length) return;
+
+    const classIdInput = document.getElementById('booking-class-id');
+    const facilityIdInput = document.getElementById('booking-facility-id');
+    const nameInput = document.getElementById('booking-name');
+
+    buttons.forEach((btn) => {
+        if (btn.dataset.listenerAttached) return;
+        btn.addEventListener('click', () => {
+            const type = btn.dataset.type;
+            const id = btn.dataset.id;
+            const name = btn.dataset.name;
+
+            if (nameInput) nameInput.value = name || '';
+
+            if (type === 'class') {
+                if (classIdInput) classIdInput.value = id || '';
+                if (facilityIdInput) facilityIdInput.value = '';
+            } else {
+                if (facilityIdInput) facilityIdInput.value = id || '';
+                if (classIdInput) classIdInput.value = '';
+            }
+        });
+        btn.dataset.listenerAttached = 'true';
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUserSidePanel();
     initAutoHideAlerts();
+    initBookingPopup();
 });
 
-document.querySelector(".cart-link").onclick = function() {
-    document.querySelector(".cart-container") 
-        .classList.toggle("show");
+const cartLink = document.querySelector(".cart-link");
+if (cartLink) {
+    cartLink.onclick = function() {
+        document.querySelector(".cart-container") 
+            .classList.toggle("show");
+    };
 }

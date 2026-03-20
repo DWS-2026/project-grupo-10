@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 
 @Controller
@@ -13,9 +14,13 @@ public class FacilityController {
 
     @Autowired
     private FacilityService facilityService;
+    @Autowired
+    private ClassesService classesService;
 
     @GetMapping("/bookings")
-    public String getBooking() {
+    public String getBooking(Model model) {
+        model.addAttribute("classes", classesService.getAllClasses());
+        model.addAttribute("facilities", facilityService.getAllFacilities());
         return "bookings";
     }
 
