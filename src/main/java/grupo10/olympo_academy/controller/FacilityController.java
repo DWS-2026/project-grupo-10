@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
@@ -24,6 +25,8 @@ public class FacilityController {
 
     @Autowired
     private FacilityService facilityService;
+    @Autowired
+    private ClassesService classesService;
     @Autowired
     private ReviewService reviewService;
     @Autowired
