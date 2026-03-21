@@ -1,5 +1,7 @@
 package grupo10.olympo_academy.controller;
 
+
+import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
@@ -9,6 +11,7 @@ import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +39,7 @@ public class UserController {
 
     /////////////////////////////////////////////////////////////////// LOGIN
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
+
     @GetMapping("/login")
     public String getLogin(@RequestParam(value = "error", required = false) String error,
             Model model) {
@@ -59,7 +62,8 @@ public class UserController {
         User user = userService.findByEmail(email);
 
         model.addAttribute("user", user);
-
+        model.addAttribute("reservations", reservationService.getReservationsByUser(user));
+        
         return "userProfile";
     }
 
@@ -129,7 +133,6 @@ public class UserController {
 
     /////////////////////////////////////////////////////////////////// REGISTER
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
     @GetMapping("/register")
     public String showRegister() {
         return "register";
@@ -157,8 +160,8 @@ public class UserController {
     }
 
     ////////////////////////////////////////////////////////////////// ADMIN
-    ////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////////
+
     @GetMapping("/admin")
     public String getAdmin(Model model) {
         model.addAttribute("users", userService.getAllUsers());
@@ -166,6 +169,8 @@ public class UserController {
         model.addAttribute("classes", classesService.getAllClasses());
         return "admin";
     }
+    //////////////////////////////////////// Facility
+    //////////////////////////////////////// //////////////////////////////////////////////////////
 
     @PostMapping("/admin/facility/save")
     public String processFacility(
@@ -248,8 +253,8 @@ public class UserController {
             return "redirect:/admin";
         }
 
-        // Comprobar si tiene reservas activas
-        boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
+    // Comprobar si tiene reservas activas
+    boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
 
         if (hasActiveReservations) {
             model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
@@ -264,7 +269,146 @@ public class UserController {
         // Eliminar instalación
         facilityService.deleteFacility(id);
 
+    return "redirect:/admin";
+}
+
+
+ ///////////////////////////////// Classes//////////////////////////////////////////////////////
+
+    
+@PostMapping("/admin/classes/save")
+public String processClasses(
+        Classes classes,
+        //@RequestParam String name,
+        //@RequestParam String description,
+        //@RequestParam String trainer,
+        //@RequestParam List<String> difficulty,
+        //@RequestParam List<String> day,
+        //@RequestParam List<String> startTime,
+        @RequestParam String durationRAW,
+        @RequestParam("photoFile") MultipartFile photoFile,
+        Model model) {
+
+    try {
+        /*Classes classes = new Classes();
+        classes.setName(name);
+        classes.setDescription(description);
+        classes.setTrainer(trainer);
+        classes.setStartTime(startTime);
+        classes.setDifficulty(difficulty);
+        classes.setDay(day);*/
+
+
+        int durationMinutes = convertDurationToMinutes(durationRAW);
+        classes.setDuration(durationMinutes);
+
+        if (!photoFile.isEmpty()) {
+            Image image = imageService.createImage(photoFile.getInputStream());
+           classes.setClassesImage(image);
+        }
+
+        classesService.saveClass(classes);
+
+        return "redirect:/admin";
+
+    } catch (Exception e) {
+        model.addAttribute("error", e.getMessage());
+        return "admin";
+    }
+}
+
+
+    @PostMapping("/admin/classes/update")
+    public String updateClasses(
+            @RequestParam Long id,
+            @RequestParam String name,
+            @RequestParam String description,
+            @RequestParam String trainer,
+            @RequestParam List<String> difficulty,
+            @RequestParam List<String> day,
+            @RequestParam List<String> startTime,
+            @RequestParam String durationRAW,
+            //@RequestParam String duration,
+            @RequestParam("photoFile") MultipartFile photoFile,
+            Model model) {
+
+        try {
+            // Buscamos si la instalación existe
+            Classes classes = classesService.getClassById(id);
+            if (classes == null) {
+                model.addAttribute("error", "La clase no existe");
+                return "admin";
+            }
+
+            // Actualizamos los campos
+            classes.setName(name);
+            classes.setDescription(description);
+            classes.setTrainer(trainer);
+            classes.setDifficulty(difficulty);
+            classes.setDay(day);
+            classes.setStartTime(startTime);
+
+            int durationMinutes = convertDurationToMinutes(durationRAW);
+            classes.setDuration(durationMinutes);
+
+            // Si sube nueva imagen reemplazamos la antigua
+            if (!photoFile.isEmpty()) {
+                Image image = imageService.createImage(photoFile.getInputStream());
+                classes.setClassesImage(image);
+            }
+
+            // Guardar cambios
+            classesService.saveClass(classes);
+
+            return "redirect:/admin";
+
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "admin";
+        }
+
+    }
+
+    private int convertDurationToMinutes(String duration) {
+        switch (duration) {
+            case "1h":
+                return 60;
+            case "1:30h":
+                return 90;
+            case "2h":
+                return 120;
+            default:
+                return 60;
+        }
+    }
+
+    @GetMapping("/admin/classes/delete/{id}")
+    public String deleteClasses(@PathVariable Long id, Model model) {
+
+        Classes classes = classesService.getClassById(id);
+
+        if (classes == null) {
+            model.addAttribute("error", "La clase no existe");
+            return "redirect:/admin";
+        }
+
+        boolean hasActiveReservations = reservationService.hasActiveReservationsForClasses(classes);
+
+        if (hasActiveReservations) {
+            model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
+            return "redirect:/admin";
+        }
+
+        // Eliminar imagen asociada (opcional pero recomendable)
+        if (classes.getClassesImage() != null) {
+            imageService.deleteImage(classes.getClassesImage().getId());
+        }
+
+        // Eliminar instalación
+        classesService.deleteClass(id);
+
         return "redirect:/admin";
     }
+
 
 }

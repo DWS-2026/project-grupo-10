@@ -1,4 +1,4 @@
-package grupo10.olympo_academy.controller;
+/*package grupo10.olympo_academy.controller;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -61,7 +61,7 @@ public class ReviewController {
     // Save review
     /////////////////////////////////////////////////////////////
 
-    @PostMapping("/save")
+    @PostMapping("/facility/reviews/save")
     public String saveReview(@RequestParam int rating,
                              @RequestParam String comment,
                              Principal principal) {
@@ -86,7 +86,7 @@ public class ReviewController {
 
         reviewService.saveReview(review);
 
-        return "redirect:/reviews";
+        return "redirect:/facility/" + review.getFacility().getId();
     }
 
 
@@ -113,4 +113,4 @@ public class ReviewController {
         return "redirect:/reviews";
     }
 
-}
+}*/

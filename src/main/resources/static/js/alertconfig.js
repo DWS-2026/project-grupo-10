@@ -1,6 +1,7 @@
 function initUserSidePanel() {
     const userMenuBtn = document.getElementById('userMenuBtn');
     const closePanelBtn = document.getElementById('closePanelBtn');
+    const cartLink = document.querySelector('.cart-link');
 
     if (userMenuBtn && !userMenuBtn.dataset.listenerAttached) {
         userMenuBtn.addEventListener('click', () => {
@@ -14,6 +15,15 @@ function initUserSidePanel() {
             document.getElementById('userSidePanel')?.classList.remove('open');
         });
         closePanelBtn.dataset.listenerAttached = 'true';
+    }
+
+    if (cartLink && !cartLink.dataset.listenerAttached) {
+        cartLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            document.getElementById('userSidePanel')?.classList.add('open');
+            document.querySelector('.cart-container')?.classList.toggle('show');
+        });
+        cartLink.dataset.listenerAttached = 'true';
     }
 }
 
@@ -32,7 +42,50 @@ function initAutoHideAlerts() {
     });
 }
 
+function initBookingPopup() {
+    const buttons = document.querySelectorAll('.booking-btn');
+    if (!buttons.length) return;
+
+    const classIdInput = document.getElementById('booking-class-id');
+    const facilityIdInput = document.getElementById('booking-facility-id');
+    const nameInput = document.getElementById('booking-name');
+
+    buttons.forEach((btn) => {
+        if (btn.dataset.listenerAttached) return;
+        btn.addEventListener('click', () => {
+            const type = btn.dataset.type;
+            const id = btn.dataset.id;
+            const name = btn.dataset.name;
+
+            if (nameInput) nameInput.value = name || '';
+
+            if (type === 'class') {
+                if (classIdInput) classIdInput.value = id || '';
+                if (facilityIdInput) facilityIdInput.value = '';
+            } else {
+                if (facilityIdInput) facilityIdInput.value = id || '';
+                if (classIdInput) classIdInput.value = '';
+            }
+        });
+        btn.dataset.listenerAttached = 'true';
+    });
+}
+
+function initClassDayMin() {
+    // Ensures the class date picker only allows today or future dates.
+    const input = document.getElementById('class-day');
+    if (!input) return;
+
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    input.min = `${yyyy}-${mm}-${dd}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUserSidePanel();
     initAutoHideAlerts();
+    initBookingPopup();
+    initClassDayMin();
 });

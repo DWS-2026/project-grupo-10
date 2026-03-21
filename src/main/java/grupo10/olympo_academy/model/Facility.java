@@ -84,5 +84,15 @@ public class Facility {
     public void setType(String type) {
         this.type = type;
     }
+     public void addReview(Review review) {
+        reviews.add(review);
+        review.setFacility(this);
+    }
+    
+    // Método helper para eliminar una reseña
+    public void removeReview(Review review) {
+        reviews.remove(review);
+        review.setFacility(null);
+    }
 
 }

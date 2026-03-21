@@ -53,9 +53,9 @@
             </div>
         </section>
 
-        <!-- Future Bookings -->
+        <!-- Bookings -->
         <section id="future-bookings" class="mb-5">
-            <h2 class="mb-3">Reservas Futuras</h2>
+            <h2 class="mb-3">Mis Reservas</h2>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -68,38 +68,30 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#reservations}}
                         <tr>
-                            <td>20/03/2026</td>
-                            <td>Clase de natacion</td>
-                            <td class="text-success fw-bold">Confirmada</td>
+                            <td>{{day}} {{startTime}}</td>
+                            <td>{{name}}</td>
+                            <td class="fw-bold">{{status}}</td>
                             <td>
-                                <a href="#change-profile" class="btn btn-danger btn-sm">Cancelar</a>
+                                <form method="post" action="/reservations/cancel" class="d-inline">
+                                    <input type="hidden" name="id" value="{{id}}">
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
+                                    <button class="btn btn-danger btn-sm">Cancelar</button>
+                                </form>
+                                <form method="post" action="/reservations/delete" class="d-inline">
+                                    <input type="hidden" name="id" value="{{id}}">
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
+                                    <button class="btn btn-outline-danger btn-sm">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Past Bookings -->
-        <section id="past-bookings">
-            <h2 class="mb-3">Reservas Pasadas</h2>
-
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead class="table-light">
+                        {{/reservations}}
+                        {{^reservations}}
                         <tr>
-                            <th>Fecha</th>
-                            <th>Servicio</th>
-                            <th>Estado</th>
+                            <td colspan="4" class="text-muted">No tienes reservas.</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>10/01/2025</td>
-                            <td>Pista de tenis</td>
-                            <td class="text-dark fw-bold">Finalizada</td>
-                        </tr>
+                        {{/reservations}}
                     </tbody>
                 </table>
             </div>
@@ -165,20 +157,6 @@
             </div>
         </div>
 
-        <!-- Cancel reservation -->
-        <div id="change-profile" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Cancelar Reserva</h3>
-                <p>¿Seguro que quieres cancelar la reserva del <strong>20/03/2026</strong>?</p>
-
-                <div class="d-flex gap-2 mt-3">
-                    <button class="btn btn-danger">Sí, cancelar</button>
-                    <a href="#" class="btn btn-secondary">Volver</a>
-                </div>
-            </div>
-        </div>
-
         <!-- Delete review  -->
         <div id="delete-review" class="popup">
             <div class="popup-content">
@@ -224,3 +202,7 @@
 </body>
 
 </html>
+
+
+
+

@@ -24,6 +24,9 @@ public class Review {
     @ManyToOne
     private Facility facility; 
 
+    @ManyToOne
+    private Classes classes;
+
     public Review () {}
 
     public Long getId() {
@@ -37,9 +40,26 @@ public class Review {
     public int getRating() {
         return rating;
     }
+    
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+    public Facility getFacility() {
+        return facility;
+    }
+    
+
+    public void setFacility(Facility facility) {
+        this.facility = facility;
+    }
+     public Classes getClasses() {
+        return classes;
+    }
+    
+
+    public void setClasses(Classes classes) {
+        this.classes = classes;
     }
 
     public String getComment() {
@@ -64,10 +84,6 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Facility getFacility() {
-        return facility;
     }
 
 }

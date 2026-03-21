@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-    <title>{{facility.name}} - Olympo Academy</title>
+    <title>{{classes.name}} - Olympo Academy</title>
     <link rel="icon" type="image/png" href="/assets/images/logoSinFondo.png" />
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -19,21 +19,21 @@
     {{>header}}
 
     <!-- Detalle de Instalación -->
-    <main class="facility-detail">
+    <main class="Facility-detail">
         <div class="container">
             <!-- Título -->
-            <h1 class="facility-title">{{facility.name}}</h1>
+            <h1 class="facility-title">{{classes.name}}</h1>
 
             <!-- Imagen Principal -->
             <div class="text-center">
-                <img src="/images/id/{{facility.facilityImage.id}}" alt="{{facility.name}}" class="facility-image">
+                <img src="/images/id/{{classes.classesImage.id}}" alt="{{classes.name}}" class="facility-image">
             </div>
 
             <!-- Descripción con borde -->
             <div class="description-box">
-                <p class="facility-description">{{facility.description}}</p>
+                <p class="facility-description">{{classes.description}}</p>
             </div>
-
+        
             <!-- Botones -->
             <div class="buttons-container">
                 <a href="#booking-popup" class="btn btn-primary btn-custom-primary  mt-2">Reservar ahora</a>
@@ -60,7 +60,7 @@
 
                                 <!-- USER LOGGED IN -->
                                 {{#user}}
-                                <form action="/facilities/{{facility.id}}/review" method="POST">
+                                <form action="/classes/{{classes.id}}/review" method="POST">
                                     <div class="mb-3">
                                         <label class="form-label">Puntuación (1-5)</label>
                                         <input type="number" name="rating" min="1" max="5" class="form-control"
@@ -120,7 +120,7 @@
                                         <small class="text-muted">{{date}}</small>
 
                                         <div class="mt-2">
-                                            <form action="/facilities/{{facility.id}}/review/delete" method="post">
+                                            <form action="/classes/{{classes.id}}/review/delete" method="post">
                                                 <input type="hidden" name="_csrf" value="{{token}}" />
                                                 <input type="hidden" name="id" value="{{id}}">
                                                 <button class="btn btn-danger btn-sm">Eliminar</button>
@@ -146,47 +146,43 @@
 
     {{>footer}}
 
-    <!-- Popup for Facilities -->
+    <!-- Popup for Bookings  -->
     <div id="booking-popup" class="popup">
         <div class="popup-content">
             <a href="#" class="close">&times;</a>
-            <h3>Reservar Instalación</h3>
+            <h3>Reservar Actividad</h3>
 
-            <!-- Facilities Form -->
+            <!-- Booking Form  -->
             <form method="post" action="/cart/add">
-                <input type="hidden" name="facilityId" value="{{facility.id}}">
-                <input type="hidden" name="name" value="{{facility.name}}">
-                <!-- 1. Day-->
+                <input type="hidden" name="classId" value="{{classes.id}}">
+                <input type="hidden" name="name" value="{{classes.name}}">
+                <!-- 1. Level-->
                 <div class="section-form">
-                    <label class="section-title">Selecciona el día *</label>
+                    <label class="section-title">Selecciona tu nivel *</label>
                     <div class="options-grid">
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Lunes" required>
-                            <div class="day-square">Lunes</div>
+                        <label class="option-level">
+                            <input type="radio" name="level" value="low" required>
+                            <div class="level-square">
+                                <span class="emoji-level">👶</span>
+                                <span class="text-level">Bajo</span>
+                                <span class="description-level">Principiante</span>
+                            </div>
                         </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Martes">
-                            <div class="day-square">Martes</div>
+                        <label class="option-level">
+                            <input type="radio" name="level" value="intermediate">
+                            <div class="level-square">
+                                <span class="emoji-level">👍</span>
+                                <span class="text-level">Medio</span>
+                                <span class="description-level">Intermedio</span>
+                            </div>
                         </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Miércoles">
-                            <div class="day-square">Miércoles</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Jueves">
-                            <div class="day-square">Jueves</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Viernes">
-                            <div class="day-square">Viernes</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Sábado">
-                            <div class="day-square">Sábado</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Domingo">
-                            <div class="day-square">Domingo</div>
+                        <label class="option-level">
+                            <input type="radio" name="level" value="high">
+                            <div class="level-square">
+                                <span class="emoji-level">🏆</span>
+                                <span class="text-level">Alto</span>
+                                <span class="description-level">Avanzado</span>
+                            </div>
                         </label>
                     </div>
                 </div>
@@ -219,7 +215,7 @@
                 </div>
 
                 <!-- 3. DURATION -->
-                <div class="section-form">
+               <div class="section-form">
                     <label class="section-title">Duración *</label>
                     <div class="options-grid">
                         <label class="duration-option">
@@ -234,38 +230,32 @@
                                 <span class="duration-time">1 hora</span>
                             </div>
                         </label>
-                        <label class="duration-option">
-                            <input type="radio" name="duration" value="90">
-                            <div class="duration-square">
-                                <span class="duration-time">1h 30min</span>
-                            </div>
-                        </label>
                     </div>
                 </div>
-                <!-- 4. MATERIAL -->
+                
+                <!-- 4. DAY -->
                 <div class="section-form">
-                    <label class="option-material">
-                        <input type="checkbox" name="material">
-                        <span class="checkmark"></span>
-                        <span class="material-text">Necesito material deportivo</span>
-                    </label>
-                    <small class="help-text">(Raquetas, pelotas, aletas, etc.)</small>
+                    <label class="section-title">Selecciona el día *</label>
+                    <div class="options-grid">
+                        <input type="date" id="class-day" name="day" class="form-control" required>
+                    </div>
                 </div>
+
                 <!-- 5. FINAL BUTTONS -->
                 <div class="botones-popup">
                     <a href="#" class="btn-cancel">Cancelar</a>
                     <button type="submit" class="btn-confirm" name="action" value="add">Añadir al carrito</button>
                     <button type="submit" class="btn-confirm" name="action" value="confirm">Confirmar Reserva</button>
                     <input type="hidden" name="_csrf" value="{{token}}" />
+
                 </div>
             </form>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/alertconfig.js"></script>
+    <script src="/js/scripts.js"></script>
 </body>
-
 </html>
 
 

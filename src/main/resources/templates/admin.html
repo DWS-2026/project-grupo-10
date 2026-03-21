@@ -258,70 +258,13 @@
             </div>
         </section>
 
-        <!-- Class Table -->
-        <div class="table-responsive mb-4">
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Monitor</th>
-                        <th>Dificultad</th>
-                        <th>Días</th>
-                        <th>Horas</th>
-                        <th>Duración (min)</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {{#classes}}
-                    <tr>
-                        <td>{{name}}</td>
-                        <td>{{description}}</td>
-                        <td>{{trainer}}</td>
-                        <td>
-                            {{#difficulty}}
-                            {{.}}
-                            {{/difficulty}}
-                        </td>
-
-                        <td>
-                            {{#day}}
-                            {{.}}
-                            {{/day}}
-                        </td>
-                        <td>
-                            {{#startTime}}
-                            {{.}}
-                            {{/startTime}}
-                        </td>
-
-                        <td>{{duration}}</td>
-
-                        <td class="d-flex gap-2">
-                            <a href="#edit-class-{{id}}" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#delete-class-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
-                        </td>
-                    </tr>
-                    {{/classes}}
-
-                    {{^classes}}
-                    <tr>
-                        <td colspan="8" class="text-center text-muted">No hay clases registradas.</td>
-                    </tr>
-                    {{/classes}}
-                </tbody>
-            </table>
-        </div>
-
         <!-- Create Class Popup -->
         <div id="create-class-popup" class="popup">
             <div class="popup-content">
                 <a href="#" class="close">&times;</a>
                 <h3>Crear Clase</h3>
 
-                <form action="/admin/class/save" method="post">
+                <form action="/admin/classes/save" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Nombre *</label>
                         <input type="text" name="name" class="form-control" required>
@@ -334,27 +277,66 @@
 
                     <div class="mb-3">
                         <label class="form-label">Monitor *</label>
-                        <input type="text" name="monitor" class="form-control" required>
+                        <input type="text" name="trainer" class="form-control" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Dificultad *</label>
-                        <select name="difficulty" class="form-control" required>
-                            <option value="">Selecciona dificultad</option>
-                            <option value="Fácil">Fácil</option>
-                            <option value="Intermedio">Intermedio</option>
-                            <option value="Difícil">Difícil</option>
+                <!-- difficulty -->
+                <div class="mb-3">
+                    <label class="form-label">Dificultad *</label>
+                    <div>
+                        <select name="difficulty" class="form-control" multiple>
+                            <option value="Begginer"> Principiante</option>
+                            <option value="Intermediate"> Intermedio</option>
+                            <option value="Hard"> Avanzado</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <!-- days -->
+                <div class="mb-3">
+                    <label class="form-label">Días *</label>
+                    <div>
+                        <select name="days" class="form-control" multiple>
+                            <option value="Monday"> Lunes</option>
+                            <option value="Tuesday"> Martes</option>
+                            <option value="Wednesday"> Miércoles</option>
+                            <option value="Thursday"> Jueves</option>
+                            <option value="Friday"> Viernes</option>
+                            <option value="Saturday"> Sábado</option>
+                            <option value="Sunday"> Domingo</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- hours -->
+                <div class="mb-3">
+                    <label class="form-label">Horarios *</label>
+                    <div>
+                        <select name="startTime" class="form-control" multiple>
+                            <option value="08:00"> 08:00</option>
+                            <option value="10:00"> 10:00</option>
+                            <option value="12:00"> 12:00</option>
+                            <option value="16:00"> 16:00</option>
+                            <option value="18:00"> 18:00</option>
+                            <option value="20:00"> 20:00</option>
+                        </select>
+                    </div>
+                </div>
 
                     <div class="mb-3">
                         <label class="form-label">Duración *</label>
-                        <select name="duration" class="form-control" required>
+                        <select name="durationRAW" class="form-control" required>
                             <option value="">Selecciona duración</option>
                             <option value="1h">1h</option>
                             <option value="1:30h">1:30h</option>
                             <option value="2h">2h</option>
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Foto *</label>
+                        <input type="file" name="photoFile" class="form-control">
                     </div>
 
                     <button class="btn btn-success" type="submit">Guardar</button>
@@ -363,186 +345,204 @@
             </div>
         </div>
 
-        <!-- Classes List Popup -->
-        <div id="list-edit-class-popup" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Selecciona una clase</h3>
-
-                <div class="list-group">
-                    {{#classes}}
-                    <a href="#edit-class-{{id}}" class="list-group-item list-group-item-action">
-                        {{name}}
-                    </a>
-                    {{/classes}}
-
-                    {{^classes}}
-                    <p class="text-muted">No hay clases creadas.</p>
-                    {{/classes}}
-                </div>
-            </div>
-        </div>
-
-        <!-- Editing Classes -->
-        {{#classes}}
-        <div id="edit-class-{{id}}" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Editar: {{name}}</h3>
-
-                <form action="/admin/class/save" method="post">
-                    <input type="hidden" name="id" value="{{id}}">
-
-                    <!-- Nombre -->
-                    <div class="mb-3">
-                        <label class="form-label">Nombre *</label>
-                        <input type="text" name="name" class="form-control" value="{{name}}" required>
-                    </div>
-
-                    <!-- Descripción -->
-                    <div class="mb-3">
-                        <label class="form-label">Descripción *</label>
-                        <textarea name="description" class="form-control" rows="4">{{description}}</textarea>
-                    </div>
-
-                    <!-- Monitor -->
-                    <div class="mb-3">
-                        <label class="form-label">Monitor *</label>
-                        <input type="text" name="trainer" class="form-control" value="{{trainer}}" required>
-                    </div>
-
-                    <!-- Dificultad (lista) -->
-                    <div class="mb-3">
-                        <label class="form-label">Dificultad *</label>
-
-                        {{#difficulty}}
-                        <input type="text" name="difficulty" class="form-control mb-1" value="{{.}}">
-                        {{/difficulty}}
-
-                        <!-- Campo vacío para añadir nueva dificultad -->
-                        <input type="text" name="difficulty" class="form-control mt-2"
-                            placeholder="Añadir dificultad...">
-                    </div>
-
-                    <!-- Días (lista) -->
-                    <div class="mb-3">
-                        <label class="form-label">Días *</label>
-
-                        {{#day}}
-                        <input type="text" name="day" class="form-control mb-1" value="{{.}}">
-                        {{/day}}
-
-                        <input type="text" name="day" class="form-control mt-2" placeholder="Añadir día...">
-                    </div>
-
-                    <!-- Horas (lista) -->
-                    <div class="mb-3">
-                        <label class="form-label">Horas *</label>
-
-                        {{#startTime}}
-                        <input type="text" name="startTime" class="form-control mb-1" value="{{.}}">
-                        {{/startTime}}
-
-                        <input type="text" name="startTime" class="form-control mt-2" placeholder="Añadir hora...">
-                    </div>
-
-                    <!-- Duración -->
-                    <div class="mb-3">
-                        <label class="form-label">Duración (min) *</label>
-                        <input type="number" name="duration" class="form-control" value="{{duration}}" required>
-                    </div>
-
-                    <button class="btn btn-success" type="submit">Guardar cambios</button>
-                </form>
-
-                <div class="d-flex gap-2 mt-3">
-                    <a href="#delete-class-{{id}}" class="btn btn-danger">Eliminar clase</a>
-                </div>
-            </div>
-        </div>
-        {{/classes}}
-
-        <!-- Delete facilities -->
-        <section class="mb-5">
-            <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
-
-            <div class="alert alert-warning">
-                ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
-            </div>
-
-            <div class="list-group">
-                {{#facilities}}
-                <div class="list-group-item d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 class="mb-1">{{name}}</h5>
-                        <p class="mb-1">{{description}}</p>
-                    </div>
-                    <a href="#delete-facility-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
-                </div>
-                {{/facilities}}
-
-                {{^facilities}}
-                <p class="text-muted mb-0">No hay instalaciones para eliminar.</p>
-                {{/facilities}}
-            </div>
-        </section>
-
-        <!-- Delete Facility Confirmation -->
-        {{#facilities}}
-        <div id="delete-facility-{{id}}" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>¿Eliminar instalación?</h3>
-                <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
-
-                <div class="d-flex gap-2 mt-3">
-                    <a href="/admin/facility/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
-                    <a href="#" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </div>
-        </div>
-        {{/facilities}}
-
-        <!--Delete classes -->
-        <section class="mb-5">
-            <h2 class="mb-3 text-danger">Eliminar Clase</h2>
-
-            <div class="alert alert-warning">
-                ⚠️ Solo se puede eliminar la clase si no tiene reservas activas.
-            </div>
+   <!-- Classes List Popup -->
+    <div id="list-edit-class-popup" class="popup">
+        <div class="popup-content">
+            <a href="#" class="close">&times;</a>
+            <h3>Selecciona una clase</h3>
 
             <div class="list-group">
                 {{#classes}}
-                <div class="list-group-item d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 class="mb-1">{{name}}</h5>
-                        <p class="mb-1">{{description}}</p>
-                    </div>
-                    <a href="#delete-class-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
-                </div>
+                <a href="#edit-class-{{id}}" class="list-group-item list-group-item-action">
+                    {{name}}
+                </a>
                 {{/classes}}
 
                 {{^classes}}
-                <p class="text-muted">No hay clases para eliminar.</p>
+                <p class="text-muted">No hay clases creadas.</p>
                 {{/classes}}
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Delete Class Confirmation -->
-        {{#classes}}
-        <div id="delete-class-{{id}}" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>¿Eliminar clase?</h3>
-                <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
+    <!-- Editing Classes -->
+    {{#classes}}
+    <div id="edit-class-{{id}}" class="popup">
+        <div class="popup-content">
+            <a href="#" class="close">&times;</a>
+            <h3>Editar: {{name}}</h3>
 
-                <div class="d-flex gap-2 mt-3">
-                    <a href="/admin/class/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
-                    <a href="#" class="btn btn-secondary">Cancelar</a>
+            <form action="/admin/classes/update" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{id}}">
+
+                <!-- Name -->
+                <div class="mb-3">
+                    <label class="form-label">Nombre *</label>
+                    <input type="text" name="name" class="form-control" value="{{name}}" required>
                 </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label">Descripción *</label>
+                    <textarea name="description" class="form-control" rows="4">{{description}}</textarea>
+                </div>
+
+                <!-- Trainer -->
+                <div class="mb-3">
+                    <label class="form-label">Monitor *</label>
+                    <input type="text" name="trainer" class="form-control" value="{{trainer}}" required>
+                </div>
+
+                <!-- difficulty -->
+                <div class="mb-3">
+                    <label class="form-label">Dificultad *</label>
+                    <div>
+                        <select name="difficulty" class="form-control" multiple>
+                            <option value="Begginer"> Principiante</option>
+                            <option value="Intermediate"> Intermedio</option>
+                            <option value="Hard"> Avanzado</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <!-- days -->
+                <div class="mb-3">
+                    <label class="form-label">Días *</label>
+                    <div>
+                        <select name="days" class="form-control" multiple>
+                            <option value="Monday"> Lunes</option>
+                            <option value="Tuesday"> Martes</option>
+                            <option value="Wednesday"> Miércoles</option>
+                            <option value="Thursday"> Jueves</option>
+                            <option value="Friday"> Viernes</option>
+                            <option value="Saturday"> Sábado</option>
+                            <option value="Sunday"> Domingo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- hours -->
+                <div class="mb-3">
+                    <label class="form-label">Horarios *</label>
+                    <div>
+                        <select name="startTime" class="form-control" multiple>
+                            <option value="08:00"> 08:00</option>
+                            <option value="10:00"> 10:00</option>
+                            <option value="12:00"> 12:00</option>
+                            <option value="16:00"> 16:00</option>
+                            <option value="18:00"> 18:00</option>
+                            <option value="20:00"> 20:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- duration -->
+                <div class="mb-3">
+                    <label class="form-label">Duración *</label>
+                    <select name="duration" class="form-control" required>
+                        <option value="">Selecciona duración</option>
+                        <option value="1h">1h</option>
+                        <option value="1:30h">1:30h</option>
+                        <option value="2h">2h</option>
+                    </select>
+                </div>
+
+                <!-- photo -->
+                <div class="mb-3">
+                    <label class="form-label">Foto </label>
+                    <input type="file" name="photoFile" class="form-control">
+                </div>
+
+                <button class="btn btn-success" type="submit">Guardar cambios</button>
+                <input type="hidden" name="_csrf" value="{{token}}" />
+            </form>
+        </div>
+    </div>
+    {{/classes}}
+
+    
+    <!-- Delete facilities -->
+    <section class="mb-5">
+        <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
+
+        <div class="alert alert-warning">
+            ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
+        </div>
+
+        <div class="list-group">
+            {{#facilities}}
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">{{name}}</h5>
+                    <p class="mb-1">{{description}}</p>
+                </div>
+                <a href="#delete-facility-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
+            </div>
+            {{/facilities}}
+
+            {{^facilities}}
+            <p class="text-muted mb-0">No hay instalaciones para eliminar.</p>
+            {{/facilities}}
+        </div>
+    </section>
+
+    <!-- Delete Facility Confirmation -->
+    {{#facilities}}
+    <div id="delete-facility-{{id}}" class="popup">
+        <div class="popup-content">
+            <a href="#" class="close">&times;</a>
+            <h3>¿Eliminar instalación?</h3>
+            <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
+
+            <div class="d-flex gap-2 mt-3">
+                <a href="/admin/facility/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
+                <a href="#" class="btn btn-secondary">Cancelar</a>
             </div>
         </div>
-        {{/classes}}
+    </div>
+    {{/facilities}}
+
+    <!--Delete classes -->
+    <section class="mb-5">
+        <h2 class="mb-3 text-danger">Eliminar Clase</h2>
+
+        <div class="alert alert-warning">
+            ⚠️ Solo se puede eliminar la clase si no tiene reservas activas.
+        </div>
+
+        <div class="list-group">
+            {{#classes}}
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <h5 class="mb-1">{{name}}</h5>
+                    <p class="mb-1">{{description}}</p>
+                </div>
+                <a href="#delete-class-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
+            </div>
+            {{/classes}}
+
+            {{^classes}}
+            <p class="text-muted">No hay clases para eliminar.</p>
+            {{/classes}}
+        </div>
+    </section>
+
+    <!-- Delete Class Confirmation -->
+    {{#classes}}
+    <div id="delete-class-{{id}}" class="popup">
+        <div class="popup-content">
+            <a href="#" class="close">&times;</a>
+            <h3>¿Eliminar clase?</h3>
+            <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
+
+            <div class="d-flex gap-2 mt-3">
+                <a href="/admin/classes/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
+                <a href="#" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </div>
+    </div>
+    {{/classes}}
 
     </div>
 
