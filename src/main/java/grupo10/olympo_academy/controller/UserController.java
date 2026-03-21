@@ -138,7 +138,8 @@ public class UserController {
     @PostMapping("/register")
     public String processRegister(User user,
             @RequestParam String password2,
-            Model model) {
+            Model model,
+            RedirectAttributes redirectAttrs) { 
 
         if (!user.getPassword().equals(password2)) {
             model.addAttribute("error", "Las contraseñas no coinciden.");
@@ -147,7 +148,8 @@ public class UserController {
 
         try {
             userService.register(user);
-            return "redirect:/login?registered";
+            redirectAttrs.addFlashAttribute("success", "Registrado correctamente, ya puedes iniciar sesión.");
+            return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "register";

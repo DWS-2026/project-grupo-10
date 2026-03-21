@@ -53,14 +53,14 @@ public class WebSecurityConfig {
 					.requestMatchers("/userProfile").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/bookings").hasAnyRole("USER", "ADMIN")
 					.requestMatchers("/reviews").hasAnyRole("USER", "ADMIN")
-					.requestMatchers("/admin/**").hasRole("ADMIN")
+					.requestMatchers("/admin/**", "/adminPanel").hasRole("ADMIN")
 					.anyRequest().authenticated()
 			)
 
 			.formLogin(formLogin -> formLogin
 					.loginPage("/login")
 					.usernameParameter("email")
-					.defaultSuccessUrl("/userProfile") // no funciona el login
+					.defaultSuccessUrl("/userProfile") 
 					.failureUrl("/login?error")
 					.permitAll()
 			)
@@ -68,7 +68,9 @@ public class WebSecurityConfig {
 					.logoutUrl("/logout")
 					.logoutSuccessUrl("/")
 					.permitAll()
-			);
+			)
+			
+			.exceptionHandling(ex -> ex.accessDeniedPage("/"));	
 			//http.csrf().disable(); // DESHABILITAR CSRF PARA PRUEBAS (NO RECOMENDADO EN PRODUCCIÓN)
 		return http.build();
 	}

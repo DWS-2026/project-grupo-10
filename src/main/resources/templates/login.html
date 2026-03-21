@@ -29,10 +29,16 @@
             </div>
             {{/error}}
 
+            {{#success}}
+            <div class="alert alert-success text-center">
+              {{success}}
+            </div>
+            {{/success}}
+
             <form action="/login" method="post">
               <div class="mb-3">
-                <label for="email" class="form-label">Correo electrónico</label>
-                <input type="email" id="user" name="email" class="form-control" placeholder="tu.email@dominio.com"
+                <label for="text" class="form-label">Usuario o Correo</label>
+                <input type="text" id="user" name="email" class="form-control" placeholder="tu.email@dominio.com"
                   required />
                 <div class="form-text">Introduce tu usuario o correo.</div>
               </div>

@@ -1,6 +1,3 @@
-// Custom JavaScript for Olympo Academy
-// This file is loaded on every page (via footer partial) and contains shared UI helpers.
-
 function initUserSidePanel() {
     const userMenuBtn = document.getElementById('userMenuBtn');
     const closePanelBtn = document.getElementById('closePanelBtn');
@@ -39,8 +36,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initUserSidePanel();
     initAutoHideAlerts();
 });
-
-document.querySelector(".cart-link").onclick = function() {
-    document.querySelector(".cart-container") 
-        .classList.toggle("show");
-}

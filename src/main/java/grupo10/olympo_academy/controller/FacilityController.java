@@ -1,5 +1,7 @@
 package grupo10.olympo_academy.controller;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,15 @@ public class FacilityController {
 
     @GetMapping("/facilities/{id}")
     public String getFacilityById(@PathVariable Long id, Model model) {
-        model.addAttribute("facility", facilityService.getFacilityById(id));
 
+        var facility = facilityService.getFacilityById(id);
+
+        if(facility == null) {
+            throw new NoSuchElementException("Facility not found");
+        }
+
+        model.addAttribute("facility", facility);
+        
         return "facility";
     }
 
