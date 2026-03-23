@@ -51,22 +51,25 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-    return userRepository.findAll();
-}
+        return userRepository.findAll();
+    }
 
     public User updateProfile(String currentUserEmail, String name, String username, String phone) throws Exception {
-        // we ensure that the user is updating their own profile by using the email from the session (currentUserEmail) to fetch the user from the database.
-        User user = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+        // we ensure that the user is updating their own profile by using the email from
+        // the session (currentUserEmail) to fetch the user from the database.
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
 
         // Check if the new username is already taken by another user
         if (!user.getUsername().equals(username) && userRepository.findByUsername(username).isPresent()) {
             throw new Exception("Username ya registrado");
         }
-        
+
         // Check if the new email is already taken by another user
-        //if (!user.getEmail().equals(email) && userRepository.findByEmail(email).isPresent()) {
-        //   throw new Exception("Email ya registrado");
-        //}
+        // if (!user.getEmail().equals(email) &&
+        // userRepository.findByEmail(email).isPresent()) {
+        // throw new Exception("Email ya registrado");
+        // }
 
         // Check if the new phone number is already taken by another user
         if (!user.getPhone().equals(phone) && userRepository.findByPhone(phone).isPresent()) {
@@ -80,9 +83,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updatePassword(String currentUserEmail, String currentPassword, String newPassword, String confirmPassword) throws Exception {
-        // we ensure that the user is updating his own password by using the email from the session (currentUserEmail) to fetch the user from the database.
-        User user = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+    public User updatePassword(String currentUserEmail, String currentPassword, String newPassword,
+            String confirmPassword) throws Exception {
+        // we ensure that the user is updating his own password by using the email from
+        // the session (currentUserEmail) to fetch the user from the database.
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
 
         // check if users input matches his current password stored in the database
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
@@ -96,17 +102,65 @@ public class UserService {
 
         // Update the password
         user.setPassword(passwordEncoder.encode(newPassword));
-        
+
         return userRepository.save(user);
     }
 
     public User updateProfileImage(String currentUserEmail, MultipartFile photoFile) throws Exception {
-        // we ensure that the user is updating his own profile image by using the email from the session (currentUserEmail) to fetch the user from the database.
-        User user = userRepository.findByEmail(currentUserEmail).orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+        // we ensure that the user is updating his own profile image by using the email
+        // from the session (currentUserEmail) to fetch the user from the database.
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
 
         Image image = imageService.createImage(photoFile.getInputStream());
         user.setProfileImage(image);
 
         return userRepository.save(user);
     }
+
+    public User updateUserFromAdmin(Long id, String name, String username, String email, String phone,
+            MultipartFile photoFile) throws Exception {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new Exception("Usuario no encontrado"));
+
+        //We make sure the admin is not trying to change the email, username or phone to one that already exists in another user
+        if (!user.getEmail().equals(email) && userRepository.findByEmail(email).isPresent()) {
+            throw new Exception("Email ya registrado");
+        }
+
+        if (!user.getUsername().equals(username) && userRepository.findByUsername(username).isPresent()) {
+            throw new Exception("Username ya registrado");
+        }
+
+        if (!user.getPhone().equals(phone) && userRepository.findByPhone(phone).isPresent()) {
+            throw new Exception("Número de teléfono ya registrado");
+        }
+
+        user.setName(name);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPhone(phone);
+
+        // If a new profile image is uploaded, update it. Otherwise, keep the existing one.
+        if (photoFile != null && !photoFile.isEmpty()) {
+            Image image = imageService.createImage(photoFile.getInputStream());
+            user.setProfileImage(image);
+        }
+
+        return userRepository.save(user);
+    }
+
+    public void deleteUserById(Long id) throws Exception {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new Exception("Usuario no encontrado"));
+
+        // We prevent the deletion of admin users to avoid locking ourselves out of the system
+        if (user.getRoles().contains("ADMIN")) {
+            throw new Exception("No puedes eliminar un administrador");
+        }
+        userRepository.delete(user);
+    }
+
 }
