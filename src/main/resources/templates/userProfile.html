@@ -74,15 +74,10 @@
                             <td>{{name}}</td>
                             <td class="fw-bold">{{status}}</td>
                             <td>
-                                <form method="post" action="/reservations/cancel" class="d-inline">
+                                <form method="post" action="/reservations/cancel" class="d-inline cancel-reservation-form">
                                     <input type="hidden" name="id" value="{{id}}">
                                     <input type="hidden" name="_csrf" value="{{token}}" />
                                     <button class="btn btn-danger btn-sm">Cancelar</button>
-                                </form>
-                                <form method="post" action="/reservations/delete" class="d-inline">
-                                    <input type="hidden" name="id" value="{{id}}">
-                                    <input type="hidden" name="_csrf" value="{{token}}" />
-                                    <button class="btn btn-outline-danger btn-sm">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -199,6 +194,26 @@
         </div>
     </div>
     {{>footer}}
+
+    <!-- Cancel Reservation Modal -->
+    <div class="modal fade" id="cancelReservationModal" tabindex="-1" aria-labelledby="cancelReservationLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelReservationLabel">Cancelar reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Seguro que quieres cancelar esta reserva?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, volver</button>
+                    <button type="button" class="btn btn-danger" id="confirmCancelReservation">Sí, cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

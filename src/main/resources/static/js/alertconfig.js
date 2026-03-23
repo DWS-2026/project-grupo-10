@@ -83,9 +83,36 @@ function initClassDayMin() {
     input.min = `${yyyy}-${mm}-${dd}`;
 }
 
+function initCancelReservationModal() {
+    const modalEl = document.getElementById('cancelReservationModal');
+    if (!modalEl || typeof bootstrap === 'undefined') return;
+
+    const modal = new bootstrap.Modal(modalEl);
+    const confirmBtn = document.getElementById('confirmCancelReservation');
+    let pendingForm = null;
+
+    document.querySelectorAll('.cancel-reservation-form').forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            pendingForm = form;
+            modal.show();
+        });
+    });
+
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+            if (pendingForm) {
+                pendingForm.submit();
+                pendingForm = null;
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUserSidePanel();
     initAutoHideAlerts();
     initBookingPopup();
     initClassDayMin();
+    initCancelReservationModal();
 });

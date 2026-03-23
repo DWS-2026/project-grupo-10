@@ -200,8 +200,7 @@ public class ReservationController {
             return "redirect:/userProfile";
         }
 
-        reservation.setStatus("Cancelada");
-        reservationService.save(reservation);
+        reservationService.delete(reservation);
         redirectAttributes.addFlashAttribute("success", "Reserva cancelada correctamente.");
         return "redirect:/userProfile";
     }
