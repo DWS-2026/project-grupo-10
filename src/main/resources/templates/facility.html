@@ -35,7 +35,7 @@
         {{.}}
     </div>
     {{/error}}
-    
+
     <!-- Detalle de Instalación -->
     <main class="facility-detail">
         <div class="container">
@@ -54,7 +54,17 @@
 
             <!-- Botones -->
             <div class="buttons-container">
+
+                {{#user}}
+                <!-- Usuario logueado → botón normal que abre el popup -->
                 <a href="#booking-popup" class="btn btn-primary btn-custom-primary  mt-2">Reservar ahora</a>
+                {{/user}}
+
+                {{^user}}
+                <!-- Usuario NO logueado → lo mandamos a /login directamente -->
+                <a href="/login" class="btn btn-primary btn-custom-primary  mt-2">Reservar ahora</a>
+                {{/user}}
+
             </div>
 
             <main class="container py-5">
@@ -182,7 +192,7 @@
                         <input type="date" id="class-day" name="day" class="form-control" required>
                     </div>
                 </div>
-             
+
                 <!-- 2. HOURS -->
                 <div class="section-form">
                     <label class="section-title">Selecciona la hora *</label>
@@ -259,6 +269,3 @@
 </body>
 
 </html>
-
-
-
