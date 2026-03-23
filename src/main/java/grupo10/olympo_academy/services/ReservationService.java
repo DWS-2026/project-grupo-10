@@ -30,6 +30,10 @@ public class ReservationService {
     return reservationRepository.existsByClassesAndStatusAndUser(classes, "Activa", user);
   }
 
+  public boolean hasActiveReservationsForUserAndClassesAtTime(Classes classes, User user, String startTime, String day) {
+    return reservationRepository.existsByClassesAndStatusAndUserAndStartTimeAndDay(classes, "Activa", user, startTime, day);
+  }
+
   public List<Reservation> saveAll(List<Reservation> reservations) {
     return reservationRepository.saveAll(reservations);
   }

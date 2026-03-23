@@ -18,6 +18,24 @@
 <body>
     {{>header}}
 
+    {{#warning}}
+    <div class="alert alert-warning auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+        {{.}}
+    </div>
+    {{/warning}}
+
+    {{#success}}
+    <div class="alert alert-success auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+        {{.}}
+    </div>
+    {{/success}}
+
+    {{#error}}
+    <div class="alert alert-danger auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+        {{.}}
+    </div>
+    {{/error}}
+    
     <!-- Detalle de Instalación -->
     <main class="Facility-detail">
         <div class="container">
@@ -156,7 +174,7 @@
             <form method="post" action="/cart/add">
                 <input type="hidden" name="classId" value="{{classes.id}}">
                 <input type="hidden" name="name" value="{{classes.name}}">
-                <!-- 1. Level-->
+                <!-- 1. LEVEL -->
                 <div class="section-form">
                     <label class="section-title">Selecciona tu nivel *</label>
                     <div class="options-grid">
@@ -257,5 +275,7 @@
     <script src="/js/scripts.js"></script>
 </body>
 </html>
+
+
 
 

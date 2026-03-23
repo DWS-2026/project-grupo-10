@@ -18,6 +18,24 @@
 <body>
     {{>header}}
 
+    {{#warning}}
+    <div class="alert alert-warning auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+        {{.}}
+    </div>
+    {{/warning}}
+
+    {{#success}}
+    <div class="alert alert-success auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+        {{.}}
+    </div>
+    {{/success}}
+
+    {{#error}}
+    <div class="alert alert-danger auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+        {{.}}
+    </div>
+    {{/error}}
+    
     <!-- Detalle de Instalación -->
     <main class="facility-detail">
         <div class="container">
@@ -156,41 +174,15 @@
             <form method="post" action="/cart/add">
                 <input type="hidden" name="facilityId" value="{{facility.id}}">
                 <input type="hidden" name="name" value="{{facility.name}}">
-                <!-- 1. Day-->
+
+                <!-- 1. DAY -->
                 <div class="section-form">
                     <label class="section-title">Selecciona el día *</label>
                     <div class="options-grid">
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Lunes" required>
-                            <div class="day-square">Lunes</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Martes">
-                            <div class="day-square">Martes</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Miércoles">
-                            <div class="day-square">Miércoles</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Jueves">
-                            <div class="day-square">Jueves</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Viernes">
-                            <div class="day-square">Viernes</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Sábado">
-                            <div class="day-square">Sábado</div>
-                        </label>
-                        <label class="option-day">
-                            <input type="radio" name="day" value="Domingo">
-                            <div class="day-square">Domingo</div>
-                        </label>
+                        <input type="date" id="class-day" name="day" class="form-control" required>
                     </div>
                 </div>
-
+             
                 <!-- 2. HOURS -->
                 <div class="section-form">
                     <label class="section-title">Selecciona la hora *</label>
@@ -267,5 +259,6 @@
 </body>
 
 </html>
+
 
 

@@ -13,6 +13,7 @@ boolean existsByFacilityAndStatus(Facility facility, String status);
 boolean existsByClassesAndStatus(Classes classes, String status);
 boolean existsByFacilityAndStatusAndUser(Facility facility, String status, User user);
 boolean existsByClassesAndStatusAndUser(Classes classes, String status, User user);
+boolean existsByClassesAndStatusAndUserAndStartTimeAndDay(Classes classes, String status, User user, String startTime, String day);
 List<Reservation> findByUser(User user);
 List<Reservation> findByUserAndStatus(User user, String status);
 

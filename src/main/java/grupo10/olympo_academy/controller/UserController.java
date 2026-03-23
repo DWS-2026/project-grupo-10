@@ -4,6 +4,7 @@ package grupo10.olympo_academy.controller;
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
+import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
@@ -11,6 +12,8 @@ import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +64,43 @@ public class UserController {
 
         User user = userService.findByEmail(email);
 
+        List<Reservation> reservations = reservationService.getReservationsByUser(user);
+        reservations.sort((a, b) -> {
+            LocalDate dateA = parseReservationDate(a.getDay());
+            LocalDate dateB = parseReservationDate(b.getDay());
+
+            if (dateA != null && dateB != null) {
+                int cmp = dateA.compareTo(dateB);
+                if (cmp != 0) return cmp;
+            } else if (dateA != null) {
+                return -1;
+            } else if (dateB != null) {
+                return 1;
+            }
+
+            String dayA = a.getDay() == null ? "" : a.getDay();
+            String dayB = b.getDay() == null ? "" : b.getDay();
+            int cmp = dayA.compareToIgnoreCase(dayB);
+            if (cmp != 0) return cmp;
+
+            String timeA = a.getStartTime() == null ? "" : a.getStartTime();
+            String timeB = b.getStartTime() == null ? "" : b.getStartTime();
+            return timeA.compareToIgnoreCase(timeB);
+        });
+
         model.addAttribute("user", user);
-        model.addAttribute("reservations", reservationService.getReservationsByUser(user));
+        model.addAttribute("reservations", reservations);
         
         return "userProfile";
+    }
+
+    private LocalDate parseReservationDate(String day) {
+        if (day == null || day.isBlank()) return null;
+        try {
+            return LocalDate.parse(day, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     @PostMapping("/updateProfile")

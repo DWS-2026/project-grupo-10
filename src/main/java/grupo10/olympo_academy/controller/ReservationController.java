@@ -57,12 +57,12 @@ public class ReservationController {
             User currentUser = userService.findByEmail(principal.getName());
             if (reservation.getFacility() != null
                     && reservationService.hasActiveReservationsForUser(reservation.getFacility(), currentUser)) {
-                redirectAttributes.addFlashAttribute("error", "Ya tienes una reserva activa para esta instalación.");
+                redirectAttributes.addFlashAttribute("warning", "No se puede reservar la misma instalación hasta que se complete la otra.");
                 return redirectAfterReservation(facilityId, classId);
             }
             if (reservation.getClasses() != null
-                    && reservationService.hasActiveReservationsForUserAndClasses(reservation.getClasses(), currentUser)) {
-                redirectAttributes.addFlashAttribute("error", "Ya tienes una reserva activa para esta clase.");
+                    && reservationService.hasActiveReservationsForUserAndClassesAtTime(reservation.getClasses(), currentUser, reservation.getStartTime(), reservation.getDay())) {
+                redirectAttributes.addFlashAttribute("warning", "Ya tienes una reserva activa para esta clase a esa hora.");
                 return redirectAfterReservation(facilityId, classId);
             }
         }
@@ -90,13 +90,18 @@ public class ReservationController {
             if (reservation.getFacility() != null
                     && existing.getFacility() != null
                     && reservation.getFacility().getId().equals(existing.getFacility().getId())) {
-                redirectAttributes.addFlashAttribute("error", "Ya tienes esa instalación en el carrito.");
+                redirectAttributes.addFlashAttribute("warning", "Ya tienes esa instalación en el carrito.");
                 return redirectAfterReservation(facilityId, classId);
             }
             if (reservation.getClasses() != null
                     && existing.getClasses() != null
-                    && reservation.getClasses().getId().equals(existing.getClasses().getId())) {
-                redirectAttributes.addFlashAttribute("error", "Ya tienes esa clase en el carrito.");
+                    && reservation.getClasses().getId().equals(existing.getClasses().getId())
+                    && reservation.getStartTime() != null
+                    && reservation.getDay() != null
+                    && reservation.getStartTime().equals(existing.getStartTime())
+                    && reservation.getDay().equals(existing.getDay())) {
+                redirectAttributes.addFlashAttribute("warning",
+                        "Ya tienes esa clase en el carrito a esa hora.");
                 return redirectAfterReservation(facilityId, classId);
             }
         }
@@ -162,12 +167,12 @@ public class ReservationController {
         for (Reservation reservation : reservations) {
             if (reservation.getFacility() != null
                     && reservationService.hasActiveReservationsForUser(reservation.getFacility(), user)) {
-                redirectAttributes.addFlashAttribute("error", "Ya tienes una reserva activa para una instalación del carrito.");
+                redirectAttributes.addFlashAttribute("warning", "No se puede reservar la misma instalación hasta que se complete la otra.");
                 return "redirect:/";
             }
             if (reservation.getClasses() != null
-                    && reservationService.hasActiveReservationsForUserAndClasses(reservation.getClasses(), user)) {
-                redirectAttributes.addFlashAttribute("error", "Ya tienes una reserva activa para una clase del carrito.");
+                    && reservationService.hasActiveReservationsForUserAndClassesAtTime(reservation.getClasses(), user, reservation.getStartTime(), reservation.getDay())) {
+                redirectAttributes.addFlashAttribute("warning", "Ya tienes una reserva activa para esa clase a esa hora.");
                 return "redirect:/";
             }
         }
@@ -274,3 +279,4 @@ public class ReservationController {
         return "redirect:/";
     }
 }
+
