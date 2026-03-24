@@ -378,26 +378,11 @@ public class UserController {
     @PostMapping("/admin/classes/save")
     public String processClasses(
             Classes classes,
-            // @RequestParam String name,
-            // @RequestParam String description,
-            // @RequestParam String trainer,
-            // @RequestParam List<String> difficulty,
-            // @RequestParam List<String> day,
-            // @RequestParam List<String> startTime,
             @RequestParam String durationRAW,
             @RequestParam("photoFile") MultipartFile photoFile,
             Model model) {
 
         try {
-            /*
-             * Classes classes = new Classes();
-             * classes.setName(name);
-             * classes.setDescription(description);
-             * classes.setTrainer(trainer);
-             * classes.setStartTime(startTime);
-             * classes.setDifficulty(difficulty);
-             * classes.setDay(day);
-             */
 
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
@@ -420,43 +405,42 @@ public class UserController {
     @PostMapping("/admin/classes/update")
     public String updateClasses(
             @RequestParam Long id,
-            @RequestParam String name,
-            @RequestParam String description,
-            @RequestParam String trainer,
-            @RequestParam List<String> difficulty,
-            @RequestParam List<String> day,
-            @RequestParam List<String> startTime,
+            Classes classesModify,
             @RequestParam String durationRAW,
-            // @RequestParam String duration,
-            @RequestParam("photoFile") MultipartFile photoFile,
+            @RequestParam MultipartFile photoFile,
             Model model) {
 
         try {
-            // We look for the class in the database
+            // Validar ID
+            if (id == null || id <= 0) {
+                model.addAttribute("error", "ID de clase no válido");
+                return "admin";
+            }
+
+            // Buscar la clase existente
             Classes classes = classesService.getClassById(id);
             if (classes == null) {
                 model.addAttribute("error", "La clase no existe");
                 return "admin";
             }
 
-            // We update the fields
-            classes.setName(name);
-            classes.setDescription(description);
-            classes.setTrainer(trainer);
-            classes.setDifficulty(difficulty);
-            classes.setDay(day);
-            classes.setStartTime(startTime);
+            // Actualizar campos
+            classes.setName(classesModify.getName());
+            classes.setDescription(classesModify.getDescription());
+            classes.setTrainer(classesModify.getTrainer());
+            classes.setDifficulty(classesModify.getDifficulty());
+            classes.setDay(classesModify.getDay());
+            classes.setStartTime(classesModify.getStartTime());
 
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
 
-            // If a new image is uploaded, we replace the old one
-            if (!photoFile.isEmpty()) {
+            // Manejar imagen
+            if (photoFile != null && !photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 classes.setClassesImage(image);
             }
 
-            // Save changes
             classesService.saveClass(classes);
 
             return "redirect:/admin";
@@ -465,7 +449,6 @@ public class UserController {
             model.addAttribute("error", e.getMessage());
             return "admin";
         }
-
     }
 
     private int convertDurationToMinutes(String duration) {
