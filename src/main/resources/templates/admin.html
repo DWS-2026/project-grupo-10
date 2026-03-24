@@ -16,539 +16,592 @@
     {{>header}}
 
     <div class="container py-5">
-        <h1 class="text-center mb-5">Panel de Administración</h1>
 
-        <!-- Users -->
-        <section class="mb-5">
-            <h2 class="mb-3">Usuarios</h2>
+        {{#errorAdmin}}
+        <div id="globalAlert" class="alert alert-danger auto-hide-alert fixed-alert" role="alert"
+            data-hide-delay="5000">
+            {{.}}
+        </div>
+        {{/errorAdmin}}
 
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Nº Reservas</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        {{#successAdmin}}
+        <div class="alert alert-success auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+            {{.}}
+        </div>
+        {{/successAdmin}}
 
-                        {{#users}}
-                        <tr>
-                            <td>{{name}}</td>
-                            <td>{{email}}</td>
-                            <td>{{reservations}}</td>
-                            <td>
-                                {{#blocked}}
-                                <span class="badge bg-danger">Bloqueado</span>
-                                {{/blocked}}
-                                {{^blocked}}
-                                <span class="badge bg-success">Activo</span>
-                                {{/blocked}}
-                            </td>
-                            <td class="d-flex gap-2">
-                                <a href="#manage-{{id}}" class="btn btn-warning btn-sm">Gestionar</a>
-                                <a href="#block-{{id}}" class="btn btn-secondary btn-sm">Bloquear</a>
-                                <a href="#delete-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
-                            </td>
-                        </tr>
-                        {{/users}}
+        <div class="container py-5">
+            <h1 class="text-center mb-5">Panel de Administración</h1>
 
-                        {{^users}}
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">No hay usuarios registrados.</td>
-                        </tr>
-                        {{/users}}
+            <!-- Users -->
+            <section class="mb-5">
+                <h2 class="mb-3">Usuarios</h2>
 
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Nº Reservas</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-        <!-- User popups -->
-        {{#users}}
-        <!-- Manage User -->
-        <div id="manage-{{id}}" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
+                            {{#users}}
+                            <tr>
+                                <td>{{name}}</td>
+                                <td>{{email}}</td>
+                                <td>{{reservations}}</td>
+                                <td>
+                                    {{#blocked}}
+                                    <span class="badge bg-danger">Bloqueado</span>
+                                    {{/blocked}}
+                                    {{^blocked}}
+                                    <span class="badge bg-success">Activo</span>
+                                    {{/blocked}}
+                                </td>
+                                <td class="d-flex gap-2">
+                                    <a href="#manage-{{id}}" class="btn btn-warning btn-sm">Gestionar</a>
+                                    {{#blocked}}
+                                    <a href="#block-{{id}}" class="btn btn-success btn-sm">Desbloquear</a>
+                                    {{/blocked}}
 
-                <h3>Gestionar Usuario</h3>
+                                    {{^blocked}}
+                                    <a href="#block-{{id}}" class="btn btn-secondary btn-sm">Bloquear</a>
+                                    {{/blocked}}
 
-                <div class="text-center mb-4">
-                    <img src="/assets/images/fotoPerfilweb.webp" class="rounded-circle" width="120" height="120"
-                        alt="User photo">
+                                    <a href="#delete-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                                </td>
+                            </tr>
+                            {{/users}}
+
+                            {{^users}}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">No hay usuarios registrados.</td>
+                            </tr>
+                            {{/users}}
+
+                        </tbody>
+                    </table>
                 </div>
+            </section>
 
-                <form action="/admin/user/update/{{id}}" method="post">
-                    <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" name="name" class="form-control" value="{{name}}" required>
+            <!-- User popups -->
+            {{#users}}
+            <!-- Manage User -->
+            <div id="manage-{{id}}" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+
+                    <h3>Gestionar Usuario</h3>
+
+                    <div class="text-center mb-4">
+
+                        {{#profileImage}}
+                        <img src="/images/id/{{id}}" class="rounded-circle" width="120" height="120" alt="User photo">
+                        {{/profileImage}}
+
+                        {{^profileImage}}
+                        <img src="/assets/images/fotoPerfilweb.webp" class="rounded-circle" width="120" height="120"
+                            alt="Default photo">
+                        {{/profileImage}}
+
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{email}}" required>
-                    </div>
+                    <form method="post" action="/admin/user/update/{{id}}" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="name" value={{name}}>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre de usuario</label>
+                            <input type="text" class="form-control" name="username" value={{username}}>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Numero de telefono</label>
+                            <input type="text" class="form-control" name="phone" value={{phone}}>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" value="{{email}}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Foto de perfil</label>
+                            <input type="file" class="form-control" name="photoFile">
+                        </div>
+
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                        <button class="btn btn-success">Guardar cambios</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="block-{{id}}" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+
+                    {{#blocked}}
+                    <h3>¿Desbloquear usuario?</h3>
+                    <p>¿Seguro que quieres desbloquear a <strong>{{name}}</strong>?</p>
+                    {{/blocked}}
+
+                    {{^blocked}}
+                    <h3>¿Bloquear usuario?</h3>
+                    <p>¿Seguro que quieres bloquear a <strong>{{name}}</strong>?</p>
+                    {{/blocked}}
 
                     <div class="d-flex gap-2 mt-3">
+
+                        {{#blocked}}
+                        <a href="/admin/user/unblock/{{id}}" class="btn btn-success">Sí, desbloquear</a>
+                        {{/blocked}}
+
+                        {{^blocked}}
+                        <a href="/admin/user/block/{{id}}" class="btn btn-warning">Sí, bloquear</a>
+                        {{/blocked}}
+
+                        <a href="#manage-{{id}}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete User -->
+            <div id="delete-{{id}}" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>¿Eliminar usuario?</h3>
+                    <p>Esta acción no se puede deshacer.</p>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="/admin/user/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
+                        <a href="#manage-{{id}}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+            {{/users}}
+
+            <!-- Facilities -->
+            <section class="mb-5">
+                <h2 class="mb-3">Instalaciones</h2>
+
+                <!-- Main Buttons -->
+                <div class="d-flex gap-3 mb-4">
+                    <a href="#creation-popup" class="btn btn-success">Crear nueva instalación</a>
+                    <a href="#list-edit-popup" class="btn btn-warning">Editar instalaciones</a>
+                </div>
+            </section>
+
+            <!-- Create Facility Popup -->
+            <div id="creation-popup" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>Crear Instalación</h3>
+
+                    <form action="/admin/facility/save" method="post" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tipo *</label>
+                            <select class="form-select" name="type" required>
+                                <option value="Pista">Pista</option>
+                                <option value="Piscina">Piscina</option>
+                                <option value="Sala">Sala</option>
+                                <option value="Campo">Campo</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descripción *</label>
+                            <textarea class="form-control" name="description" rows="3" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Foto *</label>
+                            <input type="file" name="photoFile" class="form-control">
+                        </div>
+
+                        <button class="btn btn-success" type="submit">Guardar</button>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Facilities List Popup -->
+            <div id="list-edit-popup" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>Selecciona una instalación</h3>
+
+                    <div class="list-group">
+                        {{#facilities}}
+                        <a href="#edit-facility-{{id}}" class="list-group-item list-group-item-action">
+                            {{name}}
+                        </a>
+                        {{/facilities}}
+
+                        {{^facilities}}
+                        <p class="text-muted mb-0">No hay instalaciones creadas.</p>
+                        {{/facilities}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editing Facilities -->
+            {{#facilities}}
+            <div id="edit-facility-{{id}}" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>Editar: {{name}}</h3>
+
+                    <form action="/admin/facility/update" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{id}}" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" name="name" class="form-control" value="{{name}}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tipo *</label>
+                            <select class="form-select" name="type" required>
+                                <option value="Pista">Pista</option>
+                                <option value="Piscina">Piscina</option>
+                                <option value="Sala">Sala</option>
+                                <option value="Campo">Campo</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descripción *</label>
+                            <textarea class="form-control" name="description" rows="4">{{description}}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Foto actual</label>
+                            <input type="file" name="photoFile" class="form-control">
+                        </div>
+
                         <button class="btn btn-success" type="submit">Guardar cambios</button>
-                        <a href="#delete-{{id}}" class="btn btn-danger">Eliminar usuario</a>
-                    </div>
-                    <input type="hidden" name="_csrf" value="{{token}}" />
-                </form>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
 
-                <div class="d-flex gap-2 mt-3">
-                    <a href="#block-{{id}}" class="btn btn-warning">Bloquear</a>
+                    </form>
                 </div>
             </div>
-        </div>
+            {{/facilities}}
 
-        <!-- Block User -->
-        <div id="block-{{id}}" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>¿Bloquear usuario?</h3>
-                <p>¿Seguro que quieres bloquear a <strong>{{name}}</strong>?</p>
+            <!-- Classes -->
+            <section class="mb-5">
+                <h2 class="mb-3">Clases</h2>
 
-                <div class="d-flex gap-2 mt-3">
-                    <a href="/admin/user/block/{{id}}" class="btn btn-warning">Sí, bloquear</a>
-                    <a href="#manage-{{id}}" class="btn btn-secondary">Cancelar</a>
+                <div class="d-flex gap-3 mb-4">
+                    <a href="#create-class-popup" class="btn btn-success">Crear nueva clase</a>
+                    <a href="#list-edit-class-popup" class="btn btn-warning">Editar clases</a>
+                </div>
+            </section>
+
+            <!-- Create Class Popup -->
+            <div id="create-class-popup" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>Crear Clase</h3>
+
+                    <form action="/admin/classes/save" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descripción *</label>
+                            <textarea name="description" class="form-control" rows="3" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Monitor *</label>
+                            <input type="text" name="trainer" class="form-control" required>
+                        </div>
+
+                        <!-- difficulty -->
+                        <div class="mb-3">
+                            <label class="form-label">Dificultad *</label>
+                            <div>
+                                <select name="difficulty" class="form-control" multiple>
+                                    <option value="Begginer"> Principiante</option>
+                                    <option value="Intermediate"> Intermedio</option>
+                                    <option value="Hard"> Avanzado</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <!-- days -->
+                        <div class="mb-3">
+                            <label class="form-label">Días *</label>
+                            <div>
+                                <select name="days" class="form-control" multiple>
+                                    <option value="Monday"> Lunes</option>
+                                    <option value="Tuesday"> Martes</option>
+                                    <option value="Wednesday"> Miércoles</option>
+                                    <option value="Thursday"> Jueves</option>
+                                    <option value="Friday"> Viernes</option>
+                                    <option value="Saturday"> Sábado</option>
+                                    <option value="Sunday"> Domingo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- hours -->
+                        <div class="mb-3">
+                            <label class="form-label">Horarios *</label>
+                            <div>
+                                <select name="startTime" class="form-control" multiple>
+                                    <option value="08:00"> 08:00</option>
+                                    <option value="10:00"> 10:00</option>
+                                    <option value="12:00"> 12:00</option>
+                                    <option value="16:00"> 16:00</option>
+                                    <option value="18:00"> 18:00</option>
+                                    <option value="20:00"> 20:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Duración *</label>
+                            <select name="durationRAW" class="form-control" required>
+                                <option value="">Selecciona duración</option>
+                                <option value="1h">1h</option>
+                                <option value="1:30h">1:30h</option>
+                                <option value="2h">2h</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Foto *</label>
+                            <input type="file" name="photoFile" class="form-control">
+                        </div>
+
+                        <button class="btn btn-success" type="submit">Guardar</button>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <!-- Delete User -->
-        <div id="delete-{{id}}" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>¿Eliminar usuario?</h3>
-                <p>Esta acción no se puede deshacer.</p>
+            <!-- Classes List Popup -->
+            <div id="list-edit-class-popup" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>Selecciona una clase</h3>
 
-                <div class="d-flex gap-2 mt-3">
-                    <a href="/admin/user/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
-                    <a href="#manage-{{id}}" class="btn btn-secondary">Cancelar</a>
+                    <div class="list-group">
+                        {{#classes}}
+                        <a href="#edit-class-{{id}}" class="list-group-item list-group-item-action">
+                            {{name}}
+                        </a>
+                        {{/classes}}
+
+                        {{^classes}}
+                        <p class="text-muted">No hay clases creadas.</p>
+                        {{/classes}}
+                    </div>
                 </div>
             </div>
-        </div>
-        {{/users}}
 
-        <!-- Facilities -->
-        <section class="mb-5">
-            <h2 class="mb-3">Instalaciones</h2>
+            <!-- Editing Classes -->
+            {{#classes}}
+            <div id="edit-class-{{id}}" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>Editar: {{name}}</h3>
 
-            <!-- Main Buttons -->
-            <div class="d-flex gap-3 mb-4">
-                <a href="#creation-popup" class="btn btn-success">Crear nueva instalación</a>
-                <a href="#list-edit-popup" class="btn btn-warning">Editar instalaciones</a>
+                    <form action="/admin/classes/update" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{id}}">
+
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" name="name" class="form-control" value="{{name}}" required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label class="form-label">Descripción *</label>
+                            <textarea name="description" class="form-control" rows="4">{{description}}</textarea>
+                        </div>
+
+                        <!-- Trainer -->
+                        <div class="mb-3">
+                            <label class="form-label">Monitor *</label>
+                            <input type="text" name="trainer" class="form-control" value="{{trainer}}" required>
+                        </div>
+
+                        <!-- difficulty -->
+                        <div class="mb-3">
+                            <label class="form-label">Dificultad *</label>
+                            <div>
+                                <select name="difficulty" class="form-control" multiple>
+                                    <option value="Begginer"> Principiante</option>
+                                    <option value="Intermediate"> Intermedio</option>
+                                    <option value="Hard"> Avanzado</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <!-- days -->
+                        <div class="mb-3">
+                            <label class="form-label">Días *</label>
+                            <div>
+                                <select name="day" class="form-control" multiple>
+                                    <option value="Monday"> Lunes</option>
+                                    <option value="Tuesday"> Martes</option>
+                                    <option value="Wednesday"> Miércoles</option>
+                                    <option value="Thursday"> Jueves</option>
+                                    <option value="Friday"> Viernes</option>
+                                    <option value="Saturday"> Sábado</option>
+                                    <option value="Sunday"> Domingo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- hours -->
+                        <div class="mb-3">
+                            <label class="form-label">Horarios *</label>
+                            <div>
+                                <select name="startTime" class="form-control" multiple>
+                                    <option value="08:00"> 08:00</option>
+                                    <option value="10:00"> 10:00</option>
+                                    <option value="12:00"> 12:00</option>
+                                    <option value="16:00"> 16:00</option>
+                                    <option value="18:00"> 18:00</option>
+                                    <option value="20:00"> 20:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- duration -->
+                        <div class="mb-3">
+                            <label class="form-label">Duración *</label>
+                            <select name="durationRAW" class="form-control" required>
+                                <option value="">Selecciona duración</option>
+                                <option value="1h">1h</option>
+                                <option value="1:30h">1:30h</option>
+                                <option value="2h">2h</option>
+                            </select>
+                        </div>
+
+                        <!-- photo -->
+                        <div class="mb-3">
+                            <label class="form-label">Foto </label>
+                            <input type="file" name="photoFile" class="form-control">
+                        </div>
+
+                        <button class="btn btn-success" type="submit">Guardar cambios</button>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                    </form>
+                </div>
             </div>
-        </section>
+            {{/classes}}
 
-        <!-- Create Facility Popup -->
-        <div id="creation-popup" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Crear Instalación</h3>
 
-                <form action="/admin/facility/save" method="post" enctype="multipart/form-data">
+            <!-- Delete facilities -->
+            <section class="mb-5">
+                <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
 
-                    <div class="mb-3">
-                        <label class="form-label">Nombre *</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Tipo *</label>
-                        <select class="form-select" name="type" required>
-                            <option value="Pista">Pista</option>
-                            <option value="Piscina">Piscina</option>
-                            <option value="Sala">Sala</option>
-                            <option value="Campo">Campo</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Descripción *</label>
-                        <textarea class="form-control" name="description" rows="3" required></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Foto *</label>
-                        <input type="file" name="photoFile" class="form-control">
-                    </div>
-
-                    <button class="btn btn-success" type="submit">Guardar</button>
-                    <input type="hidden" name="_csrf" value="{{token}}" />
-
-                </form>
-            </div>
-        </div>
-
-        <!-- Facilities List Popup -->
-        <div id="list-edit-popup" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Selecciona una instalación</h3>
+                <div class="alert alert-warning">
+                    ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
+                </div>
 
                 <div class="list-group">
                     {{#facilities}}
-                    <a href="#edit-facility-{{id}}" class="list-group-item list-group-item-action">
-                        {{name}}
-                    </a>
+                    <div class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="mb-1">{{name}}</h5>
+                            <p class="mb-1">{{description}}</p>
+                        </div>
+                        <a href="#delete-facility-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </div>
                     {{/facilities}}
 
                     {{^facilities}}
-                    <p class="text-muted mb-0">No hay instalaciones creadas.</p>
+                    <p class="text-muted mb-0">No hay instalaciones para eliminar.</p>
                     {{/facilities}}
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Editing Facilities -->
-        {{#facilities}}
-        <div id="edit-facility-{{id}}" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Editar: {{name}}</h3>
-
-                <form action="/admin/facility/update" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="{{id}}" />
-
-                    <div class="mb-3">
-                        <label class="form-label">Nombre *</label>
-                        <input type="text" name="name" class="form-control" value="{{name}}" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Tipo *</label>
-                        <select class="form-select" name="type" required>
-                            <option value="Pista">Pista</option>
-                            <option value="Piscina">Piscina</option>
-                            <option value="Sala">Sala</option>
-                            <option value="Campo">Campo</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Descripción *</label>
-                        <textarea class="form-control" name="description" rows="4">{{description}}</textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Foto actual</label>
-                        <input type="file" name="photoFile" class="form-control">
-                    </div>
-
-                    <button class="btn btn-success" type="submit">Guardar cambios</button>
-                    <input type="hidden" name="_csrf" value="{{token}}" />
-
-                </form>
-            </div>
-        </div>
-        {{/facilities}}
-
-        <!-- Classes -->
-        <section class="mb-5">
-            <h2 class="mb-3">Clases</h2>
-
-            <div class="d-flex gap-3 mb-4">
-                <a href="#create-class-popup" class="btn btn-success">Crear nueva clase</a>
-                <a href="#list-edit-class-popup" class="btn btn-warning">Editar clases</a>
-            </div>
-        </section>
-
-        <!-- Create Class Popup -->
-        <div id="create-class-popup" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Crear Clase</h3>
-
-                <form action="/admin/classes/save" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label class="form-label">Nombre *</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Descripción *</label>
-                        <textarea name="description" class="form-control" rows="3" required></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Monitor *</label>
-                        <input type="text" name="trainer" class="form-control" required>
-                    </div>
-
-                <!-- difficulty -->
-                <div class="mb-3">
-                    <label class="form-label">Dificultad *</label>
-                    <div>
-                        <select name="difficulty" class="form-control" multiple>
-                            <option value="Begginer"> Principiante</option>
-                            <option value="Intermediate"> Intermedio</option>
-                            <option value="Hard"> Avanzado</option>
-                        </select>
-
-                    </div>
-                </div>
-
-                <!-- days -->
-                <div class="mb-3">
-                    <label class="form-label">Días *</label>
-                    <div>
-                        <select name="days" class="form-control" multiple>
-                            <option value="Monday"> Lunes</option>
-                            <option value="Tuesday"> Martes</option>
-                            <option value="Wednesday"> Miércoles</option>
-                            <option value="Thursday"> Jueves</option>
-                            <option value="Friday"> Viernes</option>
-                            <option value="Saturday"> Sábado</option>
-                            <option value="Sunday"> Domingo</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- hours -->
-                <div class="mb-3">
-                    <label class="form-label">Horarios *</label>
-                    <div>
-                        <select name="startTime" class="form-control" multiple>
-                            <option value="08:00"> 08:00</option>
-                            <option value="10:00"> 10:00</option>
-                            <option value="12:00"> 12:00</option>
-                            <option value="16:00"> 16:00</option>
-                            <option value="18:00"> 18:00</option>
-                            <option value="20:00"> 20:00</option>
-                        </select>
-                    </div>
-                </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Duración *</label>
-                        <select name="durationRAW" class="form-control" required>
-                            <option value="">Selecciona duración</option>
-                            <option value="1h">1h</option>
-                            <option value="1:30h">1:30h</option>
-                            <option value="2h">2h</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Foto *</label>
-                        <input type="file" name="photoFile" class="form-control">
-                    </div>
-
-                    <button class="btn btn-success" type="submit">Guardar</button>
-                    <input type="hidden" name="_csrf" value="{{token}}" />
-                </form>
-            </div>
-        </div>
-
-   <!-- Classes List Popup -->
-    <div id="list-edit-class-popup" class="popup">
-        <div class="popup-content">
-            <a href="#" class="close">&times;</a>
-            <h3>Selecciona una clase</h3>
-
-            <div class="list-group">
-                {{#classes}}
-                <a href="#edit-class-{{id}}" class="list-group-item list-group-item-action">
-                    {{name}}
-                </a>
-                {{/classes}}
-
-                {{^classes}}
-                <p class="text-muted">No hay clases creadas.</p>
-                {{/classes}}
-            </div>
-        </div>
-    </div>
-
-    <!-- Editing Classes -->
-    {{#classes}}
-    <div id="edit-class-{{id}}" class="popup">
-        <div class="popup-content">
-            <a href="#" class="close">&times;</a>
-            <h3>Editar: {{name}}</h3>
-
-            <form action="/admin/classes/update" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="{{id}}">
-
-                <!-- Name -->
-                <div class="mb-3">
-                    <label class="form-label">Nombre *</label>
-                    <input type="text" name="name" class="form-control" value="{{name}}" required>
-                </div>
-
-                <!-- Description -->
-                <div class="mb-3">
-                    <label class="form-label">Descripción *</label>
-                    <textarea name="description" class="form-control" rows="4">{{description}}</textarea>
-                </div>
-
-                <!-- Trainer -->
-                <div class="mb-3">
-                    <label class="form-label">Monitor *</label>
-                    <input type="text" name="trainer" class="form-control" value="{{trainer}}" required>
-                </div>
-
-                <!-- difficulty -->
-                <div class="mb-3">
-                    <label class="form-label">Dificultad *</label>
-                    <div>
-                        <select name="difficulty" class="form-control" multiple>
-                            <option value="Begginer"> Principiante</option>
-                            <option value="Intermediate"> Intermedio</option>
-                            <option value="Hard"> Avanzado</option>
-                        </select>
-
-                    </div>
-                </div>
-
-                <!-- days -->
-                <div class="mb-3">
-                    <label class="form-label">Días *</label>
-                    <div>
-                        <select name="days" class="form-control" multiple>
-                            <option value="Monday"> Lunes</option>
-                            <option value="Tuesday"> Martes</option>
-                            <option value="Wednesday"> Miércoles</option>
-                            <option value="Thursday"> Jueves</option>
-                            <option value="Friday"> Viernes</option>
-                            <option value="Saturday"> Sábado</option>
-                            <option value="Sunday"> Domingo</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- hours -->
-                <div class="mb-3">
-                    <label class="form-label">Horarios *</label>
-                    <div>
-                        <select name="startTime" class="form-control" multiple>
-                            <option value="08:00"> 08:00</option>
-                            <option value="10:00"> 10:00</option>
-                            <option value="12:00"> 12:00</option>
-                            <option value="16:00"> 16:00</option>
-                            <option value="18:00"> 18:00</option>
-                            <option value="20:00"> 20:00</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- duration -->
-                <div class="mb-3">
-                    <label class="form-label">Duración *</label>
-                    <select name="duration" class="form-control" required>
-                        <option value="">Selecciona duración</option>
-                        <option value="1h">1h</option>
-                        <option value="1:30h">1:30h</option>
-                        <option value="2h">2h</option>
-                    </select>
-                </div>
-
-                <!-- photo -->
-                <div class="mb-3">
-                    <label class="form-label">Foto </label>
-                    <input type="file" name="photoFile" class="form-control">
-                </div>
-
-                <button class="btn btn-success" type="submit">Guardar cambios</button>
-                <input type="hidden" name="_csrf" value="{{token}}" />
-            </form>
-        </div>
-    </div>
-    {{/classes}}
-
-    
-    <!-- Delete facilities -->
-    <section class="mb-5">
-        <h2 class="mb-3 text-danger">Eliminar Instalación</h2>
-
-        <div class="alert alert-warning">
-            ⚠️ Solo se puede eliminar la instalación si no tiene reservas activas.
-        </div>
-
-        <div class="list-group">
+            <!-- Delete Facility Confirmation -->
             {{#facilities}}
-            <div class="list-group-item d-flex justify-content-between align-items-start">
-                <div>
-                    <h5 class="mb-1">{{name}}</h5>
-                    <p class="mb-1">{{description}}</p>
+            <div id="delete-facility-{{id}}" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>¿Eliminar instalación?</h3>
+                    <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="/admin/facility/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
+                        <a href="#" class="btn btn-secondary">Cancelar</a>
+                    </div>
                 </div>
-                <a href="#delete-facility-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
             </div>
             {{/facilities}}
 
-            {{^facilities}}
-            <p class="text-muted mb-0">No hay instalaciones para eliminar.</p>
-            {{/facilities}}
-        </div>
-    </section>
+            <!--Delete classes -->
+            <section class="mb-5">
+                <h2 class="mb-3 text-danger">Eliminar Clase</h2>
 
-    <!-- Delete Facility Confirmation -->
-    {{#facilities}}
-    <div id="delete-facility-{{id}}" class="popup">
-        <div class="popup-content">
-            <a href="#" class="close">&times;</a>
-            <h3>¿Eliminar instalación?</h3>
-            <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
+                <div class="alert alert-warning">
+                    ⚠️ Solo se puede eliminar la clase si no tiene reservas activas.
+                </div>
 
-            <div class="d-flex gap-2 mt-3">
-                <a href="/admin/facility/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
-                <a href="#" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </div>
-    </div>
-    {{/facilities}}
+                <div class="list-group">
+                    {{#classes}}
+                    <div class="list-group-item d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5 class="mb-1">{{name}}</h5>
+                            <p class="mb-1">{{description}}</p>
+                        </div>
+                        <a href="#delete-class-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </div>
+                    {{/classes}}
 
-    <!--Delete classes -->
-    <section class="mb-5">
-        <h2 class="mb-3 text-danger">Eliminar Clase</h2>
+                    {{^classes}}
+                    <p class="text-muted">No hay clases para eliminar.</p>
+                    {{/classes}}
+                </div>
+            </section>
 
-        <div class="alert alert-warning">
-            ⚠️ Solo se puede eliminar la clase si no tiene reservas activas.
-        </div>
-
-        <div class="list-group">
+            <!-- Delete Class Confirmation -->
             {{#classes}}
-            <div class="list-group-item d-flex justify-content-between align-items-start">
-                <div>
-                    <h5 class="mb-1">{{name}}</h5>
-                    <p class="mb-1">{{description}}</p>
+            <div id="delete-class-{{id}}" class="popup">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3>¿Eliminar clase?</h3>
+                    <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="/admin/classes/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
+                        <a href="#" class="btn btn-secondary">Cancelar</a>
+                    </div>
                 </div>
-                <a href="#delete-class-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
             </div>
             {{/classes}}
 
-            {{^classes}}
-            <p class="text-muted">No hay clases para eliminar.</p>
-            {{/classes}}
         </div>
-    </section>
 
-    <!-- Delete Class Confirmation -->
-    {{#classes}}
-    <div id="delete-class-{{id}}" class="popup">
-        <div class="popup-content">
-            <a href="#" class="close">&times;</a>
-            <h3>¿Eliminar clase?</h3>
-            <p>¿Seguro que quieres eliminar <strong>{{name}}</strong>? Esta acción no se puede deshacer.</p>
+        {{>footer}}
 
-            <div class="d-flex gap-2 mt-3">
-                <a href="/admin/classes/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
-                <a href="#" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </div>
-    </div>
-    {{/classes}}
-
-    </div>
-
-    {{>footer}}
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

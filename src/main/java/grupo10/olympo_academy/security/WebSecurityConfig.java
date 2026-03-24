@@ -37,7 +37,7 @@ public class WebSecurityConfig {
 		http
 			.authorizeHttpRequests(authorize -> authorize
 					// PUBLIC PAGES
-						.requestMatchers("/", "/index", "/login", "/register", "/error").permitAll()
+						.requestMatchers("/", "/index", "/login", "/register", "/error", "/facilities/{id}", "/classes/{id}").permitAll()
 
 						// STATIC RESOURCES (CSS/JS/IMAGES)
 						.requestMatchers(

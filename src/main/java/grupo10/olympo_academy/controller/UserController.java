@@ -1,11 +1,11 @@
 package grupo10.olympo_academy.controller;
 
-
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
@@ -39,6 +39,8 @@ public class UserController {
     private ClassesService classesService;
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private UserRepository userRepository;
 
     /////////////////////////////////////////////////////////////////// LOGIN
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
@@ -71,7 +73,8 @@ public class UserController {
 
             if (dateA != null && dateB != null) {
                 int cmp = dateA.compareTo(dateB);
-                if (cmp != 0) return cmp;
+                if (cmp != 0)
+                    return cmp;
             } else if (dateA != null) {
                 return -1;
             } else if (dateB != null) {
@@ -81,7 +84,8 @@ public class UserController {
             String dayA = a.getDay() == null ? "" : a.getDay();
             String dayB = b.getDay() == null ? "" : b.getDay();
             int cmp = dayA.compareToIgnoreCase(dayB);
-            if (cmp != 0) return cmp;
+            if (cmp != 0)
+                return cmp;
 
             String timeA = a.getStartTime() == null ? "" : a.getStartTime();
             String timeB = b.getStartTime() == null ? "" : b.getStartTime();
@@ -90,12 +94,13 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("reservations", reservations);
-        
+
         return "userProfile";
     }
 
     private LocalDate parseReservationDate(String day) {
-        if (day == null || day.isBlank()) return null;
+        if (day == null || day.isBlank())
+            return null;
         try {
             return LocalDate.parse(day, DateTimeFormatter.ISO_LOCAL_DATE);
         } catch (Exception ignored) {
@@ -106,7 +111,7 @@ public class UserController {
     @PostMapping("/updateProfile")
     public String updateProfile(
             @RequestParam String name,
-            //@RequestParam String email,
+            // @RequestParam String email,
             @RequestParam String username,
             @RequestParam String phone,
             Model model,
@@ -115,7 +120,7 @@ public class UserController {
         // Spring Security provides user email through Principal object, we can use it
         // to fetch the user details from the database
         String currentUserEmail = principal.getName();
-        
+
         try {
             userService.updateProfile(currentUserEmail, name, username, phone);
         } catch (Exception e) {
@@ -141,7 +146,7 @@ public class UserController {
             userService.updatePassword(currentUserEmail, currentPassword, newPassword, confirmPassword);
             redirectAttributes.addFlashAttribute("success", "Contraseña actualizada correctamente");
             return "redirect:/userProfile";
-            
+
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "userProfile";
@@ -178,7 +183,7 @@ public class UserController {
     public String processRegister(User user,
             @RequestParam String password2,
             Model model,
-            RedirectAttributes redirectAttrs) { 
+            RedirectAttributes redirectAttrs) {
 
         if (!user.getPassword().equals(password2)) {
             model.addAttribute("error", "Las contraseñas no coinciden.");
@@ -223,13 +228,13 @@ public class UserController {
             facility.setType(tipo);
             facility.setMaterial(false);
 
-            // Imagen
+            // Image
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 facility.setFacilityImage(image);
             }
 
-            // Guardar
+            // Save
             facilityService.saveFacility(facility);
 
             return "redirect:/admin";
@@ -250,25 +255,25 @@ public class UserController {
             Model model) {
 
         try {
-            // Buscamos si la instalación existe
+            // We look for the facility in the database
             Facility facility = facilityService.getFacilityById(id);
             if (facility == null) {
                 model.addAttribute("error", "La instalación no existe");
                 return "admin";
             }
 
-            // Actualizamos los campos
+            // We update the fields
             facility.setName(name);
             facility.setType(tipo);
             facility.setDescription(description);
 
-            // Si sube nueva imagen reemplazamos la antigua
+            // If a new image is uploaded, we replace the old one
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 facility.setFacilityImage(image);
             }
 
-            // Guardar cambios
+            // Save changes
             facilityService.saveFacility(facility);
 
             return "redirect:/admin";
@@ -289,111 +294,104 @@ public class UserController {
             return "redirect:/admin";
         }
 
-    // Comprobar si tiene reservas activas
-    boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
+        // Before deleting the facility, we check if it has active reservations. If it
+        // does, we prevent deletion and show an error message.
+        boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
 
         if (hasActiveReservations) {
             model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
             return "redirect:/admin";
         }
 
-        // Eliminar imagen asociada (opcional pero recomendable)
+        // Delete associated image
         if (facility.getFacilityImage() != null) {
             imageService.deleteImage(facility.getFacilityImage().getId());
         }
 
-        // Eliminar instalación
+        // Delete facility
         facilityService.deleteFacility(id);
 
-    return "redirect:/admin";
-}
+        return "redirect:/admin";
+    }
 
+    @PostMapping("/admin/user/update/{id}")
+    public String updateUserFromAdmin(
+            @PathVariable Long id,
+            @RequestParam String name,
+            @RequestParam String username,
+            @RequestParam String email,
+            @RequestParam String phone,
+            @RequestParam(required = false) MultipartFile photoFile,
+            RedirectAttributes redirectAttributes) {
 
- ///////////////////////////////// Classes//////////////////////////////////////////////////////
-
-    
-@PostMapping("/admin/classes/save")
-public String processClasses(
-        Classes classes,
-        //@RequestParam String name,
-        //@RequestParam String description,
-        //@RequestParam String trainer,
-        //@RequestParam List<String> difficulty,
-        //@RequestParam List<String> day,
-        //@RequestParam List<String> startTime,
-        @RequestParam String durationRAW,
-        @RequestParam("photoFile") MultipartFile photoFile,
-        Model model) {
-
-    try {
-        /*Classes classes = new Classes();
-        classes.setName(name);
-        classes.setDescription(description);
-        classes.setTrainer(trainer);
-        classes.setStartTime(startTime);
-        classes.setDifficulty(difficulty);
-        classes.setDay(day);*/
-
-
-        int durationMinutes = convertDurationToMinutes(durationRAW);
-        classes.setDuration(durationMinutes);
-
-        if (!photoFile.isEmpty()) {
-            Image image = imageService.createImage(photoFile.getInputStream());
-           classes.setClassesImage(image);
+        try {
+            userService.updateUserFromAdmin(id, name, username, email, phone, photoFile);
+            redirectAttributes.addFlashAttribute("successAdmin", "Usuario actualizado correctamente");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorAdmin", e.getMessage());
         }
 
-        classesService.saveClass(classes);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/user/block/{id}")
+    public String blockUser(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            user.setBlocked(true);
+            userRepository.save(user);
+        }
 
         return "redirect:/admin";
-
-    } catch (Exception e) {
-        model.addAttribute("error", e.getMessage());
-        return "admin";
     }
-}
 
+    @GetMapping("/admin/user/unblock/{id}")
+    public String unblockUser(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
 
-    @PostMapping("/admin/classes/update")
-    public String updateClasses(
-            @RequestParam Long id,
-            @RequestParam String name,
-            @RequestParam String description,
-            @RequestParam String trainer,
-            @RequestParam List<String> difficulty,
-            @RequestParam List<String> day,
-            @RequestParam List<String> startTime,
+        if (user != null) {
+            user.setBlocked(false);
+            userRepository.save(user);
+        }
+
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/user/delete/{id}")
+    public String deleteUserFromAdmin(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            userService.deleteUserById(id);
+            redirectAttributes.addFlashAttribute("successAdmin", "Usuario eliminado correctamente");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorAdmin", e.getMessage());
+        }
+
+        return "redirect:/admin";
+    }
+
+    ///////////////////////////////// Classes//////////////////////////////////////////////////////
+
+    @PostMapping("/admin/classes/save")
+    public String processClasses(
+            Classes classes,
             @RequestParam String durationRAW,
-            //@RequestParam String duration,
             @RequestParam("photoFile") MultipartFile photoFile,
             Model model) {
 
         try {
-            // Buscamos si la instalación existe
-            Classes classes = classesService.getClassById(id);
-            if (classes == null) {
-                model.addAttribute("error", "La clase no existe");
-                return "admin";
-            }
-
-            // Actualizamos los campos
-            classes.setName(name);
-            classes.setDescription(description);
-            classes.setTrainer(trainer);
-            classes.setDifficulty(difficulty);
-            classes.setDay(day);
-            classes.setStartTime(startTime);
 
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
 
-            // Si sube nueva imagen reemplazamos la antigua
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 classes.setClassesImage(image);
             }
 
-            // Guardar cambios
             classesService.saveClass(classes);
 
             return "redirect:/admin";
@@ -402,7 +400,55 @@ public String processClasses(
             model.addAttribute("error", e.getMessage());
             return "admin";
         }
+    }
 
+    @PostMapping("/admin/classes/update")
+    public String updateClasses(
+            @RequestParam Long id,
+            Classes classesModify,
+            @RequestParam String durationRAW,
+            @RequestParam MultipartFile photoFile,
+            Model model) {
+
+        try {
+            // Validar ID
+            if (id == null || id <= 0) {
+                model.addAttribute("error", "ID de clase no válido");
+                return "admin";
+            }
+
+            // Buscar la clase existente
+            Classes classes = classesService.getClassById(id);
+            if (classes == null) {
+                model.addAttribute("error", "La clase no existe");
+                return "admin";
+            }
+
+            // Actualizar campos
+            classes.setName(classesModify.getName());
+            classes.setDescription(classesModify.getDescription());
+            classes.setTrainer(classesModify.getTrainer());
+            classes.setDifficulty(classesModify.getDifficulty());
+            classes.setDay(classesModify.getDay());
+            classes.setStartTime(classesModify.getStartTime());
+
+            int durationMinutes = convertDurationToMinutes(durationRAW);
+            classes.setDuration(durationMinutes);
+
+            // Manejar imagen
+            if (photoFile != null && !photoFile.isEmpty()) {
+                Image image = imageService.createImage(photoFile.getInputStream());
+                classes.setClassesImage(image);
+            }
+
+            classesService.saveClass(classes);
+
+            return "redirect:/admin";
+
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "admin";
+        }
     }
 
     private int convertDurationToMinutes(String duration) {
@@ -435,16 +481,14 @@ public String processClasses(
             return "redirect:/admin";
         }
 
-        // Eliminar imagen asociada (opcional pero recomendable)
+        // Delete associated image
         if (classes.getClassesImage() != null) {
             imageService.deleteImage(classes.getClassesImage().getId());
         }
 
-        // Eliminar instalación
+        // Delete class
         classesService.deleteClass(id);
 
         return "redirect:/admin";
     }
-
-
 }
