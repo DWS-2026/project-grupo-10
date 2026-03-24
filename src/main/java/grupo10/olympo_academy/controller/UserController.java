@@ -378,6 +378,7 @@ public class UserController {
     @PostMapping("/admin/classes/save")
     public String processClasses(
             Classes classes,
+            @RequestParam Long facility,
             @RequestParam String durationRAW,
             @RequestParam("photoFile") MultipartFile photoFile,
             Model model) {
@@ -386,6 +387,10 @@ public class UserController {
 
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
+
+            // Set the facility
+            Facility selectedFacility = facilityService.getFacilityById(facility);
+            classes.setFacility(selectedFacility);
 
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
@@ -407,6 +412,7 @@ public class UserController {
             @RequestParam Long id,
             Classes classesModify,
             @RequestParam String durationRAW,
+            @RequestParam(required = false) Long facility,
             @RequestParam MultipartFile photoFile,
             Model model) {
 
@@ -429,11 +435,20 @@ public class UserController {
             classes.setDescription(classesModify.getDescription());
             classes.setTrainer(classesModify.getTrainer());
             classes.setDifficulty(classesModify.getDifficulty());
-            classes.setDay(classesModify.getDay());
+            classes.setDays(classesModify.getDays());
+            classes.setAvailableSpots(classesModify.getAvailableSpots());
             classes.setStartTime(classesModify.getStartTime());
 
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
+
+            // Actualizar facility si se proporciona
+            if (facility != null && facility > 0) {
+                Facility selectedFacility = facilityService.getFacilityById(facility);
+                if (selectedFacility != null) {
+                    classes.setFacility(selectedFacility);
+                }
+            }
 
             // Manejar imagen
             if (photoFile != null && !photoFile.isEmpty()) {

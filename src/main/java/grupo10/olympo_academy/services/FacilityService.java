@@ -1,4 +1,5 @@
 package grupo10.olympo_academy.services;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,21 +11,24 @@ import java.util.List;
 public class FacilityService {
     @Autowired
     private FacilityRepository facilityRepository;
-    
+
     public List<Facility> getAllFacilities() {
         return facilityRepository.findAll();
     }
-    
+
     public Facility getFacilityById(Long id) {
         return facilityRepository.findById(id).orElse(null);
     }
-    
+
     public Facility saveFacility(Facility facility) {
         return facilityRepository.save(facility);
     }
 
     public void deleteFacility(Long id) {
-    facilityRepository.deleteById(id);
-}
+        facilityRepository.deleteById(id);
+    }
 
+    public Facility getFacilityByName(String name) {
+        return facilityRepository.findByName(name);
+    }
 }
