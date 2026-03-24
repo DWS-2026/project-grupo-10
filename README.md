@@ -182,8 +182,9 @@ Solo si han cambiado.
 2. **AQUÍ INDICAR LO SIGUIENTES PASOS**
 
 #### **Credenciales de prueba**
-- **Usuario Admin**: usuario: `admin`, contraseña: `admin`
-- **Usuario Registrado**: usuario: `user`, contraseña: `user`
+- **Usuario Admin**: usuario: `admin`, email: `admin@example.com`, contraseña: `potato`
+- **Usuario Registrado 1**: usuario: `user1`, email: `user1@example.com`, contraseña: `user1`
+- **Usuario Registrado 2**: usuario: `user2`, email: `user2@example.com`, contraseña: `user2`
 
 ### **Diagrama de Entidades de Base de Datos**
 
@@ -203,9 +204,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ### **Participación de Miembros en la Práctica 2**
 
-#### **Alumno 1 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 1 - Javier González Alonso**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
@@ -217,9 +216,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 2 - Lucía Zapata Fernández**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
@@ -231,9 +228,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 3 - Diego Consuegra Sáez**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
@@ -245,9 +240,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 4 - Adrián Bellón de la Cruz**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|

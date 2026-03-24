@@ -26,6 +26,10 @@ public class ReservationService {
     return reservationRepository.existsByFacilityAndStatusAndUser(facility, "Activa", user);
   }
 
+  public boolean hasActiveReservationsForFacilityAtTime(Facility facility, String day, String startTime) {
+    return reservationRepository.existsByFacilityAndStatusAndDayAndStartTime(facility, "Activa", day, startTime);
+  }
+
   public boolean hasActiveReservationsForUserAndClasses(Classes classes, User user) {
     return reservationRepository.existsByClassesAndStatusAndUser(classes, "Activa", user);
   }
