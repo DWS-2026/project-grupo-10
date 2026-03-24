@@ -28,15 +28,15 @@ public class UserService {
     }
 
     // Method to register a new user
-    public User register(User user) throws Exception {
+    public User register(User user) {
 
         // Check if email is already registered
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new Exception("Email ya registrado");
+        throw new RuntimeException("Email ya registrado");
         }
         // Unique username
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new Exception("Username ya registrado");
+        throw new RuntimeException("Username ya registrado");
         }
 
         // set default role if not provided

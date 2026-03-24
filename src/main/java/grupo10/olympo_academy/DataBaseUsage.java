@@ -4,97 +4,98 @@ import grupo10.olympo_academy.repository.ImageRepository;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.FacilityRepository;
-//import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.UserService;
-import jakarta.transaction.Transactional;
+import jakarta.annotation.PostConstruct;
+//import jakarta.transaction.Transactional;
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.repository.ClassesRepository;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-@Component
-@Transactional
-public class DataBaseUsage implements CommandLineRunner {
+@Service
+public class DataBaseUsage {
 
-    @Autowired
-    private FacilityService facilityService;
-    // @Autowired
-    //private ClassesService classesService;
-    @Autowired
-    private ClassesRepository classesRepository;
-    @Autowired
-    private FacilityRepository facilityRepository;
-    @Autowired
-    private ImageRepository imageRepository;
-    @Autowired
-    private UserService userService;
+    private final FacilityService facilityService;
+    private final ClassesRepository classesRepository;
+    private final FacilityRepository facilityRepository;
+    private final ImageRepository imageRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
+    private final ImageService imageService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ImageService imageService;
-
-    DataBaseUsage(FacilityRepository facilityRepository, ImageRepository imageRepository) {
+    public DataBaseUsage(
+            FacilityService facilityService,
+            ClassesRepository classesRepository,
+            FacilityRepository facilityRepository,
+            ImageRepository imageRepository,
+            UserService userService,
+            UserRepository userRepository,
+            ImageService imageService
+    ) {
+        this.facilityService = facilityService;
+        this.classesRepository = classesRepository;
         this.facilityRepository = facilityRepository;
         this.imageRepository = imageRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
+        this.imageService = imageService;
     }
    
-    @Override
-    public void run(String... args) throws Exception {
+    @PostConstruct
+    public void init() {
+        try {
+            // Verify if data already exists to avoid duplicates on application restart
+            boolean hasClasses = classesRepository.count() > 0;
+            boolean hasFacilities = facilityRepository.count() > 0;
+            boolean hasImages = imageRepository.count() > 0;
 
-        boolean hasClasses = classesRepository.count() > 0;
-        boolean hasFacilities = facilityRepository.count() > 0;
-        boolean hasImages = imageRepository.count() > 0;
+            // --- FACILITIES ---
+            if (hasFacilities) {
+                System.out.println("La base de datos ya contiene instalaciones. No se cargaron instalaciones.");
+            } else {
+                Facility facility1 = new Facility("Pista de Tenis", "Pista",
+                        "Pista de tenis de superficie dura con iluminación LED y gradas para espectadores. Perfecta para entrenamiento y competiciones tanto diurnas como nocturnas.",
+                        null);
+                setFacilityImage(facility1, "static/assets/images/instalaciones/tenis.png");
+                Facility facility2 = new Facility("Pista de Padel", "Pista",
+                        "Pista de pádel con césped sintético de última generación, paredes de cristal templado e iluminación profesional. Disfruta del deporte de moda en las mejores condiciones.",
+                        null);
+                setFacilityImage(facility2, "static/assets/images/instalaciones/padel.png");
+                Facility facility3 = new Facility("Gimnasio", "Pista",
+                        "Amplio gimnasio equipado con máquinas de última generación, zona de cardio, peso libre y entrenamiento funcional. Cuenta con instructores profesionales y ambiente climatizado.",
+                        null);
+                setFacilityImage(facility3, "static/assets/images/instalaciones/gym_Olympo.png");
+                Facility facility4 = new Facility("Piscina ", "Piscina",
+                        "Piscina semiolímpica de 25 metros con temperatura controlada, sistema de depuración ecológica y vestuarios adaptados. Ideal para natación, aquagym y entrenamiento deportivo.",
+                        null);
+                setFacilityImage(facility4, "static/assets/images/instalaciones/natacion.png");
+                Facility facility5 = new Facility("Pista de Baloncesto", "Pista",
+                        "Pista cubierta con pavimento de parquet certificado, canastas regulables y marcador electrónico. Espacio versátil para partidos, entrenamientos y eventos deportivos.",
+                        null);
+                setFacilityImage(facility5, "static/assets/images/instalaciones/baloncesto.jpeg");
+                Facility facility6 = new Facility("Campo de Fútbol", "Campo",
+                        "Campo de fútbol 11 con césped sintético de última generación, sistema de drenaje avanzado y torretas de iluminación LED. Cumple con las medidas reglamentarias para competiciones oficiales.",
+                        null);
+                setFacilityImage(facility6, "static/assets/images/instalaciones/futbol.jpeg");
 
-        if (hasFacilities) {
-            System.out.println("La base de datos ya contiene instalaciones. No se cargaron instalaciones.");
-        } else {
-            Facility facility1 = new Facility("Pista de Tenis", "Pista",
-                    "Pista de tenis de superficie dura con iluminación LED y gradas para espectadores. Perfecta para entrenamiento y competiciones tanto diurnas como nocturnas.",
-                    null);
-            setFacilityImage(facility1, "static/assets/images/instalaciones/tenis.png");
-            Facility facility2 = new Facility("Pista de Padel", "Pista",
-                    "Pista de pádel con césped sintético de última generación, paredes de cristal templado e iluminación profesional. Disfruta del deporte de moda en las mejores condiciones.",
-                    null);
-            setFacilityImage(facility2, "static/assets/images/instalaciones/padel.png");
-            Facility facility3 = new Facility("Gimnasio", "Pista",
-                    "Amplio gimnasio equipado con máquinas de última generación, zona de cardio, peso libre y entrenamiento funcional. Cuenta con instructores profesionales y ambiente climatizado.",
-                    null);
-            setFacilityImage(facility3, "static/assets/images/instalaciones/gym_Olympo.png");
-            Facility facility4 = new Facility("Piscina ", "`Piscina",
-                    "Piscina semiolímpica de 25 metros con temperatura controlada, sistema de depuración ecológica y vestuarios adaptados. Ideal para natación, aquagym y entrenamiento deportivo.",
-                    null);
-            setFacilityImage(facility4, "static/assets/images/instalaciones/natacion.png");
-            Facility facility5 = new Facility("Pista de Baloncesto", "Pista",
-                    "Pista cubierta con pavimento de parquet certificado, canastas regulables y marcador electrónico. Espacio versátil para partidos, entrenamientos y eventos deportivos.",
-                    null);
-            setFacilityImage(facility5, "static/assets/images/instalaciones/baloncesto.jpeg");
-            Facility facility6 = new Facility("Campo de Fútbol", "Campo",
-                    "Campo de fútbol 11 con césped sintético de última generación, sistema de drenaje avanzado y torretas de iluminación LED. Cumple con las medidas reglamentarias para competiciones oficiales.",
-                    null);
-            setFacilityImage(facility6, "static/assets/images/instalaciones/futbol.jpeg");
-
-            // save facilities
-            facilityService.saveFacility(facility1);
-            facilityService.saveFacility(facility2);
-            facilityService.saveFacility(facility3);
-            facilityService.saveFacility(facility4);
-            facilityService.saveFacility(facility5);
-            facilityService.saveFacility(facility6);
-        }
+                // Save facilities
+                facilityService.saveFacility(facility1);
+                facilityService.saveFacility(facility2);
+                facilityService.saveFacility(facility3);
+                facilityService.saveFacility(facility4);
+                facilityService.saveFacility(facility5);
+                facilityService.saveFacility(facility6);
+            }
 
         if (hasClasses) {
             System.out.println("La base de datos ya contiene clases. No se cargaron clases.");
@@ -165,29 +166,31 @@ public class DataBaseUsage implements CommandLineRunner {
             class6.setFacility(facilityService.getFacilityByName("Campo de Fútbol"));
             setClassesImage(class6, "static/assets/images/clases/clase_futbol.jpg");
 
-            // Guardar
-            classesRepository.saveAll(List.of(class1, class2, class3, class4, class5, class6));
+                // Save classes
+                classesRepository.saveAll(List.of(class1, class2, class3, class4, class5, class6));
 
+            }
+
+            // --- IMAGES ---
+            if (hasImages) {
+                System.out.println("La base de datos ya contiene imágenes. No se cargaron imágenes.");
+            } else {
+                System.out.println("Se cargaron imágenes asociadas a instalaciones y clases.");
+            }
+            
+            // --- USERS ---
+            ensureUserExists(new User("user1", "user1@example.com", "600000001", "user1", "user1", "USER"));
+            ensureUserExists(new User("user2", "user2@example.com", "600000002", "user2", "user2", "USER"));
+            ensureUserExists(new User("admin", "admin@example.com", "600000003", "potato", "admin", "USER", "ADMIN"));
+            
+            System.out.println("Usuarios en base de datos: " + userRepository.count());
+        
+        } catch (IOException e) {
+            throw new RuntimeException("Error al cargar recursos iniciales", e);
         }
-
-        if (hasImages) {
-            System.out.println("La base de datos ya contiene imágenes. No se cargaron imágenes.");
-        } else {
-            System.out.println("Se cargaron imágenes asociadas a instalaciones y clases.");
-        }
-
-        User user1 = new User("user1", "user1@example.com", "600000001", "user1", "user1", "USER");
-        User user2 = new User("user2", "user2@example.com", "600000002", "user2", "user2", "USER");
-        User admin = new User("admin", "admin@example.com", "600000003", "potato", "admin", "USER", "ADMIN");
-
-        ensureUserExists(user1);
-        ensureUserExists(user2);
-        ensureUserExists(admin);
-
-        System.out.println("Usuarios en base de datos: " + userRepository.count());
     }
 
-    private void ensureUserExists(User user) throws Exception {
+    private void ensureUserExists(User user) {
         boolean emailExists = userRepository.findByEmail(user.getEmail()).isPresent();
         boolean usernameExists = userRepository.findByUsername(user.getUsername()).isPresent();
 
