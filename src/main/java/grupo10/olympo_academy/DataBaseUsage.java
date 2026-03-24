@@ -17,7 +17,7 @@ import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.UserService;
-//import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.repository.ClassesRepository;
 
@@ -25,6 +25,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 @Component
+@Transactional
 public class DataBaseUsage implements CommandLineRunner {
 
     @Autowired

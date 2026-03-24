@@ -65,7 +65,14 @@
                                 </td>
                                 <td class="d-flex gap-2">
                                     <a href="#manage-{{id}}" class="btn btn-warning btn-sm">Gestionar</a>
+                                    {{#blocked}}
+                                    <a href="#block-{{id}}" class="btn btn-success btn-sm">Desbloquear</a>
+                                    {{/blocked}}
+
+                                    {{^blocked}}
                                     <a href="#block-{{id}}" class="btn btn-secondary btn-sm">Bloquear</a>
+                                    {{/blocked}}
+
                                     <a href="#delete-{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
                                 </td>
                             </tr>
@@ -136,15 +143,30 @@
                 </div>
             </div>
 
-            <!-- Block User -->
             <div id="block-{{id}}" class="popup">
                 <div class="popup-content">
                     <a href="#" class="close">&times;</a>
+
+                    {{#blocked}}
+                    <h3>¿Desbloquear usuario?</h3>
+                    <p>¿Seguro que quieres desbloquear a <strong>{{name}}</strong>?</p>
+                    {{/blocked}}
+
+                    {{^blocked}}
                     <h3>¿Bloquear usuario?</h3>
                     <p>¿Seguro que quieres bloquear a <strong>{{name}}</strong>?</p>
+                    {{/blocked}}
 
                     <div class="d-flex gap-2 mt-3">
+
+                        {{#blocked}}
+                        <a href="/admin/user/unblock/{{id}}" class="btn btn-success">Sí, desbloquear</a>
+                        {{/blocked}}
+
+                        {{^blocked}}
                         <a href="/admin/user/block/{{id}}" class="btn btn-warning">Sí, bloquear</a>
+                        {{/blocked}}
+
                         <a href="#manage-{{id}}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>

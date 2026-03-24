@@ -5,6 +5,7 @@ import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
@@ -38,6 +39,8 @@ public class UserController {
     private ClassesService classesService;
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private UserRepository userRepository;
 
     /////////////////////////////////////////////////////////////////// LOGIN
     /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
@@ -291,7 +294,8 @@ public class UserController {
             return "redirect:/admin";
         }
 
-        // Before deleting the facility, we check if it has active reservations. If it does, we prevent deletion and show an error message.
+        // Before deleting the facility, we check if it has active reservations. If it
+        // does, we prevent deletion and show an error message.
         boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
 
         if (hasActiveReservations) {
@@ -325,6 +329,30 @@ public class UserController {
             redirectAttributes.addFlashAttribute("successAdmin", "Usuario actualizado correctamente");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorAdmin", e.getMessage());
+        }
+
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/user/block/{id}")
+    public String blockUser(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            user.setBlocked(true);
+            userRepository.save(user);
+        }
+
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/user/unblock/{id}")
+    public String unblockUser(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            user.setBlocked(false);
+            userRepository.save(user);
         }
 
         return "redirect:/admin";

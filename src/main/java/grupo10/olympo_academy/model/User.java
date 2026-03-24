@@ -30,6 +30,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER) // we use EAGER because we know we have to load few roles per user, and we need them for authentication
     private List<String> roles;
     private String username;
+    private boolean blocked = false;
 
     @OneToOne
     private Image profileImage;
@@ -113,6 +114,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean getBlocked() {
+        return blocked;
     }
 }
 
