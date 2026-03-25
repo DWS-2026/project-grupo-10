@@ -2,7 +2,9 @@ package grupo10.olympo_academy.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,7 @@ public class ReservationController {
     @Autowired
     private UserService userService;
 
+    // Handles adding a reservation to the cart or confirming it immediately.
     @PostMapping("/cart/add")
     public String addToCart(
             @RequestParam(required = false) Long facilityId,
@@ -52,6 +55,23 @@ public class ReservationController {
         }
 
         Reservation reservation = buildReservation(facilityId, classId, name, day, startTime, duration, material);
+        if (reservation.getFacility() != null
+                && reservationService.hasActiveReservationsForFacilityAtTime(
+                        reservation.getFacility(),
+                        reservation.getDay(),
+                        reservation.getStartTime())) {
+            redirectAttributes.addFlashAttribute("warning",
+                    "Esa instalación ya está reservada a esa hora.");
+            return redirectAfterReservation(facilityId, classId);
+        }
+        if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
+            Classes classes = classesService.getClassById(reservation.getClasses().getId());
+            if (classes == null || classes.getAvailableSpots() <= 0) {
+                redirectAttributes.addFlashAttribute("warning",
+                        "No quedan plazas disponibles para esta clase.");
+                return redirectAfterReservation(facilityId, classId);
+            }
+        }
 
         if (principal != null) {
             User currentUser = userService.findByEmail(principal.getName());
@@ -74,6 +94,17 @@ public class ReservationController {
             User user = userService.findByEmail(principal.getName());
             reservation.setUser(user);
             reservation.setStatus("Activa");
+            if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
+                Classes classes = classesService.getClassById(reservation.getClasses().getId());
+                if (classes == null || classes.getAvailableSpots() <= 0) {
+                    redirectAttributes.addFlashAttribute("warning",
+                            "No quedan plazas disponibles para esta clase.");
+                    return redirectAfterReservation(facilityId, classId);
+                }
+                classes.setAvailableSpots(classes.getAvailableSpots() - 1);
+                classesService.saveClass(classes);
+                reservation.setClasses(classes);
+            }
             reservationService.save(reservation);
             redirectAttributes.addFlashAttribute("success", "Reserva confirmada correctamente.");
             return "redirect:/userProfile";
@@ -86,6 +117,7 @@ public class ReservationController {
             session.setAttribute("cartReservations", cart);
         }
 
+        // Prevent duplicate items in the cart
         for (Reservation existing : cart) {
             if (reservation.getFacility() != null
                     && existing.getFacility() != null
@@ -130,6 +162,7 @@ public class ReservationController {
         return referer != null ? "redirect:" + referer : "redirect:/";
     }
 
+    // Confirms all cart reservations
     @PostMapping("/cart/confirm")
     public String confirmCart(
             Principal principal,
@@ -150,6 +183,7 @@ public class ReservationController {
         User user = userService.findByEmail(principal.getName());
         List<Reservation> reservations = new ArrayList<>();
 
+        // Build full reservation objects from cart data
         for (Reservation reservation : cart) {
             reservation.setUser(user);
             reservation.setStatus("Activa");
@@ -164,7 +198,37 @@ public class ReservationController {
             reservations.add(reservation);
         }
 
+        // Count how many spots are needed per class
+        Map<Long, Integer> classCounts = new HashMap<>();
         for (Reservation reservation : reservations) {
+            if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
+                Long classId = reservation.getClasses().getId();
+                classCounts.put(classId, classCounts.getOrDefault(classId, 0) + 1);
+            }
+        }
+
+        // Validate class availability before committing
+        for (Map.Entry<Long, Integer> entry : classCounts.entrySet()) {
+            Classes classes = classesService.getClassById(entry.getKey());
+            int needed = entry.getValue();
+            if (classes == null || classes.getAvailableSpots() < needed) {
+                redirectAttributes.addFlashAttribute("warning",
+                        "No quedan plazas disponibles para una de las clases seleccionadas.");
+                return "redirect:/";
+            }
+        }
+
+        // Validate conflicts and user constraints
+        for (Reservation reservation : reservations) {
+            if (reservation.getFacility() != null
+                    && reservationService.hasActiveReservationsForFacilityAtTime(
+                            reservation.getFacility(),
+                            reservation.getDay(),
+                            reservation.getStartTime())) {
+                redirectAttributes.addFlashAttribute("warning",
+                        "Esa instalación ya está reservada a esa hora.");
+                return "redirect:/";
+            }
             if (reservation.getFacility() != null
                     && reservationService.hasActiveReservationsForUser(reservation.getFacility(), user)) {
                 redirectAttributes.addFlashAttribute("warning", "No se puede reservar la misma instalación hasta que se complete la otra.");
@@ -177,12 +241,21 @@ public class ReservationController {
             }
         }
 
+        // Apply spot consumption for classes
+        for (Map.Entry<Long, Integer> entry : classCounts.entrySet()) {
+            Classes classes = classesService.getClassById(entry.getKey());
+            int needed = entry.getValue();
+            classes.setAvailableSpots(classes.getAvailableSpots() - needed);
+            classesService.saveClass(classes);
+        }
+
         reservationService.saveAll(reservations);
         session.removeAttribute("cartReservations");
         redirectAttributes.addFlashAttribute("success", "Reservas confirmadas correctamente.");
         return "redirect:/userProfile";
     }
 
+    // Cancels a reservation and frees class spots if needed
     @PostMapping("/reservations/cancel")
     public String cancelReservation(
             @RequestParam Long id,
@@ -205,38 +278,19 @@ public class ReservationController {
             return "redirect:/userProfile";
         }
 
+        if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
+            Classes classes = classesService.getClassById(reservation.getClasses().getId());
+            if (classes != null) {
+                classes.setAvailableSpots(classes.getAvailableSpots() + 1);
+                classesService.saveClass(classes);
+            }
+        }
         reservationService.delete(reservation);
         redirectAttributes.addFlashAttribute("success", "Reserva cancelada correctamente.");
         return "redirect:/userProfile";
     }
 
-    @PostMapping("/reservations/delete")
-    public String deleteReservation(
-            @RequestParam Long id,
-            Principal principal,
-            RedirectAttributes redirectAttributes) {
-
-        if (principal == null) {
-            return "redirect:/login";
-        }
-
-        Reservation reservation = reservationService.getById(id);
-        if (reservation == null) {
-            redirectAttributes.addFlashAttribute("error", "La reserva no existe.");
-            return "redirect:/userProfile";
-        }
-
-        User user = userService.findByEmail(principal.getName());
-        if (reservation.getUser() == null || !reservation.getUser().getId().equals(user.getId())) {
-            redirectAttributes.addFlashAttribute("error", "No tienes permiso para eliminar esta reserva.");
-            return "redirect:/userProfile";
-        }
-
-        reservationService.delete(reservation);
-        redirectAttributes.addFlashAttribute("success", "Reserva eliminada correctamente.");
-        return "redirect:/userProfile";
-    }
-
+    // Builds a Reservation object from request parameters
     private Reservation buildReservation(Long facilityId,
                                          Long classId,
                                          String name,
@@ -269,6 +323,7 @@ public class ReservationController {
         return reservation;
     }
 
+    // Chooses the best redirect target based on what was being reserved
     private String redirectAfterReservation(Long facilityId, Long classId) {
         if (classId != null) {
             return "redirect:/classes/" + classId;
@@ -279,4 +334,8 @@ public class ReservationController {
         return "redirect:/";
     }
 }
+
+
+
+
 

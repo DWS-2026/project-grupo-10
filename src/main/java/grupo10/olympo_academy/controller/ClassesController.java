@@ -56,7 +56,7 @@ public class ClassesController {
     }
 
     /////////////////////////////////////////////////////////////
-    // Guardar reseña para una clase específica
+    // Save or delete review for a specific class
     /////////////////////////////////////////////////////////////
     @PostMapping("/classes/{classesId}/review")
     public String saveReview(@PathVariable Long classesId,
@@ -64,12 +64,12 @@ public class ClassesController {
             @RequestParam String comment,
             Principal principal) {
 
-        // Verificar si el usuario está logueado
+        // Verify user is logged in
         if (principal == null) {
             return "redirect:/login";
         }
 
-        // Obtener el usuario
+        // Resolve user
         User user;
         try {
             user = userService.findByEmail(principal.getName());
@@ -77,30 +77,30 @@ public class ClassesController {
             return "redirect:/login";
         }
 
-        // Obtener la classes
+        // Resolve the classes
         Classes classes = classesService.getClassById(classesId);
         if (classes == null) {
             return "redirect:/classes?error=notfound";
         }
 
-        // Crear y configurar la reseña
+        // Create and save the review
         Review review = new Review();
         review.setRating(rating);
         review.setComment(comment);
-
-        // Formatear la fecha
+        
+        // Set current date
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         review.setDate(now.format(formatter));
-
-        // Asignar usuario y classes
+        
+        // Associate the review with the user and the classes
         review.setUser(user);
         review.setClasses(classes);
 
-        // Guardar la reseña
+        // Save the review
         reviewService.saveReview(review);
 
-        // Redirigir a la página de la classes
+        // Redirect back to the class page
         return "redirect:/classes/" + classesId;
     }
 

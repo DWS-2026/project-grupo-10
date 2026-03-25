@@ -56,7 +56,7 @@ public class FacilityController {
     }
 
     /////////////////////////////////////////////////////////////
-    // Guardar reseña para una facility específica
+    // Save or delete review for a specific facility
     /////////////////////////////////////////////////////////////
     @PostMapping("/facilities/{facilityId}/review")
     public String saveReview(@PathVariable Long facilityId,
@@ -64,12 +64,12 @@ public class FacilityController {
             @RequestParam String comment,
             Principal principal) {
 
-        // Verificar si el usuario está logueado
+        // Verify user is logged in
         if (principal == null) {
             return "redirect:/login";
         }
 
-        // Obtener el usuario
+        // Resolve user
         User user;
         try {
             user = userService.findByEmail(principal.getName());
@@ -77,30 +77,30 @@ public class FacilityController {
             return "redirect:/login";
         }
 
-        // Obtener la facility
+        // Resolve the facility
         Facility facility = facilityService.getFacilityById(facilityId);
         if (facility == null) {
             return "redirect:/facility?error=notfound";
         }
 
-        // Crear y configurar la reseña
+        // Create and save the review
         Review review = new Review();
         review.setRating(rating);
         review.setComment(comment);
-
-        // Formatear la fecha
+        
+        // Set current date
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         review.setDate(now.format(formatter));
-
-        // Asignar usuario y facility
+        
+        // Associate the review with the user and the facility
         review.setUser(user);
         review.setFacility(facility);
 
-        // Guardar la reseña
+        // Save the review
         reviewService.saveReview(review);
 
-        // Redirigir a la página de la facility
+        // Redirect back to the facility page
         return "redirect:/facilities/" + facilityId;
     }
 

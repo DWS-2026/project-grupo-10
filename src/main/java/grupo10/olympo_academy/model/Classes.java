@@ -27,7 +27,7 @@ public class Classes {
     private List<String> difficulty;
 
     @ElementCollection
-    private List<String> day;
+    private List<String> days;
 
     @ElementCollection
     private List<String> startTime;
@@ -93,12 +93,12 @@ public class Classes {
         this.difficulty = difficulty;
     }
 
-    public List<String> getDay() {
-        return day;
+    public List<String> getDays() {
+        return days;
     }
 
-    public void setDay(List<String> day) {
-        this.day = day;
+    public void setDays(List<String> day) {
+        this.days = day;
     }
 
     public List<String> getStartTime() {
@@ -138,5 +138,13 @@ public class Classes {
 
     public void setFacility(Facility facility) {
         this.facility = facility;
+    }
+
+    public Long getFacilityId() {
+        return facility != null ? facility.getId() : null;
+    }
+
+    public String getFacilityIdString() {
+        return facility != null && facility.getId() != null ? facility.getId().toString() : "";
     }
 }
