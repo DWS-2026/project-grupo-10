@@ -47,9 +47,13 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLogin(@RequestParam(value = "error", required = false) String error,
-            Model model) {
+     @RequestParam(value = "blocked", required = false) String blocked, Model model) {
+
         if (error != null) {
             model.addAttribute("error", "Las credenciales son incorrectas, inténtalo de nuevo");
+        }
+        if (blocked != null) {
+            model.addAttribute("blocked", "Has sido bloqueado por un administrador, contacta con el soporte para más información");
         }
         return "login";
     }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,12 +28,17 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 				.or(() -> userRepository.findByUsername(email))
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+		// check user is not blocked
+		if (user.getBlocked()) {	
+			throw new LockedException("User is blocked");
+		}
+
 		List<GrantedAuthority> roles = new ArrayList<>();
 
 		for (String role : user.getRoles()) {
 			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
+		
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
 	}
 }
-
