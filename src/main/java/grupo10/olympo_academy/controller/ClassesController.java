@@ -50,6 +50,8 @@ public class ClassesController {
             } catch (Exception ignored) {
                 // ignore if user cannot be resolved
             }
+            // Add available times
+            model.addAttribute("availableTimes", classes.getStartTime());
         }
 
         return "classes";
@@ -99,6 +101,8 @@ public class ClassesController {
 
         // Save the review
         reviewService.saveReview(review);
+ 
+
 
         // Redirect back to the class page
         return "redirect:/classes/" + classesId;
