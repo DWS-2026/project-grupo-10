@@ -937,14 +937,31 @@ main {
     width: 100%;
     max-width: 1000px;
 }
-
-/* Para la imagen en la página de detalle */
-.facility-detail .facility-image {
+.facility-image {
     max-width: 100%;
+    width: 100%; 
     height: auto;
-    display: block;
-    margin: 0 auto;
+    max-height: 600px; 
+    object-fit:cover; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+    .facility-image {
+        max-height: 400px; /* Aumentado de 300px a 400px */
+        width: 100%;
+    }
+}
+
+/* Para pantallas grandes */
+@media (min-width: 1200px) {
+    .facility-image {
+        max-height: 700px; /* Aún más grande en pantallas grandes */
+    }
+}
+
 
 /* Responsive para móviles */
 @media (max-width: 768px) {
