@@ -28,6 +28,18 @@
         </div>
         {{/success}}
 
+        {{#errorAdmin}}
+        <div class="alert alert-danger auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+            {{.}}
+        </div>
+        {{/errorAdmin}}
+
+        {{#successAdmin}}
+        <div class="alert alert-success auto-hide-alert fixed-alert" role="alert" data-hide-delay="5000">
+            {{.}}
+        </div>
+        {{/successAdmin}}
+
         <!-- User's Data -->
         <section id="user-profile" class="mb-5 text-center">
             <h2 class="mb-4">Mi Perfil</h2>
@@ -36,7 +48,7 @@
             <img src="/images/id/{{user.profileImage.id}}" alt="Profile photo" class="rounded-circle mb-3" width="150"
                 height="150">
             {{/user.profileImage}}
-            
+
             {{^user.profileImage}}
             <img src="/assets/images/fotoPerfilweb.webp" class="rounded-circle mb-3" width="150" height="150">
             {{/user.profileImage}}
@@ -74,14 +86,25 @@
                             <td>{{name}}</td>
                             <td class="fw-bold">{{status}}</td>
                             <td>
-                                <form method="post" action="/reservations/cancel" class="d-inline cancel-reservation-form">
+
+                                {{#adminView}}
+                                <a href="#edit-reservation-{{id}}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="/admin/reservations/delete/{{id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                                {{/adminView}}
+
+                                {{^adminView}}
+                                <form method="post" action="/reservations/cancel"
+                                    class="d-inline cancel-reservation-form">
                                     <input type="hidden" name="id" value="{{id}}">
                                     <input type="hidden" name="_csrf" value="{{token}}" />
                                     <button class="btn btn-danger btn-sm">Cancelar</button>
                                 </form>
+                                {{/adminView}}
+
                             </td>
                         </tr>
                         {{/reservations}}
+
                         {{^reservations}}
                         <tr>
                             <td colspan="4" class="text-muted">No tienes reservas.</td>
@@ -103,17 +126,17 @@
                 <form method="post" action="/updateProfile">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" name="name" value={{user.name}}>
+                        <input type="text" class="form-control" name="name" value="{{user.name}}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nombre de usuario</label>
-                        <input type="text" class="form-control" name="username" value={{user.username}}>
+                        <input type="text" class="form-control" name="username" value="{{user.username}}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Numero de telefono</label>
-                        <input type="text" class="form-control" name="phone" value={{user.phone}}>
+                        <input type="text" class="form-control" name="phone" value="{{user.phone}}">
                     </div>
 
                     <input type="hidden" name="_csrf" value="{{token}}" />
@@ -152,21 +175,6 @@
             </div>
         </div>
 
-        <!-- Delete review  -->
-        <div id="delete-review" class="popup">
-            <div class="popup-content">
-                <a href="#" class="close">&times;</a>
-                <h3>Eliminar Reseña</h3>
-                <p>¿Seguro que quieres eliminar esta reseña?</p>
-
-                <div class="d-flex gap-2 mt-3">
-                    <button class="btn btn-danger">Sí, eliminar</button>
-                    <a href="#" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Change Profile Picture -->
         <div id="change-photo" class="popup">
             <div class="popup-content">
@@ -174,11 +182,12 @@
 
                 <h3>Cambiar Foto de Perfil</h3>
 
-                <form method=post enctype="multipart/form-data" action="/updateProfileImage">
+                <form method="post" enctype="multipart/form-data" action="/updateProfileImage">
                     <div class="mb-3">
                         <label class="form-label">Foto actual</label><br>
                         {{#user.profileImage}}
-                            <img src="/images/id/{{user.profileImage.id}}" width="120" height="120" class="rounded-circle mb-3">
+                        <img src="/images/id/{{user.profileImage.id}}" width="120" height="120"
+                            class="rounded-circle mb-3">
                         {{/user.profileImage}}
                     </div>
 
@@ -192,32 +201,107 @@
                 </form>
             </div>
         </div>
-    </div>
-    {{>footer}}
 
-    <!-- Cancel Reservation Modal -->
-    <div class="modal fade" id="cancelReservationModal" tabindex="-1" aria-labelledby="cancelReservationLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cancelReservationLabel">Cancelar reserva</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Seguro que quieres cancelar esta reserva?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, volver</button>
-                    <button type="button" class="btn btn-danger" id="confirmCancelReservation">Sí, cancelar</button>
-                </div>
+        <!-- Edit Reservation Popups (admin only) -->
+        {{#adminView}}
+        {{#reservations}}
+        <div id="edit-reservation-{{id}}" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>Editar reserva: {{name}}</h3>
+
+                <form action="/admin/reservations/update/{{id}}" method="post">
+
+                    <!-- Día -->
+                    <div class="mb-3">
+                        <label class="form-label">Día *</label>
+                        <input type="date" name="day" class="form-control" value="{{day}}" required>
+                    </div>
+
+                    <!-- Hora -->
+                    <div class="mb-3">
+                        <label class="form-label">Hora *</label>
+                        <select name="startTime" class="form-control" data-current-values="{{startTime}}">
+                            <option value="08:00">08:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="20:00">20:00</option>
+                        </select>
+                    </div>
+
+                    <!-- Duración -->
+                    <div class="mb-3">
+                        <label class="form-label">Duración *</label>
+                        <select name="duration" class="form-control" data-current-duration="{{duration}}">
+                            <option value="60">1h</option>
+                            <option value="90">1:30h</option>
+                            <option value="120">2h</option>
+                        </select>
+                    </div>
+
+                    <!-- Material -->
+                    <div class="mb-3">
+                        <label class="form-label">Material</label>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="material" data-current-material="{{material}}">
+                                Necesita material deportivo
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success" type="submit">Guardar cambios</button>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                </form>
             </div>
         </div>
-    </div>
+        {{/reservations}}
+        {{/adminView}}
+
+        <script>
+            function preselectEditReservationValues(popupId) {
+                const popup = document.getElementById(popupId);
+                if (!popup) return;
+
+                // HORA
+                const startTimeSelect = popup.querySelector('select[name="startTime"]');
+                if (startTimeSelect) {
+                    const current = startTimeSelect.dataset.currentValues?.trim();
+                    Array.from(startTimeSelect.options).forEach(opt => {
+                        opt.selected = opt.value.trim() === current;
+                    });
+                }
+
+                // DURACIÓN
+                const durationSelect = popup.querySelector('select[name="duration"]');
+                if (durationSelect) {
+                    const current = parseInt(durationSelect.dataset.currentDuration);
+                    Array.from(durationSelect.options).forEach(opt => {
+                        opt.selected = parseInt(opt.value) === current;
+                    });
+                }
+
+                // MATERIAL
+                const materialInput = popup.querySelector('input[name="material"]');
+                if (materialInput.dataset.currentMaterial === "true") {
+                    materialInput.checked = true;
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('a[href^="#edit-reservation-"]').forEach(link => {
+                    link.addEventListener('click', () => {
+                        const popupId = link.getAttribute('href').substring(1);
+                        setTimeout(() => preselectEditReservationValues(popupId), 100);
+                    });
+                });
+            });
+        </script>
+
+        {{>footer}}
+
 </body>
 
 </html>
-
-
-
-

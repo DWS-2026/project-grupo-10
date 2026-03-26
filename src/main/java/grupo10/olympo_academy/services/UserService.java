@@ -163,4 +163,9 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    public User getById(Long id) {
+    return userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+}
+
 }

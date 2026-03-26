@@ -52,9 +52,9 @@
 
                             {{#users}}
                             <tr>
-                                <td>{{name}}</td>
+                                <td><a href="/admin/user/{{id}}" class="text-primary fw-bold">{{name}}</a></td>
                                 <td>{{email}}</td>
-                                <td>{{reservations}}</td>
+                                <td>{{reservationsCount}}</td>
                                 <td>
                                     {{#blocked}}
                                     <span class="badge bg-danger">Bloqueado</span>
@@ -465,7 +465,8 @@
                         <div class="mb-3">
                             <label class="form-label">Dificultad *</label>
                             <div>
-                                <select name="difficulty" class="form-control" multiple data-current-values="{{#difficulty}}{{.}},{{/difficulty}}">
+                                <select name="difficulty" class="form-control" multiple
+                                    data-current-values="{{#difficulty}}{{.}},{{/difficulty}}">
                                     <option value="Principiante"> Principiante</option>
                                     <option value="Intermedio"> Intermedio</option>
                                     <option value="Avanzado"> Avanzado</option>
@@ -478,7 +479,8 @@
                         <div class="mb-3">
                             <label class="form-label">Días *</label>
                             <div>
-                                <select name="days" class="form-control" multiple data-current-values="{{#days}}{{.}},{{/days}}">
+                                <select name="days" class="form-control" multiple
+                                    data-current-values="{{#days}}{{.}},{{/days}}">
                                     <option value="Lunes"> Lunes</option>
                                     <option value="Martes"> Martes</option>
                                     <option value="Miércoles"> Miércoles</option>
@@ -494,7 +496,8 @@
                         <div class="mb-3">
                             <label class="form-label">Horarios *</label>
                             <div>
-                                <select name="startTime" class="form-control" multiple data-current-values="{{#startTime}}{{.}},{{/startTime}}">
+                                <select name="startTime" class="form-control" multiple
+                                    data-current-values="{{#startTime}}{{.}},{{/startTime}}">
                                     <option value="08:00"> 08:00</option>
                                     <option value="10:00"> 10:00</option>
                                     <option value="12:00"> 12:00</option>
@@ -508,7 +511,8 @@
                         <!-- duration -->
                         <div class="mb-3">
                             <label class="form-label">Duración *</label>
-                            <select name="durationRAW" class="form-control" required data-current-duration="{{duration}}">
+                            <select name="durationRAW" class="form-control" required
+                                data-current-duration="{{duration}}">
                                 <option value="">Selecciona duración</option>
                                 <option value="1h">1h</option>
                                 <option value="1:30h">1:30h</option>
@@ -516,16 +520,18 @@
                             </select>
                         </div>
 
-                        <!--Available spots --> 
+                        <!--Available spots -->
                         <div class="mb-3">
                             <label class="form-label">Plazas disponibles *</label>
-                            <input type="number" name="availableSpots" min="1" max="30" class="form-control" value="{{availableSpots}}" required>
+                            <input type="number" name="availableSpots" min="1" max="30" class="form-control"
+                                value="{{availableSpots}}" required>
                         </div>
 
-                        
+
                         <div class="mb-3">
                             <label class="form-label">Instalacion en la que se realiza *</label>
-                            <select name="facility" class="form-control" required data-current-facility="{{facilityIdString}}">
+                            <select name="facility" class="form-control" required
+                                data-current-facility="{{facilityIdString}}">
                                 <option value="">Selecciona instalacion</option>
                                 {{#facilities}}
                                 <option value="{{id}}">{{name}}</option>
@@ -690,7 +696,7 @@
                     let durationValue = '1h'; // default
                     if (durationMinutes === 90) durationValue = '1:30h';
                     else if (durationMinutes === 120) durationValue = '2h';
-                    
+
                     Array.from(durationSelect.options).forEach(option => {
                         option.selected = option.value === durationValue;
                     });
@@ -710,10 +716,10 @@
         }
 
         // Add click event listeners to edit class links
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const editLinks = document.querySelectorAll('a[href^="#edit-class-"]');
             editLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function (e) {
                     const href = this.getAttribute('href');
                     const popupId = href.substring(1); // Remove the #
                     // Small delay to ensure popup is visible
@@ -722,7 +728,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

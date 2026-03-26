@@ -18,6 +18,7 @@ public class ReservationService {
   public boolean hasActiveReservations(Facility facility) {
     return reservationRepository.existsByFacilityAndStatus(facility, "Activa");
   }
+
   public boolean hasActiveReservationsForClasses(Classes classes) {
     return reservationRepository.existsByClassesAndStatus(classes, "Activa");
   }
@@ -34,16 +35,32 @@ public class ReservationService {
     return reservationRepository.existsByClassesAndStatusAndUser(classes, "Activa", user);
   }
 
-  public boolean hasActiveReservationsForUserAndClassesAtTime(Classes classes, User user, String startTime, String day) {
-    return reservationRepository.existsByClassesAndStatusAndUserAndStartTimeAndDay(classes, "Activa", user, startTime, day);
+  public boolean hasActiveReservationsForUserAndClassesAtTime(Classes classes, User user, String startTime,
+      String day) {
+    return reservationRepository.existsByClassesAndStatusAndUserAndStartTimeAndDay(classes, "Activa", user, startTime,
+        day);
   }
 
   public List<Reservation> saveAll(List<Reservation> reservations) {
-    return reservationRepository.saveAll(reservations);
+    List<Reservation> savedList = reservationRepository.saveAll(reservations);
+
+    for (Reservation r : savedList) {
+      User user = r.getUser();
+      if (user != null) {
+        user.getReservations().add(r);
+      }
+    }
+    return savedList;
   }
 
   public Reservation save(Reservation reservation) {
-    return reservationRepository.save(reservation);
+    Reservation saved = reservationRepository.save(reservation);
+
+    User user = saved.getUser();
+    if (user != null) {
+      user.getReservations().add(saved);
+    }
+    return saved;
   }
 
   public List<Reservation> getReservationsByUser(User user) {
@@ -63,6 +80,10 @@ public class ReservationService {
   }
 
   public void delete(Reservation reservation) {
+    User user = reservation.getUser();
+    if (user != null) {
+      user.getReservations().remove(reservation);
+    }
     reservationRepository.delete(reservation);
   }
 
