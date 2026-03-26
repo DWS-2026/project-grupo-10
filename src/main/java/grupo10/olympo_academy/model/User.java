@@ -35,7 +35,7 @@ public class User {
     @OneToOne
     private Image profileImage;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
 	private List<Reservation> reservations = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -123,6 +123,17 @@ public class User {
     public boolean getBlocked() {
         return blocked;
     }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+    public int getReservationsCount() {
+    return reservations.size();
+}
 }
 
     

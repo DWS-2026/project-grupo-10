@@ -47,9 +47,13 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLogin(@RequestParam(value = "error", required = false) String error,
-            Model model) {
+     @RequestParam(value = "blocked", required = false) String blocked, Model model) {
+
         if (error != null) {
             model.addAttribute("error", "Las credenciales son incorrectas, inténtalo de nuevo");
+        }
+        if (blocked != null) {
+            model.addAttribute("blocked", "Has sido bloqueado por un administrador, contacta con el soporte para más información");
         }
         return "login";
     }
@@ -371,6 +375,98 @@ public class UserController {
         }
 
         return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/user/{id}")
+public String getUserProfileAsAdmin(@PathVariable Long id, Model model) {
+
+    User user = userService.getById(id);
+    if (user == null) {
+        return "redirect:/admin";
+    }
+
+    List<Reservation> reservations = reservationService.getReservationsByUser(user);
+    reservations.sort((a, b) -> {
+        LocalDate dateA = parseReservationDate(a.getDay());
+        LocalDate dateB = parseReservationDate(b.getDay());
+
+        if (dateA != null && dateB != null) {
+            int cmp = dateA.compareTo(dateB);
+            if (cmp != 0) return cmp;
+        } else if (dateA != null) {
+            return -1;
+        } else if (dateB != null) {
+            return 1;
+        }
+
+        String dayA = a.getDay() == null ? "" : a.getDay();
+        String dayB = b.getDay() == null ? "" : b.getDay();
+        int cmp = dayA.compareToIgnoreCase(dayB);
+        if (cmp != 0) return cmp;
+
+        String timeA = a.getStartTime() == null ? "" : a.getStartTime();
+        String timeB = b.getStartTime() == null ? "" : b.getStartTime();
+        return timeA.compareToIgnoreCase(timeB);
+    });
+
+    model.addAttribute("user", user);
+    model.addAttribute("reservations", reservations);
+
+    // To indicate in the view that we are in admin mode, so we can show/hide certain options
+    model.addAttribute("adminView", true);
+
+    return "userProfile";
+}
+
+@PostMapping("/admin/reservations/update/{id}")
+public String updateReservationAsAdmin(
+        @PathVariable Long id,
+        @RequestParam String day,
+        @RequestParam String startTime,
+        @RequestParam int duration,
+        @RequestParam(required = false) Boolean material,
+        @RequestParam String status,
+        RedirectAttributes redirectAttributes) {
+
+    Reservation reservation = reservationService.getById(id);
+
+    if (reservation == null) {
+        redirectAttributes.addFlashAttribute("errorAdmin", "La reserva no existe.");
+        return "redirect:/admin";
+    }
+
+    reservation.setDay(day);
+    reservation.setStartTime(startTime);
+    reservation.setDuration(duration);
+    reservation.setMaterial(material != null && material);
+    reservation.setStatus(status);
+
+    reservationService.save(reservation);
+
+    redirectAttributes.addFlashAttribute("successAdmin", "Reserva actualizada correctamente.");
+
+    return "redirect:/admin/user/" + reservation.getUser().getId();
+}
+
+    @GetMapping("/admin/reservations/delete/{id}")
+    public String deleteReservationAsAdmin(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes) {
+
+        Reservation reservation = reservationService.getById(id);
+
+        if (reservation == null) {
+            redirectAttributes.addFlashAttribute("errorAdmin", "La reserva no existe.");
+            return "redirect:/admin";
+        }
+
+        Long userId = reservation.getUser().getId();
+
+        reservationService.delete(reservation);
+
+        redirectAttributes.addFlashAttribute("successAdmin", "Reserva eliminada correctamente.");
+
+        return "redirect:/admin/user/" + userId;
     }
 
     ///////////////////////////////// Classes//////////////////////////////////////////////////////

@@ -102,7 +102,5 @@ public class Reservation {
     public void setMaterial(Boolean material) {
         this.material = material;
     }  
-
-
-     
+  
 }

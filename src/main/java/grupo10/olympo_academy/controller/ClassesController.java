@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Review;
@@ -27,38 +28,43 @@ public class ClassesController {
     private UserService userService;
     @Autowired
     private ReviewService reviewService;
-  
 
     @GetMapping("/classes/{id}")
-    public String getClassById(@PathVariable Long id, Model model, Principal principal) {
-        Classes classes = classesService.getClassById(id);
-        model.addAttribute("classes", classes);
+    public String getClassById(@PathVariable Long id, Model model, Principal principal,
+            RedirectAttributes redirectAttributes) {
 
-        if (classes != null) {
-            model.addAttribute("reviews", reviewService.getReviewsByClasses(id));
-            if (principal != null) {
-                try {
-                    User user = userService.findByEmail(principal.getName());
-                    model.addAttribute("myReviews", reviewService.getReviewsByUserAndClasses(user, id));
-                } catch (Exception ignored) {
-                    // ignore if user cannot be resolved
-                }
+        Classes classes = classesService.getClassById(id);
+        if (classes == null) {
+            redirectAttributes.addFlashAttribute("error404", "Error 404: Elemento no encontrado");
+            return "redirect:/error";
+        }
+
+        model.addAttribute("classes", classes);
+        model.addAttribute("reviews", reviewService.getReviewsByClasses(id));
+
+        if (principal != null) {
+            try {
+                User user = userService.findByEmail(principal.getName());
+                model.addAttribute("user", user);
+                model.addAttribute("myReviews", reviewService.getReviewsByUserAndClasses(user, id));
+            } catch (Exception ignored) {
+                // ignore if user cannot be resolved
             }
             // Add available times
             model.addAttribute("availableTimes", classes.getStartTime());
         }
+
         return "classes";
     }
-
 
     /////////////////////////////////////////////////////////////
     // Save or delete review for a specific class
     /////////////////////////////////////////////////////////////
     @PostMapping("/classes/{classesId}/review")
     public String saveReview(@PathVariable Long classesId,
-                             @RequestParam int rating,
-                             @RequestParam String comment,
-                             Principal principal) {
+            @RequestParam int rating,
+            @RequestParam String comment,
+            Principal principal) {
 
         // Verify user is logged in
         if (principal == null) {
@@ -104,8 +110,8 @@ public class ClassesController {
 
     @PostMapping("/classes/{classesId}/review/delete")
     public String deleteReview(@PathVariable Long classesId,
-                               @RequestParam Long id,
-                               Principal principal) {
+            @RequestParam Long id,
+            Principal principal) {
 
         if (principal == null) {
             return "redirect:/login";
