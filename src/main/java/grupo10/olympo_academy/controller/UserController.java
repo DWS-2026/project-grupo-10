@@ -425,7 +425,6 @@ public String updateReservationAsAdmin(
         @RequestParam String startTime,
         @RequestParam int duration,
         @RequestParam(required = false) Boolean material,
-        @RequestParam String status,
         RedirectAttributes redirectAttributes) {
 
     Reservation reservation = reservationService.getById(id);
@@ -439,7 +438,6 @@ public String updateReservationAsAdmin(
     reservation.setStartTime(startTime);
     reservation.setDuration(duration);
     reservation.setMaterial(material != null && material);
-    reservation.setStatus(status);
 
     reservationService.save(reservation);
 

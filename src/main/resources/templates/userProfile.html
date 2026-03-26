@@ -42,7 +42,7 @@
 
         <!-- User's Data -->
         <section id="user-profile" class="mb-5 text-center">
-            <h2 class="mb-4">Mi Perfil</h2>
+            <h2 class="mb-4 facility-title">Mi Perfil</h2>
 
             {{#user.profileImage}}
             <img src="/images/id/{{user.profileImage.id}}" alt="Profile photo" class="rounded-circle mb-3" width="150"
@@ -212,13 +212,13 @@
 
                 <form action="/admin/reservations/update/{{id}}" method="post">
 
-                    <!-- Día -->
+                    <!-- Day -->
                     <div class="mb-3">
                         <label class="form-label">Día *</label>
                         <input type="date" name="day" class="form-control" value="{{day}}" required>
                     </div>
 
-                    <!-- Hora -->
+                    <!-- Hour -->
                     <div class="mb-3">
                         <label class="form-label">Hora *</label>
                         <select name="startTime" class="form-control" data-current-values="{{startTime}}">
@@ -231,7 +231,7 @@
                         </select>
                     </div>
 
-                    <!-- Duración -->
+                    <!-- Duration -->
                     <div class="mb-3">
                         <label class="form-label">Duración *</label>
                         <select name="duration" class="form-control" data-current-duration="{{duration}}">
@@ -265,7 +265,7 @@
                 const popup = document.getElementById(popupId);
                 if (!popup) return;
 
-                // HORA
+                // Hour
                 const startTimeSelect = popup.querySelector('select[name="startTime"]');
                 if (startTimeSelect) {
                     const current = startTimeSelect.dataset.currentValues?.trim();
@@ -274,7 +274,7 @@
                     });
                 }
 
-                // DURACIÓN
+                // Duration
                 const durationSelect = popup.querySelector('select[name="duration"]');
                 if (durationSelect) {
                     const current = parseInt(durationSelect.dataset.currentDuration);
@@ -283,7 +283,7 @@
                     });
                 }
 
-                // MATERIAL
+                // Material
                 const materialInput = popup.querySelector('input[name="material"]');
                 if (materialInput.dataset.currentMaterial === "true") {
                     materialInput.checked = true;
@@ -300,8 +300,9 @@
             });
         </script>
 
-        {{>footer}}
 
+    </div>
+    {{>footer}}
 </body>
 
 </html>
