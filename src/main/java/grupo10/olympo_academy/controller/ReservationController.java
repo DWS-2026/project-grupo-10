@@ -42,7 +42,6 @@ public class ReservationController {
             @RequestParam String name,
             @RequestParam String day,
             @RequestParam String startTime,
-            @RequestParam int duration,
             @RequestParam(required = false) Boolean material,
             @RequestParam(required = false, defaultValue = "add") String action,
             Principal principal,
@@ -54,7 +53,7 @@ public class ReservationController {
             return "redirect:/";
         }
 
-        Reservation reservation = buildReservation(facilityId, classId, name, day, startTime, duration, material);
+        Reservation reservation = buildReservation(facilityId, classId, name, day, startTime, material);
         if (reservation.getFacility() != null
                 && reservationService.hasActiveReservationsForFacilityAtTime(
                         reservation.getFacility(),
@@ -64,25 +63,20 @@ public class ReservationController {
                     "Esa instalación ya está reservada a esa hora.");
             return redirectAfterReservation(facilityId, classId);
         }
-        if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
-            Classes classes = classesService.getClassById(reservation.getClasses().getId());
-            if (classes == null || classes.getAvailableSpots() <= 0) {
-                redirectAttributes.addFlashAttribute("warning",
-                        "No quedan plazas disponibles para esta clase.");
-                return redirectAfterReservation(facilityId, classId);
-            }
-        }
 
         if (principal != null) {
             User currentUser = userService.findByEmail(principal.getName());
             if (reservation.getFacility() != null
                     && reservationService.hasActiveReservationsForUser(reservation.getFacility(), currentUser)) {
-                redirectAttributes.addFlashAttribute("warning", "No se puede reservar la misma instalación hasta que se complete la otra.");
+                redirectAttributes.addFlashAttribute("warning",
+                        "No se puede reservar la misma instalación hasta que se complete la otra.");
                 return redirectAfterReservation(facilityId, classId);
             }
             if (reservation.getClasses() != null
-                    && reservationService.hasActiveReservationsForUserAndClassesAtTime(reservation.getClasses(), currentUser, reservation.getStartTime(), reservation.getDay())) {
-                redirectAttributes.addFlashAttribute("warning", "Ya tienes una reserva activa para esta clase a esa hora.");
+                    && reservationService.hasActiveReservationsForUserAndClassesAtTime(reservation.getClasses(),
+                            currentUser, reservation.getStartTime(), reservation.getDay())) {
+                redirectAttributes.addFlashAttribute("warning",
+                        "Ya tienes una reserva activa para esta clase a esa hora.");
                 return redirectAfterReservation(facilityId, classId);
             }
         }
@@ -96,12 +90,6 @@ public class ReservationController {
             reservation.setStatus("Activa");
             if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
                 Classes classes = classesService.getClassById(reservation.getClasses().getId());
-                if (classes == null || classes.getAvailableSpots() <= 0) {
-                    redirectAttributes.addFlashAttribute("warning",
-                            "No quedan plazas disponibles para esta clase.");
-                    return redirectAfterReservation(facilityId, classId);
-                }
-                classes.setAvailableSpots(classes.getAvailableSpots() - 1);
                 classesService.saveClass(classes);
                 reservation.setClasses(classes);
             }
@@ -207,17 +195,6 @@ public class ReservationController {
             }
         }
 
-        // Validate class availability before committing
-        for (Map.Entry<Long, Integer> entry : classCounts.entrySet()) {
-            Classes classes = classesService.getClassById(entry.getKey());
-            int needed = entry.getValue();
-            if (classes == null || classes.getAvailableSpots() < needed) {
-                redirectAttributes.addFlashAttribute("warning",
-                        "No quedan plazas disponibles para una de las clases seleccionadas.");
-                return "redirect:/";
-            }
-        }
-
         // Validate conflicts and user constraints
         for (Reservation reservation : reservations) {
             if (reservation.getFacility() != null
@@ -231,22 +208,17 @@ public class ReservationController {
             }
             if (reservation.getFacility() != null
                     && reservationService.hasActiveReservationsForUser(reservation.getFacility(), user)) {
-                redirectAttributes.addFlashAttribute("warning", "No se puede reservar la misma instalación hasta que se complete la otra.");
+                redirectAttributes.addFlashAttribute("warning",
+                        "No se puede reservar la misma instalación hasta que se complete la otra.");
                 return "redirect:/";
             }
             if (reservation.getClasses() != null
-                    && reservationService.hasActiveReservationsForUserAndClassesAtTime(reservation.getClasses(), user, reservation.getStartTime(), reservation.getDay())) {
-                redirectAttributes.addFlashAttribute("warning", "Ya tienes una reserva activa para esa clase a esa hora.");
+                    && reservationService.hasActiveReservationsForUserAndClassesAtTime(reservation.getClasses(), user,
+                            reservation.getStartTime(), reservation.getDay())) {
+                redirectAttributes.addFlashAttribute("warning",
+                        "Ya tienes una reserva activa para esa clase a esa hora.");
                 return "redirect:/";
             }
-        }
-
-        // Apply spot consumption for classes
-        for (Map.Entry<Long, Integer> entry : classCounts.entrySet()) {
-            Classes classes = classesService.getClassById(entry.getKey());
-            int needed = entry.getValue();
-            classes.setAvailableSpots(classes.getAvailableSpots() - needed);
-            classesService.saveClass(classes);
         }
 
         reservationService.saveAll(reservations);
@@ -281,7 +253,6 @@ public class ReservationController {
         if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
             Classes classes = classesService.getClassById(reservation.getClasses().getId());
             if (classes != null) {
-                classes.setAvailableSpots(classes.getAvailableSpots() + 1);
                 classesService.saveClass(classes);
             }
         }
@@ -292,17 +263,15 @@ public class ReservationController {
 
     // Builds a Reservation object from request parameters
     private Reservation buildReservation(Long facilityId,
-                                         Long classId,
-                                         String name,
-                                         String day,
-                                         String startTime,
-                                         int duration,
-                                         Boolean material) {
+            Long classId,
+            String name,
+            String day,
+            String startTime,
+            Boolean material) {
         Reservation reservation = new Reservation();
         reservation.setName(name);
         reservation.setDay(day);
         reservation.setStartTime(startTime);
-        reservation.setDuration(duration);
         reservation.setMaterial(material != null && material);
         reservation.setStatus("Pendiente");
 
@@ -334,8 +303,3 @@ public class ReservationController {
         return "redirect:/";
     }
 }
-
-
-
-
-

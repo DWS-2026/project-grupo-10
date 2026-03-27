@@ -530,7 +530,6 @@ public String updateReservationAsAdmin(
             classes.setTrainer(classesModify.getTrainer());
             classes.setDifficulty(classesModify.getDifficulty());
             classes.setDays(classesModify.getDays());
-            classes.setAvailableSpots(classesModify.getAvailableSpots());
             classes.setStartTime(classesModify.getStartTime());
 
             int durationMinutes = convertDurationToMinutes(durationRAW);

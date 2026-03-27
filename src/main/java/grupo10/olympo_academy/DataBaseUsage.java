@@ -107,7 +107,6 @@ public class DataBaseUsage {
             class1.setDays(List.of("Lunes", "Miércoles"));
             class1.setStartTime(List.of("10:00", "18:00"));
             class1.setDuration(60);
-            class1.setAvailableSpots(20);
             class1.setFacility(facilityService.getFacilityByName("Pista de Tenis"));
             setClassesImage(class1, "static/assets/images/clases/clase_tenis.jpg");
 
@@ -118,7 +117,6 @@ public class DataBaseUsage {
             class2.setDays(List.of("Martes", "Jueves"));
             class2.setStartTime(List.of("12:00", "19:00"));
             class2.setDuration(60);
-            class2.setAvailableSpots(20);
             class2.setFacility(facilityService.getFacilityByName("Pista de Padel"));
             setClassesImage(class2, "static/assets/images/clases/clase_padel.jpg");
 
@@ -129,7 +127,6 @@ public class DataBaseUsage {
             class3.setDays(List.of("Lunes", "Viernes"));
             class3.setStartTime(List.of("19:00", "20:00"));
             class3.setDuration(60);
-            class3.setAvailableSpots(20);
             class3.setFacility(facilityService.getFacilityByName("Gimnasio"));
             setClassesImage(class3, "static/assets/images/clases/clase_crossfit.jpg");
 
@@ -140,7 +137,6 @@ public class DataBaseUsage {
             class4.setDays(List.of("Miércoles"));
             class4.setStartTime(List.of("17:00", "18:30"));
             class4.setDuration(60);
-            class4.setAvailableSpots(10);
             class4.setFacility(facilityService.getFacilityByName("Piscina "));
             setClassesImage(class4, "static/assets/images/clases/clase_natacion.jpg");
 
@@ -151,7 +147,6 @@ public class DataBaseUsage {
             class5.setDays(List.of("Viernes"));
             class5.setStartTime(List.of("18:00", "20:00"));
             class5.setDuration(90);
-            class5.setAvailableSpots(25);
             class5.setFacility(facilityService.getFacilityByName("Pista de Baloncesto"));
             setClassesImage(class5, "static/assets/images/clases/clase_baloncesto.jpg");
 
@@ -162,7 +157,6 @@ public class DataBaseUsage {
             class6.setDays(List.of("Sábado"));
             class6.setStartTime(List.of("11:00", "13:00"));
             class6.setDuration(90);
-            class6.setAvailableSpots(22);
             class6.setFacility(facilityService.getFacilityByName("Campo de Fútbol"));
             setClassesImage(class6, "static/assets/images/clases/clase_futbol.jpg");
 

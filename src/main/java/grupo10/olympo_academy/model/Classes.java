@@ -21,7 +21,6 @@ public class Classes {
     private String name;
     private String description;
     private String trainer;
-    private int availableSpots;
 
     @ElementCollection
     private List<String> difficulty;
@@ -115,13 +114,6 @@ public class Classes {
 
     public void setDuration(int duration) {
         this.duration = duration;
-    }
-    public int getAvailableSpots() {
-        return availableSpots;
-    }
-
-    public void setAvailableSpots(int availableSpots) {
-        this.availableSpots = availableSpots;
     }
 
     public Image getClassesImage() {
