@@ -18,14 +18,14 @@ Our application is a website for a sports academy called Olympo Academy. The goa
 ### **Entidades**
 
 1. **[Entidad 1]**: User
-2. **[Entidad 2]**: Space
+2. **[Entidad 2]**: Facility
 3. **[Entidad 3]**: Reservation
-4. **[Entidad 4]**: Rating
+4. **[Entidad 4]**: Review
 
 **Relaciones entre entidades:**
 - User - Reservation: A user can make multiple reservations (1:N)
-- Reservation - Space: A reservation has a space
-- User - Rating: A user can make multiple ratings (1:N)
+- Reservation - Facility: A reservation has a facility
+- User - Review: A user can make multiple reviews (1:N)
 
 ### **Permisos de los Usuarios**
 
@@ -190,9 +190,7 @@ Solo si han cambiado.
 
 Diagrama mostrando las entidades, sus campos y relaciones:
 
-![Diagrama Entidad-Relación](images/database-diagram.png)
-
-> [Descripción opcional: Ej: "El diagrama muestra las 4 entidades principales: Usuario, Producto, Pedido y Categoría, con sus respectivos atributos y relaciones 1:N y N:M."]
+![Diagrama Entidad-Relación](images/bbdd-diagram.png)
 
 ### **Diagrama de Clases y Templates**
 
@@ -208,11 +206,11 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Login and register page functionality](https://github.com/DWS-2026/project-grupo-10/commit/73789f06713ea048ff46822e2283fb82597c9c03)  | [UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/UserController.java)   |
+|2| [Website security](https://github.com/DWS-2026/project-grupo-10/commit/4d0bf7d94732c6ba66686bf3bc3baac312485756)  | [/security](https://github.com/DWS-2026/project-grupo-10/tree/main/src/main/java/grupo10/olympo_academy/security)   |
+|3| [User profile functionalities development](https://github.com/DWS-2026/project-grupo-10/commit/74cadc3db31504131e24403fa6606ba1ad856b77)  | [UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/UserController.java)   |
+|4| [Username login and password checker implementation](https://github.com/DWS-2026/project-grupo-10/commit/92139952b3bb6ceb4fa85a8cb0f2b1c8c524ecf0)  | [passwordChecker.js](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/static/js/passwordChecker.js)   |
+|5| [Doubts form and HTTPS added](https://github.com/DWS-2026/project-grupo-10/commit/7dd2b7713511ab4875b8075b4b2a9d02480fd534)  | [index.html](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/templates/index.html)   |
 
 ---
 
@@ -220,11 +218,11 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Classes detail page development ](https://github.com/DWS-2026/project-grupo-10/commit/4f442b437a553ac59aa91bd6e2e420790d511c08)  | [ClassesController/classes.html](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/ClassesController.java / https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/templates/classes.html)   |
+|2| [Facility detail page development](https://github.com/DWS-2026/project-grupo-10/commit/beb3182019f0d2e79ea7af13a932b5ea1096dbd4)  | [FacilityController/facility.html](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/FacilityController.java / https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/templates/facility.html)   |
+|3| [Error page development](https://github.com/DWS-2026/project-grupo-10/commit/44dd8f569b53612602a20800ff219b16fb791f2c)  | [error.html](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/templates/error.html)   |
+|4| [Data base usage development](https://github.com/DWS-2026/project-grupo-10/commit/9cbe946067d8c57cf2579cf3604e9df21fc643ec)  | [DataBaseUsage](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/DataBaseUsage.java)   |
+|5| [Image entity creation](https://github.com/DWS-2026/project-grupo-10/commit/bbf21c0272adf8ad44b9d6014335a11b13e5adbe)  | [ImageController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/ImageController.java)   |
 
 ---
 
@@ -232,11 +230,10 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Facilities functionalities for admin](https://github.com/DWS-2026/project-grupo-10/commit/592274cc878a0f60b10d59fd22120a9b6d2ec279)  | [UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/UserController.java)   |
+|2| [Classes functionalities for admin](https://github.com/DWS-2026/project-grupo-10/commit/459f2abc77c904f9ca701c1f4faa600831adeafc)  | [UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/UserController.java)   |
+|3| [Edit and delete users from admin panel functionality](https://github.com/DWS-2026/project-grupo-10/commit/ce039f213ecb89ed6fe5e8bf4e9dde138e652fc4)  | [UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/UserController.java)   |
+|4| [Navigation between users from admin panel functionality](https://github.com/DWS-2026/project-grupo-10/commit/cf949c58400899af27871a270f191b9c9ef34fc3)  | [UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/UserController.java)   |
 
 ---
 
@@ -244,11 +241,10 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [Reviews functionality](https://github.com/DWS-2026/project-grupo-10/commit/ee1d600c861ee25bb04c4fdefc1dd9700698dc51)  | [Facility/Classes Controller](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/FacilityController.java / https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/ClassesController.java)   |
+|2| [Classes and facilities reservation functionality](https://github.com/DWS-2026/project-grupo-10/commit/5f17d6a276ed9b3cd0546a1dd9d275516aa837fd)  | [ReservationController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/ReservationController.java)   |
+|3| [Reservation restrictions](https://github.com/DWS-2026/project-grupo-10/commit/c2394d3e6450827644536e391f5650a1ead0479a)  | [ReservationController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/ReservationController.java)   |
+|4| [Cart development and functionality](https://github.com/DWS-2026/project-grupo-10/commit/5f17d6a276ed9b3cd0546a1dd9d275516aa837fd)  | [GlobalModelAttributes](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/config/GlobalModelAttributes.java)   |
 
 ---
 

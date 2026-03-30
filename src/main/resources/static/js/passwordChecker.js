@@ -7,39 +7,39 @@ document.querySelector(".cart-link").onclick = function() {
         .classList.toggle("show");
 }*/
 
-// Comprueba si las contraseñas coinciden
+// Verifies that the password and confirmation match before allowing form submission
 function checkPasswordMatch() {
-    console.log("Comprobando contraseñas..."); // para depuración
+    console.log("Comprobando contraseñas..."); // for debugging
     const pass1 = document.getElementById("password");
     const pass2 = document.getElementById("password2");
     const errorDiv = document.getElementById("passwordError");
 
-    if (!pass1 || !pass2) return false; // por seguridad
+    if (!pass1 || !pass2) return false; // for security
 
     if (pass1.value !== pass2.value) {
         errorDiv.style.display = "block";
-        return false; // bloquea el envío
+        return false; // blocks form submission
     } else {
         errorDiv.style.display = "none";
-        return true; // permite el envío
+        return true; // allows form submission
     }
 }
 
-// Cuando el DOM está listo
+// Initialize password validation when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Inicializando validación de contraseñas..."); // para depuración
+    console.log("Inicializando validación de contraseñas..."); // for debugging
     const form = document.getElementById("registerForm");
     const pass1 = document.getElementById("password");
     const pass2 = document.getElementById("password2");
 
-    // Validación en tiempo real
+    // Validate passwords on input
     pass1.addEventListener("input", checkPasswordMatch);
     pass2.addEventListener("input", checkPasswordMatch);
 
-    // Evitar envío desde JS por si el onsubmit no se dispara
+    // Avoid form submission if passwords don't match, in case onsubmit is bypassed
     form.addEventListener("submit", function (event) {
         if (!checkPasswordMatch()) {
-            event.preventDefault();  // bloquea el formulario
+            event.preventDefault();  // blocks form submission if passwords don't match
         }
     });
 

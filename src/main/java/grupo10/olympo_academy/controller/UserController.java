@@ -43,7 +43,7 @@ public class UserController {
     private UserRepository userRepository;
 
     /////////////////////////////////////////////////////////////////// LOGIN
-    /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/login")
     public String getLogin(@RequestParam(value = "error", required = false) String error,
@@ -60,12 +60,11 @@ public class UserController {
 
     /////////////////////////////////////////////////////////////////////// USER
     /////////////////////////////////////////////////////////////////////// PROFILE
-    /////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/userProfile")
     public String getProfile(Model model, Principal principal) {
 
-        // Spring Security provides user email through Principal object, we can use it
-        // to fetch the user details from the database
+        // Spring Security provides user email through Principal object, we can use it to fetch the user details from the database
         String email = principal.getName();
 
         User user = userService.findByEmail(email);
@@ -115,14 +114,11 @@ public class UserController {
     @PostMapping("/updateProfile")
     public String updateProfile(
             @RequestParam String name,
-            // @RequestParam String email,
             @RequestParam String username,
             @RequestParam String phone,
             Model model,
             Principal principal) {
 
-        // Spring Security provides user email through Principal object, we can use it
-        // to fetch the user details from the database
         String currentUserEmail = principal.getName();
 
         try {
@@ -177,7 +173,7 @@ public class UserController {
     }
 
     /////////////////////////////////////////////////////////////////// REGISTER
-    /////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/register")
     public String showRegister() {
         return "register";
@@ -205,7 +201,7 @@ public class UserController {
     }
 
     ////////////////////////////////////////////////////////////////// ADMIN
-    ////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/admin")
     public String getAdmin(Model model) {
@@ -214,8 +210,9 @@ public class UserController {
         model.addAttribute("classes", classesService.getAllClasses());
         return "admin";
     }
+
     //////////////////////////////////////// Facility
-    //////////////////////////////////////// //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
     @PostMapping("/admin/facility/save")
     public String processFacility(
@@ -378,73 +375,70 @@ public class UserController {
     }
 
     @GetMapping("/admin/user/{id}")
-public String getUserProfileAsAdmin(@PathVariable Long id, Model model) {
+    public String getUserProfileAsAdmin(@PathVariable Long id, Model model) {
+       
+        User user = userService.getById(id);
+        if (user == null) {
+            return "redirect:/admin";
+        }
+        List<Reservation> reservations = reservationService.getReservationsByUser(user);
+        reservations.sort((a, b) -> {
+            LocalDate dateA = parseReservationDate(a.getDay());
+            LocalDate dateB = parseReservationDate(b.getDay());
 
-    User user = userService.getById(id);
-    if (user == null) {
-        return "redirect:/admin";
+            if (dateA != null && dateB != null) {
+                int cmp = dateA.compareTo(dateB);
+                if (cmp != 0) return cmp;
+            } else if (dateA != null) {
+                return -1;
+            } else if (dateB != null) {
+                return 1;
+            }
+
+            String dayA = a.getDay() == null ? "" : a.getDay();
+            String dayB = b.getDay() == null ? "" : b.getDay();
+            int cmp = dayA.compareToIgnoreCase(dayB);
+            if (cmp != 0) return cmp;
+
+            String timeA = a.getStartTime() == null ? "" : a.getStartTime();
+            String timeB = b.getStartTime() == null ? "" : b.getStartTime();
+            return timeA.compareToIgnoreCase(timeB);
+        });
+        
+        model.addAttribute("user", user);
+        model.addAttribute("reservations", reservations);
+        // To indicate in the view that we are in admin mode, so we can show/hide certain options
+        model.addAttribute("adminView", true);
+        return "userProfile";
     }
 
-    List<Reservation> reservations = reservationService.getReservationsByUser(user);
-    reservations.sort((a, b) -> {
-        LocalDate dateA = parseReservationDate(a.getDay());
-        LocalDate dateB = parseReservationDate(b.getDay());
+    @PostMapping("/admin/reservations/update/{id}")
+    public String updateReservationAsAdmin(
+            @PathVariable Long id,
+            @RequestParam String day,
+            @RequestParam String startTime,
+            @RequestParam int duration,
+            @RequestParam(required = false) Boolean material,
+            RedirectAttributes redirectAttributes) {
 
-        if (dateA != null && dateB != null) {
-            int cmp = dateA.compareTo(dateB);
-            if (cmp != 0) return cmp;
-        } else if (dateA != null) {
-            return -1;
-        } else if (dateB != null) {
-            return 1;
+        Reservation reservation = reservationService.getById(id);
+
+        if (reservation == null) {
+            redirectAttributes.addFlashAttribute("errorAdmin", "La reserva no existe.");
+            return "redirect:/admin";
         }
 
-        String dayA = a.getDay() == null ? "" : a.getDay();
-        String dayB = b.getDay() == null ? "" : b.getDay();
-        int cmp = dayA.compareToIgnoreCase(dayB);
-        if (cmp != 0) return cmp;
+        reservation.setDay(day);
+        reservation.setStartTime(startTime);
+        reservation.setDuration(duration);
+        reservation.setMaterial(material != null && material);
 
-        String timeA = a.getStartTime() == null ? "" : a.getStartTime();
-        String timeB = b.getStartTime() == null ? "" : b.getStartTime();
-        return timeA.compareToIgnoreCase(timeB);
-    });
+        reservationService.save(reservation);
 
-    model.addAttribute("user", user);
-    model.addAttribute("reservations", reservations);
+        redirectAttributes.addFlashAttribute("successAdmin", "Reserva actualizada correctamente.");
 
-    // To indicate in the view that we are in admin mode, so we can show/hide certain options
-    model.addAttribute("adminView", true);
-
-    return "userProfile";
-}
-
-@PostMapping("/admin/reservations/update/{id}")
-public String updateReservationAsAdmin(
-        @PathVariable Long id,
-        @RequestParam String day,
-        @RequestParam String startTime,
-        @RequestParam int duration,
-        @RequestParam(required = false) Boolean material,
-        RedirectAttributes redirectAttributes) {
-
-    Reservation reservation = reservationService.getById(id);
-
-    if (reservation == null) {
-        redirectAttributes.addFlashAttribute("errorAdmin", "La reserva no existe.");
-        return "redirect:/admin";
+        return "redirect:/admin/user/" + reservation.getUser().getId();
     }
-
-    reservation.setDay(day);
-    reservation.setStartTime(startTime);
-    reservation.setDuration(duration);
-    reservation.setMaterial(material != null && material);
-
-    reservationService.save(reservation);
-
-    redirectAttributes.addFlashAttribute("successAdmin", "Reserva actualizada correctamente.");
-
-    return "redirect:/admin/user/" + reservation.getUser().getId();
-}
 
     @GetMapping("/admin/reservations/delete/{id}")
     public String deleteReservationAsAdmin(
@@ -467,7 +461,8 @@ public String updateReservationAsAdmin(
         return "redirect:/admin/user/" + userId;
     }
 
-    ///////////////////////////////// Classes//////////////////////////////////////////////////////
+    //////////////////////////////////////// Classes
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
     @PostMapping("/admin/classes/save")
     public String processClasses(
@@ -511,20 +506,20 @@ public String updateReservationAsAdmin(
             Model model) {
 
         try {
-            // Validar ID
+            // Validate ID
             if (id == null || id <= 0) {
                 model.addAttribute("error", "ID de clase no válido");
                 return "admin";
             }
 
-            // Buscar la clase existente
+            // Fetch existing class
             Classes classes = classesService.getClassById(id);
             if (classes == null) {
                 model.addAttribute("error", "La clase no existe");
                 return "admin";
             }
 
-            // Actualizar campos
+            // Update fields
             classes.setName(classesModify.getName());
             classes.setDescription(classesModify.getDescription());
             classes.setTrainer(classesModify.getTrainer());
@@ -535,7 +530,7 @@ public String updateReservationAsAdmin(
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
 
-            // Actualizar facility si se proporciona
+            // Update facility if provided
             if (facility != null && facility > 0) {
                 Facility selectedFacility = facilityService.getFacilityById(facility);
                 if (selectedFacility != null) {
@@ -543,7 +538,7 @@ public String updateReservationAsAdmin(
                 }
             }
 
-            // Manejar imagen
+            // Update image if a new one is uploaded
             if (photoFile != null && !photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 classes.setClassesImage(image);
