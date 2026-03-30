@@ -40,7 +40,7 @@ public class ClassesController {
         }
 
         model.addAttribute("classes", classes);
-        model.addAttribute("reviews", reviewService.getReviewsByClasses(id));
+        model.addAttribute("reviews", classes.getReviews());
 
         if (principal != null) {
             try {
@@ -57,9 +57,7 @@ public class ClassesController {
         return "classes";
     }
 
-    /////////////////////////////////////////////////////////////
     // Save or delete review for a specific class
-    /////////////////////////////////////////////////////////////
     @PostMapping("/classes/{classesId}/review")
     public String saveReview(@PathVariable Long classesId,
             @RequestParam int rating,
@@ -89,20 +87,18 @@ public class ClassesController {
         Review review = new Review();
         review.setRating(rating);
         review.setComment(comment);
-        
+
         // Set current date
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         review.setDate(now.format(formatter));
-        
+
         // Associate the review with the user and the classes
         review.setUser(user);
         review.setClasses(classes);
 
-        // Save the review
+        // Add and save review (will persist to user and classes as well)
         reviewService.saveReview(review);
- 
-
 
         // Redirect back to the class page
         return "redirect:/classes/" + classesId;

@@ -41,7 +41,7 @@ public class FacilityController {
         }
 
         model.addAttribute("facility", facility);
-        model.addAttribute("reviews", reviewService.getReviewsByFacility(id));
+        model.addAttribute("reviews", facility.getReviews());
 
         if (principal != null) {
             try {

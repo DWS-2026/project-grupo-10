@@ -1,5 +1,6 @@
- package grupo10.olympo_academy.model;
+package grupo10.olympo_academy.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -14,18 +15,18 @@ import jakarta.persistence.OneToOne;
 public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;         
+    private Long id;
 
-    private String name;      
-    private String description; 
+    private String name;
+    private String description;
     private boolean material;
     private String type;
 
-    @OneToMany
-    private List <Review> reviews;
+    @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
-    @OneToOne (cascade = CascadeType.ALL)
-    private Image facilityImage; 
+    @OneToOne 
+    private Image facilityImage;
 
     public Facility() {
     }
@@ -67,7 +68,7 @@ public class Facility {
 
     public void setFacilityImage(Image facilityImage) {
         this.facilityImage = facilityImage;
-    }    
+    }
 
     public Boolean getMaterial() {
         return material;
@@ -77,22 +78,36 @@ public class Facility {
         this.material = material;
     }
 
-       public String getType() {
+    public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
     }
-     public void addReview(Review review) {
+
+    public void addReview(Review review) {
         reviews.add(review);
         review.setFacility(this);
     }
-    
+
     // Método helper para eliminar una reseña
     public void removeReview(Review review) {
         reviews.remove(review);
         review.setFacility(null);
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void saveReview(Review review) {
+        this.reviews.add(review);
+        review.setFacility(this);
+    }
+
+    public void deleteReview(Long id) {
+        this.reviews.removeIf(review -> review.getId().equals(id));
     }
 
 }

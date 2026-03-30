@@ -4,12 +4,14 @@ import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
+import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReservationService;
+import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
 import java.security.Principal;
 import java.time.LocalDate;
@@ -39,6 +41,8 @@ public class UserController {
     private ClassesService classesService;
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private ReviewService reviewService;
     @Autowired
     private UserRepository userRepository;
 
@@ -97,6 +101,9 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("reservations", reservations);
+
+        List<Review> reviews = reviewService.getReviewsByUser(user);
+        model.addAttribute("reviews", reviews);
 
         return "userProfile";
     }
@@ -461,8 +468,7 @@ public class UserController {
         return "redirect:/admin/user/" + userId;
     }
 
-    //////////////////////////////////////// Classes
-    //////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////// Classes///////////////////////////
 
     @PostMapping("/admin/classes/save")
     public String processClasses(

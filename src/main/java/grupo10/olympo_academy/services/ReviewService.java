@@ -6,14 +6,25 @@ import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.ReviewRepository;
 
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+import grupo10.olympo_academy.model.Classes;
+import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.repository.ClassesRepository;
+import grupo10.olympo_academy.repository.FacilityRepository;
 
+import java.util.List;
 
 @Service
 public class ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private ClassesRepository classesRepository;
+
+    @Autowired
+    private FacilityRepository facilityRepository;
 
     public Review saveReview(Review review) {
         return reviewRepository.save(review);
@@ -31,7 +42,28 @@ public class ReviewService {
         return reviewRepository.findByClassesId(classesId);
     }
 
+    @Transactional 
     public void deleteReview(Long id) {
+        // Obtain the review before deleting it
+        Review review = reviewRepository.findById(id).orElse(null);
+
+        if (review != null) {
+            // Delete the review from the list in Classes if it exists
+            Classes classes = review.getClasses();
+            if (classes != null) {
+                classes.deleteReview(id);
+                classesRepository.save(classes);
+            }
+
+            // Delete the review from the list in Facility if it exists
+            Facility facility = review.getFacility();
+            if (facility != null) {
+                facility.deleteReview(id);
+                facilityRepository.save(facility);
+            }
+        }
+
+        // Finally, delete the review from the database
         reviewRepository.deleteById(id);
     }
 

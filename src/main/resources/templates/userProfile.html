@@ -115,6 +115,56 @@
             </div>
         </section>
 
+        <!-- User Reviews -->
+        <section id="user-reviews" class="mb-5">
+            <h2 class="mb-3">Mis Reseñas</h2>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Servicio</th>
+                            <th>Puntuación</th>
+                            <th>Comentario</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#reviews}}
+                        <tr>
+                            <td>
+                                {{#classes}}
+                                {{classes.name}}
+                                {{/classes}}
+                                {{#facility}}
+                                {{facility.name}}
+                                {{/facility}}
+                            </td>
+                            <td>{{rating}} / 5</td>
+                            <td>{{comment}}</td>
+                            <td>
+                                <a href="
+                                {{#classes}}
+                                /classes/{{classes.id}}
+                                {{/classes}}
+                                {{#facility}}
+                                /facilities/{{facility.id}}
+                                {{/facility}}
+                                " class="btn btn-primary btn-sm">Ver o gestionar reseña</a>
+                            </td>
+                        </tr>
+                        {{/reviews}}
+
+                        {{^reviews}}
+                        <tr>
+                            <td colspan="4" class="text-muted">No tienes reseñas.</td>
+                        </tr>
+                        {{/reviews}}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <!--Profile Popups-->
 
         <!-- Data Editing -->

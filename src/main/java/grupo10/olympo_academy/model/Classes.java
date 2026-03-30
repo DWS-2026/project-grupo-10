@@ -1,5 +1,6 @@
 package grupo10.olympo_academy.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -33,11 +34,11 @@ public class Classes {
 
     private int duration;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne 
     private Image classesImage;
-    
-    @OneToMany
-    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
     @OneToOne
     private Facility facility;
@@ -49,7 +50,7 @@ public class Classes {
         this.name = name;
         this.description = description;
         this.trainer = trainer;
-        this.classesImage= classesImage;
+        this.classesImage = classesImage;
     }
 
     public Long getId() {
@@ -139,4 +140,18 @@ public class Classes {
     public String getFacilityIdString() {
         return facility != null && facility.getId() != null ? facility.getId().toString() : "";
     }
+
+    public List<Review> getReviews() {
+        return this.reviews;
+    }
+
+    public void saveReview(Review review) {
+        this.reviews.add(review);
+        review.setClasses(this);
+    }
+
+    public void deleteReview(Long id) {
+        this.reviews.removeIf(review -> review.getId().equals(id));
+    }
+
 }

@@ -15,19 +15,20 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name= "users")
+@Table(name = "users")
 
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
+
     private Long id;
     private String name;
     private String email;
     private String phone;
     private String encodedPassword;
-    @ElementCollection(fetch = FetchType.EAGER) // we use EAGER because we know we have to load few roles per user, and we need them for authentication
+    @ElementCollection(fetch = FetchType.EAGER) // we use EAGER because we know we have to load few roles per user, and
+                                                // we need them for authentication
     private List<String> roles;
     private String username;
     private boolean blocked = false;
@@ -35,13 +36,14 @@ public class User {
     @OneToOne
     private Image profileImage;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-	private List<Reservation> reservations = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-	private List<Review> reviews = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String email, String phone, String password, String username, String... roles) {
         this.name = name;
@@ -131,9 +133,22 @@ public class User {
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
-    public int getReservationsCount() {
-    return reservations.size();
-}
-}
 
-    
+    public int getReservationsCount() {
+        return reservations.size();
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void saveReview(Review review) {
+        this.reviews.add(review);
+        review.setUser(this);
+    }
+
+    public void deleteReview(Long id) {
+        this.reviews.removeIf(review -> review.getId().equals(id));
+    }
+
+}
