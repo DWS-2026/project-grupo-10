@@ -51,13 +51,14 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLogin(@RequestParam(value = "error", required = false) String error,
-     @RequestParam(value = "blocked", required = false) String blocked, Model model) {
+            @RequestParam(value = "blocked", required = false) String blocked, Model model) {
 
         if (error != null) {
             model.addAttribute("error", "Las credenciales son incorrectas, inténtalo de nuevo");
         }
         if (blocked != null) {
-            model.addAttribute("blocked", "Has sido bloqueado por un administrador, contacta con el soporte para más información");
+            model.addAttribute("blocked",
+                    "Has sido bloqueado por un administrador, contacta con el soporte para más información");
         }
         return "login";
     }
@@ -68,7 +69,8 @@ public class UserController {
     @GetMapping("/userProfile")
     public String getProfile(Model model, Principal principal) {
 
-        // Spring Security provides user email through Principal object, we can use it to fetch the user details from the database
+        // Spring Security provides user email through Principal object, we can use it
+        // to fetch the user details from the database
         String email = principal.getName();
 
         User user = userService.findByEmail(email);
@@ -277,6 +279,10 @@ public class UserController {
 
             // If a new image is uploaded, we replace the old one
             if (!photoFile.isEmpty()) {
+                // Delete the old image if it exists
+                if (facility.getFacilityImage() != null) {
+                    imageService.deleteImage(facility.getFacilityImage().getId());
+                }
                 Image image = imageService.createImage(photoFile.getInputStream());
                 facility.setFacilityImage(image);
             }
@@ -313,7 +319,11 @@ public class UserController {
 
         // Delete associated image
         if (facility.getFacilityImage() != null) {
-            imageService.deleteImage(facility.getFacilityImage().getId());
+            Long imageId = facility.getFacilityImage().getId();
+            // Set the reference to null and save to avoid transient reference issues
+            facility.setFacilityImage(null);
+            facilityService.saveFacility(facility);
+            imageService.deleteImage(imageId);
         }
 
         // Delete facility
@@ -383,7 +393,7 @@ public class UserController {
 
     @GetMapping("/admin/user/{id}")
     public String getUserProfileAsAdmin(@PathVariable Long id, Model model) {
-       
+
         User user = userService.getById(id);
         if (user == null) {
             return "redirect:/admin";
@@ -395,7 +405,8 @@ public class UserController {
 
             if (dateA != null && dateB != null) {
                 int cmp = dateA.compareTo(dateB);
-                if (cmp != 0) return cmp;
+                if (cmp != 0)
+                    return cmp;
             } else if (dateA != null) {
                 return -1;
             } else if (dateB != null) {
@@ -405,16 +416,18 @@ public class UserController {
             String dayA = a.getDay() == null ? "" : a.getDay();
             String dayB = b.getDay() == null ? "" : b.getDay();
             int cmp = dayA.compareToIgnoreCase(dayB);
-            if (cmp != 0) return cmp;
+            if (cmp != 0)
+                return cmp;
 
             String timeA = a.getStartTime() == null ? "" : a.getStartTime();
             String timeB = b.getStartTime() == null ? "" : b.getStartTime();
             return timeA.compareToIgnoreCase(timeB);
         });
-        
+
         model.addAttribute("user", user);
         model.addAttribute("reservations", reservations);
-        // To indicate in the view that we are in admin mode, so we can show/hide certain options
+        // To indicate in the view that we are in admin mode, so we can show/hide
+        // certain options
         model.addAttribute("adminView", true);
         return "userProfile";
     }
@@ -546,6 +559,10 @@ public class UserController {
 
             // Update image if a new one is uploaded
             if (photoFile != null && !photoFile.isEmpty()) {
+                // Delete the old image if it exists
+                if (classes.getClassesImage() != null) {
+                    imageService.deleteImage(classes.getClassesImage().getId());
+                }
                 Image image = imageService.createImage(photoFile.getInputStream());
                 classes.setClassesImage(image);
             }
@@ -592,7 +609,11 @@ public class UserController {
 
         // Delete associated image
         if (classes.getClassesImage() != null) {
-            imageService.deleteImage(classes.getClassesImage().getId());
+            Long imageId = classes.getClassesImage().getId();
+            // Set the reference to null and save to avoid transient reference issues
+            classes.setClassesImage(null);
+            classesService.saveClass(classes);
+            imageService.deleteImage(imageId);
         }
 
         // Delete class

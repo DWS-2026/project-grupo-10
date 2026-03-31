@@ -32,11 +32,11 @@ public class UserService {
 
         // Check if email is already registered
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-        throw new RuntimeException("Email ya registrado");
+            throw new RuntimeException("Email ya registrado");
         }
         // Unique username
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-        throw new RuntimeException("Username ya registrado");
+            throw new RuntimeException("Username ya registrado");
         }
 
         // set default role if not provided
@@ -113,6 +113,10 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
 
         Image image = imageService.createImage(photoFile.getInputStream());
+        // Delete old image if exists
+        if (user.getProfileImage() != null) {
+            imageService.deleteImage(user.getProfileImage().getId());
+        }
         user.setProfileImage(image);
 
         return userRepository.save(user);
@@ -124,7 +128,8 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new Exception("Usuario no encontrado"));
 
-        //We make sure the admin is not trying to change the email, username or phone to one that already exists in another user
+        // We make sure the admin is not trying to change the email, username or phone
+        // to one that already exists in another user
         if (!user.getEmail().equals(email) && userRepository.findByEmail(email).isPresent()) {
             throw new Exception("Email ya registrado");
         }
@@ -142,8 +147,13 @@ public class UserService {
         user.setEmail(email);
         user.setPhone(phone);
 
-        // If a new profile image is uploaded, update it. Otherwise, keep the existing one.
+        // If a new profile image is uploaded, update it. Otherwise, keep the existing
+        // one.
         if (photoFile != null && !photoFile.isEmpty()) {
+            // Delete old image if exists
+            if (user.getProfileImage() != null) {
+                imageService.deleteImage(user.getProfileImage().getId());
+            }
             Image image = imageService.createImage(photoFile.getInputStream());
             user.setProfileImage(image);
         }
@@ -156,16 +166,26 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new Exception("Usuario no encontrado"));
 
-        // We prevent the deletion of admin users to avoid locking ourselves out of the system
+        // We prevent the deletion of admin users to avoid locking ourselves out of the
+        // system
         if (user.getRoles().contains("ADMIN")) {
             throw new Exception("No puedes eliminar un administrador");
         }
+
+        // Delete associated image
+        if (user.getProfileImage() != null) {
+            Long imageId = user.getProfileImage().getId();
+            user.setProfileImage(null);
+            userRepository.save(user);
+            imageService.deleteImage(imageId);
+        }
+
         userRepository.delete(user);
     }
 
     public User getById(Long id) {
-    return userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-}
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
 
 }
