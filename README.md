@@ -216,9 +216,7 @@ Diagrama mostrando las entidades, sus campos y relaciones:
 
 Diagrama de clases de la aplicación con diferenciación por colores o secciones:
 
-![Diagrama de Clases](images/classes-diagram.png)
-
-> [Descripción opcional del diagrama y relaciones principales]
+![Diagrama de Clases](src/main/resources/static/assets/images/classes-diagram.png)
 
 ### **Participación de Miembros en la Práctica 2**
 
@@ -230,7 +228,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 |2| [Website security](https://github.com/DWS-2026/project-grupo-10/commit/4d0bf7d94732c6ba66686bf3bc3baac312485756)  | [/security](https://github.com/DWS-2026/project-grupo-10/tree/main/src/main/java/grupo10/olympo_academy/security)   |
 |3| [User profile functionalities development](https://github.com/DWS-2026/project-grupo-10/commit/74cadc3db31504131e24403fa6606ba1ad856b77)  | [UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controller/UserController.java)   |
 |4| [Username login and password checker implementation](https://github.com/DWS-2026/project-grupo-10/commit/92139952b3bb6ceb4fa85a8cb0f2b1c8c524ecf0)  | [passwordChecker.js](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/static/js/passwordChecker.js)   |
-|5| [Doubts form and HTTPS added](https://github.com/DWS-2026/project-grupo-10/commit/7dd2b7713511ab4875b8075b4b2a9d02480fd534)  | [index.html](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/templates/index.html)   |
+|5| [Doubts form and HTTPS addition](https://github.com/DWS-2026/project-grupo-10/commit/7dd2b7713511ab4875b8075b4b2a9d02480fd534)  | [index.html](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/resources/templates/index.html)   |
 
 ---
 
