@@ -19,31 +19,35 @@ Our application is a website for a sports academy called Olympo Academy. The goa
 
 1. **[Entidad 1]**: User
 2. **[Entidad 2]**: Facility
-3. **[Entidad 3]**: Reservation
-4. **[Entidad 4]**: Review
+3. **[Entidad 3]**: Class
+4. **[Entidad 4]**: Reservation
+5. **[Entidad 5]**: Review
 
 **Relaciones entre entidades:**
 - User - Reservation: A user can make multiple reservations (1:N)
-- Reservation - Facility: A reservation has a facility
+- Facility - Reservation: A facility has a reservation (1:1)
+- Class - Reservation: A class can have multiple reservations (1:N)
+- Class - Facility: A class takes place in a facility (1:1)
 - User - Review: A user can make multiple reviews (1:N)
 
 ### **Permisos de los Usuarios**
 
 * **Anonymous User**:
-- Permissions: Viewing of different spaces, schedules, and records
+- Permissions: View of the facilities and classes
 - Is not the owner of any entity
 
 * **Registered User**:
 - Permissions: Manage profile, make reservations, leave reviews.
-- Owns: Their own reservations, User Profile, Reviews
+- Owns: Its own reservations, User Profile, Reviews
 
 * **Administrator**:
-- Permissions: Full product management, statistics viewing, content moderation
-- Owns: Spaces, reviews, can manage bookings and Users
+- Permissions: Creation, edition and deletion of facilities, classes, users or reviews
+- Owns: All entities
 
 ### **Images**
 - **[Entidad con imágenes 1]**: User - One avatar image per user
-- **[Entidad con imágenes 2]**: Facilities - Multiple images per facility (gallery)
+- **[Entidad con imágenes 2]**: Facilities - One image per facility 
+- **[Entidad con imágenes 3]**: Classes - One image per class
 
 
 ---
