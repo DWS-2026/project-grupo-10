@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -20,15 +19,12 @@ public class Review {
     private String date;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "classes_id")
     private Classes classes;
 
     @ManyToOne
-    @JoinColumn(name = "facility_id")
     private Facility facility;
 
     public Review() {
