@@ -55,7 +55,7 @@ Our application is a website for a sports academy called Olympo Academy. The goa
 > Video showing the main features of the web application.
 
 ### **Diagrama de Navegación**
-![Diagrama de Navegación](images/navigation-diagram.png)
+![Diagrama de Navegación](src/main/resources/static/assets/images/navigation-diagram.png)
 
 > The user can access all sections from the homepage through the navigation bar/menu. An anonymous user will only have access to public pages and will not be able to access the admin panel or user profile. To access the user profile and, consequently, book classes/facilities, leave reviews, or edit their user profile, it is necessary to first register or log in on the respective page. Once logged in as an academy user, they will be able to carry out the activities mentioned above. On the other hand, the administrator can access their panel from the main page, where they can perform any privileged activity.
 
@@ -64,37 +64,37 @@ NOTE: Not all arrows have been added to the diagram, but from the admin panel yo
 ### **Capturas de Pantalla y Descripción de Páginas**
 
 #### **1. Pagina Principal/ Home**
-![Página Principal](images/screens/index.png)
+![Página Principal](src/main/resources/static/assets/images/screens/index.png)
 
 > Homepage that displays information about the academy, its team and the available facilities. Includes a navigation bar and access to registration/login for unauthenticated users.
 
 #### **2. Reseñas**
-![Reseñas](images/screens/reseñas.png)
+![Reseñas](src/main/resources/static/assets/images/screens/reseñas.png)
 
 > User reviews/rating page. To add a new review, you must be logged in to the website with your credentials.
 
 #### **3. Reservas**
-![Reservas](images/screens/reservas.png)
+![Reservas](src/main/resources/static/assets/images/screens/reservas.png)
 
 > Booking page, only available to registered users. Allows you to book both a class and a facility.
 
 #### **4. Login**
-![Login](images/screens/login.png)
+![Login](src/main/resources/static/assets/images/screens/login.png)
 
 > Page that allows user authentication. It also has an option for anonymous users to register. It redirects to the main page since we don't know if the user wants to make a purchase or not.
 
 #### **5. Registro**
-![Registro](images/screens/register.png)
+![Registro](src/main/resources/static/assets/images/screens/register.png)
 
 > This page allows new users to become members, who will need to fill out a form with the requested information. Once registered, it redirects to the login page.
 
 #### **6. Mi Perfil** 
-![Perfil](images/screens/profile.png)
+![Perfil](src/main/resources/static/assets/images/screens/profile.png)
 
 > This page is only visible to registered users. It allows you to view and edit user information (email, password, etc.), manage your bookings, and your published reviews.
 
 #### **7. Panel del Administrador**
-![Admin](images/screens/admin_screen.png)
+![Admin](src/main/resources/static/assets/images/screens/admin_screen.png)
 
 > This section is only available to the admin user, who will log in like a regular user but, as an admin, will have certain privileges such as managing users and facilities.
 
@@ -161,7 +161,28 @@ Solo si ha cambiado.
 
 #### **Capturas de Pantalla Actualizadas**
 
-Solo si han cambiado.
+#### **1. Pagina Principal/ Home**
+![Página Principal](src/main/resources/static/assets/images/screens/new_index.png)
+
+#### **2. Clases/Instalaciones**
+![Instalaciones](src/main/resources/static/assets/images/screens/instalaciones.png)
+![Clases](src/main/resources/static/assets/images/screens/classes.png)
+
+#### **3. Reservas**
+![Reservas](src/main/resources/static/assets/images/screens/ej_clase.png)
+![](src/main/resources/static/assets/images/screens/ej_reserva.png)
+
+#### **4. Login**
+![Login](src/main/resources/static/assets/images/screens/new_login.png)
+
+#### **5. Registro**
+![Registro](src/main/resources/static/assets/images/screens/new_register.png)
+
+#### **6. Mi Perfil** 
+![Perfil](src/main/resources/static/assets/images/screens/new_userProfile.png)
+
+#### **7. Panel del Administrador**
+![Admin](src/main/resources/static/assets/images/screens/new_admin_screen.png)
 
 ### **Instrucciones de Ejecución**
 
@@ -190,7 +211,7 @@ Solo si han cambiado.
 
 Diagrama mostrando las entidades, sus campos y relaciones:
 
-![Diagrama Entidad-Relación](images/bbdd-diagram.png)
+![Diagrama Entidad-Relación](src/main/resources/static/assets/images/bbdd-diagram.png)
 
 ### **Diagrama de Clases y Templates**
 
