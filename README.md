@@ -156,8 +156,7 @@ NOTE: Not all arrows have been added to the diagram, but from the admin panel yo
 ### **Navegación y Capturas de Pantalla**
 
 #### **Diagrama de Navegación**
-
-Solo si ha cambiado.
+![Diagrama de Navegación](src/main/resources/static/assets/images/new_navigation-diagram.png)
 
 #### **Capturas de Pantalla Actualizadas**
 
