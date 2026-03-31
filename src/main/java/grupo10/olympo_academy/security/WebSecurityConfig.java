@@ -62,7 +62,7 @@ public class WebSecurityConfig {
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.usernameParameter("email")
-						.defaultSuccessUrl("/userProfile")
+						.defaultSuccessUrl("/")
 						// .failureUrl("/login?error")
 						// Custom failure handler to redirect user to /login?blocked if LockedException
 						// is thrown
