@@ -299,12 +299,12 @@ public class UserController {
     }
 
     @GetMapping("/admin/facility/delete/{id}")
-    public String deleteFacility(@PathVariable Long id, Model model) {
+    public String deleteFacility(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
 
         Facility facility = facilityService.getFacilityById(id);
 
         if (facility == null) {
-            model.addAttribute("error", "La instalación no existe");
+            redirectAttributes.addFlashAttribute("error", "La instalación no existe");
             return "redirect:/admin";
         }
 
@@ -313,7 +313,15 @@ public class UserController {
         boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
 
         if (hasActiveReservations) {
-            model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
+            redirectAttributes.addFlashAttribute("error","No se puede eliminar: tiene reservas activas.");
+            return "redirect:/admin";
+        }
+
+        // Check if the facility has associated classes
+        boolean hasAssociatedClasses = classesService.hasClassesUsingFacility(facility);
+
+        if (hasAssociatedClasses) {
+            redirectAttributes.addFlashAttribute("error","No se puede eliminar: tiene clases asociadas.");
             return "redirect:/admin";
         }
 
@@ -591,19 +599,19 @@ public class UserController {
     }
 
     @GetMapping("/admin/classes/delete/{id}")
-    public String deleteClasses(@PathVariable Long id, Model model) {
+    public String deleteClasses(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
 
         Classes classes = classesService.getClassById(id);
 
         if (classes == null) {
-            model.addAttribute("error", "La clase no existe");
+            redirectAttributes.addFlashAttribute("error", "La clase no existe");
             return "redirect:/admin";
         }
 
         boolean hasActiveReservations = reservationService.hasActiveReservationsForClasses(classes);
 
         if (hasActiveReservations) {
-            model.addAttribute("error", "No se puede eliminar: tiene reservas activas.");
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar: tiene reservas activas.");
             return "redirect:/admin";
         }
 

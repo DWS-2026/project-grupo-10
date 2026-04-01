@@ -29,6 +29,13 @@
             {{.}}
         </div>
         {{/successAdmin}}
+        
+        {{#error}}
+        <div id="globalAlert" class="alert alert-danger auto-hide-alert fixed-alert" role="alert"
+            data-hide-delay="5000">
+            {{.}}
+        </div>
+        {{/error}}
 
         <div class="container py-5">
             <h1 class="text-center mb-5">Panel de Administración</h1>
