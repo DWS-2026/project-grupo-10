@@ -22,6 +22,7 @@ public class Classes {
     private String name;
     private String description;
     private String trainer;
+    private float price;
 
     @ElementCollection
     private List<String> difficulty;
@@ -152,6 +153,14 @@ public class Classes {
 
     public void deleteReview(Long id) {
         this.reviews.removeIf(review -> review.getId().equals(id));
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
 }

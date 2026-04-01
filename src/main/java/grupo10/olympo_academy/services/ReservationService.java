@@ -87,4 +87,12 @@ public class ReservationService {
     reservationRepository.delete(reservation);
   }
 
+  public float calculateTotalCost(List<Reservation> reservations) {
+    float total = 0;
+    for (Reservation reservation : reservations) {
+      total += reservation.getPrice();
+    }
+    return total;
+  }
+
 }

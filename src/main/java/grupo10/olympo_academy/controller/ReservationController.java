@@ -155,7 +155,7 @@ public class ReservationController {
     public String confirmCart(
             Principal principal,
             HttpSession session,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes) throws Exception {
 
         if (principal == null) {
             return "redirect:/login";
@@ -169,6 +169,10 @@ public class ReservationController {
         }
 
         User user = userService.findByEmail(principal.getName());
+        // we need to calculate the total cost of the cart, and then check users wallet before confirming the reservations.
+        float totalCost = reservationService.calculateTotalCost(cart);
+        userService.realizarPago(user, totalCost);
+        
         List<Reservation> reservations = new ArrayList<>();
 
         // Build full reservation objects from cart data

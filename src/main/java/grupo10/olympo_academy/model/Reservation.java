@@ -26,6 +26,7 @@ public class Reservation {
     private int duration;
     private String status;
     private Boolean material;
+    private float price;
  
     public Reservation() {}
 
@@ -102,5 +103,13 @@ public class Reservation {
     public void setMaterial(Boolean material) {
         this.material = material;
     }  
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public float getPrice() {
+        return price;
+    }
   
 }

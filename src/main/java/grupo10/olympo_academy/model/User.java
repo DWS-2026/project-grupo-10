@@ -36,6 +36,9 @@ public class User {
     @OneToOne
     private Image profileImage;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Wallet wallet;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -149,6 +152,14 @@ public class User {
 
     public void deleteReview(Long id) {
         this.reviews.removeIf(review -> review.getId().equals(id));
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
     }
 
 }

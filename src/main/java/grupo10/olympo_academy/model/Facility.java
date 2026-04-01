@@ -21,11 +21,12 @@ public class Facility {
     private String description;
     private boolean material;
     private String type;
+    private float price;
 
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToOne 
+    @OneToOne
     private Image facilityImage;
 
     public Facility() {
@@ -110,4 +111,11 @@ public class Facility {
         this.reviews.removeIf(review -> review.getId().equals(id));
     }
 
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
 }

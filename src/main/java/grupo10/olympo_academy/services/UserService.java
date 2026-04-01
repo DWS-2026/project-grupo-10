@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.model.Wallet;
 import grupo10.olympo_academy.repository.UserRepository;
 
 @Service
@@ -47,6 +48,10 @@ public class UserService {
         // Encrypt the password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        // Create a new wallet for the user
+        Wallet wallet = new Wallet(0); // initialize with 0 balance
+        user.setWallet(wallet);
+        
         return userRepository.save(user);
     }
 
@@ -167,5 +172,14 @@ public class UserService {
     return userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 }
+
+    public void realizarPago(User user, float amount) throws Exception {
+        Wallet wallet = user.getWallet();
+        if (wallet.getSaldo() < amount) {
+            throw new Exception("Saldo insuficiente en la cartera");
+        }
+        wallet.setSaldo(wallet.getSaldo() - amount);
+        userRepository.save(user);
+    }
 
 }
