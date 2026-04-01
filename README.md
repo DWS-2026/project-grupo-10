@@ -154,8 +154,8 @@ NOTE: Not all arrows have been added to the diagram, but from the admin panel yo
 ## 🛠 **Práctica 2: Web con HTML generado en servidor**
 
 ### **Vídeo de Demostración**
-📹 **[Enlace al vídeo en YouTube](https://www.youtube.com/watch?v=x91MPoITQ3I)**
-> Vídeo mostrando las principales funcionalidades de la aplicación web.
+📹 **[Enlace al vídeo en YouTube](https://youtu.be/Yqe-NK-Feg8)**
+> Video showing the main features of the web application.
 
 ### **Navegación y Capturas de Pantalla**
 
@@ -199,11 +199,24 @@ NOTE: Not all arrows have been added to the diagram, but from the admin panel yo
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/[usuario]/[nombre-repositorio].git
-   cd [nombre-repositorio]
+   git clone https://github.com/DWS-2026/project-grupo-10.git
+   cd project-grupo-10
    ```
 
-2. **AQUÍ INDICAR LO SIGUIENTES PASOS**
+2. **Crear la base de datos en MySQL**
+   ```bash
+   CREATE DATABASE olympo_academy_db;
+   ```
+
+3. **Ejecutar la aplicación**
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+4. **Abrir en el navegador**
+   ```bash
+   https://localhost:8443
+   ```
 
 #### **Credenciales de prueba**
 - **Usuario Admin**: usuario: `admin`, email: `admin@example.com`, contraseña: `potato`
