@@ -6,6 +6,7 @@ import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.repository.ReviewRepository;
 import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
@@ -45,6 +46,8 @@ public class UserController {
     private ReviewService reviewService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     /////////////////////////////////////////////////////////////////// LOGIN
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,6 +220,7 @@ public class UserController {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("facilities", facilityService.getAllFacilities());
         model.addAttribute("classes", classesService.getAllClasses());
+        model.addAttribute("reviews", reviewService.getAllReviews());
         return "admin";
     }
 
@@ -434,6 +438,10 @@ public class UserController {
 
         model.addAttribute("user", user);
         model.addAttribute("reservations", reservations);
+
+        List<Review> reviews = reviewService.getReviewsByUser(user);
+        model.addAttribute("reviews", reviews);
+
         // To indicate in the view that we are in admin mode, so we can show/hide
         // certain options
         model.addAttribute("adminView", true);
@@ -626,6 +634,23 @@ public class UserController {
 
         // Delete class
         classesService.deleteClass(id);
+
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/reviews/delete/{id}")
+    public String deleteReviewAsAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+
+        Review review = reviewRepository.findById(id).orElse(null);
+
+        if (review == null) {
+            redirectAttributes.addFlashAttribute("errorAdmin", "La reseña no existe.");
+            return "redirect:/admin";
+        }
+
+        reviewService.deleteReview(id);
+
+        redirectAttributes.addFlashAttribute("successAdmin", "Reseña eliminada correctamente.");
 
         return "redirect:/admin";
     }

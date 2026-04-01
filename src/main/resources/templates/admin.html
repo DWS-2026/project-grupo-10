@@ -29,7 +29,7 @@
             {{.}}
         </div>
         {{/successAdmin}}
-        
+
         {{#error}}
         <div id="globalAlert" class="alert alert-danger auto-hide-alert fixed-alert" role="alert"
             data-hide-delay="5000">
@@ -633,6 +633,67 @@
             {{/classes}}
 
         </div>
+
+        <!-- User Reviews -->
+        <section id="user-reviews" class="mb-5">
+            <h2 class="mb-3"> Reseñas</h2>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Servicio</th>
+                            <th>Usuario</th>
+                            <th>Puntuación</th>
+                            <th>Comentario</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#reviews}}
+                        <tr>
+                            <td>
+                                {{#classes}}
+                                {{classes.name}}
+                                {{/classes}}
+                                {{#facility}}
+                                {{facility.name}}
+                                {{/facility}}
+                            </td>
+                            <td>{{user.name}}</td>
+                            <td>{{rating}} / 5</td>
+                            <td>{{comment}}</td>
+                            <td>
+                                <a href="#delete-review-{{id}}" class="btn btn-danger btn-sm">Borrar</a>
+                            </td>
+                        </tr>
+                        {{/reviews}}
+
+                        {{^reviews}}
+                        <tr>
+                            <td colspan="5" class="text-muted">No hay reseñas.</td>
+                        </tr>
+                        {{/reviews}}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Delete Review Confirmation -->
+        {{#reviews}}
+        <div id="delete-review-{{id}}" class="popup">
+            <div class="popup-content">
+                <a href="#" class="close">&times;</a>
+                <h3>¿Eliminar reseña?</h3>
+                <p>¿Seguro que quieres eliminar esta reseña de <strong>{{user.name}}</strong>? Esta acción no se puede deshacer.</p>
+
+                <div class="d-flex gap-2 mt-3">
+                    <a href="/admin/reviews/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
+                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+        {{/reviews}}
 
     </div>
 
