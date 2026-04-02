@@ -54,8 +54,6 @@ public class WebSecurityConfig {
 						.permitAll()
 						// PROTECTED PAGES
 						.requestMatchers("/userProfile").hasAnyRole("USER", "ADMIN")
-						.requestMatchers("/bookings").hasAnyRole("USER", "ADMIN")
-						.requestMatchers("/reviews").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/admin/**", "/adminPanel").hasRole("ADMIN")
 						.anyRequest().authenticated())
 
@@ -74,10 +72,10 @@ public class WebSecurityConfig {
 							// a user is blocked)
 							if (exception instanceof LockedException ||
 									(cause != null && cause instanceof LockedException)) {
-								// System.out.println(">>> Redirigiendo a /login?blocked");
+								
 								response.sendRedirect("/login?blocked");
 							} else {
-								// System.out.println(">>> Redirigiendo a /login?error");
+								
 								response.sendRedirect("/login?error");
 							}
 						})

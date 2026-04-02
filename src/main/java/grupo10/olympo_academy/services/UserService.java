@@ -112,14 +112,34 @@ public class UserService {
         User user = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
 
-        Image image = imageService.createImage(photoFile.getInputStream());
-        // Delete old image if exists
-        if (user.getProfileImage() != null) {
-            imageService.deleteImage(user.getProfileImage().getId());
+        if (photoFile == null || photoFile.isEmpty()) {
+            throw new Exception("Debes seleccionar una imagen válida");
         }
-        user.setProfileImage(image);
 
-        return userRepository.save(user);
+        Image previousImage = user.getProfileImage();
+        Image newImage = imageService.createImage(photoFile.getInputStream());
+        user.setProfileImage(newImage);
+
+        User savedUser;
+        try {
+            savedUser = userRepository.save(user);
+        } catch (Exception e) {
+            if (newImage.getId() != null) {
+                try {
+                    imageService.deleteImage(newImage.getId());
+                } catch (Exception ignored) {
+                    // Best-effort cleanup if user save fails.
+                }
+            }
+            throw e;
+        }
+
+        if (previousImage != null && previousImage.getId() != null
+                && !previousImage.getId().equals(newImage.getId())) {
+            imageService.deleteImage(previousImage.getId());
+        }
+
+        return savedUser;
     }
 
     public User updateUserFromAdmin(Long id, String name, String username, String email, String phone,
@@ -147,18 +167,41 @@ public class UserService {
         user.setEmail(email);
         user.setPhone(phone);
 
+        Long previousImageId = null;
+
         // If a new profile image is uploaded, update it. Otherwise, keep the existing
         // one.
         if (photoFile != null && !photoFile.isEmpty()) {
-            // Delete old image if exists
-            if (user.getProfileImage() != null) {
-                imageService.deleteImage(user.getProfileImage().getId());
+            Image previousImage = user.getProfileImage();
+            Image newImage = imageService.createImage(photoFile.getInputStream());
+            user.setProfileImage(newImage);
+
+            if (previousImage != null && previousImage.getId() != null
+                    && !previousImage.getId().equals(newImage.getId())) {
+                previousImageId = previousImage.getId();
             }
-            Image image = imageService.createImage(photoFile.getInputStream());
-            user.setProfileImage(image);
         }
 
-        return userRepository.save(user);
+        User savedUser;
+        try {
+            savedUser = userRepository.save(user);
+        } catch (Exception e) {
+            if (photoFile != null && !photoFile.isEmpty() && user.getProfileImage() != null
+                    && user.getProfileImage().getId() != null) {
+                try {
+                    imageService.deleteImage(user.getProfileImage().getId());
+                } catch (Exception ignored) {
+                    // Best-effort cleanup if user save fails.
+                }
+            }
+            throw e;
+        }
+
+        if (previousImageId != null) {
+            imageService.deleteImage(previousImageId);
+        }
+
+        return savedUser;
     }
 
     public void deleteUserById(Long id) throws Exception {

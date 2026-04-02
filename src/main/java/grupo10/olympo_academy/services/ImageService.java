@@ -36,9 +36,8 @@ public class ImageService {
             throw new IOException("Failed to create image", e);
         }
 
-        imageRepository.save(image);
-
-        return image;
+        // Flush so the image has a stable persisted identifier before being referenced.
+        return imageRepository.saveAndFlush(image);
     }
 
     public Resource getImageFile(long id) throws SQLException {

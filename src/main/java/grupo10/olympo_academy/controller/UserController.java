@@ -126,17 +126,19 @@ public class UserController {
             @RequestParam String username,
             @RequestParam String phone,
             Model model,
-            Principal principal) {
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
 
         String currentUserEmail = principal.getName();
 
         try {
             userService.updateProfile(currentUserEmail, name, username, phone);
         } catch (Exception e) {
+            //this line gets the error message from UserService and adds it to the model, so we can show it in the view
             model.addAttribute("error", e.getMessage());
             return "userProfile";
         }
-
+        redirectAttributes.addFlashAttribute("success", "Perfil actualizado correctamente");
         return "redirect:/userProfile";
     }
 
@@ -157,6 +159,7 @@ public class UserController {
             return "redirect:/userProfile";
 
         } catch (Exception e) {
+            //this line gets the error message from UserService and adds it to the model, so we can show it in the view
             model.addAttribute("error", e.getMessage());
             return "userProfile";
         }
@@ -439,7 +442,7 @@ public class UserController {
         model.addAttribute("adminView", true);
         return "userProfile";
     }
-
+                            /////////////////////Reservations///////////////////////////
     @PostMapping("/admin/reservations/update/{id}")
     public String updateReservationAsAdmin(
             @PathVariable Long id,

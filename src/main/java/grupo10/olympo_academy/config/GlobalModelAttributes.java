@@ -23,7 +23,8 @@ public class GlobalModelAttributes {
 
     @Autowired
     private UserService userService;
-
+    
+    //this methods are needed for login correctly each user
     @ModelAttribute
     public void addLoggedUser(Model model, HttpSession session) {
         Object user = session.getAttribute("user");

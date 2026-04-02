@@ -42,6 +42,7 @@ public class ClassesController {
         model.addAttribute("classes", classes);
         model.addAttribute("reviews", classes.getReviews());
 
+        //principal is an object that spring security provides to get the currently authenticated user, if any. We use it to get the user's reviews and to show the available times for the class.
         if (principal != null) {
             try {
                 User user = userService.findByEmail(principal.getName());
