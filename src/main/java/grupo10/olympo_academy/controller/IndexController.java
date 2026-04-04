@@ -21,4 +21,9 @@ public class IndexController {
         model.addAttribute("classes", classesService.getAllClasses());
         return "index";
     }
+
+    @GetMapping("/app-error")
+    public String appError() {
+        return "error";
+    }
 }

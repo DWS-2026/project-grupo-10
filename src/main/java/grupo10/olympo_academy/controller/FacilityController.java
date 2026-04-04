@@ -37,7 +37,7 @@ public class FacilityController {
 
         if (facility == null) {
             redirectAttributes.addFlashAttribute("error404", "Error 404: Elemento no encontrado");
-            return "redirect:/error";
+            return "redirect:/app-error";
         }
 
         model.addAttribute("facility", facility);

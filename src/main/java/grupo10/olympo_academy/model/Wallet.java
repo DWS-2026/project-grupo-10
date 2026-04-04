@@ -13,6 +13,9 @@ public class Wallet {
 
     private float saldo;
 
+    public Wallet() {
+    }
+    
     public Wallet(float saldo) {
         this.saldo = saldo;
     }

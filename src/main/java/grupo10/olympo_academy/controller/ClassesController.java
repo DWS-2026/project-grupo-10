@@ -36,7 +36,7 @@ public class ClassesController {
         Classes classes = classesService.getClassById(id);
         if (classes == null) {
             redirectAttributes.addFlashAttribute("error404", "Error 404: Elemento no encontrado");
-            return "redirect:/error";
+            return "redirect:/app-error";
         }
 
         model.addAttribute("classes", classes);

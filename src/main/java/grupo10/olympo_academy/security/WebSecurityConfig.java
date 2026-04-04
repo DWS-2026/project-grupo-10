@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.LockedException;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,21 +23,12 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailService);
-		authProvider.setPasswordEncoder(passwordEncoder());
-		return authProvider;
-	}
-
-	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-		http.authenticationProvider(authenticationProvider());
 
 		http
 				.authorizeHttpRequests(authorize -> authorize
 						// PUBLIC PAGES
-						.requestMatchers("/", "/index", "/login", "/register", "/error", "/facilities/{id}",
+					.requestMatchers("/", "/index", "/login", "/register", "/error", "/app-error", "/facilities/{id}",
 								"/classes/{id}")
 						.permitAll()
 
@@ -67,13 +57,8 @@ public class WebSecurityConfig {
 						// Custom failure handler to redirect user to /login?blocked if LockedException
 						// is thrown
 						.failureHandler((request, response, exception) -> {
-
-							Throwable cause = exception.getCause();
-
-							// check if the exception or its cause is a LockedException (which we throw when
-							// a user is blocked)
-							if (exception instanceof LockedException ||
-									(cause != null && cause instanceof LockedException)) {
+							// Check full cause chain to correctly classify blocked-user logins.
+							if (hasLockedCause(exception)) {
 								// System.out.println(">>> Redirigiendo a /login?blocked");
 								response.sendRedirect("/login?blocked");
 							} else {
@@ -90,5 +75,16 @@ public class WebSecurityConfig {
 
 				.exceptionHandling(ex -> ex.accessDeniedPage("/"));
 		return http.build();
+	}
+
+	private boolean hasLockedCause(Throwable throwable) {
+		Throwable current = throwable;
+		while (current != null) {
+			if (current instanceof LockedException) {
+				return true;
+			}
+			current = current.getCause();
+		}
+		return false;
 	}
 }
