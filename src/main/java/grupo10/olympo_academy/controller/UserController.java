@@ -227,6 +227,7 @@ public class UserController {
             @RequestParam("type") String tipo,
             @RequestParam String description,
             @RequestParam("photoFile") MultipartFile photoFile,
+            @RequestParam("price") float price,
             Model model) {
 
         try {
@@ -241,6 +242,9 @@ public class UserController {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 facility.setFacilityImage(image);
             }
+
+            // Set price
+            facility.setPrice(price);
 
             // Save
             facilityService.saveFacility(facility);
@@ -260,6 +264,7 @@ public class UserController {
             @RequestParam("type") String tipo,
             @RequestParam String description,
             @RequestParam("photoFile") MultipartFile photoFile,
+            @RequestParam("price") float price,
             Model model) {
 
         try {
@@ -280,6 +285,9 @@ public class UserController {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 facility.setFacilityImage(image);
             }
+
+            // Set price
+            facility.setPrice(price);
 
             // Save changes
             facilityService.saveFacility(facility);
@@ -476,6 +484,7 @@ public class UserController {
             @RequestParam Long facility,
             @RequestParam String durationRAW,
             @RequestParam("photoFile") MultipartFile photoFile,
+            @RequestParam("price") float price,
             Model model) {
 
         try {
@@ -486,6 +495,8 @@ public class UserController {
             // Set the facility
             Facility selectedFacility = facilityService.getFacilityById(facility);
             classes.setFacility(selectedFacility);
+            // Set the price
+            classes.setPrice(price);
 
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
@@ -532,6 +543,7 @@ public class UserController {
             classes.setDifficulty(classesModify.getDifficulty());
             classes.setDays(classesModify.getDays());
             classes.setStartTime(classesModify.getStartTime());
+            classes.setPrice(classesModify.getPrice());
 
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);

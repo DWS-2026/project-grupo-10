@@ -282,12 +282,14 @@ public class ReservationController {
         if (classId != null) {
             Classes classes = classesService.getClassById(classId);
             reservation.setClasses(classes);
+            reservation.setPrice(classes != null ? classes.getPrice() : 0);
             if (reservation.getName() == null || reservation.getName().isBlank()) {
                 reservation.setName(classes != null ? classes.getName() : name);
             }
         } else if (facilityId != null) {
             Facility facility = facilityService.getFacilityById(facilityId);
             reservation.setFacility(facility);
+            reservation.setPrice(facility != null ? facility.getPrice() : 0);
             if (reservation.getName() == null || reservation.getName().isBlank()) {
                 reservation.setName(facility != null ? facility.getName() : name);
             }
