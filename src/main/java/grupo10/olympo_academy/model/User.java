@@ -36,6 +36,9 @@ public class User {
     @OneToOne
     private Image profileImage;
 
+    @OneToMany
+    private List<Task> tasks = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -151,4 +154,11 @@ public class User {
         this.reviews.removeIf(review -> review.getId().equals(id));
     }
 
+    public List<Task> getTasks(){
+        return this.tasks;
+    }
+
+    public void setTasks(List<Task> tasks){
+        this.tasks = tasks;
+    }
 }

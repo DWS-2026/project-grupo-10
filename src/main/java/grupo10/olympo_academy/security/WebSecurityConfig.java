@@ -55,6 +55,7 @@ public class WebSecurityConfig {
 						// PROTECTED PAGES
 						.requestMatchers("/userProfile").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/admin/**", "/adminPanel").hasRole("ADMIN")
+						.requestMatchers("/tareas").hasAnyRole("USER","ADMIN")
 						.anyRequest().authenticated())
 
 				.formLogin(formLogin -> formLogin

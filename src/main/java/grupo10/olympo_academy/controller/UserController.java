@@ -5,6 +5,7 @@ import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.Review;
+import grupo10.olympo_academy.model.Task;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
@@ -103,6 +104,9 @@ public class UserController {
 
         List<Review> reviews = reviewService.getReviewsByUser(user);
         model.addAttribute("reviews", reviews);
+
+        List<Task> tareas = userService.verTareas(email);
+        model.addAttribute("tareas", tareas);
 
         return "userProfile";
     }
@@ -638,5 +642,21 @@ public class UserController {
         redirectAttributes.addFlashAttribute("successAdmin", "Reseña eliminada correctamente.");
 
         return "redirect:/admin";
+    }
+
+    /////TAREAS
+    @GetMapping("/tareas")
+    public String listarTareas(@PathVariable Long id, Principal principal, Model model, RedirectAttributes redirectAttributes){
+        //muestra solo las tareas del usuario logeado
+        if(principal == null){
+            //no tiene sesión activa
+            redirectAttributes.addFlashAttribute("error","ERROR!!! Necesitas estar autenticado para poder ver tus tareas");
+            return "redirect:/error";
+        }
+        String email = principal.getName();
+        List <Task> tareas = userService.verTareas(email);
+        model.addAttribute("tareas",tareas);
+
+        return "redirect:/userProfile";
     }
 }

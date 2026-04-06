@@ -310,6 +310,37 @@
         {{/reservations}}
         {{/adminView}}
 
+        <section id="user-tasks" class="mb-5">
+            <h2 class="mb-3">Mis Tareas</h2>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Título</th>
+                            <th>Estado</th>
+                            <th>Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#tareas}}
+                        <tr>
+                            <td>{{title}}</td>
+                            <td>{{#completed}}Completada{{/completed}}{{^completed}}Pendiente{{/completed}}</td>
+                            <td>{{description}}</td>
+                        </tr>
+                        {{/tareas}}
+
+                        {{^tareas}}
+                        <tr>
+                            <td colspan="3" class="text-muted">No tienes tareas.</td>
+                        </tr>
+                        {{/tareas}}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <script>
             function preselectEditReservationValues(popupId) {
                 const popup = document.getElementById(popupId);

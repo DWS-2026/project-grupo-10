@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import grupo10.olympo_academy.model.Image;
+import grupo10.olympo_academy.model.Task;
 import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.repository.TaskRepository;
 import grupo10.olympo_academy.repository.UserRepository;
 
 @Service
@@ -20,6 +22,9 @@ public class UserService {
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     // With Spring security, we don´t need to implement the login logic ourselves
 
@@ -245,4 +250,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    //Ver tareas
+    public List<Task> verTareas(String email){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return taskRepository.findByUser(user);
+    }
 }
