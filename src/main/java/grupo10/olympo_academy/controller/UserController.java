@@ -6,8 +6,6 @@ import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
-import grupo10.olympo_academy.repository.ReviewRepository;
-import grupo10.olympo_academy.repository.UserRepository;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
@@ -44,10 +42,6 @@ public class UserController {
     private ReservationService reservationService;
     @Autowired
     private ReviewService reviewService;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ReviewRepository reviewRepository;
 
     /////////////////////////////////////////////////////////////////// LOGIN
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,25 +363,13 @@ public class UserController {
 
     @GetMapping("/admin/user/block/{id}")
     public String blockUser(@PathVariable Long id) {
-        User user = userRepository.findById(id).orElse(null);
-
-        if (user != null) {
-            user.setBlocked(true);
-            userRepository.save(user);
-        }
-
+        userService.blockUser(id);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/user/unblock/{id}")
     public String unblockUser(@PathVariable Long id) {
-        User user = userRepository.findById(id).orElse(null);
-
-        if (user != null) {
-            user.setBlocked(false);
-            userRepository.save(user);
-        }
-
+        userService.unblockUser(id);
         return "redirect:/admin";
     }
 
@@ -644,7 +626,7 @@ public class UserController {
     @GetMapping("/admin/reviews/delete/{id}")
     public String deleteReviewAsAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        Review review = reviewRepository.findById(id).orElse(null);
+        Review review = reviewService.getById(id);
 
         if (review == null) {
             redirectAttributes.addFlashAttribute("errorAdmin", "La reseña no existe.");
