@@ -287,7 +287,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ### **Vídeo de Demostración**
 📹 **[Enlace al vídeo en YouTube](https://www.youtube.com/watch?v=x91MPoITQ3I)**
-> Vídeo mostrando las principales funcionalidades de la aplicación web.
+> Video showing the main features of the web application.
 
 ### **Documentación de la API REST**
 
@@ -309,15 +309,13 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 | Rol | Usuario | Contraseña |
 |:---|:---|:---|
-| Administrador | admin | admin123 |
-| Usuario Registrado | user1 | user123 |
-| Usuario Registrado | user2 | user123 |
+| Administrador | admin | potato |
+| Usuario Registrado | user1 | user1 |
+| Usuario Registrado | user2 | user2|
 
 ### **Participación de Miembros en la Práctica 3**
 
-#### **Alumno 1 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 1 - Javier González Alonso**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
@@ -329,9 +327,7 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ---
 
-#### **Alumno 2 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 2 - Lucía Zapata Fernández**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
@@ -343,9 +339,7 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ---
 
-#### **Alumno 3 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 3 - Diego Consuegra Sáez**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
@@ -357,13 +351,11 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 ---
 
-#### **Alumno 4 - [Nombre Completo]**
-
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+#### **Alumno 4 - Adrián Bellón de la Cruz**
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
+|1| [Rich text addition](https://github.com/DWS-2026/project-grupo-10/commit/55b139c5a5b748c827731d8d6f8df058e0495502)  | [admin.html](https://github.com/DWS-2026/project-grupo-10/commit/55b139c5a5b748c827731d8d6f8df058e0495502#diff-ab23a499fae2f6f07ede1e5e3ccb0a449a1bfe25a38f21fdc5344fee38914598)   |
 |2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
 |3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
 |4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
