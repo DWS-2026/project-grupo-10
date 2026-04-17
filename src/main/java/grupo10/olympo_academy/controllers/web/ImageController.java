@@ -1,4 +1,4 @@
-package grupo10.olympo_academy.controller;
+package grupo10.olympo_academy.controllers.web;
 
 import java.sql.SQLException;
 

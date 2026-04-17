@@ -1,4 +1,4 @@
-package grupo10.olympo_academy.controller;
+package grupo10.olympo_academy.controllers.web;
 
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
