@@ -356,7 +356,7 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
 |1| [Rich text addition](https://github.com/DWS-2026/project-grupo-10/commit/55b139c5a5b748c827731d8d6f8df058e0495502)  | [admin.html](https://github.com/DWS-2026/project-grupo-10/commit/55b139c5a5b748c827731d8d6f8df058e0495502#diff-ab23a499fae2f6f07ede1e5e3ccb0a449a1bfe25a38f21fdc5344fee38914598)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
+|2| [REST API implementation for reservations](https://github.com/DWS-2026/project-grupo-10/commit/0b1cad331ba6d31bb5f99137136cab9d2353a048)  | [ReservationRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ReservationRestController.java)   |
 |3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
 |4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
 |5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
