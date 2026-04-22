@@ -245,4 +245,20 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public User changePassword(String email, String newPassword) throws Exception {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("Usuario no encontrado"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        return userRepository.save(user);
+    }
+
+    public User changeProfileImage(String email, MultipartFile photoFile) throws Exception {
+        return updateProfileImage(email, photoFile);
+    }
+
+    public User getUserProfile(String email) throws Exception {
+        return findByEmail(email);
+    }
+
 }

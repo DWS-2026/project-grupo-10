@@ -14,7 +14,7 @@ import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/api/v1/reservations")
 public class ReservationRestController {
 
     @Autowired

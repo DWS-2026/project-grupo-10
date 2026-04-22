@@ -66,45 +66,48 @@ public class UserController {
     @GetMapping("/userProfile")
     public String getProfile(Model model, Principal principal) {
 
-        // Spring Security provides user email through Principal object, we can use it
-        // to fetch the user details from the database
         String email = principal.getName();
 
-        User user = userService.findByEmail(email);
+        try {
+            User user = userService.getUserProfile(email);
 
-        List<Reservation> reservations = reservationService.getReservationsByUser(user);
-        reservations.sort((a, b) -> {
-            LocalDate dateA = parseReservationDate(a.getDay());
-            LocalDate dateB = parseReservationDate(b.getDay());
+            List<Reservation> reservations = reservationService.getReservationsByUser(user);
+            reservations.sort((a, b) -> {
+                LocalDate dateA = parseReservationDate(a.getDay());
+                LocalDate dateB = parseReservationDate(b.getDay());
 
-            if (dateA != null && dateB != null) {
-                int cmp = dateA.compareTo(dateB);
+                if (dateA != null && dateB != null) {
+                    int cmp = dateA.compareTo(dateB);
+                    if (cmp != 0)
+                        return cmp;
+                } else if (dateA != null) {
+                    return -1;
+                } else if (dateB != null) {
+                    return 1;
+                }
+
+                String dayA = a.getDay() == null ? "" : a.getDay();
+                String dayB = b.getDay() == null ? "" : b.getDay();
+                int cmp = dayA.compareToIgnoreCase(dayB);
                 if (cmp != 0)
                     return cmp;
-            } else if (dateA != null) {
-                return -1;
-            } else if (dateB != null) {
-                return 1;
-            }
 
-            String dayA = a.getDay() == null ? "" : a.getDay();
-            String dayB = b.getDay() == null ? "" : b.getDay();
-            int cmp = dayA.compareToIgnoreCase(dayB);
-            if (cmp != 0)
-                return cmp;
+                String timeA = a.getStartTime() == null ? "" : a.getStartTime();
+                String timeB = b.getStartTime() == null ? "" : b.getStartTime();
+                return timeA.compareToIgnoreCase(timeB);
+            });
 
-            String timeA = a.getStartTime() == null ? "" : a.getStartTime();
-            String timeB = b.getStartTime() == null ? "" : b.getStartTime();
-            return timeA.compareToIgnoreCase(timeB);
-        });
+            model.addAttribute("user", user);
+            model.addAttribute("reservations", reservations);
 
-        model.addAttribute("user", user);
-        model.addAttribute("reservations", reservations);
+            List<Review> reviews = reviewService.getReviewsByUser(user);
+            model.addAttribute("reviews", reviews);
 
-        List<Review> reviews = reviewService.getReviewsByUser(user);
-        model.addAttribute("reviews", reviews);
-
-        return "userProfile";
+            return "userProfile";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
     }
 
     private LocalDate parseReservationDate(String day) {
