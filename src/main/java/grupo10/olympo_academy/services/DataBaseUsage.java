@@ -1,4 +1,4 @@
-package grupo10.olympo_academy;
+package grupo10.olympo_academy.services;
 
 import grupo10.olympo_academy.repository.ImageRepository;
 import java.io.IOException;
@@ -10,10 +10,7 @@ import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.FacilityRepository;
-import grupo10.olympo_academy.services.FacilityService;
-import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.repository.UserRepository;
-import grupo10.olympo_academy.services.UserService;
 import jakarta.annotation.PostConstruct;
 //import jakarta.transaction.Transactional;
 import grupo10.olympo_academy.model.Classes;
