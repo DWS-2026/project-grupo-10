@@ -4,23 +4,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-//import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import grupo10.olympo_academy.security.jwt.JwtRequestFilter;
+//import grupo10.olympo_academy.security.jwt.JwtTokenProvider;
+import grupo10.olympo_academy.security.jwt.UnauthorizedHandlerJwt;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class SecurityConfig {
 
 	@Autowired
 	public RepositoryUserDetailsService userDetailService;
+
+	@Autowired
+	private UnauthorizedHandlerJwt unauthorizedHandlerJwt;
+
+	// @Autowired
+	// private JwtTokenProvider jwtTokenProvider;
+
+	@Autowired
+	private JwtRequestFilter jwtRequestFilter;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -32,6 +47,11 @@ public class WebSecurityConfig {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailService);
 		authProvider.setPasswordEncoder(passwordEncoder());
 		return authProvider;
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
 	}
 
 	@Bean
@@ -102,24 +122,28 @@ public class WebSecurityConfig {
 		http.authenticationProvider(authenticationProvider());
 
 		http
-				.securityMatcher("/api/**");
-				//.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
+				.securityMatcher("/api/v1/**")
+				.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
 
 		http
 				.authorizeHttpRequests(authorize -> authorize
 						// PRIVATE ENDPOINTS
 						// Images
-						// .requestMatchers(HttpMethod.PUT, "/api/images/*/media").hasRole("USER")
-						// .requestMatchers(HttpMethod.DELETE, "/api/books/*/images/*").hasRole("USER")
-						// Books
-						// .requestMatchers(HttpMethod.POST, "/api/books/**").hasRole("USER")
-						// .requestMatchers(HttpMethod.PUT, "/api/books/**").hasRole("USER")
-						// .requestMatchers(HttpMethod.DELETE, "/api/books/**").hasRole("ADMIN")
-						// // Shops
-						// .requestMatchers(HttpMethod.PUT, "/api/shops/**").hasRole("ADMIN")
-						// .requestMatchers(HttpMethod.PUT, "/api/shops/**").hasRole("ADMIN")
-						// .requestMatchers(HttpMethod.DELETE, "/api/shops/**").hasRole("ADMIN")
-						// // PUBLIC ENDPOINTS
+						.requestMatchers(HttpMethod.POST, "/api/v1/images/**").hasRole("USER")
+						.requestMatchers(HttpMethod.PUT, "/api/v1/images/*/media").hasRole("USER")
+						.requestMatchers(HttpMethod.DELETE, "/api/v1/images/**").hasRole("USER")
+
+						// Classes
+						.requestMatchers(HttpMethod.POST, "/api/v1/classes/**").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.PUT, "/api/v1/classes/**").hasRole("USER") //revisar
+						.requestMatchers(HttpMethod.DELETE, "/api/v1/classes/**").hasRole("ADMIN")
+
+						//Users
+						.requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAnyRole("USER","ADMIN")
+
+						
+
+						// PUBLIC ENDPOINTS
 						.anyRequest().permitAll());
 
 		// Disable Form login Authentication
@@ -135,7 +159,7 @@ public class WebSecurityConfig {
 		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		// Add JWT Token filter
-		//http.addFilterBefore(new JwtRequestFilter(userDetailService, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
