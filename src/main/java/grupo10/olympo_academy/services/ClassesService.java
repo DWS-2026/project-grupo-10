@@ -25,31 +25,24 @@ public class ClassesService {
     @Autowired
     private ImageRepository imageRepository;
 
-    // ---------------------------------------------------------
+    
     // WEB + REST: GET ALL
-    // ---------------------------------------------------------
     public List<Classes> getAllClasses() {
         return classesRepository.findAll();
     }
 
-    // ---------------------------------------------------------
     // WEB + REST: GET BY ID
-    // ---------------------------------------------------------
     public Classes getClassById(Long id) {
         return classesRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Class not found"));
     }
 
-    // ---------------------------------------------------------
-    // WEB: SAVE (ya lo usas en tu web actual)
-    // ---------------------------------------------------------
+    // WEB: SAVE
     public Classes saveClass(Classes classes) {
         return classesRepository.save(classes);
     }
 
-    // ---------------------------------------------------------
-    // WEB: DELETE (ya lo usas)
-    // ---------------------------------------------------------
+    // WEB: DELETE
     public void deleteClass(Long id) {
         if (!classesRepository.existsById(id)) {
             throw new RuntimeException("Class not found");
@@ -57,16 +50,12 @@ public class ClassesService {
         classesRepository.deleteById(id);
     }
 
-    // ---------------------------------------------------------
     // WEB: CHECK FACILITY USAGE
-    // ---------------------------------------------------------
     public boolean hasClassesUsingFacility(Facility facility) {
         return !classesRepository.findByFacility(facility).isEmpty();
     }
 
-    // ---------------------------------------------------------
     // REST: CREATE CLASS FROM DTO
-    // ---------------------------------------------------------
     public Classes createClass(ClassesDTO dto) {
 
         Classes classes = new Classes();
@@ -96,9 +85,7 @@ public class ClassesService {
         return classesRepository.save(classes);
     }
 
-    // ---------------------------------------------------------
     // REST: UPDATE CLASS FROM DTO
-    // ---------------------------------------------------------
     public Classes updateClass(Long id, ClassesDTO dto) {
 
         Classes classes = getClassById(id);
