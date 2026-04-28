@@ -5,12 +5,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import grupo10.olympo_academy.model.Classes;
@@ -35,8 +37,7 @@ public class ClassesController {
 
         Classes classes = classesService.getClassById(id);
         if (classes == null) {
-            redirectAttributes.addFlashAttribute("error404", "Error 404: Elemento no encontrado");
-            return "redirect:/error";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         model.addAttribute("classes", classes);
@@ -81,7 +82,7 @@ public class ClassesController {
         // Resolve the classes
         Classes classes = classesService.getClassById(classesId);
         if (classes == null) {
-            return "redirect:/classes?error=notfound";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         // Create and save the review
