@@ -3,21 +3,30 @@ package grupo10.olympo_academy.controllers.rest;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
+import org.springframework.web.multipart.MultipartFile;
 
 import grupo10.olympo_academy.dto.UserDTO;
 import grupo10.olympo_academy.dto.UserDetailDTO;
 import grupo10.olympo_academy.dto.UserMapper;
+import grupo10.olympo_academy.dto.UserRegisterDTO;
+import grupo10.olympo_academy.dto.PasswordChangeDTO;
 import grupo10.olympo_academy.model.User;
+import grupo10.olympo_academy.services.ImageService;
+import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,51 +40,20 @@ public class UserRestController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private ReservationService reservationService;
+
     @GetMapping("/me")
     public ResponseEntity<UserDetailDTO> me(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
-
         if (principal != null) {
             try {
                 User user = userService.getUserProfile(principal.getName());
-                UserDetailDTO userDetailDTO = userMapper.toDTO(user);
-                return ResponseEntity.ok(userDetailDTO);
-            } catch (Exception e) {
-                return ResponseEntity.notFound().build();
-            }
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/profile")
-    public ResponseEntity<UserDetailDTO> profile(HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-
-        if (principal != null) {
-            try {
-                User user = userService.getUserProfile(principal.getName());
-                UserDetailDTO userDetailDTO = userMapper.toDTO(user);
-
-                // Set profile image URL manually
-                String profileImageUrl = user.getProfileImage() != null ? "/images/id/" + user.getProfileImage().getId()
-                        : null;
-
-                // Create updated DTO with profile image URL
-                userDetailDTO = new UserDetailDTO(
-                        userDetailDTO.id(),
-                        userDetailDTO.name(),
-                        userDetailDTO.email(),
-                        userDetailDTO.phone(),
-                        userDetailDTO.username(),
-                        userDetailDTO.blocked(),
-                        profileImageUrl,
-                        userDetailDTO.roles(),
-                        null, // reservations - set to null for now
-                        null // reviews - set to null for now
-                );
-
-                return ResponseEntity.ok(userDetailDTO);
+                UserDetailDTO userDTO = userMapper.toDetailDTO(user);
+                return ResponseEntity.ok(userDTO);
             } catch (Exception e) {
                 return ResponseEntity.notFound().build();
             }
@@ -85,39 +63,20 @@ public class UserRestController {
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<UserDetailDTO> updateProfile(@RequestBody UserDetailDTO userDetailDTO,
+    public ResponseEntity<UserDTO> updateProfile(@RequestBody UserDTO userDTO,
             HttpServletRequest request) {
+
         Principal principal = request.getUserPrincipal();
 
         if (principal != null) {
             try {
                 User updatedUser = userService.updateProfile(
                         principal.getName(),
-                        userDetailDTO.name(),
-                        userDetailDTO.username(),
-                        userDetailDTO.phone());
+                        userDTO.name(),
+                        userDTO.username(),
+                        userDTO.phone());
 
-                UserDetailDTO updatedDTO = userMapper.toDTO(updatedUser);
-
-                // Set profile image URL manually
-                String profileImageUrl = updatedUser.getProfileImage() != null
-                        ? "/images/id/" + updatedUser.getProfileImage().getId()
-                        : null;
-
-                // Create updated DTO with profile image URL
-                updatedDTO = new UserDetailDTO(
-                        updatedDTO.id(),
-                        updatedDTO.name(),
-                        updatedDTO.email(),
-                        updatedDTO.phone(),
-                        updatedDTO.username(),
-                        updatedDTO.blocked(),
-                        profileImageUrl,
-                        updatedDTO.roles(),
-                        null, // reservations - set to null for now
-                        null // reviews - set to null for now
-                );
-
+                UserDTO updatedDTO = userMapper.toUserDTO(updatedUser);
                 return ResponseEntity.ok(updatedDTO);
             } catch (Exception e) {
                 return ResponseEntity.badRequest().build();
@@ -128,12 +87,13 @@ public class UserRestController {
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<Void> changePassword(@RequestBody String newPassword, HttpServletRequest request) {
+    public ResponseEntity<Void> changePassword(@RequestBody PasswordChangeDTO passwordChangeDTO,
+            HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
         if (principal != null) {
             try {
-                userService.changePassword(principal.getName(), newPassword);
+                userService.changePassword(principal.getName(), passwordChangeDTO.newPassword());
                 return ResponseEntity.ok().build();
             } catch (Exception e) {
                 return ResponseEntity.badRequest().build();
@@ -143,17 +103,51 @@ public class UserRestController {
         }
     }
 
-    @PatchMapping("/image")
-    public ResponseEntity<Void> changeProfileImage(@RequestBody String newImageUrl, HttpServletRequest request) {
+    @PutMapping("/image")
+    public ResponseEntity<Object> changeProfileImage(@RequestParam MultipartFile imageFile, HttpServletRequest request)
+            throws Exception {
+
+        Principal principal = request.getUserPrincipal();
+
+        if (principal != null) {
+            String currentUserEmail = principal.getName();
+            userService.updateProfileImage(currentUserEmail, imageFile);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/image")
+    public ResponseEntity<Object> getProfileImage(HttpServletRequest request) throws Exception {
+
+        Principal principal = request.getUserPrincipal();
+
+        if (principal != null) {
+            String currentUserEmail = principal.getName();
+            Resource imageFile = imageService.getImageFile(userService.getUserProfile(currentUserEmail).getProfileImage().getId());
+            MediaType mediaType = MediaTypeFactory
+                    .getMediaType(imageFile)
+                    .orElse(MediaType.IMAGE_JPEG);
+            return ResponseEntity
+                    .ok()
+                    .contentType(mediaType)
+                    .body(imageFile);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //method to cancel your own reservations
+    @DeleteMapping("/reservations/{id}")
+    public ResponseEntity<Void> cancelReservation(@PathVariable Long id, HttpServletRequest request) throws Exception {
+        
         Principal principal = request.getUserPrincipal();
 
         if (principal != null) {
             try {
-                // Note: This endpoint receives a URL string. For a file upload, consider
-                // changing
-                // the parameter type to MultipartFile and using the service's
-                // changeProfileImage method.
-                // For now, this is kept as-is for compatibility.
+                User user = userService.getUserProfile(principal.getName());
+                reservationService.cancelReservation(id, user);
                 return ResponseEntity.ok().build();
             } catch (Exception e) {
                 return ResponseEntity.badRequest().build();
@@ -163,29 +157,23 @@ public class UserRestController {
         }
     }
 
-    @PostMapping("/register")
-    @JsonCreator
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    @PostMapping
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserRegisterDTO userRegisterDTO) {
         try {
-            // create new User domain object from DTO (without id, blocked, roles, profileImage)
             User newUser = new User(
-                    userDTO.name(),
-                    userDTO.email(),
-                    userDTO.phone(),
-                    userDTO.password(),
-                    userDTO.username());
+                    userRegisterDTO.name(),
+                    userRegisterDTO.email(),
+                    userRegisterDTO.phone(),
+                    userRegisterDTO.password(),
+                    userRegisterDTO.username());
 
-            // we use the service to register the user
             User registeredUser = userService.register(newUser);
 
-            // return created user
             return ResponseEntity.ok(new UserDTO(
                     registeredUser.getName(),
                     registeredUser.getEmail(),
                     registeredUser.getPhone(),
-                    registeredUser.getUsername(),
-                    null // password is not returned for security reasons
-            ));
+                    registeredUser.getUsername()));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }

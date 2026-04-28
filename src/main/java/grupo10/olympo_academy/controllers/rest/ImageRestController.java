@@ -52,7 +52,7 @@ public class ImageRestController {
                 .body(imageFile);
     }
 
-    @PostMapping("/{id}/images/")
+    @PostMapping("/{id}/images/") //¿debo quitar esta ruta??
     public ResponseEntity<ImageDTO> createImage(
             @PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
         if (imageFile.isEmpty()) {
@@ -60,8 +60,6 @@ public class ImageRestController {
         }
 
         Image image = imageService.createImage(imageFile.getInputStream());
-
-        // postService.addImageToPost(id, image);
 
         URI location = URI.create("/api/v1/" + id + "/images/" + image.getId());
         return ResponseEntity.created(location).body(imageMapper.toDTO(image));

@@ -10,7 +10,7 @@ public record UserDetailDTO(
     String phone,
     String username,
     String blocked,
-    String profileImageUrl,
+    ImageDTO profileImage,
     List<String> roles,
     List<ReservationDTO> reservations,
     List<ReviewDTO> reviews

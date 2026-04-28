@@ -1,5 +1,114 @@
 package grupo10.olympo_academy.controllers.rest;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import grupo10.olympo_academy.dto.FacilityDTO;
+import grupo10.olympo_academy.dto.FacilityMapper;
+import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.services.FacilityService;
+
+@RestController
+@RequestMapping("/api/v1/facilities")
 public class FacilityRestController {
-    
+
+    @Autowired
+    private FacilityService facilityService;
+
+    @Autowired
+    private FacilityMapper facilityMapper;
+
+    @GetMapping
+    public ResponseEntity<List<FacilityDTO>> getAll() {
+        try {
+            List<Facility> facilities = facilityService.getAllFacilities();
+            List<FacilityDTO> dtoList = facilityMapper.toDTOs(facilities);
+            return ResponseEntity.ok(dtoList);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FacilityDTO> getById(@PathVariable Long id) {
+        try {
+            Facility facility = facilityService.getFacilityById(id);
+            if (facility == null) {
+                return ResponseEntity.notFound().build();
+            }
+            FacilityDTO dto = facilityMapper.toDTO(facility);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/by-name/{name}")
+    public ResponseEntity<FacilityDTO> getByName(@PathVariable String name) {
+        try {
+            Facility facility = facilityService.getFacilityByName(name);
+            if (facility == null) {
+                return ResponseEntity.notFound().build();
+            }
+            FacilityDTO dto = facilityMapper.toDTO(facility);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<FacilityDTO> create(@RequestBody FacilityDTO dto) {
+        try {
+            Facility facility = facilityMapper.toDomain(dto);
+            Facility saved = facilityService.saveFacility(facility);
+            return ResponseEntity.ok(facilityMapper.toDTO(saved));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FacilityDTO> update(@PathVariable Long id, @RequestBody FacilityDTO dto) {
+        try {
+            Facility existing = facilityService.getFacilityById(id);
+            if (existing == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            existing.setName(dto.name());
+            existing.setDescription(dto.description());
+            existing.setMaterial(dto.material());
+            existing.setType(dto.type());
+
+            Facility updated = facilityService.saveFacility(existing);
+            return ResponseEntity.ok(facilityMapper.toDTO(updated));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            Facility facility = facilityService.getFacilityById(id);
+            if (facility == null) {
+                return ResponseEntity.notFound().build();
+            }
+            facilityService.deleteFacility(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
