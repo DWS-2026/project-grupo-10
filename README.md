@@ -321,7 +321,7 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 |:------------: |:------------:| :------------:|
 |1| [REST API implementation for users](https://github.com/DWS-2026/project-grupo-10/commit/c01982dd6da80866cedc637ab498a7e6619816e1)  | [UserRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/UserRestController.java)   |
 |2| [REST API implementation for images](https://github.com/DWS-2026/project-grupo-10/commit/4353f5a4b6aead91beba7e04eeb1d0bda45f7358)  | [ImageRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ImageRestController.java)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
+|3| [Added Security config with jwt](https://github.com/DWS-2026/project-grupo-10/commit/2f201c8f2512fc06919ccea2b3d62b2908684762)  | [jwt](https://github.com/DWS-2026/project-grupo-10/tree/main/src/main/java/grupo10/olympo_academy/security/jwt)   |
 |4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
 |5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
 
@@ -331,7 +331,7 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [REST API implementation for facilities](URL_commit_1)  | [FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java)   |
+|1| [REST API implementation for facilities](https://github.com/DWS-2026/project-grupo-10/commit/05f03ba156dc33152cc9094ede19f1dbb07627f2)  | [FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java)   |
 |2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
 |3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
 |4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
@@ -344,7 +344,7 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
 |1| [REST API implementation for classes](https://github.com/DWS-2026/project-grupo-10/commit/65ece63b33b01f79fd52ed8125a4a2ac74da091f)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
+|2| [REST API implementation for classes reviews](https://github.com/DWS-2026/project-grupo-10/commit/fac61f835e3b921e01c01386adca68376e8f27de)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)   |
 |3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
 |4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
 |5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
@@ -357,6 +357,6 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 |:------------: |:------------:| :------------:|
 |1| [Rich text addition](https://github.com/DWS-2026/project-grupo-10/commit/55b139c5a5b748c827731d8d6f8df058e0495502)  | [admin.html](https://github.com/DWS-2026/project-grupo-10/commit/55b139c5a5b748c827731d8d6f8df058e0495502#diff-ab23a499fae2f6f07ede1e5e3ccb0a449a1bfe25a38f21fdc5344fee38914598)   |
 |2| [REST API implementation for reservations](https://github.com/DWS-2026/project-grupo-10/commit/0b1cad331ba6d31bb5f99137136cab9d2353a048)  | [ReservationRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ReservationRestController.java)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
+|3| [Implement document management with file storage on disk and download endpoints (web and REST)](https://github.com/DWS-2026/project-grupo-10/commit/776f7c1cf5e56b19738129ed281e989fa26dfdb5)  | [DocumentRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/DocumentRestController.java) [UserController] (https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/web/UserController.java)|
 |4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
 |5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |

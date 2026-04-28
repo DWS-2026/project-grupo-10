@@ -243,23 +243,6 @@ public class UserController {
                 .body(resource);
     }
 
-    @GetMapping("/admin/user/{id}/document/download")
-    public ResponseEntity<Resource> downloadUserDocumentAsAdmin(@PathVariable Long id) throws Exception {
-        User user = userService.getById(id);
-        var doc = documentService.findDocumentByUser(user);
-        if (doc == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Resource resource = documentService.loadAsResource(doc);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getOriginalName() + "\"")
-                .contentType(MediaType.parseMediaType(doc.getContentType()))
-                .body(resource);
-    }
-
-
-    
 
     /////////////////////////////////////////////////////////////////// REGISTER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -299,6 +282,24 @@ public class UserController {
         model.addAttribute("classes", classesService.getAllClasses());
         model.addAttribute("reviews", reviewService.getAllReviews());
         return "admin";
+    }
+
+    //////////////////////////////////////// Documents
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+    @GetMapping("/admin/user/{id}/document/download")
+    public ResponseEntity<Resource> downloadUserDocumentAsAdmin(@PathVariable Long id) throws Exception {
+        User user = userService.getById(id);
+        var doc = documentService.findDocumentByUser(user);
+        if (doc == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Resource resource = documentService.loadAsResource(doc);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getOriginalName() + "\"")
+                .contentType(MediaType.parseMediaType(doc.getContentType()))
+                .body(resource);
     }
 
     //////////////////////////////////////// Facility

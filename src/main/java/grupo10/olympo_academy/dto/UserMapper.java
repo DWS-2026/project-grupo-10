@@ -25,5 +25,6 @@ public interface UserMapper {
     @Mapping(target = "reviews", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "document", ignore = true)
     User toDomain(UserDetailDTO dto);
 }
