@@ -1,10 +1,10 @@
 package grupo10.olympo_academy.dto;
 
-
-public record UserDTO ( //this will be the data shown to any logged user
+public record UserRegisterDTO (
     String name,
     String email,
     String phone,
-    String username) 
+    String username,
+    String password) 
     {
 }

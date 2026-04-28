@@ -7,20 +7,23 @@ import org.mapstruct.Mapping;
 
 import grupo10.olympo_academy.model.User;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { ReservationMapper.class, ReviewMapper.class, ImageMapper.class})
 public interface UserMapper {
 
-    @Mapping(target = "profileImageUrl", ignore = true)
-    @Mapping(target = "reservations", ignore = true)
-    @Mapping(target = "reviews", ignore = true)
-    UserDetailDTO toDTO(User user);
+    UserDetailDTO toDetailDTO(User user);
 
-    List<UserDetailDTO> toDTOs(List<User> users);
+    List<UserDetailDTO> toDetailDTOs(List<User> users);
 
-    @Mapping(target = "password", ignore = true)
+    UserDTO toUserDTO(User user);
+
+    List<UserDTO> toUserDTOs(List<User> users);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "blocked", ignore = true)
     @Mapping(target = "profileImage", ignore = true)
     @Mapping(target = "reservations", ignore = true)
     @Mapping(target = "reviews", ignore = true)
     @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "password", ignore = true)
     User toDomain(UserDetailDTO dto);
 }
