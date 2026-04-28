@@ -12,5 +12,6 @@ public record ClassesDTO(
     List<String> startTime,
     Integer duration,
     Long facilityId,
-    Long imageId) {
+    Long imageId,
+    List<Long> reviewsId) {
 }
