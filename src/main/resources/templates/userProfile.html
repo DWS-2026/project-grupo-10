@@ -65,6 +65,46 @@
             </div>
         </section>
 
+        <!-- DNI Document -->
+        <section id="user-dni-document" class="mb-5">
+            <h2 class="mb-3">Documento DNI</h2>
+
+            {{#user.document}}
+            <div class="mb-3">
+                <p><strong>{{user.document.originalName}}</strong></p>
+
+                {{#adminView}}
+                <a href="/admin/user/{{user.id}}/document/download" class="btn btn-primary me-2">Descargar DNI</a>
+                {{/adminView}}
+
+                {{^adminView}}
+                <a href="/document/download" class="btn btn-primary me-2">Descargar DNI</a>
+                <form method="post" action="/document/delete" style="display:inline;">
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    <button class="btn btn-danger">Eliminar DNI</button>
+                </form>
+                {{/adminView}}
+            </div>
+            {{/user.document}}
+
+            {{^user.document}}
+            <p class="text-muted mb-3">No tienes un documento DNI subido.</p>
+            {{/user.document}}
+
+            {{^adminView}}
+            <form method="post" enctype="multipart/form-data" action="/document/upload">
+                <div class="mb-3">
+                    <label class="form-label">Subir DNI (PDF)</label>
+                    <input type="file" name="dniFile" class="form-control" accept="application/pdf" required>
+                </div>
+                <button class="btn btn-success">
+                    {{#user.document}}Actualizar DNI{{/user.document}}{{^user.document}}Subir DNI{{/user.document}}
+                </button>
+                <input type="hidden" name="_csrf" value="{{token}}" />
+            </form>
+            {{/adminView}}
+        </section>
+
         <!-- Bookings -->
         <section id="future-bookings" class="mb-5">
             <h2 class="mb-3">Mis Reservas</h2>

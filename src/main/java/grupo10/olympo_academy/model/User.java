@@ -36,6 +36,9 @@ public class User {
     @OneToOne
     private Image profileImage;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Document document;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -100,6 +103,14 @@ public class User {
 
     public void setProfileImage(Image profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    public void setDocument(Document document) {
+        this.document = document;
     }
 
     public Long getId() {

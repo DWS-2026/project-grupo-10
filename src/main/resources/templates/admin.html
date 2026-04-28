@@ -55,6 +55,7 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Email</th>
+                                <th>DNI</th>
                                 <th>Nº Reservas</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -66,6 +67,7 @@
                             <tr>
                                 <td><a href="/admin/user/{{id}}" class="text-primary fw-bold">{{name}}</a></td>
                                 <td>{{email}}</td>
+                                <td> <a href="/admin/user/{{id}}/document/download" class="btn btn-primary btn-sm">Descargar</a></td>
                                 <td>{{reservationsCount}}</td>
                                 <td>
                                     {{#blocked}}
@@ -92,7 +94,7 @@
 
                             {{^users}}
                             <tr>
-                                <td colspan="5" class="text-center text-muted">No hay usuarios registrados.</td>
+                                <td colspan="6" class="text-center text-muted">No hay usuarios registrados.</td>
                             </tr>
                             {{/users}}
 

@@ -12,12 +12,18 @@ import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
+import grupo10.olympo_academy.services.DocumentService;
+
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +48,9 @@ public class UserController {
     private ReservationService reservationService;
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private DocumentService documentService;
 
     /////////////////////////////////////////////////////////////////// LOGIN
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,6 +192,74 @@ public class UserController {
 
         return "redirect:/userProfile";
     }
+
+    @PostMapping("/document/upload")
+    public String uploadUserDocument(
+            @RequestParam("dniFile") MultipartFile dniFile,
+            Model model,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            User user = userService.getUserProfile(principal.getName());
+            documentService.saveDocumentForUser(dniFile, user);
+            redirectAttributes.addFlashAttribute("success", "DNI subido correctamente");
+            return "redirect:/userProfile";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "userProfile";
+        }
+    }
+
+    @PostMapping("/document/delete")
+    public String deleteUserDocument(Model model, Principal principal, RedirectAttributes redirectAttributes) {
+        try {
+            User user = userService.getUserProfile(principal.getName());
+            boolean deleted = documentService.deleteDocumentForUser(user);
+            if (!deleted) {
+                redirectAttributes.addFlashAttribute("error", "No hay ningún DNI para eliminar.");
+            } else {
+                redirectAttributes.addFlashAttribute("success", "DNI eliminado correctamente");
+            }
+            return "redirect:/userProfile";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "userProfile";
+        }
+    }
+
+    @GetMapping("/document/download")
+    public ResponseEntity<Resource> downloadUserDocument(Principal principal) throws Exception {
+        User user = userService.getUserProfile(principal.getName());
+        var doc = documentService.findDocumentByUser(user);
+        if (doc == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Resource resource = documentService.loadAsResource(doc);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getOriginalName() + "\"")
+                .contentType(MediaType.parseMediaType(doc.getContentType()))
+                .body(resource);
+    }
+
+    @GetMapping("/admin/user/{id}/document/download")
+    public ResponseEntity<Resource> downloadUserDocumentAsAdmin(@PathVariable Long id) throws Exception {
+        User user = userService.getById(id);
+        var doc = documentService.findDocumentByUser(user);
+        if (doc == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Resource resource = documentService.loadAsResource(doc);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getOriginalName() + "\"")
+                .contentType(MediaType.parseMediaType(doc.getContentType()))
+                .body(resource);
+    }
+
+
+    
 
     /////////////////////////////////////////////////////////////////// REGISTER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
