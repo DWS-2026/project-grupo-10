@@ -72,18 +72,11 @@
             {{#user.document}}
             <div class="mb-3">
                 <p><strong>{{user.document.originalName}}</strong></p>
-
-                {{#adminView}}
-                <a href="/admin/user/{{user.id}}/document/download" class="btn btn-primary me-2">Descargar DNI</a>
-                {{/adminView}}
-
-                {{^adminView}}
-                <a href="/document/download" class="btn btn-primary me-2">Descargar DNI</a>
+                <a href="/document/view" class="btn btn-primary me-2">Ver DNI</a>
                 <form method="post" action="/document/delete" style="display:inline;">
                     <input type="hidden" name="_csrf" value="{{token}}" />
                     <button class="btn btn-danger">Eliminar DNI</button>
                 </form>
-                {{/adminView}}
             </div>
             {{/user.document}}
 

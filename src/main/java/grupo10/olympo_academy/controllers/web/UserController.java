@@ -230,8 +230,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("/document/download")
-    public ResponseEntity<Resource> downloadUserDocument(Principal principal) throws Exception {
+
+    @GetMapping("/document/view")
+    public ResponseEntity<Resource> viewUserDocument(Principal principal) throws Exception {
         User user = userService.getUserProfile(principal.getName());
         var doc = documentService.findDocumentByUser(user);
         if (doc == null) {
@@ -240,7 +241,7 @@ public class UserController {
 
         Resource resource = documentService.loadAsResource(doc);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getOriginalName() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + doc.getOriginalName() + "\"")
                 .contentType(MediaType.parseMediaType(doc.getContentType()))
                 .body(resource);
     }
@@ -289,8 +290,9 @@ public class UserController {
     //////////////////////////////////////// Documents
     //////////////////////////////////////////////////////////////////////////////////////////////
 
-    @GetMapping("/admin/user/{id}/document/download")
-    public ResponseEntity<Resource> downloadUserDocumentAsAdmin(@PathVariable Long id) throws Exception {
+
+    @GetMapping("/admin/user/{id}/document/view")
+    public ResponseEntity<Resource> viewUserDocumentAsAdmin(@PathVariable Long id) throws Exception {
         User user = userService.getById(id);
         var doc = documentService.findDocumentByUser(user);
         if (doc == null) {
@@ -299,7 +301,7 @@ public class UserController {
 
         Resource resource = documentService.loadAsResource(doc);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + doc.getOriginalName() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + doc.getOriginalName() + "\"")
                 .contentType(MediaType.parseMediaType(doc.getContentType()))
                 .body(resource);
     }
