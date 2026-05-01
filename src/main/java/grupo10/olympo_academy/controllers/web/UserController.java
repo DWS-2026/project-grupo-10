@@ -213,24 +213,6 @@ public class UserController {
         }
     }
 
-    @PostMapping("/document/delete")
-    public String deleteUserDocument(Model model, Principal principal, RedirectAttributes redirectAttributes) {
-        try {
-            User user = userService.getUserProfile(principal.getName());
-            boolean deleted = documentService.deleteDocumentForUser(user);
-            if (!deleted) {
-                redirectAttributes.addFlashAttribute("error", "No hay ningún DNI para eliminar.");
-            } else {
-                redirectAttributes.addFlashAttribute("success", "DNI eliminado correctamente");
-            }
-            return "redirect:/userProfile";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "userProfile";
-        }
-    }
-
-
     @GetMapping("/document/view")
     public ResponseEntity<Resource> viewUserDocument(Principal principal) throws Exception {
         User user = userService.getUserProfile(principal.getName());

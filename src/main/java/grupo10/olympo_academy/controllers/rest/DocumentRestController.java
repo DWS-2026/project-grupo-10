@@ -8,7 +8,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +24,7 @@ import grupo10.olympo_academy.services.DocumentService;
 import grupo10.olympo_academy.services.UserService;
 
 @RestController
-@RequestMapping("/api/v1/documents")
+@RequestMapping("/api/v1/document")
 public class DocumentRestController {
 
     @Autowired
@@ -77,8 +76,8 @@ public class DocumentRestController {
         return ResponseEntity.ok(documentMapper.toDTO(doc));
     }
 
-    @GetMapping("/me/download")
-    public ResponseEntity<Resource> downloadMyDocument(Principal principal) throws IOException {
+    @GetMapping(value = "/me/view", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> viewMyDocument(Principal principal) throws IOException {
 
         if (principal == null) {
             return ResponseEntity.status(401).build();
@@ -95,26 +94,9 @@ public class DocumentRestController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + doc.getOriginalName() + "\"")
-                .contentType(MediaType.parseMediaType(doc.getContentType()))
+                        "inline; filename=\"" + doc.getOriginalName() + "\"")
+                .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
-    }
-
-    @DeleteMapping("/me")
-    public ResponseEntity<Void> deleteMyDocument(Principal principal) throws IOException {
-
-        if (principal == null) {
-            return ResponseEntity.status(401).build();
-        }
-
-        User user = userService.findByEmail(principal.getName());
-        boolean deleted = documentService.deleteDocumentForUser(user);
-
-        if (!deleted) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.noContent().build();
     }
 
     // ==============================
@@ -148,8 +130,8 @@ public class DocumentRestController {
         return ResponseEntity.ok(documentMapper.toDTO(doc));
     }
 
-    @GetMapping("/user/{id}/download")
-    public ResponseEntity<Resource> downloadUserDocument(
+    @GetMapping(value = "/user/{id}/view", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> viewUserDocument(
             @PathVariable Long id,
             Principal principal) throws IOException {
 
@@ -172,31 +154,8 @@ public class DocumentRestController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + doc.getOriginalName() + "\"")
-                .contentType(MediaType.parseMediaType(doc.getContentType()))
+                        "inline; filename=\"" + doc.getOriginalName() + "\"")
+                .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
-    }
-
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<Void> deleteUserDocument(
-            @PathVariable Long id,
-            Principal principal) throws IOException {
-
-        if (principal == null) {
-            return ResponseEntity.status(401).build();
-        }
-
-        User requester = userService.findByEmail(principal.getName());
-        if (!isAdmin(requester)) {
-            return ResponseEntity.status(403).build();
-        }
-
-        boolean deleted = documentService.deleteDocumentForUserId(id);
-
-        if (!deleted) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.noContent().build();
     }
 }

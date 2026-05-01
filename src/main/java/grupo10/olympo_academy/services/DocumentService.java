@@ -14,16 +14,12 @@ import org.springframework.core.io.Resource;
 import grupo10.olympo_academy.model.Document;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.DocumentRepository;
-import grupo10.olympo_academy.repository.UserRepository;
 
 @Service
 public class DocumentService {
 
     @Autowired
     private DocumentRepository documentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     private static final String UPLOAD_DIR = "uploads/documents";
     private static final String STORAGE_FILE_PREFIX = "dni_user_";
@@ -82,37 +78,6 @@ public class DocumentService {
                     return doc;
                 })
                 .orElse(null);
-    }
-
-    public boolean deleteDocumentForUser(User user) throws IOException {
-        Document document = documentRepository.findByUser(user).orElse(null);
-        if (document == null) {
-            return false;
-        }
-
-        Path path = Paths.get(document.getFilePath());
-        Files.deleteIfExists(path);
-        user.setDocument(null);
-        userRepository.save(user);
-        documentRepository.delete(document);
-        return true;
-    }
-    
-    public boolean deleteDocumentForUserId(Long userId) throws IOException {
-        Document document = documentRepository.findByUserId(userId).orElse(null);
-        if (document == null) {
-            return false;
-        }
-
-        Path path = Paths.get(document.getFilePath());
-        Files.deleteIfExists(path);
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
-            user.setDocument(null);
-            userRepository.save(user);
-        }
-        documentRepository.delete(document);
-        return true;
     }
 
     public Resource loadAsResource(Document doc) throws IOException {
