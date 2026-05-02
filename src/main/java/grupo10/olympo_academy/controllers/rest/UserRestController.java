@@ -1,6 +1,7 @@
 package grupo10.olympo_academy.controllers.rest;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -46,6 +47,15 @@ public class UserRestController {
     @Autowired
     private ReservationService reservationService;
 
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        List<UserDTO> userDTOs = users.stream()
+        .map(userMapper::toUserDTO)
+        .toList();
+        return ResponseEntity.ok(userDTOs);
+    }
+    
     @GetMapping("/me")
     public ResponseEntity<UserDetailDTO> me(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -62,8 +72,8 @@ public class UserRestController {
         }
     }
 
-    @PutMapping("/profile")
-    public ResponseEntity<UserDTO> updateProfile(@RequestBody UserDTO userDTO,
+    @PatchMapping("{id}") // ¿¿para que uso el id??
+    public ResponseEntity<UserDTO> updateProfile(@PathVariable Long id, @RequestBody UserDTO userDTO,
             HttpServletRequest request) {
 
         Principal principal = request.getUserPrincipal();
@@ -86,8 +96,8 @@ public class UserRestController {
         }
     }
 
-    @PatchMapping("/password")
-    public ResponseEntity<Void> changePassword(@RequestBody PasswordChangeDTO passwordChangeDTO,
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody PasswordChangeDTO passwordChangeDTO,
             HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
