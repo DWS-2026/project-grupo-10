@@ -24,7 +24,7 @@ import grupo10.olympo_academy.services.DocumentService;
 import grupo10.olympo_academy.services.UserService;
 
 @RestController
-@RequestMapping("/api/v1/document")
+@RequestMapping("/api/v1/documents")
 public class DocumentRestController {
 
     @Autowired
