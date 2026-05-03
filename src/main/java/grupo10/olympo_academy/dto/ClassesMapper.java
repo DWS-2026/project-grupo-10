@@ -10,11 +10,9 @@ import grupo10.olympo_academy.model.Classes;
 public interface ClassesMapper {
 
     @Mapping(target = "facilityId", source = "facility.id")
-    @Mapping(target = "imageId", source = "classesImage.id")
-    @Mapping(
-        target = "reviewsId",
-        expression = "java(classes.getReviews().stream().map(r -> r.getId()).collect(java.util.stream.Collectors.toList()))"
-    )
+    @Mapping(target = "imageId", expression = "java(classes.getClassesImage() !=null ? classes.getClassesImage().getId() : null)")
+    @Mapping(target = "reviewsId", expression = "java(classes.getReviews().stream().map(r -> r.getId()).collect(java.util.stream.Collectors.toList()))")
+
     ClassesDTO toDTO(Classes classes);
 
     List<ClassesDTO> toDTOs(List<Classes> classesList);

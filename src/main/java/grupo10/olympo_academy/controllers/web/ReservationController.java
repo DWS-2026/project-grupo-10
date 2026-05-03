@@ -34,6 +34,8 @@ public class ReservationController {
             @RequestParam String name,
             @RequestParam String day,
             @RequestParam String startTime,
+            @RequestParam(required = false) Integer duration,
+            @RequestParam(required = false) String level,
             @RequestParam(required = false) Boolean material,
             @RequestParam(required = false, defaultValue = "add") String action,
             Principal principal,
@@ -46,7 +48,7 @@ public class ReservationController {
         }
 
         Reservation reservation = reservationService.buildReservation(
-                facilityId, classId, name, day, startTime, material);
+                facilityId, classId, name, day, startTime, duration, level, material);
         
         // CASE 1: CONFIRM DIRECTLY
         if ("confirm".equalsIgnoreCase(action)) {

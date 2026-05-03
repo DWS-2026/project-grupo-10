@@ -42,7 +42,7 @@ public class DocumentRestController {
 
     @PostMapping(value = "/me", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<DocumentDTO> uploadMyDocument(
-            @RequestParam("file") MultipartFile file,
+            @RequestParam MultipartFile file,
             Principal principal) throws IOException {
 
         if (principal == null) {

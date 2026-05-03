@@ -16,17 +16,26 @@ import org.springframework.web.bind.annotation.RestController;
 import grupo10.olympo_academy.dto.FacilityDTO;
 import grupo10.olympo_academy.dto.FacilityMapper;
 import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.services.FacilityService;
+import grupo10.olympo_academy.services.ImageService;
 
 @RestController
 @RequestMapping("/api/v1/facilities")
 public class FacilityRestController {
 
     @Autowired
+    private ImageService imageService;
+
+    @Autowired
     private FacilityService facilityService;
 
     @Autowired
     private FacilityMapper facilityMapper;
+
+    FacilityRestController(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
     @GetMapping
     public ResponseEntity<List<FacilityDTO>> getAll() {
@@ -71,7 +80,12 @@ public class FacilityRestController {
     public ResponseEntity<FacilityDTO> create(@RequestBody FacilityDTO dto) {
         try {
             Facility facility = facilityMapper.toDomain(dto);
+            if (dto.imageId() != null) {
+                facility.setFacilityImage(imageService.getImage(dto.imageId()));
+            }
             Facility saved = facilityService.saveFacility(facility);
+            System.out.println("IMAGE ID: " + dto.imageId());
+            System.out.println("REVIEWS: " + dto.reviewsId());
             return ResponseEntity.ok(facilityMapper.toDTO(saved));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -88,7 +102,6 @@ public class FacilityRestController {
 
             existing.setName(dto.name());
             existing.setDescription(dto.description());
-            existing.setMaterial(dto.material());
             existing.setType(dto.type());
 
             Facility updated = facilityService.saveFacility(existing);

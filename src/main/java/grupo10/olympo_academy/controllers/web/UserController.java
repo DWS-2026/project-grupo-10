@@ -304,8 +304,7 @@ public class UserController {
             facility.setName(name);
             facility.setDescription(description);
             facility.setType(tipo);
-            facility.setMaterial(false);
-
+            
             // Image
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
