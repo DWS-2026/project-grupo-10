@@ -110,6 +110,8 @@ public class ReservationService {
                                         String name,
                                         String day,
                                         String startTime,
+                                        Integer duration,
+                                        String level,
                                         Boolean material) {
 
         Reservation reservation = new Reservation();
@@ -122,6 +124,7 @@ public class ReservationService {
         if (classId != null) {
             Classes classes = classesService.getClassById(classId);
             reservation.setClasses(classes);
+            reservation.setLevel(level);
 
             if (reservation.getName() == null || reservation.getName().isBlank()) {
                 reservation.setName(classes != null ? classes.getName() : name);
@@ -131,6 +134,7 @@ public class ReservationService {
         if (facilityId != null) {
             Facility facility = facilityService.getFacilityById(facilityId);
             reservation.setFacility(facility);
+            reservation.setDuration(duration);
 
             if (reservation.getName() == null || reservation.getName().isBlank()) {
                 reservation.setName(facility != null ? facility.getName() : name);

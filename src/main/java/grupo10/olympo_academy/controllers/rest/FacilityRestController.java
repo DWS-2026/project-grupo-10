@@ -19,12 +19,17 @@ import grupo10.olympo_academy.dto.ReviewDTO;
 import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Review;
+import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ReviewService;
+import grupo10.olympo_academy.services.ImageService;
 
 @RestController
 @RequestMapping("/api/v1/facilities")
 public class FacilityRestController {
+
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private FacilityService facilityService;
@@ -35,6 +40,10 @@ public class FacilityRestController {
     private ReviewService reviewService;
     @Autowired
     private ReviewMapper reviewMapper;
+
+    FacilityRestController(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
     @GetMapping
     public ResponseEntity<List<FacilityDTO>> getAll() {
@@ -79,7 +88,12 @@ public class FacilityRestController {
     public ResponseEntity<FacilityDTO> create(@RequestBody FacilityDTO dto) {
         try {
             Facility facility = facilityMapper.toDomain(dto);
+            if (dto.imageId() != null) {
+                facility.setFacilityImage(imageService.getImage(dto.imageId()));
+            }
             Facility saved = facilityService.saveFacility(facility);
+            System.out.println("IMAGE ID: " + dto.imageId());
+            System.out.println("REVIEWS: " + dto.reviewsId());
             return ResponseEntity.ok(facilityMapper.toDTO(saved));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -96,7 +110,6 @@ public class FacilityRestController {
 
             existing.setName(dto.name());
             existing.setDescription(dto.description());
-            existing.setMaterial(dto.material());
             existing.setType(dto.type());
 
             Facility updated = facilityService.saveFacility(existing);

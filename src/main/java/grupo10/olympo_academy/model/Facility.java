@@ -19,7 +19,6 @@ public class Facility {
 
     private String name;
     private String description;
-    private boolean material;
     private String type;
 
     @OneToMany(mappedBy = "facility", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -68,14 +67,6 @@ public class Facility {
 
     public void setFacilityImage(Image facilityImage) {
         this.facilityImage = facilityImage;
-    }
-
-    public Boolean getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Boolean material) {
-        this.material = material;
     }
 
     public String getType() {

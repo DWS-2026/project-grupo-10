@@ -24,7 +24,7 @@ import grupo10.olympo_academy.services.DocumentService;
 import grupo10.olympo_academy.services.UserService;
 
 @RestController
-@RequestMapping("/api/v1/document")
+@RequestMapping("/api/v1/documents")
 public class DocumentRestController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class DocumentRestController {
 
     @PostMapping(value = "/me", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<DocumentDTO> uploadMyDocument(
-            @RequestParam("file") MultipartFile file,
+            @RequestParam MultipartFile file,
             Principal principal) throws IOException {
 
         if (principal == null) {

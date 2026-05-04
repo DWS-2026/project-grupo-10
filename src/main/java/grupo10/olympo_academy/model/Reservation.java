@@ -23,7 +23,8 @@ public class Reservation {
     
     private String day;
     private String startTime;
-    private int duration;
+    private Integer duration;
+    private String level;
     private String status;
     private Boolean material;
  
@@ -80,13 +81,22 @@ public class Reservation {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
-     public int getDuration() {
+     public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
     public String getStatus() {
         return status;
     }

@@ -8,6 +8,6 @@ import grupo10.olympo_academy.model.Document;
 @Mapper(componentModel = "spring")
 public interface DocumentMapper {
 
-    @Mapping(target = "viewUrl", expression = "java(\"/api/v1/document/view\")")
+    @Mapping(target = "viewUrl", expression = "java(\"/api/v1/documents/view\")")
     DocumentDTO toDTO(Document document);
 } 

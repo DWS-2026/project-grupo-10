@@ -70,11 +70,19 @@
             <h2 class="mb-3">Documento DNI</h2>
 
             {{#user.document}}
-            <div class="mb-3">
-                <p><strong>{{user.document.originalName}}</strong></p>
-                <a href="/document/view" class="btn btn-primary me-2">Ver DNI</a>
+           <div class="mb-3">
+                <p><strong>{{originalName}}</strong></p>
+
+                {{#adminView}}
+                    <a href="/admin/user/{{user.id}}/document/view" class="btn btn-primary me-2">Ver DNI</a>
+                {{/adminView}}
+
+                {{^adminView}}
+                    <a href="/document/view" class="btn btn-primary me-2">Ver DNI</a>
+                {{/adminView}}
             </div>
             {{/user.document}}
+
 
             {{^user.document}}
             <p class="text-muted mb-3">No tienes un documento DNI subido.</p>
