@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import grupo10.olympo_academy.dto.FacilityDTO;
 import grupo10.olympo_academy.dto.FacilityMapper;
+import grupo10.olympo_academy.dto.ReviewDTO;
+import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.services.FacilityService;
+import grupo10.olympo_academy.services.ReviewService;
 
 @RestController
 @RequestMapping("/api/v1/facilities")
@@ -27,6 +31,10 @@ public class FacilityRestController {
 
     @Autowired
     private FacilityMapper facilityMapper;
+    @Autowired
+    private ReviewService reviewService;
+    @Autowired
+    private ReviewMapper reviewMapper;
 
     @GetMapping
     public ResponseEntity<List<FacilityDTO>> getAll() {
@@ -111,4 +119,36 @@ public class FacilityRestController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByFacilityId(@PathVariable Long id) {
+        try {
+            List<Review> reviews = reviewService.getReviewsByFacility(id);
+            List<ReviewDTO> dto = reviewMapper.toDTOs(reviews);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping("/{id}/newReview")
+    public ResponseEntity<ReviewDTO> createReview(@PathVariable ReviewDTO dto) {
+        try {
+            Review review = reviewMapper.toDomain(dto);
+            Review reviewSaved = reviewService.saveReview(review);
+            return ResponseEntity.ok(reviewMapper.toDTO(reviewSaved));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/{id}/review/{reviewId}")
+    public ResponseEntity<Void> deleteReview (@PathVariable Long reviewId) {
+        try {
+            reviewService.deleteReview(reviewId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
