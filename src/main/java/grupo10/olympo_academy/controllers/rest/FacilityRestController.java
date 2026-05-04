@@ -19,7 +19,6 @@ import grupo10.olympo_academy.dto.ReviewDTO;
 import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Review;
-import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.ImageService;
