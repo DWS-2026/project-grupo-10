@@ -6,6 +6,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import grupo10.olympo_academy.dto.DocumentDTO;
 import grupo10.olympo_academy.dto.DocumentMapper;
@@ -90,6 +92,10 @@ public class DocumentRestController {
             return ResponseEntity.notFound().build();
         }
 
+        if (!"application/pdf".equals(doc.getContentType())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid file type");
+        }
+
         Resource resource = documentService.loadAsResource(doc);
 
         return ResponseEntity.ok()
@@ -148,6 +154,10 @@ public class DocumentRestController {
 
         if (doc == null) {
             return ResponseEntity.notFound().build();
+        }
+
+        if (!"application/pdf".equals(doc.getContentType())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid file type");
         }
 
         Resource resource = documentService.loadAsResource(doc);

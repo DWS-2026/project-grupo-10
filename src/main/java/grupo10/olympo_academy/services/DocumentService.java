@@ -24,7 +24,6 @@ public class DocumentService {
     private static final String UPLOAD_DIR = "uploads/documents";
     private static final String STORAGE_FILE_PREFIX = "dni_user_";
     private static final String STORAGE_FILE_EXTENSION = ".pdf";
-    private static final String DEFAULT_CONTENT_TYPE = "application/pdf";
 
     public Document saveDocumentForUser(MultipartFile file, User user) throws IOException {
         if (file == null || file.isEmpty()) {
@@ -38,6 +37,19 @@ public class DocumentService {
             originalName = Paths.get(originalName).getFileName().toString();
         }
 
+        // Real validation of PDF content (magic bytes)
+        byte[] bytes = file.getBytes();
+        String header = new String(bytes, 0, Math.min(bytes.length, 4));
+        if (!header.equals("%PDF")) {
+            throw new IOException("Solo se permiten archivos PDF reales");
+        }
+
+        // Blocking basic HTML/JS files (extra defense)
+        String lowerName = originalName.toLowerCase();        
+        if (lowerName.endsWith(".html") || lowerName.endsWith(".htm") || lowerName.endsWith(".js")) {
+            throw new IOException("Tipo de archivo no permitido");
+        }
+
         Path uploadDir = Paths.get(UPLOAD_DIR);
         Files.createDirectories(uploadDir);
 
@@ -48,7 +60,7 @@ public class DocumentService {
         Document document = documentRepository.findByUser(user).orElse(new Document());
         document.setOriginalName(originalName);
         document.setFilePath(path.toAbsolutePath().toString());
-        document.setContentType(file.getContentType() != null ? file.getContentType() : DEFAULT_CONTENT_TYPE);
+        document.setContentType("application/pdf");
         document.setUser(user);
 
         return documentRepository.save(document);
