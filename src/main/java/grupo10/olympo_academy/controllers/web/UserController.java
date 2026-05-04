@@ -221,6 +221,10 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
+        if (!"application/pdf".equals(doc.getContentType())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid file type");
+        }
+
         Resource resource = documentService.loadAsResource(doc);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + doc.getOriginalName() + "\"")
@@ -279,6 +283,10 @@ public class UserController {
         var doc = documentService.findDocumentByUser(user);
         if (doc == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        if (!"application/pdf".equals(doc.getContentType())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid file type");
         }
 
         Resource resource = documentService.loadAsResource(doc);
