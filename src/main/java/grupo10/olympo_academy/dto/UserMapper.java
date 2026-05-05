@@ -27,4 +27,16 @@ public interface UserMapper {
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "document", ignore = true)
     User toDomain(UserDetailDTO dto);
+
+    
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "blocked", ignore = true)
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "profileImage", ignore = true)
+    @Mapping(target = "document", ignore = true)
+    @Mapping(target = "reservations", ignore = true)
+    @Mapping(target = "reviews", ignore = true)
+    User toEntity(UserRegisterDTO dto);
+    UserRegisterDTO toRegisterDTO(User user);
+    List<UserRegisterDTO> toRegisterDTOs(List<User> users);
 }

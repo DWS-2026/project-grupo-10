@@ -18,7 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import grupo10.olympo_academy.security.jwt.JwtRequestFilter;
-//import grupo10.olympo_academy.security.jwt.JwtTokenProvider;
 import grupo10.olympo_academy.security.jwt.UnauthorizedHandlerJwt;
 
 @Configuration
@@ -30,9 +29,6 @@ public class SecurityConfig {
 
 	@Autowired
 	private UnauthorizedHandlerJwt unauthorizedHandlerJwt;
-
-	// @Autowired
-	// private JwtTokenProvider jwtTokenProvider;
 
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
@@ -131,20 +127,16 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.PUT, "/api/v1/images/*/media").hasRole("USER")
 						.requestMatchers(HttpMethod.DELETE, "/api/v1/images/**").hasRole("USER")
 
-						// Classes
-						.requestMatchers(HttpMethod.POST, "/api/v1/classes/**").hasRole("ADMIN")
-						.requestMatchers(HttpMethod.PUT, "/api/v1/classes/**").hasRole("USER") //revisar
-						.requestMatchers(HttpMethod.DELETE, "/api/v1/classes/**").hasRole("ADMIN")
-
 						//Users
 						.requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAnyRole("USER","ADMIN")
 						.requestMatchers(HttpMethod.GET, "/api/v1/users").hasRole("ADMIN")
 
-
-						
-
 						// PUBLIC ENDPOINTS
-						.anyRequest().permitAll());
+						.requestMatchers(HttpMethod.GET, "/api/v1/classes/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/api/v1/facilities/**").permitAll()
+						.requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+						.requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll() //register endpoint
+						.anyRequest().authenticated());
 
 		// Disable Form login Authentication
 		http.formLogin(formLogin -> formLogin.disable());

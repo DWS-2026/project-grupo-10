@@ -39,7 +39,9 @@ public class ImageRestController {
         return imageMapper.toDTO(imageService.getImage(id));
     }
 
-    @GetMapping("/{id}/media")
+    @GetMapping("/{id}/media") //vulnerabilidad crítica - path traversal
+    //GET /classes/{classId}/images/{imageId}
+    //GET /facilities/{facilityId}/images/{imageId}
     public ResponseEntity<Object> getImageFile(@PathVariable long id)
             throws SQLException, IOException {
         Resource imageFile = imageService.getImageFile(id);
@@ -52,7 +54,7 @@ public class ImageRestController {
                 .body(imageFile);
     }
 
-    @PostMapping("/{id}/images/") //¿debo quitar esta ruta??
+    @PostMapping("/{id}/images/") 
     public ResponseEntity<ImageDTO> createImage(
             @PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
         if (imageFile.isEmpty()) {

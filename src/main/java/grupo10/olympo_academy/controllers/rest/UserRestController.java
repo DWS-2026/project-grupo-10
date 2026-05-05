@@ -1,5 +1,6 @@
 package grupo10.olympo_academy.controllers.rest;
 
+import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import grupo10.olympo_academy.dto.UserDTO;
 import grupo10.olympo_academy.dto.UserDetailDTO;
 import grupo10.olympo_academy.dto.UserMapper;
@@ -72,7 +73,7 @@ public class UserRestController {
         }
     }
 
-    @PatchMapping("{id}") // ¿¿para que uso el id??
+    @PutMapping("{id}") 
     public ResponseEntity<UserDTO> updateProfile(@PathVariable Long id, @RequestBody UserDTO userDTO,
             HttpServletRequest request) {
 
@@ -80,6 +81,12 @@ public class UserRestController {
 
         if (principal != null) {
             try {
+                //ensure user is using his id
+                Long userId = userService.getUserProfile(principal.getName()).getId();
+                if(!userId.equals(id)) {
+                    return ResponseEntity.status(403).build();
+                }
+                
                 User updatedUser = userService.updateProfile(
                         principal.getName(),
                         userDTO.name(),
@@ -167,23 +174,14 @@ public class UserRestController {
         }
     }
 
-    @PostMapping
+    @PostMapping 
     public ResponseEntity<UserDTO> createUser(@RequestBody UserRegisterDTO userRegisterDTO) {
         try {
-            User newUser = new User(
-                    userRegisterDTO.name(),
-                    userRegisterDTO.email(),
-                    userRegisterDTO.phone(),
-                    userRegisterDTO.password(),
-                    userRegisterDTO.username());
+            User newUser = userMapper.toEntity(userRegisterDTO);
+            User createdUser = userService.register(newUser);
+            URI location = fromCurrentRequest().path("/{id}").buildAndExpand(createdUser.getId()).toUri();
+            return ResponseEntity.created(location).body(userMapper.toUserDTO(createdUser));
 
-            User registeredUser = userService.register(newUser);
-
-            return ResponseEntity.ok(new UserDTO(
-                    registeredUser.getName(),
-                    registeredUser.getEmail(),
-                    registeredUser.getPhone(),
-                    registeredUser.getUsername()));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
         }

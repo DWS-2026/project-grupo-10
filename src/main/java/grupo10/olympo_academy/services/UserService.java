@@ -65,17 +65,19 @@ public class UserService {
             throw new Exception("Username ya registrado");
         }
 
-        // Check if the new email is already taken by another user
-        // if (!user.getEmail().equals(email) &&
-        // userRepository.findByEmail(email).isPresent()) {
-        // throw new Exception("Email ya registrado");
-        // }
-
         // Check if the new phone number is already taken by another user
         if (!user.getPhone().equals(phone) && userRepository.findByPhone(phone).isPresent()) {
             throw new Exception("Número de teléfono ya registrado");
         }
 
+        // name and username cant be empty. Phone number is optional
+        if (name == null || name.isEmpty()) {
+            throw new Exception("No puede haber campos vacios");
+        }
+        if (username == null || username.isEmpty()) {
+            throw new Exception("No puede haber campos vacios");
+        }
+        
         user.setName(name);
         user.setUsername(username);
         user.setPhone(phone);
