@@ -105,7 +105,7 @@ public class SecurityConfig {
 				.logout(logout -> logout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
-					.permitAll());
+						.permitAll());
 		return http.build();
 	}
 
@@ -121,21 +121,85 @@ public class SecurityConfig {
 
 		http
 				.authorizeHttpRequests(authorize -> authorize
-						// PRIVATE ENDPOINTS
-						// Images
-						.requestMatchers(HttpMethod.POST, "/api/v1/images/**").hasRole("USER")
-						.requestMatchers(HttpMethod.PUT, "/api/v1/images/*/media").hasRole("USER")
-						.requestMatchers(HttpMethod.DELETE, "/api/v1/images/**").hasRole("USER")
-
-						//Users
-						.requestMatchers(HttpMethod.GET, "/api/v1/users/me").hasAnyRole("USER","ADMIN")
-						.requestMatchers(HttpMethod.GET, "/api/v1/users").hasRole("ADMIN")
 
 						// PUBLIC ENDPOINTS
-						.requestMatchers(HttpMethod.GET, "/api/v1/classes/**").permitAll()
-						.requestMatchers(HttpMethod.GET, "/api/v1/facilities/**").permitAll()
-						.requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-						.requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll() //register endpoint
+						.requestMatchers(HttpMethod.GET,
+								"/classes/**",
+								"/facilities/**")
+						.permitAll()
+
+						.requestMatchers(HttpMethod.POST,
+								"/auth/login",
+								"/users") // register method
+						.permitAll()
+
+						// PROTECTED ENDPOINTS
+
+						.requestMatchers(HttpMethod.POST,
+								"/classes/{id}/newReview",
+								"/facilities/{id}/newReview",
+								"/documents/me")
+						.hasAnyRole("USER,ADMIN")
+
+						.requestMatchers(HttpMethod.DELETE,
+								"/classes/{id}/review/{reviewId}",
+								"/facilities/{id}/review/{reviewId}",
+								"/users/reservations/{id}")
+						.hasAnyRole("USER,ADMIN")
+
+						.requestMatchers(HttpMethod.GET,
+								"/documents/me",
+								"/documents/me/view",
+								"/reservations",
+								"/reservations/{id}",
+								"/users/me",
+								"/users/image")
+						.hasAnyRole("USER,ADMIN")
+
+						.requestMatchers(HttpMethod.POST,
+								"/auth/logout",
+								"/auth/refresh")
+						.hasAnyRole("USER,ADMIN")
+
+						.requestMatchers(HttpMethod.PUT,
+								"/users/{id}",
+								"/users/image")
+						.hasAnyRole("USER,ADMIN")
+
+						.requestMatchers(HttpMethod.PATCH,
+								"/users/{id}/password")
+						.hasAnyRole("USER,ADMIN")
+
+						// ADMIN ENDPOINTS
+
+						.requestMatchers(HttpMethod.POST,
+								"/classes",
+								"/facilities")
+						.hasRole("ADMIN")
+
+						.requestMatchers(HttpMethod.PUT,
+								"/classes/{id}",
+								"/facilities/{id}",
+								"/users/admin/{id}",
+								"/users/admin/{id}/image")
+						.hasRole("ADMIN")
+
+						.requestMatchers(HttpMethod.DELETE,
+								"/classes/{id}",
+								"/facilities/{id}",
+								"/users/admin/{id}")
+						.hasRole("ADMIN")
+
+						.requestMatchers(HttpMethod.PATCH,
+								"/users/admin/{id}/*")
+						.hasRole("ADMIN")
+
+						.requestMatchers(HttpMethod.GET,
+								"/documents/user/**",
+								"/users",
+								"/users/admin/{id}")
+						.hasRole("ADMIN")
+
 						.anyRequest().authenticated());
 
 		// Disable Form login Authentication
