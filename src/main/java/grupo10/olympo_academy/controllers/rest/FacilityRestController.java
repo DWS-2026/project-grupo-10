@@ -3,6 +3,9 @@ package grupo10.olympo_academy.controllers.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,11 +48,14 @@ public class FacilityRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FacilityDTO>> getAll() {
+    public ResponseEntity<Page<FacilityDTO>> getAll(@PageableDefault(size = 4, sort = "id") Pageable pageable) {
         try {
-            List<Facility> facilities = facilityService.getAllFacilities();
-            List<FacilityDTO> dtoList = facilityMapper.toDTOs(facilities);
-            return ResponseEntity.ok(dtoList);
+            Page<Facility> facilityPage = facilityService.getFacilities(pageable);
+            if (pageable.getPageNumber() >= facilityPage.getTotalPages()) {
+                return ResponseEntity.notFound().build();
+            }
+            Page<FacilityDTO> dtoPage = facilityPage.map(facilityMapper::toDTO);
+            return ResponseEntity.ok(dtoPage);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -142,6 +148,7 @@ public class FacilityRestController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/{id}/newReview")
     public ResponseEntity<ReviewDTO> createReview(@PathVariable ReviewDTO dto) {
         try {
@@ -154,7 +161,7 @@ public class FacilityRestController {
     }
 
     @DeleteMapping("/{id}/review/{reviewId}")
-    public ResponseEntity<Void> deleteReview (@PathVariable Long reviewId) {
+    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId) {
         try {
             reviewService.deleteReview(reviewId);
             return ResponseEntity.ok().build();

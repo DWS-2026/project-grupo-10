@@ -1,6 +1,8 @@
 package grupo10.olympo_academy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import grupo10.olympo_academy.dto.ClassesDTO;
@@ -55,6 +57,11 @@ public class ClassesService {
         return !classesRepository.findByFacility(facility).isEmpty();
     }
 
+    //REST: GET CLASSES
+    public Page<Classes> getClasses(Pageable pageable) {
+        return classesRepository.findAll(pageable);
+    }
+    
     // REST: CREATE CLASS FROM DTO
     public Classes createClass(ClassesDTO dto) {
 
