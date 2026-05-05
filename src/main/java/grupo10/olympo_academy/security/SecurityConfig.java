@@ -139,13 +139,13 @@ public class SecurityConfig {
 								"/classes/{id}/newReview",
 								"/facilities/{id}/newReview",
 								"/documents/me")
-						.hasAnyRole("USER,ADMIN")
+						.hasAnyRole("USER", "ADMIN")
 
 						.requestMatchers(HttpMethod.DELETE,
 								"/classes/{id}/review/{reviewId}",
 								"/facilities/{id}/review/{reviewId}",
 								"/users/reservations/{id}")
-						.hasAnyRole("USER,ADMIN")
+						.hasAnyRole("USER","ADMIN")
 
 						.requestMatchers(HttpMethod.GET,
 								"/documents/me",
@@ -154,21 +154,21 @@ public class SecurityConfig {
 								"/reservations/{id}",
 								"/users/me",
 								"/users/image")
-						.hasAnyRole("USER,ADMIN")
+						.hasAnyRole("USER","ADMIN")
 
 						.requestMatchers(HttpMethod.POST,
 								"/auth/logout",
 								"/auth/refresh")
-						.hasAnyRole("USER,ADMIN")
+						.hasAnyRole("USER","ADMIN")
 
 						.requestMatchers(HttpMethod.PUT,
 								"/users/{id}",
 								"/users/image")
-						.hasAnyRole("USER,ADMIN")
+						.hasAnyRole("USER","ADMIN")
 
 						.requestMatchers(HttpMethod.PATCH,
 								"/users/{id}/password")
-						.hasAnyRole("USER,ADMIN")
+						.hasAnyRole("USER","ADMIN")
 
 						// ADMIN ENDPOINTS
 
@@ -199,8 +199,9 @@ public class SecurityConfig {
 								"/users",
 								"/users/admin/{id}")
 						.hasRole("ADMIN")
-
-						.anyRequest().authenticated());
+						
+						.anyRequest().permitAll());
+						//.anyRequest().hasAnyRole("USER", "ADMIN"));
 
 		// Disable Form login Authentication
 		http.formLogin(formLogin -> formLogin.disable());
