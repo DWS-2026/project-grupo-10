@@ -187,7 +187,79 @@ public class UserRestController {
         }
     }
 
-    // ADMIN ENDPOINTS : /api/v1/admin/users/{id} , /api/v1/admin/users/{id}/block ,
-    // /api/v1/admin/users/{id}/unblock
+// ADMIN ENDPOINTS
+
+@PutMapping("/admin/{id}")
+public ResponseEntity<UserDTO> updateUserFromAdmin(
+        @PathVariable Long id,
+        @RequestBody UserDTO dto) {
+
+    try {
+        User updated = userService.updateUserFromAdmin(
+                id,
+                dto.name(),
+                dto.username(),
+                dto.email(),
+                dto.phone(),
+                null // here without photo, because we have a separate endpoint for that
+        );
+
+        return ResponseEntity.ok(userMapper.toUserDTO(updated));
+
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().build();
+    }
+}
+
+@PutMapping("/admin/{id}/image")
+public ResponseEntity<Object> changeUserImageFromAdmin(
+        @PathVariable Long id,
+        @RequestParam MultipartFile imageFile) {
+
+    try {
+        userService.updateUserImageFromAdmin(id, imageFile);
+        return ResponseEntity.noContent().build();
+
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+}
+
+@PatchMapping("/admin/{id}/block")
+public ResponseEntity<Void> blockUser(@PathVariable Long id) {
+    userService.blockUser(id);
+    return ResponseEntity.ok().build();
+}
+
+@PatchMapping("/admin/{id}/unblock")
+public ResponseEntity<Void> unblockUser(@PathVariable Long id) {
+    userService.unblockUser(id);
+    return ResponseEntity.ok().build();
+}
+
+@DeleteMapping("/admin/{id}")
+public ResponseEntity<Void> deleteUserFromAdmin(@PathVariable Long id) {
+    try {
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().build();
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().build();
+    }
+}
+
+@GetMapping("/admin/{id}")
+public ResponseEntity<UserDetailDTO> getUserProfileAsAdmin(@PathVariable Long id) {
+    try {
+        User user = userService.getById(id);
+        if (user == null) return ResponseEntity.notFound().build();
+
+        UserDetailDTO dto = userMapper.toDetailDTO(user);
+        return ResponseEntity.ok(dto);
+
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().build();
+    }
+}
+
 
 }
