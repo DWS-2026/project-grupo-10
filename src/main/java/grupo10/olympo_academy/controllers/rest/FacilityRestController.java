@@ -156,15 +156,16 @@ public class FacilityRestController {
     }
 
     @DeleteMapping("/{id}/reviews/{reviewId}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId, HttpServletRequest request) {
+    public ResponseEntity<ReviewDTO> deleteReview(@PathVariable Long reviewId, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
         Optional<Review> reviewOpt = reviewService.getById(reviewId);
         if (reviewOpt.isPresent()) {
             boolean bool = reviewService.userReview(reviewOpt.get(), principal.getName());
             if (bool ) {
+                Review review= reviewOpt.get();
                 reviewService.deleteReview(reviewId);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(reviewMapper.toDTO(review));
             }else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }

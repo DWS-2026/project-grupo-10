@@ -52,9 +52,12 @@ public class ClassesController {
 
         if (principal != null) {
             try {
-                User user = userService.findByEmail(principal.getName());
-                model.addAttribute("user", user);
-                model.addAttribute("myReviews", reviewService.getReviewsByUserAndClasses(user, id));
+                Optional<User> userOpt = userService.findByEmail(principal.getName());
+                if (userOpt.isPresent()) {
+                    User user = userOpt.get();
+                    model.addAttribute("user", user);
+                    model.addAttribute("myReviews", reviewService.getReviewsByUserAndClasses(user, id));
+                }
             } catch (Exception ignored) {}
 
             model.addAttribute("availableTimes", classes.getStartTime());
@@ -73,12 +76,17 @@ public class ClassesController {
             return "redirect:/login";
         }
 
-        User user;
+        Optional<User> userOpt;
         try {
-            user = userService.findByEmail(principal.getName());
+            userOpt = userService.findByEmail(principal.getName());
         } catch (Exception e) {
             return "redirect:/login";
         }
+
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+        User user = userOpt.get();
 
         Optional<Classes> classesOpt = classesService.getClassById(classesId);
         if (!classesOpt.isPresent()) {
@@ -112,12 +120,17 @@ public class ClassesController {
             return "redirect:/login";
         }
 
-        User user;
+        Optional<User> userOpt;
         try {
-            user = userService.findByEmail(principal.getName());
+            userOpt = userService.findByEmail(principal.getName());
         } catch (Exception e) {
             return "redirect:/login";
         }
+
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+        User user = userOpt.get();
 
         Optional<Review> reviewOpt = reviewService.getById(id);
 

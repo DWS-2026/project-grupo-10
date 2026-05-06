@@ -3,6 +3,7 @@ package grupo10.olympo_academy.controllers.web;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,11 @@ public class ReservationController {
             if (principal == null) {
                 return "redirect:/login";
             }
-            User user = userService.findByEmail(principal.getName());
+            Optional<User> userOpt = userService.findByEmail(principal.getName());
+            if (userOpt.isEmpty()) {
+                return "redirect:/login";
+            }
+            User user = userOpt.get();
             reservationService.confirmReservation(reservation, user);
             redirectAttributes.addFlashAttribute("success", "Reserva confirmada correctamente.");
             return "redirect:/userProfile";
@@ -120,7 +125,11 @@ public class ReservationController {
             return "redirect:/";
         }
 
-        User user = userService.findByEmail(principal.getName());
+        Optional<User> userOpt = userService.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+        User user = userOpt.get();
 
         reservationService.confirmCart(cart, user);
 
@@ -141,7 +150,11 @@ public class ReservationController {
             return "redirect:/login";
         }
 
-        User user = userService.findByEmail(principal.getName());
+        Optional<User> userOpt = userService.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+        User user = userOpt.get();
 
         reservationService.cancelReservation(id, user);
 

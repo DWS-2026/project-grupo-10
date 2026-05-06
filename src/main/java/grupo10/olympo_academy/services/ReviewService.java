@@ -96,7 +96,11 @@ public class ReviewService {
     }
 
     public boolean userReview(Review review, String email) {
-        User user = userService.findByEmail(email);
+        Optional<User> userOpt = userService.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            return false;
+        }
+        User user = userOpt.get();
         Long id = user.getId();
         Long idUserReview = review.getUser().getId();
         boolean isAdmin = isAdmin(user);
@@ -110,17 +114,22 @@ public class ReviewService {
     private boolean isAdmin(User user) {
         return user.getRoles() != null && user.getRoles().contains("ADMIN");
     }
-    public Review  buildReviewF(Review review, String email, Long id){
-        User user = userService.findByEmail(email);
+
+    public Review buildReviewF(Review review, String email, Long id) {
+        Optional<User> userOpt = userService.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            return null;
+        }
+        User user = userOpt.get();
         review.setUser(user);
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         review.setDate(now.format(formatter));
-        Optional <Facility> facilityOpt = facilityService.getFacilityById(id);
-        if(facilityOpt.isPresent () ){
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+        if (facilityOpt.isPresent()) {
             Facility facility = facilityOpt.get();
             review.setFacility(facility);
-        }else{
+        } else {
             return null;
         }
         return review;
@@ -129,22 +138,26 @@ public class ReviewService {
 
     public Review buildReviewC(Review review, String email, Long id) {
 
-    User user = userService.findByEmail(email);
-    review.setUser(user);
+        Optional<User> userOpt = userService.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            return null;
+        }
+        User user = userOpt.get();
+        review.setUser(user);
 
-    LocalDate now = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    review.setDate(now.format(formatter));
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        review.setDate(now.format(formatter));
 
-    Optional<Classes> classesOpt = classesRepository.findById(id);
+        Optional<Classes> classesOpt = classesRepository.findById(id);
 
-    if (classesOpt.isPresent()) {
-        Classes classes = classesOpt.get();
-        review.setClasses(classes);
-    } else {
-        return null;
+        if (classesOpt.isPresent()) {
+            Classes classes = classesOpt.get();
+            review.setClasses(classes);
+        } else {
+            return null;
+        }
+
+        return review;
     }
-
-    return review;
-}
 }

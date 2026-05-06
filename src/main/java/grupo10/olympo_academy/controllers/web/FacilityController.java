@@ -48,9 +48,12 @@ public class FacilityController {
 
         if (principal != null) {
             try {
-                User user = userService.findByEmail(principal.getName());
-                model.addAttribute("user", user);   
-                model.addAttribute("myReviews", reviewService.getReviewsByUserAndFacility(user, id));
+                Optional<User> userOpt = userService.findByEmail(principal.getName());
+                if (userOpt.isPresent()) {
+                    User user = userOpt.get();
+                    model.addAttribute("user", user);
+                    model.addAttribute("myReviews", reviewService.getReviewsByUserAndFacility(user, id));
+                }
             } catch (Exception ignored) {
                 // ignore if user cannot be resolved
             }
@@ -73,13 +76,16 @@ public class FacilityController {
         }
 
         // Resolve user
-        User user;
+        Optional<User> userOpt;
         try {
-            user = userService.findByEmail(principal.getName());
+            userOpt = userService.findByEmail(principal.getName());
         } catch (Exception e) {
             return "redirect:/login";
         }
-
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+        User user = userOpt.get();  
         // Resolve the facility
         Optional<Facility> facilityOpt = facilityService.getFacilityById(facilityId);
         if (!facilityOpt.isPresent()) {
@@ -117,12 +123,17 @@ public class FacilityController {
             return "redirect:/login";
         }
 
-        User user;
+        Optional<User> userOpt;
         try {
-            user = userService.findByEmail(principal.getName());
+            userOpt = userService.findByEmail(principal.getName());
         } catch (Exception e) {
             return "redirect:/login";
         }
+
+        if (userOpt.isEmpty()) {
+            return "redirect:/login";
+        }
+        User user = userOpt.get();
 
         Optional<Review> reviewOpt = reviewService.getById(id);
         if (!reviewOpt.isPresent() || reviewOpt.get().getUser() == null || reviewOpt.get().getFacility() == null) {

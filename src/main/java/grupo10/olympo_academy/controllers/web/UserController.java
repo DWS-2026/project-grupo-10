@@ -533,12 +533,13 @@ public class UserController {
             @RequestParam(required = false) Boolean material,
             RedirectAttributes redirectAttributes) {
 
-        Reservation reservation = reservationService.getById(id);
+        Optional <Reservation> reservationOpt = reservationService.getById(id);
 
-        if (reservation == null) {
+        if (reservationOpt == null) {
             redirectAttributes.addFlashAttribute("errorAdmin", "La reserva no existe.");
             return "redirect:/admin";
         }
+        Reservation reservation = reservationOpt.get();
 
         reservation.setDay(day);
         reservation.setStartTime(startTime);
@@ -557,12 +558,13 @@ public class UserController {
             @PathVariable Long id,
             RedirectAttributes redirectAttributes) {
 
-        Reservation reservation = reservationService.getById(id);
+        Optional<Reservation> reservationOpt = reservationService.getById(id);
 
-        if (reservation == null) {
+        if (reservationOpt == null) {
             redirectAttributes.addFlashAttribute("errorAdmin", "La reserva no existe.");
             return "redirect:/admin";
         }
+        Reservation reservation = reservationOpt.get();
 
         Long userId = reservation.getUser().getId();
 

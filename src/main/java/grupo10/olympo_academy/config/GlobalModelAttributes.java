@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import grupo10.olympo_academy.model.Reservation;
+import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.UserService;
 
 @ControllerAdvice
@@ -49,11 +51,14 @@ public class GlobalModelAttributes {
         if (principal == null) {
             return false;
         }
+        Optional <User> userOpt= userService.findByEmail(principal.getName());
+        if(userOpt.isEmpty()) {
+            return false;
+        }
+        User user = userOpt.get();
 
         try {
-            return userService.findByEmail(principal.getName())
-                    .getRoles()
-                    .contains("ADMIN");
+            return user.getRoles().contains("ADMIN");
         } catch (Exception ignored) {
             return false;
         }

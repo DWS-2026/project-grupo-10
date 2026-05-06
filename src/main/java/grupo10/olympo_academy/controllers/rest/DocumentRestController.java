@@ -2,6 +2,7 @@ package grupo10.olympo_academy.controllers.rest;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -55,7 +56,11 @@ public class DocumentRestController {
             return ResponseEntity.badRequest().build();
         }
 
-        User user = userService.findByEmail(principal.getName());
+        Optional <User> userOpt = userService.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(401).build();
+        }
+        User user = userOpt.get();
         Document doc = documentService.saveDocumentForUser(file, user);
 
         return ResponseEntity.ok(documentMapper.toDTO(doc));
@@ -68,7 +73,11 @@ public class DocumentRestController {
             return ResponseEntity.status(401).build();
         }
 
-        User user = userService.findByEmail(principal.getName());
+        Optional <User> userOpt = userService.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(401).build();
+        }
+        User user = userOpt.get();
         Document doc = documentService.findDocumentByUser(user);
 
         if (doc == null) {
@@ -85,7 +94,11 @@ public class DocumentRestController {
             return ResponseEntity.status(401).build();
         }
 
-        User user = userService.findByEmail(principal.getName());
+        Optional <User> userOpt = userService.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(401).build();
+        }
+        User user = userOpt.get();
         Document doc = documentService.findDocumentByUser(user);
 
         if (doc == null) {

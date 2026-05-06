@@ -1,4 +1,4 @@
-package grupo10.olympo_academy.services;
+    package grupo10.olympo_academy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,8 +25,15 @@ public class UserService {
 
     // With Spring security, we don´t need to implement the login logic ourselves
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    public Optional <User> findByEmail(String email) {
+        Optional <User> userOpt = userRepository.findByEmail(email);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+            return Optional.of(user);
+        }else{
+            return Optional.empty();
+        }
+        
     }
 
     // Method to register a new user
@@ -267,7 +274,11 @@ public class UserService {
     }
 
     public User getUserProfile(String email) throws Exception {
-        return findByEmail(email);
+        Optional <User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            throw new Exception("Usuario no encontrado");
+        }else{
+            return userOpt.get();}
     }
 
     public User updateUserImageFromAdmin(Long id, MultipartFile imageFile) throws Exception {

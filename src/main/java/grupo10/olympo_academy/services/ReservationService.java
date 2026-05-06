@@ -38,8 +38,8 @@ public class ReservationService {
         return reservationRepository.findByUserAndStatus(user, "Activa");
     }
 
-    public Reservation getById(Long id) {
-        return reservationRepository.findById(id).orElse(null);
+    public Optional <Reservation> getById(Long id) {
+        return reservationRepository.findById(id);
     }
 
     public boolean hasActiveReservations(Facility facility) {
