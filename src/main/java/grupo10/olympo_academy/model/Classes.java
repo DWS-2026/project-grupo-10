@@ -141,8 +141,22 @@ public class Classes {
         return facility != null && facility.getId() != null ? facility.getId().toString() : "";
     }
 
-    public List<Review> getReviews() {
+  public List<Review> getReviews() {
         return this.reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.setClasses(this);
+    }
+
+    public void removeReview(Review review) {
+        reviews.remove(review);
+        review.setClasses(null);
     }
 
     public void saveReview(Review review) {
@@ -153,5 +167,4 @@ public class Classes {
     public void deleteReview(Long id) {
         this.reviews.removeIf(review -> review.getId().equals(id));
     }
-
 }

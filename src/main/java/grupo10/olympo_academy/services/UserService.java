@@ -1,6 +1,5 @@
 package grupo10.olympo_academy.services;
 
-import grupo10.olympo_academy.dto.DocumentMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,8 +14,6 @@ import grupo10.olympo_academy.repository.UserRepository;
 @Service
 public class UserService {
 
-    private final DocumentMapperImpl documentMapperImpl;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -25,10 +22,6 @@ public class UserService {
 
     @Autowired
     private ImageService imageService;
-
-    UserService(DocumentMapperImpl documentMapperImpl) {
-        this.documentMapperImpl = documentMapperImpl;
-    }
 
     // With Spring security, we don´t need to implement the login logic ourselves
 

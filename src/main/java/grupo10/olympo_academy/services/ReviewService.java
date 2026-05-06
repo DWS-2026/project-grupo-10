@@ -50,7 +50,7 @@ public class ReviewService {
         return reviewRepository.findByFacilityId(facilityId);
     }
 
-    public List<Review> getReviewsByClasses(Long classesId) {
+    public Optional<List<Review>> getReviewsByClasses(Long classesId) {
         return reviewRepository.findByClassesId(classesId);
     }
 
@@ -127,4 +127,24 @@ public class ReviewService {
 
     }
 
+    public Review buildReviewC(Review review, String email, Long id) {
+
+    User user = userService.findByEmail(email);
+    review.setUser(user);
+
+    LocalDate now = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    review.setDate(now.format(formatter));
+
+    Optional<Classes> classesOpt = classesRepository.findById(id);
+
+    if (classesOpt.isPresent()) {
+        Classes classes = classesOpt.get();
+        review.setClasses(classes);
+    } else {
+        return null;
+    }
+
+    return review;
+}
 }

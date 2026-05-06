@@ -31,14 +31,12 @@ import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
-import grupo10.olympo_academy.services.ImageService;
+
 
 @RestController
 @RequestMapping("/api/v1/facilities")
 public class FacilityRestController {
 
-    @Autowired
-    private ImageService imageService;
 
     @Autowired
     private FacilityService facilityService;
@@ -50,9 +48,6 @@ public class FacilityRestController {
     @Autowired
     private ReviewMapper reviewMapper;
 
-    FacilityRestController(ImageService imageService) {
-        this.imageService = imageService;
-    }
 
     @GetMapping
     public ResponseEntity<Page<FacilityDTO>> getAll(@PageableDefault(size = 4, sort = "id") Pageable pageable) {

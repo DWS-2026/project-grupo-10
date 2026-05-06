@@ -9,7 +9,7 @@ import grupo10.olympo_academy.model.Review;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     Optional<List<Review>> findByFacilityId(Long facilityId);
-    List<Review> findByClassesId(Long classesId);
+    Optional<List<Review>> findByClassesId(Long classesId);
     List<Review> findByUserId(Long userId);
     List<Review> findByUserIdAndClassesId(Long userId, Long classesId);
     List<Review> findByUserIdAndFacilityId(Long userId, Long facilityId);

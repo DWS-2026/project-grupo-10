@@ -13,6 +13,7 @@ import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.ReservationRepository;
 
+
 @Service
 public class ReservationService {
 
@@ -25,6 +26,9 @@ public class ReservationService {
     @Autowired
     private ClassesService classesService;
 
+    // =====================================================
+    // GETTERS
+    // =====================================================
 
     public List<Reservation> getReservationsByUser(User user) {
         return reservationRepository.findByUser(user);
@@ -55,13 +59,15 @@ public class ReservationService {
                 facility, "Activa", day, startTime);
     }
 
-    public boolean hasActiveReservationsForUserAndClassesAtTime(Classes classes, User user, String startTime, String day) {
+    public boolean hasActiveReservationsForUserAndClassesAtTime(
+            Classes classes, User user, String startTime, String day) {
+
         return reservationRepository.existsByClassesAndStatusAndUserAndStartTimeAndDay(
                 classes, "Activa", user, startTime, day);
     }
 
     // =====================================================
-    // SAVE 
+    // SAVE
     // =====================================================
 
     public Reservation save(Reservation reservation) {
@@ -103,7 +109,7 @@ public class ReservationService {
     }
 
     // =====================================================
-    // BUILD RESERVATION (from DTO or controller)
+    // BUILD RESERVATION
     // =====================================================
 
     public Reservation buildReservation(Long facilityId,
@@ -122,34 +128,41 @@ public class ReservationService {
         reservation.setMaterial(material != null && material);
         reservation.setStatus("Pendiente");
 
+        // CLASSES
         if (classId != null) {
-            Classes classes = classesService.getClassById(classId);
-            reservation.setClasses(classes);
-            reservation.setLevel(level);
+            Optional<Classes> classesOpt = classesService.getClassById(classId);
 
-            if (reservation.getName() == null || reservation.getName().isBlank()) {
-                reservation.setName(classes != null ? classes.getName() : name);
+            if (classesOpt.isPresent()) {
+                Classes classes = classesOpt.get();
+                reservation.setClasses(classes);
+                reservation.setLevel(level);
+
+                if (reservation.getName() == null || reservation.getName().isBlank()) {
+                    reservation.setName(classes.getName());
+                }
             }
         }
 
+        // FACILITY
         if (facilityId != null) {
             Optional<Facility> facilityOpt = facilityService.getFacilityById(facilityId);
+
             if (facilityOpt.isPresent()) {
                 Facility facility = facilityOpt.get();
                 reservation.setFacility(facility);
                 reservation.setDuration(duration);
-            
 
-            if (reservation.getName() == null || reservation.getName().isBlank()) {
-                reservation.setName(facility != null ? facility.getName() : name);
-            }}
+                if (reservation.getName() == null || reservation.getName().isBlank()) {
+                    reservation.setName(facility.getName());
+                }
+            }
         }
 
         return reservation;
     }
 
     // =====================================================
-    // VERIFY AND CONFIRM RESERVATION
+    // CONFIRM RESERVATION
     // =====================================================
 
     public Reservation confirmReservation(Reservation reservation, User user) {
@@ -158,16 +171,15 @@ public class ReservationService {
         reservation.setStatus("Activa");
 
         if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
-            Classes classes = classesService.getClassById(reservation.getClasses().getId());
-            reservation.setClasses(classes);
-            classesService.saveClass(classes);
+            Optional<Classes> classesOpt = classesService.getClassById(reservation.getClasses().getId());
+            classesOpt.ifPresent(reservation::setClasses);
         }
 
         return reservationRepository.save(reservation);
     }
 
     // =====================================================
-    // VERIFY AND CONFIRM CART 
+    // CONFIRM CART
     // =====================================================
 
     public List<Reservation> confirmCart(List<Reservation> cart, User user) {
@@ -179,21 +191,18 @@ public class ReservationService {
 
             if (r.getFacility() != null && r.getFacility().getId() != null) {
                 Optional<Facility> facilityOpt = facilityService.getFacilityById(r.getFacility().getId());
-                if (facilityOpt.isPresent()) {
-                    r.setFacility(facilityOpt.get());
-                }
+                facilityOpt.ifPresent(r::setFacility);
             }
 
             if (r.getClasses() != null && r.getClasses().getId() != null) {
-                Classes classes = classesService.getClassById(r.getClasses().getId());
-                r.setClasses(classes);
+                Optional<Classes> classesOpt = classesService.getClassById(r.getClasses().getId());
+                classesOpt.ifPresent(r::setClasses);
             }
         }
 
         return reservationRepository.saveAll(cart);
     }
 
-    
     // =====================================================
     // CANCEL RESERVATION
     // =====================================================
@@ -204,24 +213,22 @@ public class ReservationService {
 
         if (reservation == null) {
             throw new RuntimeException("La reserva no existe.");
-        };
+        }
 
         if (reservation.getUser() == null || !reservation.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("No tienes permiso para cancelar esta reserva.");
         }
 
         if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
-            Classes classes = classesService.getClassById(reservation.getClasses().getId());
-            if (classes != null) {
-                classesService.saveClass(classes);
-            }
+            Optional<Classes> classesOpt = classesService.getClassById(reservation.getClasses().getId());
+            classesOpt.ifPresent(classesService::saveClass);
         }
 
         reservationRepository.delete(reservation);
     }
 
     // =====================================================
-    // CARRITO HELPERS (FOR FRONTEND CART FUNCTIONALITY)
+    // CART HELPERS
     // =====================================================
 
     public List<Reservation> initCart(List<Reservation> cart) {

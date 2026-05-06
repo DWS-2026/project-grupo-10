@@ -2,19 +2,16 @@ package grupo10.olympo_academy.services;
 
 import grupo10.olympo_academy.repository.ImageRepository;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
-import grupo10.olympo_academy.model.Review;
+
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.FacilityRepository;
 import grupo10.olympo_academy.repository.UserRepository;
@@ -25,7 +22,7 @@ import grupo10.olympo_academy.repository.ClassesRepository;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
+
 
 @Service
 public class DataBaseUsage {

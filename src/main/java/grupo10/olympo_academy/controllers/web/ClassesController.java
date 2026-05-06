@@ -25,54 +25,54 @@ import grupo10.olympo_academy.services.UserService;
 
 @Controller
 public class ClassesController {
+
     @Autowired
     private ClassesService classesService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private ReviewService reviewService;
 
     @GetMapping("/classes/{id}")
     public String getClassById(@PathVariable Long id, Model model, Principal principal,
-            RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes) {
 
-        Classes classes = classesService.getClassById(id);
-        if (classes == null) {
+        Optional<Classes> classesOpt = classesService.getClassById(id);
+
+        if (!classesOpt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
+        Classes classes = classesOpt.get();
 
         model.addAttribute("classes", classes);
         model.addAttribute("reviews", classes.getReviews());
 
-        //principal is an object that spring security provides to get the currently authenticated user, if any. We use it to get the user's reviews and to show the available times for the class.
         if (principal != null) {
             try {
                 User user = userService.findByEmail(principal.getName());
                 model.addAttribute("user", user);
                 model.addAttribute("myReviews", reviewService.getReviewsByUserAndClasses(user, id));
-            } catch (Exception ignored) {
-                // ignore if user cannot be resolved
-            }
-            // Add available times
+            } catch (Exception ignored) {}
+
             model.addAttribute("availableTimes", classes.getStartTime());
         }
 
         return "classes";
     }
 
-    // Save or delete review for a specific class
     @PostMapping("/classes/{classesId}/review")
     public String saveReview(@PathVariable Long classesId,
-            @RequestParam int rating,
-            @RequestParam String comment,
-            Principal principal) {
+                             @RequestParam int rating,
+                             @RequestParam String comment,
+                             Principal principal) {
 
-        // Verify user is logged in
         if (principal == null) {
             return "redirect:/login";
         }
 
-        // Resolve user
         User user;
         try {
             user = userService.findByEmail(principal.getName());
@@ -80,37 +80,33 @@ public class ClassesController {
             return "redirect:/login";
         }
 
-        // Resolve the classes
-        Classes classes = classesService.getClassById(classesId);
-        if (classes == null) {
+        Optional<Classes> classesOpt = classesService.getClassById(classesId);
+        if (!classesOpt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        // Create and save the review
+        Classes classes = classesOpt.get();
+
         Review review = new Review();
         review.setRating(rating);
         review.setComment(comment);
 
-        // Set current date
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         review.setDate(now.format(formatter));
 
-        // Associate the review with the user and the classes
         review.setUser(user);
         review.setClasses(classes);
 
-        // Add and save review (will persist to user and classes as well)
         reviewService.saveReview(review);
 
-        // Redirect back to the class page
         return "redirect:/classes/" + classesId;
     }
 
     @PostMapping("/classes/{classesId}/review/delete")
     public String deleteReview(@PathVariable Long classesId,
-            @RequestParam Long id,
-            Principal principal) {
+                               @RequestParam Long id,
+                               Principal principal) {
 
         if (principal == null) {
             return "redirect:/login";
@@ -124,18 +120,23 @@ public class ClassesController {
         }
 
         Optional<Review> reviewOpt = reviewService.getById(id);
-        if (!reviewOpt.isPresent()|| reviewOpt.get().getUser() == null || reviewOpt.get().getClasses() == null) {
+
+        if (!reviewOpt.isPresent()) {
             return "redirect:/classes/" + classesId;
         }
+
         Review review = reviewOpt.get();
 
-        if (!review.getUser().getId().equals(user.getId())
-                || !review.getClasses().getId().equals(classesId)) {
+        if (review.getUser() == null || review.getClasses() == null) {
+            return "redirect:/classes/" + classesId;
+        }
+
+        if (!review.getUser().getId().equals(user.getId()) ||
+            !review.getClasses().getId().equals(classesId)) {
             return "redirect:/classes/" + classesId;
         }
 
         reviewService.deleteReview(id);
         return "redirect:/classes/" + classesId;
     }
-
 }
