@@ -2,6 +2,7 @@ package grupo10.olympo_academy.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -132,13 +133,16 @@ public class ReservationService {
         }
 
         if (facilityId != null) {
-            Facility facility = facilityService.getFacilityById(facilityId);
-            reservation.setFacility(facility);
-            reservation.setDuration(duration);
+            Optional<Facility> facilityOpt = facilityService.getFacilityById(facilityId);
+            if (facilityOpt.isPresent()) {
+                Facility facility = facilityOpt.get();
+                reservation.setFacility(facility);
+                reservation.setDuration(duration);
+            
 
             if (reservation.getName() == null || reservation.getName().isBlank()) {
                 reservation.setName(facility != null ? facility.getName() : name);
-            }
+            }}
         }
 
         return reservation;
@@ -174,8 +178,10 @@ public class ReservationService {
             r.setStatus("Activa");
 
             if (r.getFacility() != null && r.getFacility().getId() != null) {
-                Facility facility = facilityService.getFacilityById(r.getFacility().getId());
-                r.setFacility(facility);
+                Optional<Facility> facilityOpt = facilityService.getFacilityById(r.getFacility().getId());
+                if (facilityOpt.isPresent()) {
+                    r.setFacility(facilityOpt.get());
+                }
             }
 
             if (r.getClasses() != null && r.getClasses().getId() != null) {

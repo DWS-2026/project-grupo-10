@@ -2,12 +2,19 @@ package grupo10.olympo_academy.services;
 
 import grupo10.olympo_academy.repository.ImageRepository;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
+import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.FacilityRepository;
 import grupo10.olympo_academy.repository.UserRepository;
@@ -18,6 +25,7 @@ import grupo10.olympo_academy.repository.ClassesRepository;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 
 @Service
 public class DataBaseUsage {
@@ -104,7 +112,8 @@ public class DataBaseUsage {
             class1.setDays(List.of("Lunes", "Miércoles"));
             class1.setStartTime(List.of("10:00", "18:00"));
             class1.setDuration(60);
-            class1.setFacility(facilityService.getFacilityByName("Pista de Tenis"));
+            Optional <Facility> fac= facilityService.getFacilityByName("Pista de Tenis");
+            if(fac.isPresent()) {class1.setFacility(fac.get());}
             setClassesImage(class1, "static/assets/images/clases/clase_tenis.jpg");
 
             Classes class2 = new Classes("Clase de Padel",
@@ -114,7 +123,8 @@ public class DataBaseUsage {
             class2.setDays(List.of("Martes", "Jueves"));
             class2.setStartTime(List.of("12:00", "19:00"));
             class2.setDuration(60);
-            class2.setFacility(facilityService.getFacilityByName("Pista de Padel"));
+            Optional <Facility> fac2 = facilityService.getFacilityByName("Pista de Padel");
+            if(fac2.isPresent()) {class2.setFacility(fac2.get());}
             setClassesImage(class2, "static/assets/images/clases/clase_padel.jpg");
 
             Classes class3 = new Classes("Clase de CrossFit",
@@ -124,7 +134,8 @@ public class DataBaseUsage {
             class3.setDays(List.of("Lunes", "Viernes"));
             class3.setStartTime(List.of("19:00", "20:00"));
             class3.setDuration(60);
-            class3.setFacility(facilityService.getFacilityByName("Gimnasio"));
+            Optional <Facility> fac3 = facilityService.getFacilityByName("Gimnasio");
+            if(fac3.isPresent()) {class3.setFacility(fac3.get());}
             setClassesImage(class3, "static/assets/images/clases/clase_crossfit.jpg");
 
             Classes class4 = new Classes("Clase de Natación",
@@ -134,7 +145,8 @@ public class DataBaseUsage {
             class4.setDays(List.of("Miércoles"));
             class4.setStartTime(List.of("17:00", "18:30"));
             class4.setDuration(60);
-            class4.setFacility(facilityService.getFacilityByName("Piscina "));
+            Optional <Facility> fac4 = facilityService.getFacilityByName("Piscina ");
+            if(fac4.isPresent()) {class4.setFacility(fac4.get());}
             setClassesImage(class4, "static/assets/images/clases/clase_natacion.jpg");
 
             Classes class5 = new Classes("Clase de Baloncesto",
@@ -144,7 +156,8 @@ public class DataBaseUsage {
             class5.setDays(List.of("Viernes"));
             class5.setStartTime(List.of("18:00", "20:00"));
             class5.setDuration(90);
-            class5.setFacility(facilityService.getFacilityByName("Pista de Baloncesto"));
+            Optional <Facility> fac5 = facilityService.getFacilityByName("Pista de Baloncesto");
+            if(fac5.isPresent()) {class5.setFacility(fac5.get());}
             setClassesImage(class5, "static/assets/images/clases/clase_baloncesto.jpg");
 
             Classes class6 = new Classes("Clase de Fútbol",
@@ -154,7 +167,8 @@ public class DataBaseUsage {
             class6.setDays(List.of("Sábado"));
             class6.setStartTime(List.of("11:00", "13:00"));
             class6.setDuration(90);
-            class6.setFacility(facilityService.getFacilityByName("Campo de Fútbol"));
+            Optional <Facility> fac6 = facilityService.getFacilityByName("Campo de Fútbol");
+            if(fac6.isPresent()) {class6.setFacility(fac6.get());}
             setClassesImage(class6, "static/assets/images/clases/clase_futbol.jpg");
 
                 // Save classes

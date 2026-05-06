@@ -3,6 +3,7 @@ package grupo10.olympo_academy.controllers.web;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -122,10 +123,11 @@ public class ClassesController {
             return "redirect:/login";
         }
 
-        Review review = reviewService.getById(id);
-        if (review == null || review.getUser() == null || review.getClasses() == null) {
+        Optional<Review> reviewOpt = reviewService.getById(id);
+        if (!reviewOpt.isPresent()|| reviewOpt.get().getUser() == null || reviewOpt.get().getClasses() == null) {
             return "redirect:/classes/" + classesId;
         }
+        Review review = reviewOpt.get();
 
         if (!review.getUser().getId().equals(user.getId())
                 || !review.getClasses().getId().equals(classesId)) {

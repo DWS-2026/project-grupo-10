@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -341,11 +342,12 @@ public class UserController {
 
         try {
             // We look for the facility in the database
-            Facility facility = facilityService.getFacilityById(id);
-            if (facility == null) {
+            Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+            if (!facilityOpt.isPresent()) {
                 model.addAttribute("error", "La instalación no existe");
                 return "admin";
             }
+            Facility facility = facilityOpt.get();
 
             // We update the fields
             facility.setName(name);
@@ -376,12 +378,12 @@ public class UserController {
     @GetMapping("/admin/facility/delete/{id}")
     public String deleteFacility(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
 
-        Facility facility = facilityService.getFacilityById(id);
-
-        if (facility == null) {
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+        if (!facilityOpt.isPresent()) {
             redirectAttributes.addFlashAttribute("error", "La instalación no existe");
             return "redirect:/admin";
         }
+        Facility facility = facilityOpt.get();
 
         // Before deleting the facility, we check if it has active reservations. If it
         // does, we prevent deletion and show an error message.
@@ -572,7 +574,12 @@ public class UserController {
             classes.setDuration(durationMinutes);
 
             // Set the facility
-            Facility selectedFacility = facilityService.getFacilityById(facility);
+            Optional<Facility> facilityOpt = facilityService.getFacilityById(facility);
+            if (!facilityOpt.isPresent()) {
+                model.addAttribute("error", "La instalación no existe");
+                return "admin";
+            }
+            Facility selectedFacility = facilityOpt.get();
             classes.setFacility(selectedFacility);
 
             if (!photoFile.isEmpty()) {
@@ -626,9 +633,9 @@ public class UserController {
 
             // Update facility if provided
             if (facility != null && facility > 0) {
-                Facility selectedFacility = facilityService.getFacilityById(facility);
-                if (selectedFacility != null) {
-                    classes.setFacility(selectedFacility);
+                Optional<Facility> facilityOpt = facilityService.getFacilityById(facility);
+                if (facilityOpt.isPresent()) {
+                    classes.setFacility(facilityOpt.get());
                 }
             }
 
@@ -700,9 +707,9 @@ public class UserController {
     @GetMapping("/admin/reviews/delete/{id}")
     public String deleteReviewAsAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        Review review = reviewService.getById(id);
+        Optional<Review> reviewOpt = reviewService.getById(id);
 
-        if (review == null) {
+        if (!reviewOpt.isPresent()) {
             redirectAttributes.addFlashAttribute("errorAdmin", "La reseña no existe.");
             return "redirect:/admin";
         }
