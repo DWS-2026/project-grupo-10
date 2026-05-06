@@ -205,6 +205,7 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.PUT,
                         "/api/v1/classes/{id}",
+						"/api/v1/classes/{id}/images",
                         "/api/v1/facilities/{id}/**",
                         "/api/v1/users/admin/{id}",
                         "/api/v1/users/admin/{id}/image",
@@ -213,6 +214,7 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.DELETE,
                         "/api/v1/classes/{id}",
+						"/api/v1/classes/{id}/images",
                         "/api/v1/facilities/{id}",
                         "/api/v1/facilities/{id}/images",
                         "/api/v1/users/admin/{id}",
