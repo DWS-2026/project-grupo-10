@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,7 @@ import grupo10.olympo_academy.dto.UserRegisterDTO;
 import grupo10.olympo_academy.dto.PasswordChangeDTO;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ImageService;
-import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -45,9 +44,6 @@ public class UserRestController {
     @Autowired
     private ImageService imageService;
 
-    @Autowired
-    private ReservationService reservationService;
-
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = userService.getAllUsers();
@@ -58,8 +54,7 @@ public class UserRestController {
     }
     
     @GetMapping("/me")
-    public ResponseEntity<UserDetailDTO> me(HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
+    public ResponseEntity<UserDetailDTO> me(Principal principal) {
         if (principal != null) {
             try {
                 User user = userService.getUserProfile(principal.getName());
@@ -69,22 +64,20 @@ public class UserRestController {
                 return ResponseEntity.notFound().build();
             }
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
     @PutMapping("{id}") 
     public ResponseEntity<UserDTO> updateProfile(@PathVariable Long id, @RequestBody UserDTO userDTO,
-            HttpServletRequest request) {
-
-        Principal principal = request.getUserPrincipal();
+            Principal principal) {
 
         if (principal != null) {
             try {
                 //ensure user is using his id
                 Long userId = userService.getUserProfile(principal.getName()).getId();
                 if(!userId.equals(id)) {
-                    return ResponseEntity.status(403).build();
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
                 }
                 
                 User updatedUser = userService.updateProfile(
@@ -99,15 +92,13 @@ public class UserRestController {
                 return ResponseEntity.badRequest().build();
             }
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
     @PatchMapping("/{id}/password")
     public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody PasswordChangeDTO passwordChangeDTO,
-            HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-
+            Principal principal) {
         if (principal != null) {
             try {
                 userService.changePassword(principal.getName(), passwordChangeDTO.newPassword());
@@ -116,29 +107,28 @@ public class UserRestController {
                 return ResponseEntity.badRequest().build();
             }
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
     @PutMapping("/image")
-    public ResponseEntity<Object> changeProfileImage(@RequestParam MultipartFile imageFile, HttpServletRequest request)
+    public ResponseEntity<Object> changeProfileImage(@RequestParam MultipartFile imageFile, Principal principal)
             throws Exception {
 
-        Principal principal = request.getUserPrincipal();
-
         if (principal != null) {
-            String currentUserEmail = principal.getName();
-            userService.updateProfileImage(currentUserEmail, imageFile);
-            return ResponseEntity.noContent().build();
+            try {
+                userService.updateProfileImage(principal.getName(), imageFile);
+                return ResponseEntity.noContent().build();
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
     @GetMapping("/image")
-    public ResponseEntity<Object> getProfileImage(HttpServletRequest request) throws Exception {
-
-        Principal principal = request.getUserPrincipal();
+    public ResponseEntity<Object> getProfileImage(Principal principal) throws Exception {
 
         if (principal != null) {
             String currentUserEmail = principal.getName();
@@ -151,7 +141,7 @@ public class UserRestController {
                     .contentType(mediaType)
                     .body(imageFile);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
@@ -168,23 +158,6 @@ public class UserRestController {
         }
     }
 
-    //delete your own reservations
-    @DeleteMapping("/reservations/{id}")
-    public ResponseEntity<Void> deleteReservation (@PathVariable Long id, HttpServletRequest request){
-
-        Principal principal = request.getUserPrincipal();
-        if(principal != null){
-            try {
-                User user = userService.getUserProfile(principal.getName());
-                reservationService.cancelReservation(id,user);
-                return ResponseEntity.ok().build();
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().build();
-            }
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
 // ADMIN ENDPOINTS
 

@@ -93,13 +93,14 @@ public class ReservationRestController {
             return ResponseEntity.notFound().build();
         }
         User user = userOpt.get();
-        Optional <Reservation> reservationOpt= reservationService.getById(id);
-        if(reservationOpt.isEmpty()){
-           return ResponseEntity.notFound().build();
+        Optional<Reservation> reservationOpt = reservationService.getById(id);
+        if (reservationOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
         Reservation reservation = reservationOpt.get();
         reservationService.cancelReservation(id, user);
-        
+
         return ResponseEntity.ok(reservationMapper.toDTO(reservation));
     }
+
 }
