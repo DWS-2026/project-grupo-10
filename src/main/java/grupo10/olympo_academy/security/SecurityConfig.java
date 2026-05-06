@@ -124,90 +124,85 @@ public class SecurityConfig {
 
 						// PUBLIC ENDPOINTS
 						.requestMatchers(HttpMethod.GET,
-								"/classes/**",
-								"/facilities/**")
+        						"/api/v1/classes/**",
+        						"/api/v1/facilities/**")
 						.permitAll()
 
 						.requestMatchers(HttpMethod.POST,
-								"/auth/login",
-								"/users") // register method
+								"/api/v1/auth/login",
+								"/api/v1/users") // register method
 						.permitAll()
 
 						// PROTECTED ENDPOINTS
-
 						.requestMatchers(HttpMethod.POST,
-								"/classes/{id}/newReview",
-								"/facilities/{id}/newReview",
-								"/documents/me")
+								"/api/v1/classes/{id}/newReview",
+								"/api/v1/facilities/{id}/newReview",
+								"/api/v1/documents/me")
 						.hasAnyRole("USER", "ADMIN")
 
 						.requestMatchers(HttpMethod.DELETE,
-								"/classes/{id}/review/{reviewId}",
-								"/facilities/{id}/review/{reviewId}",
-								"/users/reservations/{id}")
-						.hasAnyRole("USER","ADMIN")
+								"/api/v1/classes/{id}/review/{reviewId}",
+								"/api/v1/facilities/{id}/review/{reviewId}",
+								"/api/v1/users/reservations/{id}")
+						.hasAnyRole("USER", "ADMIN")
 
 						.requestMatchers(HttpMethod.GET,
-								"/documents/me",
-								"/documents/me/view",
-								"/reservations",
-								"/reservations/{id}",
-								"/users/me",
-								"/users/image")
-						.hasAnyRole("USER","ADMIN")
+								"/api/v1/documents/me",
+								"/api/v1/documents/me/view",
+								"/api/v1/reservations",
+								"/api/v1/reservations/{id}",
+								"/api/v1/users/me",
+								"/api/v1/users/image")
+						.hasAnyRole("USER", "ADMIN")
 
 						.requestMatchers(HttpMethod.POST,
-								"/auth/logout",
-								"/auth/refresh")
-						.hasAnyRole("USER","ADMIN")
+								"/api/v1/auth/logout",
+								"/api/v1/auth/refresh")
+						.hasAnyRole("USER", "ADMIN")
 
 						.requestMatchers(HttpMethod.PUT,
-								"/users/{id}",
-								"/users/image")
-						.hasAnyRole("USER","ADMIN")
+								"/api/v1/users/{id}",
+								"/api/v1/users/image")
+						.hasAnyRole("USER", "ADMIN")
 
 						.requestMatchers(HttpMethod.PATCH,
-								"/users/{id}/password")
-						.hasAnyRole("USER","ADMIN")
+								"/api/v1/users/{id}/password")
+						.hasAnyRole("USER", "ADMIN")
 
 						// ADMIN ENDPOINTS
 
 						.requestMatchers(HttpMethod.POST,
-								"/classes",
-								"/facilities",
-								"/images/{id}/images"
-							)
+								"/api/v1/classes",
+								"/api/v1/facilities",
+								"/api/v1/images/{id}/images")
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.PUT,
-								"/classes/{id}",
-								"/facilities/{id}",
-								"/users/admin/{id}",
-								"/users/admin/{id}/image",
-								"/images/{id}/media"
-							)
+								"/api/v1/classes/{id}",
+								"/api/v1/facilities/{id}",
+								"/api/v1/users/admin/{id}",
+								"/api/v1/users/admin/{id}/image",
+								"/api/v1/images/{id}/media")
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.DELETE,
-								"/classes/{id}",
-								"/facilities/{id}",
-								"/users/admin/{id}",
-								"/images/{id}"
-							)
+								"/api/v1/classes/{id}",
+								"/api/v1/facilities/{id}",
+								"/api/v1/users/admin/{id}",
+								"/api/v1/images/{id}")
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.PATCH,
-								"/users/admin/{id}/*")
+								"/api/v1/users/admin/{id}/*")
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.GET,
-								"/documents/users/**",
-								"/users",
-								"/users/admin/{id}")
+								"/api/v1/documents/users/**",
+								"/api/v1/users",
+								"/api/v1/users/admin/{id}")
 						.hasRole("ADMIN")
-						
-						.anyRequest().permitAll());
-						//.anyRequest().hasAnyRole("USER", "ADMIN"));
+
+						.anyRequest().authenticated());
 
 		// Disable Form login Authentication
 		http.formLogin(formLogin -> formLogin.disable());
