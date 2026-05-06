@@ -49,7 +49,7 @@ public class ImageRestController {
                 .body(imageFile);
     }
 
-    @PostMapping("/{id}/images")
+    @PostMapping("/{id}/media")
     public ResponseEntity<ImageDTO> createImage(
             @PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
         if (imageFile.isEmpty()) {

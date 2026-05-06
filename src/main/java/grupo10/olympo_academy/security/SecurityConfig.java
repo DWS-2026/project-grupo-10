@@ -200,12 +200,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,
                         "/api/v1/classes",
                         "/api/v1/facilities",
-                        "/api/v1/images/{id}/images")
+                        "/api/v1/images/{id}/media")
                 .hasRole("ADMIN")
 
                 .requestMatchers(HttpMethod.PUT,
                         "/api/v1/classes/{id}",
-                        "/api/v1/facilities/{id}",
+                        "/api/v1/facilities/{id}/**",
                         "/api/v1/users/admin/{id}",
                         "/api/v1/users/admin/{id}/image",
                         "/api/v1/images/{id}/media")
@@ -214,6 +214,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE,
                         "/api/v1/classes/{id}",
                         "/api/v1/facilities/{id}",
+                        "/api/v1/facilities/{id}/images",
                         "/api/v1/users/admin/{id}",
                         "/api/v1/images/{id}")
                 .hasRole("ADMIN")
@@ -225,7 +226,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,
                         "/api/v1/documents/users/**",
                         "/api/v1/users",
-                        "/api/v1/users/admin/{id}")
+                        "/api/v1/users/admin/{id}",
+                        "/api/v1/images/{id}/media")
                 .hasRole("ADMIN")
 
                 .anyRequest().authenticated()

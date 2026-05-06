@@ -1,14 +1,19 @@
 package grupo10.olympo_academy.controllers.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -20,23 +25,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import grupo10.olympo_academy.dto.FacilityDTO;
 import grupo10.olympo_academy.dto.FacilityMapper;
+import grupo10.olympo_academy.dto.ImageDTO;
+import grupo10.olympo_academy.dto.ImageMapper;
 import grupo10.olympo_academy.dto.ReviewDTO;
 import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.services.FacilityService;
+import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
-
 
 @RestController
 @RequestMapping("/api/v1/facilities")
 public class FacilityRestController {
-
 
     @Autowired
     private FacilityService facilityService;
@@ -48,6 +57,11 @@ public class FacilityRestController {
     @Autowired
     private ReviewMapper reviewMapper;
 
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private ImageMapper imageMapper;
 
     @GetMapping
     public ResponseEntity<Page<FacilityDTO>> getAll(@PageableDefault(size = 4, sort = "id") Pageable pageable) {
@@ -162,17 +176,83 @@ public class FacilityRestController {
         Optional<Review> reviewOpt = reviewService.getById(reviewId);
         if (reviewOpt.isPresent()) {
             boolean bool = reviewService.userReview(reviewOpt.get(), principal.getName());
-            if (bool ) {
-                Review review= reviewOpt.get();
+            if (bool) {
+                Review review = reviewOpt.get();
                 reviewService.deleteReview(reviewId);
                 return ResponseEntity.ok(reviewMapper.toDTO(review));
-            }else {
+            } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } else {
             return ResponseEntity.notFound().build();
         }
 
+    }
+    ////////// IMAGES///////////
+
+    @GetMapping("/{id}/images")
+    public ResponseEntity<Object> getImageFacility(@PathVariable long id) throws SQLException, IOException {
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+        if (facilityOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Facility facility = facilityOpt.get();
+        FacilityDTO dto = facilityMapper.toDTO(facility);
+        Long idImage = dto.imageId();
+        if (idImage == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Resource imageFile = imageService.getImageFile(idImage);
+
+        MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
+
+        return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+    }
+
+    @DeleteMapping("/{id}/images")
+    public ResponseEntity<ImageDTO> deleteFacilityImage(@PathVariable long id) throws IOException {
+
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+        if (facilityOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Facility facility = facilityOpt.get();
+        FacilityDTO dto = facilityMapper.toDTO(facility);
+        Long idImage = dto.imageId();
+        if (idImage == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Image image = imageService.getImage(idImage);
+
+        facilityService.removeImageFacility(id, image);
+        imageService.deleteImage(idImage);
+        return ResponseEntity.ok(imageMapper.toDTO(image));
+    }
+
+    @PutMapping("/{id}/images")
+    public ResponseEntity<Object> replaceFacilityImage(@PathVariable long id,@RequestParam MultipartFile imageFile) 
+    throws IOException {
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+        if (facilityOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Facility facility = facilityOpt.get();
+        FacilityDTO dto = facilityMapper.toDTO(facility);
+        Long idImage = dto.imageId();
+        if (idImage == null) {
+            Image image;
+            if (!imageFile.isEmpty()) {
+                image = imageService.createImage(imageFile.getInputStream());
+                facility.setFacilityImage(image);
+                facilityService.saveFacility(facility);
+            return ResponseEntity.noContent().build();
+            }else{
+                return ResponseEntity.badRequest().build();
+            }
+        }
+
+        imageService.replaceImageFile(idImage, imageFile.getInputStream());
+        return ResponseEntity.noContent().build();
     }
 
 }

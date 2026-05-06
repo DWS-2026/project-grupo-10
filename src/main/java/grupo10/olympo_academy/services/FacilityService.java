@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.repository.FacilityRepository;
 import java.util.List;
 import java.util.Optional;
@@ -61,5 +62,10 @@ public class FacilityService {
     // REST: GET FACILITIES
     public Page<Facility> getFacilities(Pageable pageable) {
         return facilityRepository.findAll(pageable);
+    }
+    public void removeImageFacility(Long facId, Image image){
+        Optional <Facility> facilityOpt= facilityRepository.findById(facId);
+        Facility facility = facilityOpt.get();
+        facility.setFacilityImage(null);       
     }
 }
