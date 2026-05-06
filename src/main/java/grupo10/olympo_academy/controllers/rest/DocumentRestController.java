@@ -109,7 +109,7 @@ public class DocumentRestController {
     // ADMIN ENDPOINTS
     // ==============================
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<DocumentDTO> getUserDocument(
             @PathVariable Long id,
             Principal principal) {
@@ -127,7 +127,7 @@ public class DocumentRestController {
         return ResponseEntity.ok(documentMapper.toDTO(doc));
     }
 
-    @GetMapping(value = "/user/{id}/view", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/users/{id}/view", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<Resource> viewUserDocument(
             @PathVariable Long id,
             Principal principal) throws IOException {

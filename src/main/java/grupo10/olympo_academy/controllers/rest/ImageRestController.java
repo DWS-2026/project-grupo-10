@@ -34,14 +34,9 @@ public class ImageRestController {
     @Autowired
     private ImageMapper imageMapper;
 
-    @GetMapping("/{id}")
-    public ImageDTO getImage(@PathVariable long id) {
-        return imageMapper.toDTO(imageService.getImage(id));
-    }
-
-    @GetMapping("/{id}/media") //vulnerabilidad crítica - path traversal
-    //GET /classes/{classId}/images/{imageId}
-    //GET /facilities/{facilityId}/images/{imageId}
+    @GetMapping("/{id}/media") // vulnerabilidad crítica - path traversal
+    // GET /classes/{classId}/images/{imageId}
+    // GET /facilities/{facilityId}/images/{imageId}
     public ResponseEntity<Object> getImageFile(@PathVariable long id)
             throws SQLException, IOException {
         Resource imageFile = imageService.getImageFile(id);
@@ -54,7 +49,7 @@ public class ImageRestController {
                 .body(imageFile);
     }
 
-    @PostMapping("/{id}/images/") 
+    @PostMapping("/{id}/images")
     public ResponseEntity<ImageDTO> createImage(
             @PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
         if (imageFile.isEmpty()) {
@@ -74,7 +69,7 @@ public class ImageRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}") 
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable long id) {
         Image image = imageService.getImage(id);
 
@@ -83,6 +78,6 @@ public class ImageRestController {
         }
 
         imageService.deleteImage(id);
-        return ResponseEntity.noContent().build(); 
+        return ResponseEntity.noContent().build();
     }
 }
