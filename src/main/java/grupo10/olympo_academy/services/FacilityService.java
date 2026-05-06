@@ -1,6 +1,8 @@
 package grupo10.olympo_academy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import grupo10.olympo_academy.model.Facility;
@@ -54,5 +56,10 @@ public class FacilityService {
 
     public Optional<Facility> getFacilityByName(String name) {
         return facilityRepository.findByName(name);
+    }
+
+    // REST: GET FACILITIES
+    public Page<Facility> getFacilities(Pageable pageable) {
+        return facilityRepository.findAll(pageable);
     }
 }

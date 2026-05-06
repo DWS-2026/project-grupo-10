@@ -9,6 +9,9 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,11 +55,14 @@ public class FacilityRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FacilityDTO>> getAll() {
+    public ResponseEntity<Page<FacilityDTO>> getAll(@PageableDefault(size = 4, sort = "id") Pageable pageable) {
         try {
-            List<Facility> facilities = facilityService.getAllFacilities();
-            List<FacilityDTO> dtoList = facilityMapper.toDTOs(facilities);
-            return ResponseEntity.ok(dtoList);
+            Page<Facility> facilityPage = facilityService.getFacilities(pageable);
+            if (pageable.getPageNumber() >= facilityPage.getTotalPages()) {
+                return ResponseEntity.notFound().build();
+            }
+            Page<FacilityDTO> dtoPage = facilityPage.map(facilityMapper::toDTO);
+            return ResponseEntity.ok(dtoPage);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

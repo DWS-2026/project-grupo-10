@@ -3,6 +3,9 @@ package grupo10.olympo_academy.controllers.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,13 +40,15 @@ public class ClassesRestController {
     @Autowired
     private ReviewMapper reviewMapper;
 
-
     @GetMapping
-    public ResponseEntity<List<ClassesDTO>> getAll() {
+    public ResponseEntity<Page<ClassesDTO>> getAll(@PageableDefault(size = 4, sort = "id") Pageable pageable) {
         try {
-            List<Classes> classesList = classesService.getAllClasses();
-            List<ClassesDTO> dtoList = classesMapper.toDTOs(classesList);
-            return ResponseEntity.ok(dtoList);
+            Page<Classes> classesPage = classesService.getClasses(pageable);
+            if (pageable.getPageNumber() >= classesPage.getTotalPages()) {
+                return ResponseEntity.notFound().build(); 
+            }
+            Page<ClassesDTO> dtoPage = classesPage.map(classesMapper::toDTO);
+            return ResponseEntity.ok(dtoPage);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -111,8 +116,9 @@ public class ClassesRestController {
             return ResponseEntity.badRequest().build();
         }
     }
+
     @DeleteMapping("/{id}/review/{reviewId}")
-    public ResponseEntity<Void> deleteReview (@PathVariable Long reviewId) {
+    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId) {
         try {
             reviewService.deleteReview(reviewId);
             return ResponseEntity.ok().build();

@@ -109,10 +109,6 @@ public class DocumentRestController {
     // ADMIN ENDPOINTS
     // ==============================
 
-    private boolean isAdmin(User user) {
-        return user.getRoles() != null && user.getRoles().contains("ADMIN");
-    }
-
     @GetMapping("/user/{id}")
     public ResponseEntity<DocumentDTO> getUserDocument(
             @PathVariable Long id,
@@ -121,12 +117,7 @@ public class DocumentRestController {
         if (principal == null) {
             return ResponseEntity.status(401).build();
         }
-
-        User requester = userService.findByEmail(principal.getName());
-        if (!isAdmin(requester)) {
-            return ResponseEntity.status(403).build();
-        }
-
+        
         Document doc = documentService.findDocumentByUserId(id);
 
         if (doc == null) {
@@ -143,11 +134,6 @@ public class DocumentRestController {
 
         if (principal == null) {
             return ResponseEntity.status(401).build();
-        }
-
-        User requester = userService.findByEmail(principal.getName());
-        if (!isAdmin(requester)) {
-            return ResponseEntity.status(403).build();
         }
 
         Document doc = documentService.findDocumentByUserId(id);

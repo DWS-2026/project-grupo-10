@@ -205,6 +205,9 @@ public class UserController {
 
         try {
             User user = userService.getUserProfile(principal.getName());
+            if (dniFile.getSize() > 10 * 1024 * 1024) { // 10MB limit
+                throw new IllegalArgumentException("El archivo es demasiado grande (máximo 10MB)");
+            }
             documentService.saveDocumentForUser(dniFile, user);
             redirectAttributes.addFlashAttribute("success", "DNI subido correctamente");
             return "redirect:/userProfile";
