@@ -28,6 +28,7 @@ import grupo10.olympo_academy.dto.UserRegisterDTO;
 import grupo10.olympo_academy.dto.PasswordChangeDTO;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ImageService;
+import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -43,6 +44,9 @@ public class UserRestController {
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -161,6 +165,24 @@ public class UserRestController {
 
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    //delete your own reservations
+    @DeleteMapping("/reservations/{id}")
+    public ResponseEntity<Void> deleteReservation (@PathVariable Long id, HttpServletRequest request){
+
+        Principal principal = request.getUserPrincipal();
+        if(principal != null){
+            try {
+                User user = userService.getUserProfile(principal.getName());
+                reservationService.cancelReservation(id,user);
+                return ResponseEntity.ok().build();
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
