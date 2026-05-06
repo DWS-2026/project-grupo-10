@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.repository.ClassesRepository;
 
 
@@ -106,6 +107,12 @@ public class ClassesService {
 
     public Page<Classes> getClasses(Pageable pageable) {
         return classesRepository.findAll(pageable);
+    }
+
+     public void removeImageClass(Long classId, Image image){
+        Optional <Classes> classesOpt= classesRepository.findById(classId);
+        Classes classes = classesOpt.get();
+        classes.setClassesImage(null);       
     }
 }
 

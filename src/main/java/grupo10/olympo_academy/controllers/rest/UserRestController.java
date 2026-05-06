@@ -33,6 +33,7 @@ import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -172,7 +173,7 @@ public class UserRestController {
     }
 
     @PostMapping 
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserRegisterDTO userRegisterDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
         try {
             User newUser = userMapper.toEntity(userRegisterDTO);
             User createdUser = userService.register(newUser);

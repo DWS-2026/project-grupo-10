@@ -1,16 +1,21 @@
 package grupo10.olympo_academy.controllers.rest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +24,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import grupo10.olympo_academy.dto.ClassesDTO;
 import grupo10.olympo_academy.dto.ClassesMapper;
+import grupo10.olympo_academy.dto.ImageDTO;
+import grupo10.olympo_academy.dto.ImageMapper;
 import grupo10.olympo_academy.dto.ReviewDTO;
 import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
+import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
+import grupo10.olympo_academy.services.ImageService;
 import grupo10.olympo_academy.services.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -52,6 +63,12 @@ public class ClassesRestController {
 
     @Autowired
     private FacilityService facilityService;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private ImageMapper imageMapper;
 
     @GetMapping
     public ResponseEntity<Page<ClassesDTO>> getAll(
@@ -194,5 +211,72 @@ public class ClassesRestController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    ////////// IMAGES///////////
+
+    @GetMapping("/{id}/images")
+    public ResponseEntity<Object> getImageClass(@PathVariable long id) throws SQLException, IOException {
+        Optional<Classes> classesOpt = classesService.getClassById(id);
+        if (classesOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Classes classes = classesOpt.get();
+        ClassesDTO dto = classesMapper.toDTO(classes);
+        Long idImage = dto.imageId();
+        if (idImage == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Resource imageFile = imageService.getImageFile(idImage);
+
+        MediaType mediaType = MediaTypeFactory.getMediaType(imageFile).orElse(MediaType.IMAGE_JPEG);
+
+        return ResponseEntity.ok().contentType(mediaType).body(imageFile);
+    }
+
+    @DeleteMapping("/{id}/images")
+    public ResponseEntity<ImageDTO> deleteClassImage(@PathVariable long id) throws IOException {
+
+        Optional<Classes> classesOpt = classesService.getClassById(id);
+        if (classesOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Classes classes = classesOpt.get();
+        ClassesDTO dto = classesMapper.toDTO(classes);
+        Long idImage = dto.imageId();
+        if (idImage == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Image image = imageService.getImage(idImage);
+
+        classesService.removeImageClass(id, image);
+        imageService.deleteImage(idImage);
+        return ResponseEntity.ok(imageMapper.toDTO(image));
+    }
+
+    @PutMapping("/{id}/images")
+    public ResponseEntity<Object> replaceClassImage(@PathVariable long id,@RequestParam MultipartFile imageFile) 
+    throws IOException {
+        Optional<Classes> classesOpt = classesService.getClassById(id);
+        if (classesOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Classes classes = classesOpt.get();
+        ClassesDTO dto = classesMapper.toDTO(classes);
+        Long idImage = dto.imageId();
+        if (idImage == null) {
+            Image image;
+            if (!imageFile.isEmpty()) {
+                image = imageService.createImage(imageFile.getInputStream());
+                classes.setClassesImage(image);
+                classesService.saveClass(classes);
+            return ResponseEntity.noContent().build();
+            }else{
+                return ResponseEntity.badRequest().build();
+            }
+        }
+
+        imageService.replaceImageFile(idImage, imageFile.getInputStream());
+        return ResponseEntity.noContent().build();
     }
 }
