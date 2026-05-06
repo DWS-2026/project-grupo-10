@@ -14,6 +14,7 @@ import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
 import grupo10.olympo_academy.services.DocumentService;
 
+import java.io.InputStream;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -318,11 +319,21 @@ public class UserController {
             facility.setType(tipo);
 
             // Image
-            if (!photoFile.isEmpty()) {
-                Image image = imageService.createImage(photoFile.getInputStream());
-                facility.setFacilityImage(image);
-            }
 
+            Image image;
+
+            if (!photoFile.isEmpty()) {
+                image = imageService.createImage(photoFile.getInputStream());
+            } else {
+                InputStream defaultImageStream = getClass()
+                        .getResourceAsStream("/static/assets/images/imagenPorDefecto.jpeg");
+                if (defaultImageStream == null) {
+                    throw new IllegalStateException("No se encontró la imagen por defecto");
+                }
+
+                image = imageService.createImage(defaultImageStream);
+            }
+            facility.setFacilityImage(image);
             // Save
             facilityService.saveFacility(facility);
 
@@ -585,11 +596,20 @@ public class UserController {
             }
             classes.setFacility(facilityOpt.get());
 
-            // Image
+            Image image;
+
             if (!photoFile.isEmpty()) {
-                Image image = imageService.createImage(photoFile.getInputStream());
-                classes.setClassesImage(image);
+                image = imageService.createImage(photoFile.getInputStream());
+            } else {
+                InputStream defaultImageStream = getClass()
+                        .getResourceAsStream("/static/assets/images/imagenPorDefecto.jpeg");
+                if (defaultImageStream == null) {
+                    throw new IllegalStateException("No se encontró la imagen por defecto");
+                }
+                image = imageService.createImage(defaultImageStream);
             }
+            
+            classes.setClassesImage(image);
 
             classesService.saveClass(classes);
             return "redirect:/admin";
