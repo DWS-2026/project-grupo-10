@@ -87,9 +87,17 @@
                 {{#facilities}}
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
+
                         <a href="/facilities/{{id}}">
+                            {{#facilityImage}}
                             <img class="img-fluid rounded mb-3 facilitiesFormat hover-effect"
                                 src="/images/id/{{facilityImage.id}}" alt="{{name}}" />
+                            {{/facilityImage}}
+
+                            {{^facilityImage}}
+                            <img class="img-fluid rounded mb-3 facilitiesFormat hover-effect"
+                                src="/assets/images/imagenPorDefecto.jpeg" alt="{{name}}" />
+                            {{/facilityImage}}
                         </a>
 
                         <div class="portfolio-caption">
@@ -119,6 +127,12 @@
                             <img class="commonTarjet rounded mb-3 hover-effect" src="/images/id/{{id}}"
                                 alt="{{name}}" />
                             {{/classesImage}}
+
+                            {{^classesImage}}
+                            <img class="commonTarjet rounded mb-3 hover-effect"
+                                src="/assets/images/imagenPorDefecto.jpeg" alt="{{name}}" />
+                            {{/classesImage}}
+                            
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">{{name}}</div>
@@ -219,7 +233,7 @@
                         {{/reservas}}
                     </select>
                 </div>
-                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <input type="hidden" name="_csrf" value="{{token}}" />
                 <button type="submit" class="btn btn-primary mt-4">Enviar consulta</button>
             </form>
         </div>
