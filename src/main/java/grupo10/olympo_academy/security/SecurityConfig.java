@@ -174,20 +174,26 @@ public class SecurityConfig {
 
 						.requestMatchers(HttpMethod.POST,
 								"/classes",
-								"/facilities")
+								"/facilities",
+								"/images/{id}/images"
+							)
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.PUT,
 								"/classes/{id}",
 								"/facilities/{id}",
 								"/users/admin/{id}",
-								"/users/admin/{id}/image")
+								"/users/admin/{id}/image",
+								"/images/{id}/media"
+							)
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.DELETE,
 								"/classes/{id}",
 								"/facilities/{id}",
-								"/users/admin/{id}")
+								"/users/admin/{id}",
+								"/images/{id}"
+							)
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.PATCH,
@@ -195,7 +201,7 @@ public class SecurityConfig {
 						.hasRole("ADMIN")
 
 						.requestMatchers(HttpMethod.GET,
-								"/documents/user/**",
+								"/documents/users/**",
 								"/users",
 								"/users/admin/{id}")
 						.hasRole("ADMIN")
