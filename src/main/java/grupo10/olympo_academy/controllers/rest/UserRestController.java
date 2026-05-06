@@ -25,10 +25,13 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 import grupo10.olympo_academy.dto.UserDTO;
 import grupo10.olympo_academy.dto.UserDetailDTO;
 import grupo10.olympo_academy.dto.UserMapper;
+import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.dto.UserRegisterDTO;
 import grupo10.olympo_academy.dto.PasswordChangeDTO;
+import grupo10.olympo_academy.dto.ReviewDTO;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ImageService;
+import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
 
 @RestController
@@ -42,7 +45,13 @@ public class UserRestController {
     private UserMapper userMapper;
 
     @Autowired
+    private ReviewMapper reviewMapper;
+
+    @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -143,6 +152,23 @@ public class UserRestController {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+    }
+
+   @GetMapping("/me/reviews")
+    public ResponseEntity<List<ReviewDTO>> getMyReviews(Principal principal) {
+
+        if (principal != null) {
+            try {
+                User user = userService.getUserProfile(principal.getName());
+                List<ReviewDTO> dto = reviewMapper.toDTOs(
+                        reviewService.getReviewsByUser(user.getId())
+                );
+                return ResponseEntity.ok(dto);
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+            }
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @PostMapping 

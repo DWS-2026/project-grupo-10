@@ -321,9 +321,9 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 |:------------: |:------------:| :------------:|
 |1| [REST API implementation for users](https://github.com/DWS-2026/project-grupo-10/commit/c01982dd6da80866cedc637ab498a7e6619816e1)  | [UserRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/UserRestController.java)   |
 |2| [REST API implementation for images](https://github.com/DWS-2026/project-grupo-10/commit/4353f5a4b6aead91beba7e04eeb1d0bda45f7358)  | [ImageRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ImageRestController.java)   |
-|3| [Security configuration with jwt addition](https://github.com/DWS-2026/project-grupo-10/commit/2f201c8f2512fc06919ccea2b3d62b2908684762)  | [jwt](https://github.com/DWS-2026/project-grupo-10/tree/main/src/main/java/grupo10/olympo_academy/security/jwt)   |
-|4| [Pagination in REST API implementation](https://github.com/DWS-2026/project-grupo-10/commit/5c03b68d431fc5f78c0d0bbaf618db2fd45eb6d2)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)<br>[FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java) |   
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|3| [Pagination in REST API implementation](https://github.com/DWS-2026/project-grupo-10/commit/5c03b68d431fc5f78c0d0bbaf618db2fd45eb6d2)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)<br>[FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java) |
+|4| [REST API security configuration implementation](https://github.com/DWS-2026/project-grupo-10/commit/ab287a23ad8339002adf8326b9e80478a7e94058)  | [SecurityConfig](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/security/SecurityConfig.java)   |  
+|5| [Limit login attempts implementation](https://github.com/DWS-2026/project-grupo-10/commit/e574bd22c1e2d94f5e64adec703a1edf30491a1c)  | [LoginAttemptService](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/auth/LoginAttemptService.java)<br>[UserLoginService](src/main/java/grupo10/olympo_academy/security/jwt/UserLoginService.java) |
 
 ---
 
@@ -333,9 +333,9 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 |:------------: |:------------:| :------------:|
 |1| [REST API implementation for facilities](https://github.com/DWS-2026/project-grupo-10/commit/05f03ba156dc33152cc9094ede19f1dbb07627f2)  | [FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java)   |
 |2| [REST API implementation for reviews](https://github.com/DWS-2026/project-grupo-10/commit/6a31d437b3cf2621a6e789d9e664911da5fc926a)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)<br>[FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java)|
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|3| [Improve FacilityRestController (optionals + headers)](https://github.com/DWS-2026/project-grupo-10/commit/bb205aee42f726000bee3873d5201792b8cf5610)  | [FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java)   |
+|4| [Prevent IDOR in image access by replacing /images/{id} with facility-based endpoints](https://github.com/DWS-2026/project-grupo-10/commit/7d2bb0fc87e69d52d2b6b729893a57a28d193ab6)  | [FacilityRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/FacilityRestController.java)   |
+|5| [Improve DocumentRestController and ReservationRestController (optionals + headers)](https://github.com/DWS-2026/project-grupo-10/commit/9b3de4db77631e1f55fecc5fd11f9ab1618d278e)  | [DocumentRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/DocumentRestController.java)<br>[ReservationRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ReservationRestController.java)   |
 
 ---
 
@@ -345,9 +345,9 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 |:------------: |:------------:| :------------:|
 |1| [REST API implementation for classes](https://github.com/DWS-2026/project-grupo-10/commit/65ece63b33b01f79fd52ed8125a4a2ac74da091f)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)   |
 |2| [REST API implementation for admin](https://github.com/DWS-2026/project-grupo-10/commit/4e8d09eee52a069a425607b44d6c967995f7b9f6)  | [UserRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/UserRestController.java)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|3| [CSP applied to patch possible Injection Vulnerabilites (XSS of all types)](https://github.com/DWS-2026/project-grupo-10/commit/1683d2f86b4495dbdf8d29d1fdc777cea847e8fa) [SecurityConfig](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/security/SecurityConfig.java)   |
+|4| [Prevent IDOR in image access by replacing /images/{id} with classes-based endpoints](https://github.com/DWS-2026/project-grupo-10/commit/b47eaa07d0130c1a2e6d8f6e98a8f7431619c3b1)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)   |
+|5| [Improve ClassesRestController (optionals + headers)](https://github.com/DWS-2026/project-grupo-10/commit/a3a846233318b182dd59366f9dc578937a5a4bb6)  | [ClassesRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ClassesRestController.java)  |
 
 ---
 
@@ -359,4 +359,4 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 |2| [REST API implementation for reservations](https://github.com/DWS-2026/project-grupo-10/commit/0b1cad331ba6d31bb5f99137136cab9d2353a048)  | [ReservationRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ReservationRestController.java)   |
 |3| [Document management with file storage on disk implementation](https://github.com/DWS-2026/project-grupo-10/commit/776f7c1cf5e56b19738129ed281e989fa26dfdb5)  | [DocumentRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/DocumentRestController.java)<br>[UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/web/UserController.java)|
 |4| [Secure file upload validation and stored XSS prevention](https://github.com/DWS-2026/project-grupo-10/commit/53e34aa549ae8f80aec80984c6dcfcac67b4203f)  | [DocumentService](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/services/DocumentService.java)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|5| [OpenAPI documentation addition](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
