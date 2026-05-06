@@ -26,8 +26,10 @@ import grupo10.olympo_academy.dto.ClassesMapper;
 import grupo10.olympo_academy.dto.ReviewDTO;
 import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.model.Classes;
+import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.services.ClassesService;
+import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -46,6 +48,9 @@ public class ClassesRestController {
 
     @Autowired
     private ReviewMapper reviewMapper;
+
+    @Autowired
+    private FacilityService facilityService;
 
     @GetMapping
     public ResponseEntity<Page<ClassesDTO>> getAll(
@@ -82,27 +87,35 @@ public class ClassesRestController {
     public ResponseEntity<ClassesDTO> create(@RequestBody ClassesDTO dto) {
 
         Classes classes = classesMapper.toDomain(dto);
+
+        if (dto.facilityId() != null) {
+            Facility facility = facilityService.getFacilityById(dto.facilityId())
+                    .orElseThrow(() -> new RuntimeException("Facility not found"));
+            classes.setFacility(facility);
+        }
+
         Classes saved = classesService.saveClass(classes);
-        dto = classesMapper.toDTO(saved);
 
         URI location = fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.id()).toUri();
+                .buildAndExpand(saved.getId()).toUri();
 
-        return ResponseEntity.created(location).body(dto);
+        return ResponseEntity.created(location).body(classesMapper.toDTO(saved));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClassesDTO> update(@PathVariable Long id, @RequestBody ClassesDTO dto) {
 
-        Optional<Classes> existing = classesService.getClassById(id);
+        Classes updated = classesMapper.toDomain(dto);
 
-        if (existing.isPresent()) {
-            Classes updated = classesMapper.toDomain(dto);
-            updated = classesService.updateClass(id, updated);
-            return ResponseEntity.ok(classesMapper.toDTO(updated));
-        } else {
-            return ResponseEntity.notFound().build();
+        if (dto.facilityId() != null) {
+            Facility facility = facilityService.getFacilityById(dto.facilityId())
+                    .orElseThrow(() -> new RuntimeException("Facility not found"));
+            updated.setFacility(facility);
         }
+
+        Classes saved = classesService.updateClass(id, updated);
+
+        return ResponseEntity.ok(classesMapper.toDTO(saved));
     }
 
     @DeleteMapping("/{id}")
