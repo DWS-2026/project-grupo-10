@@ -12,10 +12,15 @@ import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.repository.ClassesRepository;
 import grupo10.olympo_academy.repository.FacilityRepository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
+
+    private final FacilityService facilityService;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -26,6 +31,13 @@ public class ReviewService {
     @Autowired
     private FacilityRepository facilityRepository;
 
+    @Autowired
+    private UserService userService;
+
+    ReviewService(FacilityService facilityService) {
+        this.facilityService = facilityService;
+    }
+
     public Review saveReview(Review review) {
         return reviewRepository.save(review);
     }
@@ -34,15 +46,15 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    public List<Review> getReviewsByFacility(Long facilityId) {
+    public Optional<List<Review>> getReviewsByFacility(Long facilityId) {
         return reviewRepository.findByFacilityId(facilityId);
     }
 
-    public List<Review> getReviewsByClasses(Long classesId) {
+    public Optional<List<Review>> getReviewsByClasses(Long classesId) {
         return reviewRepository.findByClassesId(classesId);
     }
 
-    @Transactional 
+    @Transactional
     public void deleteReview(Long id) {
         // Obtain the review before deleting it
         Review review = reviewRepository.findById(id).orElse(null);
@@ -71,8 +83,8 @@ public class ReviewService {
         return reviewRepository.findByUserId(user.getId());
     }
 
-    public Review getById(Long id) {
-        return reviewRepository.findById(id).orElse(null);
+    public Optional<Review> getById(Long id) {
+        return reviewRepository.findById(id);
     }
 
     public List<Review> getReviewsByUserAndClasses(User user, Long classesId) {
@@ -83,4 +95,56 @@ public class ReviewService {
         return reviewRepository.findByUserIdAndFacilityId(user.getId(), facilityId);
     }
 
+    public boolean userReview(Review review, String email) {
+        User user = userService.findByEmail(email);
+        Long id = user.getId();
+        Long idUserReview = review.getUser().getId();
+        boolean isAdmin = isAdmin(user);
+        if (idUserReview != id && !isAdmin) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean isAdmin(User user) {
+        return user.getRoles() != null && user.getRoles().contains("ADMIN");
+    }
+    public Review  buildReviewF(Review review, String email, Long id){
+        User user = userService.findByEmail(email);
+        review.setUser(user);
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        review.setDate(now.format(formatter));
+        Optional <Facility> facilityOpt = facilityService.getFacilityById(id);
+        if(facilityOpt.isPresent () ){
+            Facility facility = facilityOpt.get();
+            review.setFacility(facility);
+        }else{
+            return null;
+        }
+        return review;
+
+    }
+
+    public Review buildReviewC(Review review, String email, Long id) {
+
+    User user = userService.findByEmail(email);
+    review.setUser(user);
+
+    LocalDate now = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    review.setDate(now.format(formatter));
+
+    Optional<Classes> classesOpt = classesRepository.findById(id);
+
+    if (classesOpt.isPresent()) {
+        Classes classes = classesOpt.get();
+        review.setClasses(classes);
+    } else {
+        return null;
+    }
+
+    return review;
+}
 }

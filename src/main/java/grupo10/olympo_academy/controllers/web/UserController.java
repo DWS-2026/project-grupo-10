@@ -18,6 +18,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -145,7 +146,8 @@ public class UserController {
         try {
             userService.updateProfile(currentUserEmail, name, username, phone);
         } catch (Exception e) {
-            //this line gets the error message from UserService and adds it to the model, so we can show it in the view
+            // this line gets the error message from UserService and adds it to the model,
+            // so we can show it in the view
             model.addAttribute("error", e.getMessage());
             return "userProfile";
         }
@@ -170,7 +172,8 @@ public class UserController {
             return "redirect:/userProfile";
 
         } catch (Exception e) {
-            //this line gets the error message from UserService and adds it to the model, so we can show it in the view
+            // this line gets the error message from UserService and adds it to the model,
+            // so we can show it in the view
             model.addAttribute("error", e.getMessage());
             return "userProfile";
         }
@@ -235,7 +238,6 @@ public class UserController {
                 .body(resource);
     }
 
-
     /////////////////////////////////////////////////////////////////// REGISTER
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/register")
@@ -279,7 +281,6 @@ public class UserController {
     //////////////////////////////////////// Documents
     //////////////////////////////////////////////////////////////////////////////////////////////
 
-
     @GetMapping("/admin/user/{id}/document/view")
     public ResponseEntity<Resource> viewUserDocumentAsAdmin(@PathVariable Long id) throws Exception {
         User user = userService.getById(id);
@@ -315,7 +316,7 @@ public class UserController {
             facility.setName(name);
             facility.setDescription(description);
             facility.setType(tipo);
-            
+
             // Image
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
@@ -344,11 +345,12 @@ public class UserController {
 
         try {
             // We look for the facility in the database
-            Facility facility = facilityService.getFacilityById(id);
-            if (facility == null) {
+            Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+            if (!facilityOpt.isPresent()) {
                 model.addAttribute("error", "La instalación no existe");
                 return "admin";
             }
+            Facility facility = facilityOpt.get();
 
             // We update the fields
             facility.setName(name);
@@ -379,19 +381,19 @@ public class UserController {
     @GetMapping("/admin/facility/delete/{id}")
     public String deleteFacility(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
 
-        Facility facility = facilityService.getFacilityById(id);
-
-        if (facility == null) {
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+        if (!facilityOpt.isPresent()) {
             redirectAttributes.addFlashAttribute("error", "La instalación no existe");
             return "redirect:/admin";
         }
+        Facility facility = facilityOpt.get();
 
         // Before deleting the facility, we check if it has active reservations. If it
         // does, we prevent deletion and show an error message.
         boolean hasActiveReservations = reservationService.hasActiveReservations(facility);
 
         if (hasActiveReservations) {
-            redirectAttributes.addFlashAttribute("error","No se puede eliminar: tiene reservas activas.");
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar: tiene reservas activas.");
             return "redirect:/admin";
         }
 
@@ -399,7 +401,7 @@ public class UserController {
         boolean hasAssociatedClasses = classesService.hasClassesUsingFacility(facility);
 
         if (hasAssociatedClasses) {
-            redirectAttributes.addFlashAttribute("error","No se puede eliminar: tiene clases asociadas.");
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar: tiene clases asociadas.");
             return "redirect:/admin";
         }
 
@@ -509,7 +511,8 @@ public class UserController {
         model.addAttribute("adminView", true);
         return "userProfile";
     }
-                            /////////////////////Reservations///////////////////////////
+
+    ///////////////////// Reservations///////////////////////////
     @PostMapping("/admin/reservations/update/{id}")
     public String updateReservationAsAdmin(
             @PathVariable Long id,
@@ -570,21 +573,25 @@ public class UserController {
             Model model) {
 
         try {
-
+            // Duration
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
 
-            // Set the facility
-            Facility selectedFacility = facilityService.getFacilityById(facility);
-            classes.setFacility(selectedFacility);
+            // Facility
+            Optional<Facility> facilityOpt = facilityService.getFacilityById(facility);
+            if (!facilityOpt.isPresent()) {
+                model.addAttribute("error", "La instalación no existe");
+                return "admin";
+            }
+            classes.setFacility(facilityOpt.get());
 
+            // Image
             if (!photoFile.isEmpty()) {
                 Image image = imageService.createImage(photoFile.getInputStream());
                 classes.setClassesImage(image);
             }
 
             classesService.saveClass(classes);
-
             return "redirect:/admin";
 
         } catch (Exception e) {
@@ -603,18 +610,18 @@ public class UserController {
             Model model) {
 
         try {
-            // Validate ID
             if (id == null || id <= 0) {
                 model.addAttribute("error", "ID de clase no válido");
                 return "admin";
             }
 
-            // Fetch existing class
-            Classes classes = classesService.getClassById(id);
-            if (classes == null) {
+            Optional<Classes> classesOpt = classesService.getClassById(id);
+            if (!classesOpt.isPresent()) {
                 model.addAttribute("error", "La clase no existe");
                 return "admin";
             }
+
+            Classes classes = classesOpt.get();
 
             // Update fields
             classes.setName(classesModify.getName());
@@ -627,17 +634,14 @@ public class UserController {
             int durationMinutes = convertDurationToMinutes(durationRAW);
             classes.setDuration(durationMinutes);
 
-            // Update facility if provided
+            // Update facility
             if (facility != null && facility > 0) {
-                Facility selectedFacility = facilityService.getFacilityById(facility);
-                if (selectedFacility != null) {
-                    classes.setFacility(selectedFacility);
-                }
+                Optional<Facility> facilityOpt = facilityService.getFacilityById(facility);
+                facilityOpt.ifPresent(classes::setFacility);
             }
 
-            // Update image if a new one is uploaded
+            // Update image
             if (photoFile != null && !photoFile.isEmpty()) {
-                // Delete the old image if it exists
                 if (classes.getClassesImage() != null) {
                     imageService.deleteImage(classes.getClassesImage().getId());
                 }
@@ -646,7 +650,6 @@ public class UserController {
             }
 
             classesService.saveClass(classes);
-
             return "redirect:/admin";
 
         } catch (Exception e) {
@@ -671,12 +674,14 @@ public class UserController {
     @GetMapping("/admin/classes/delete/{id}")
     public String deleteClasses(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
 
-        Classes classes = classesService.getClassById(id);
+        Optional<Classes> classesOpt = classesService.getClassById(id);
 
-        if (classes == null) {
+        if (!classesOpt.isPresent()) {
             redirectAttributes.addFlashAttribute("error", "La clase no existe");
             return "redirect:/admin";
         }
+
+        Classes classes = classesOpt.get();
 
         boolean hasActiveReservations = reservationService.hasActiveReservationsForClasses(classes);
 
@@ -688,24 +693,21 @@ public class UserController {
         // Delete associated image
         if (classes.getClassesImage() != null) {
             Long imageId = classes.getClassesImage().getId();
-            // Set the reference to null and save to avoid transient reference issues
             classes.setClassesImage(null);
             classesService.saveClass(classes);
             imageService.deleteImage(imageId);
         }
 
-        // Delete class
         classesService.deleteClass(id);
-
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/reviews/delete/{id}")
     public String deleteReviewAsAdmin(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 
-        Review review = reviewService.getById(id);
+        Optional<Review> reviewOpt = reviewService.getById(id);
 
-        if (review == null) {
+        if (!reviewOpt.isPresent()) {
             redirectAttributes.addFlashAttribute("errorAdmin", "La reseña no existe.");
             return "redirect:/admin";
         }
@@ -713,7 +715,6 @@ public class UserController {
         reviewService.deleteReview(id);
 
         redirectAttributes.addFlashAttribute("successAdmin", "Reseña eliminada correctamente.");
-
         return "redirect:/admin";
     }
 }

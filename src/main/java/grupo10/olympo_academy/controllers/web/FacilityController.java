@@ -3,6 +3,7 @@ package grupo10.olympo_academy.controllers.web;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,11 +36,12 @@ public class FacilityController {
     @GetMapping("/facilities/{id}")
     public String getFacilityById(@PathVariable Long id, Model model, Principal principal, RedirectAttributes redirectAttributes) {
 
-        Facility facility = facilityService.getFacilityById(id);
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
 
-        if (facility == null) {
+        if (!facilityOpt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        Facility facility = facilityOpt.get();
 
         model.addAttribute("facility", facility);
         model.addAttribute("reviews", facility.getReviews());
@@ -79,10 +81,11 @@ public class FacilityController {
         }
 
         // Resolve the facility
-        Facility facility = facilityService.getFacilityById(facilityId);
-        if (facility == null) {
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(facilityId);
+        if (!facilityOpt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        Facility facility = facilityOpt.get();
 
         // Create and save the review
         Review review = new Review();
@@ -121,10 +124,11 @@ public class FacilityController {
             return "redirect:/login";
         }
 
-        Review review = reviewService.getById(id);
-        if (review == null || review.getUser() == null || review.getFacility() == null) {
+        Optional<Review> reviewOpt = reviewService.getById(id);
+        if (!reviewOpt.isPresent() || reviewOpt.get().getUser() == null || reviewOpt.get().getFacility() == null) {
             return "redirect:/facilities/" + facilityId;
         }
+        Review review = reviewOpt.get();
 
         if (!review.getUser().getId().equals(user.getId())
                 || !review.getFacility().getId().equals(facilityId)) {

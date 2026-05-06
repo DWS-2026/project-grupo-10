@@ -1,11 +1,16 @@
 package grupo10.olympo_academy.controllers.rest;
 
+import java.net.URI;
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +29,12 @@ import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.ReviewService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/classes")
-
 public class ClassesRestController {
+
     @Autowired
     private ClassesService classesService;
 
@@ -37,18 +43,24 @@ public class ClassesRestController {
 
     @Autowired
     private ReviewService reviewService;
+
     @Autowired
     private ReviewMapper reviewMapper;
 
     @GetMapping
-    public ResponseEntity<Page<ClassesDTO>> getAll(@PageableDefault(size = 4, sort = "id") Pageable pageable) {
+    public ResponseEntity<Page<ClassesDTO>> getAll(
+            @PageableDefault(size = 4, sort = "id") Pageable pageable) {
+
         try {
             Page<Classes> classesPage = classesService.getClasses(pageable);
+
             if (pageable.getPageNumber() >= classesPage.getTotalPages()) {
-                return ResponseEntity.notFound().build(); 
+                return ResponseEntity.notFound().build();
             }
+
             Page<ClassesDTO> dtoPage = classesPage.map(classesMapper::toDTO);
             return ResponseEntity.ok(dtoPage);
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -56,73 +68,114 @@ public class ClassesRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ClassesDTO> getById(@PathVariable Long id) {
-        try {
-            Classes classes = classesService.getClassById(id);
-            ClassesDTO dto = classesMapper.toDTO(classes);
-            return ResponseEntity.ok(dto);
-        } catch (Exception e) {
+
+        Optional<Classes> classesOpt = classesService.getClassById(id);
+
+        if (classesOpt.isPresent()) {
+            return ResponseEntity.ok(classesMapper.toDTO(classesOpt.get()));
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
     public ResponseEntity<ClassesDTO> create(@RequestBody ClassesDTO dto) {
-        try {
-            Classes saved = classesService.createClass(dto);
-            return ResponseEntity.ok(classesMapper.toDTO(saved));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+
+        Classes classes = classesMapper.toDomain(dto);
+        Classes saved = classesService.saveClass(classes);
+        dto = classesMapper.toDTO(saved);
+
+        URI location = fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.id()).toUri();
+
+        return ResponseEntity.created(location).body(dto);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClassesDTO> update(@PathVariable Long id, @RequestBody ClassesDTO dto) {
-        try {
-            Classes updated = classesService.updateClass(id, dto);
+
+        Optional<Classes> existing = classesService.getClassById(id);
+
+        if (existing.isPresent()) {
+            Classes updated = classesMapper.toDomain(dto);
+            updated = classesService.updateClass(id, updated);
             return ResponseEntity.ok(classesMapper.toDTO(updated));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        try {
+
+        Optional<Classes> classesOpt = classesService.getClassById(id);
+
+        if (classesOpt.isPresent()) {
             classesService.deleteClass(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/{id}/reviews")
     public ResponseEntity<List<ReviewDTO>> getReviewsByClassesId(@PathVariable Long id) {
-        try {
-            List<Review> reviews = reviewService.getReviewsByClasses(id);
-            List<ReviewDTO> dto = reviewMapper.toDTOs(reviews);
+
+        Optional<List<Review>> reviewsOpt = reviewService.getReviewsByClasses(id);
+
+        if (reviewsOpt.isPresent()) {
+            List<ReviewDTO> dto = reviewMapper.toDTOs(reviewsOpt.get());
             return ResponseEntity.ok(dto);
-        } catch (Exception e) {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping("/{id}/newReview")
-    public ResponseEntity<ReviewDTO> createReview(@PathVariable ReviewDTO dto) {
-        try {
-            Review review = reviewMapper.toDomain(dto);
-            Review reviewSaved = reviewService.saveReview(review);
-            return ResponseEntity.ok(reviewMapper.toDTO(reviewSaved));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+    @PostMapping("/{id}/reviews")
+    public ResponseEntity<ReviewDTO> createReview(
+            @PathVariable Long id,
+            @RequestBody ReviewDTO dto,
+            HttpServletRequest request) {
+
+        Principal principal = request.getUserPrincipal();
+
+        Review review = reviewMapper.toDomain(dto);
+        review = reviewService.buildReviewC(review, principal.getName(), id);
+
+        if (review == null) {
+            return ResponseEntity.notFound().build();
         }
+
+        Review saved = reviewService.saveReview(review);
+        dto = reviewMapper.toDTO(saved);
+
+        URI location = fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.id()).toUri();
+
+        return ResponseEntity.created(location).body(dto);
     }
 
-    @DeleteMapping("/{id}/review/{reviewId}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId) {
-        try {
-            reviewService.deleteReview(reviewId);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
+    @DeleteMapping("/{id}/reviews/{reviewId}")
+    public ResponseEntity<Void> deleteReview(
+            @PathVariable Long reviewId,
+            HttpServletRequest request) {
+
+        Principal principal = request.getUserPrincipal();
+
+        Optional<Review> reviewOpt = reviewService.getById(reviewId);
+
+        if (reviewOpt.isPresent()) {
+
+            boolean isOwner = reviewService.userReview(reviewOpt.get(), principal.getName());
+
+            if (isOwner) {
+                reviewService.deleteReview(reviewId);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

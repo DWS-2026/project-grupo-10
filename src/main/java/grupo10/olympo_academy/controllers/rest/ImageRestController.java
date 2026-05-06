@@ -66,6 +66,7 @@ public class ImageRestController {
     public ResponseEntity<Object> replaceImage(@PathVariable long id,
             @RequestParam MultipartFile imageFile) throws IOException {
         imageService.replaceImageFile(id, imageFile.getInputStream());
+        deleteImage(id);
         return ResponseEntity.noContent().build();
     }
 

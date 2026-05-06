@@ -91,6 +91,9 @@ public class Facility {
     public List<Review> getReviews() {
         return reviews;
     }
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public void saveReview(Review review) {
         this.reviews.add(review);
