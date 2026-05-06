@@ -32,6 +32,7 @@ import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api/v1/classes")
@@ -118,14 +119,15 @@ public class ClassesRestController {
         return ResponseEntity.ok(classesMapper.toDTO(saved));
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ClassesDTO> delete(@PathVariable Long id) {
 
         Optional<Classes> classesOpt = classesService.getClassById(id);
 
         if (classesOpt.isPresent()) {
             classesService.deleteClass(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(classesMapper.toDTO(classesOpt.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -169,7 +171,7 @@ public class ClassesRestController {
     }
 
     @DeleteMapping("/{id}/reviews/{reviewId}")
-    public ResponseEntity<Void> deleteReview(
+    public ResponseEntity<ReviewDTO> deleteReview(
             @PathVariable Long reviewId,
             HttpServletRequest request) {
 
@@ -182,8 +184,9 @@ public class ClassesRestController {
             boolean isOwner = reviewService.userReview(reviewOpt.get(), principal.getName());
 
             if (isOwner) {
+                Review review= reviewOpt.get();
                 reviewService.deleteReview(reviewId);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(reviewMapper.toDTO(review));
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }

@@ -17,7 +17,6 @@ import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.UserService;
-import io.micrometer.core.ipc.http.HttpSender.Response;
 
 @RestController
 @RequestMapping("/api/v1/reservations")
