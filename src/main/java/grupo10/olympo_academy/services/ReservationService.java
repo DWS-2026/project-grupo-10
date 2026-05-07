@@ -30,6 +30,10 @@ public class ReservationService {
     // GETTERS
     // =====================================================
 
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
+    
     public List<Reservation> getReservationsByUser(User user) {
         return reservationRepository.findByUser(user);
     }
