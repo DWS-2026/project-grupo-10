@@ -286,6 +286,26 @@ public class ReservationService {
         reservationRepository.delete(reservation);
     }
 
+    public void cancelReservationRest(Long id, User user) {
+
+        Reservation reservation = reservationRepository.findById(id).orElse(null);
+
+        if (reservation == null) {
+            throw new RuntimeException("La reserva no existe.");
+        }
+
+        // if (reservation.getUser() == null || !reservation.getUser().getId().equals(user.getId())) {
+        //     throw new RuntimeException("No tienes permiso para cancelar esta reserva.");
+        // }
+
+        if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
+            Optional<Classes> classesOpt = classesService.getClassById(reservation.getClasses().getId());
+            classesOpt.ifPresent(classesService::saveClass);
+        }
+
+        reservationRepository.delete(reservation);
+    }
+
     // =====================================================
     // CART HELPERS
     // =====================================================

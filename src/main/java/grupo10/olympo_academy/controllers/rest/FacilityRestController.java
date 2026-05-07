@@ -311,7 +311,7 @@ public class FacilityRestController {
         if (!permit) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        reservationService.cancelReservation(idR, user);
+        reservationService.cancelReservationRest(idR, user);
 
         return ResponseEntity.ok(reservationMapper.toDTO(reservation));
     }

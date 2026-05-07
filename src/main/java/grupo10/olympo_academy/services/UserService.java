@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
-import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.UserRepository;
 
@@ -91,25 +90,6 @@ public class UserService {
             }
             user.setPhone(phone);
         }
-
-        // // name and username cant be empty. Phone number is optional
-        // if (name == null || name.isEmpty()) {
-
-        // } else {
-        //     user.setName(name);
-        // }
-
-        // if (username == null || username.isEmpty()) {
-
-        // } else {
-        //     user.setUsername(username);
-        // }
-
-        // if (phone == null || phone.isEmpty()) {
-
-        // } else {
-        //     user.setPhone(phone);
-        // }
 
         return userRepository.save(user);
     }
