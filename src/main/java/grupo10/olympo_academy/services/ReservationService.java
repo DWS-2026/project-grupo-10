@@ -13,7 +13,6 @@ import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.ReservationRepository;
 
-
 @Service
 public class ReservationService {
 
@@ -33,7 +32,7 @@ public class ReservationService {
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
-    
+
     public List<Reservation> getReservationsByUser(User user) {
         return reservationRepository.findByUser(user);
     }
@@ -42,7 +41,7 @@ public class ReservationService {
         return reservationRepository.findByUserAndStatus(user, "Activa");
     }
 
-    public Optional <Reservation> getById(Long id) {
+    public Optional<Reservation> getById(Long id) {
         return reservationRepository.findById(id);
     }
 
@@ -117,13 +116,13 @@ public class ReservationService {
     // =====================================================
 
     public Reservation buildReservation(Long facilityId,
-                                        Long classId,
-                                        String name,
-                                        String day,
-                                        String startTime,
-                                        Integer duration,
-                                        String level,
-                                        Boolean material) {
+            Long classId,
+            String name,
+            String day,
+            String startTime,
+            Integer duration,
+            String level,
+            Boolean material) {
 
         Reservation reservation = new Reservation();
         reservation.setName(name);
@@ -171,37 +170,72 @@ public class ReservationService {
 
     public Reservation confirmReservation(Reservation reservation, User user) {
 
-    reservation.setUser(user);
-    reservation.setStatus("Activa");
+        reservation.setUser(user);
+        reservation.setStatus("Activa");
 
-    if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
-        Optional<Classes> classesOpt = classesService.getClassById(reservation.getClasses().getId());
-        if (classesOpt.isPresent()) {
-            reservation.setClasses(classesOpt.get());
-            reservation.setDuration(classesOpt.get().getDuration());
-            reservation.setFacility(classesOpt.get().getFacility());
+        if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
+            Optional<Classes> classesOpt = classesService.getClassById(reservation.getClasses().getId());
+            if (classesOpt.isPresent()) {
+                reservation.setClasses(classesOpt.get());
+                reservation.setDuration(classesOpt.get().getDuration());
+                reservation.setFacility(classesOpt.get().getFacility());
+            }
         }
+
+        return reservationRepository.save(reservation);
     }
 
-    return reservationRepository.save(reservation);
-}
+    public Reservation confirmFacReservation(Long id, Reservation reservation, User user) {
 
-public Reservation updateReservation(Long id, Reservation updated) {
+        reservation.setUser(user);
+        reservation.setStatus("Activa");
+        Optional<Facility> facilityOpt = facilityService.getFacilityById(id);
+        if (facilityOpt.isEmpty()) {
+            return null;
+        }
+        Facility facility = facilityOpt.get();
+        reservation.setFacility(facility);
+        reservation.setClasses(null);
+        reservation.setName(facility.getName());
+        reservation.setLevel(null);
+        if(reservation.getMaterial()==null){
+            reservation.setMaterial(false);
+        }
 
-    Reservation existing = reservationRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        return reservationRepository.save(reservation);
+    }
 
-    existing.setDay(updated.getDay());
-    existing.setStartTime(updated.getStartTime());
-    existing.setDuration(updated.getDuration());
-    existing.setMaterial(updated.getMaterial());
-    existing.setClasses(updated.getClasses());
-    existing.setFacility(updated.getFacility());
+    public Reservation confirmClassReservation(Long id, Reservation reservation, User user) {
 
-    return reservationRepository.save(existing);
-}
+        reservation.setUser(user);
+        reservation.setStatus("Activa");
+        Optional<Classes> classesOpt = classesService.getClassById(id);
+        if (classesOpt.isEmpty()) {
+            return null;
+        }
+        Classes classes = classesOpt.get();
+        reservation.setClasses(classes);
+        reservation.setFacility(classes.getFacility());
+        reservation.setName(classes.getName());
+        reservation.setMaterial(false);
 
+        return reservationRepository.save(reservation);
+    }
 
+    public Reservation updateReservation(Long id, Reservation updated) {
+
+        Reservation existing = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        existing.setDay(updated.getDay());
+        existing.setStartTime(updated.getStartTime());
+        existing.setDuration(updated.getDuration());
+        existing.setMaterial(updated.getMaterial());
+        existing.setClasses(updated.getClasses());
+        existing.setFacility(updated.getFacility());
+
+        return reservationRepository.save(existing);
+    }
 
     // =====================================================
     // CONFIRM CART

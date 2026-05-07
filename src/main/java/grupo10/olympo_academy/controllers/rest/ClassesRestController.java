@@ -32,16 +32,22 @@ import grupo10.olympo_academy.dto.ClassesDTO;
 import grupo10.olympo_academy.dto.ClassesMapper;
 import grupo10.olympo_academy.dto.ImageDTO;
 import grupo10.olympo_academy.dto.ImageMapper;
+import grupo10.olympo_academy.dto.ReservationDTO;
+import grupo10.olympo_academy.dto.ReservationMapper;
 import grupo10.olympo_academy.dto.ReviewDTO;
 import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
+import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.Review;
+import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ClassesService;
 import grupo10.olympo_academy.services.FacilityService;
 import grupo10.olympo_academy.services.ImageService;
+import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.ReviewService;
+import grupo10.olympo_academy.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
@@ -69,6 +75,15 @@ public class ClassesRestController {
 
     @Autowired
     private ImageMapper imageMapper;
+    
+    @Autowired
+    private ReservationService reservationService;
+
+    @Autowired
+    private ReservationMapper reservationMapper;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<Page<ClassesDTO>> getAll(
@@ -278,5 +293,47 @@ public class ClassesRestController {
 
         imageService.replaceImageFile(idImage, imageFile.getInputStream());
         return ResponseEntity.noContent().build();
+    }
+    //////////////// Reservations////////
+    /// 
+    @PostMapping("/{id}/reservations")
+    public ResponseEntity<ReservationDTO> createReservation(@PathVariable Long id ,@RequestBody ReservationDTO dto, Principal principal) {
+
+        Optional<User> userOpt = userService.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        User user = userOpt.get();
+        Reservation reservation = reservationMapper.toDomain(dto);
+        reservation= reservationService.confirmClassReservation(id,reservation, user );
+        if(reservation == null){
+            return ResponseEntity.badRequest().build();
+        }
+        dto = reservationMapper.toDTO(reservation);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(dto.id()).toUri();
+
+        return ResponseEntity.created(location).body(dto);
+    }
+    @DeleteMapping("/{id}/reservations/{idR}")
+    public ResponseEntity<ReservationDTO> deleteReservation(@PathVariable Long id, @PathVariable Long idR,
+            Principal principal) {
+
+        Optional<User> userOpt = userService.findByEmail(principal.getName());
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        User user = userOpt.get();
+        Optional<Reservation> reservationOpt = reservationService.getById(idR);
+        if (reservationOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Reservation reservation = reservationOpt.get();
+        Boolean permit = userService.userReservation(reservation, user);
+        if (!permit) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        reservationService.cancelReservation(idR, user);
+
+        return ResponseEntity.ok(reservationMapper.toDTO(reservation));
     }
 }

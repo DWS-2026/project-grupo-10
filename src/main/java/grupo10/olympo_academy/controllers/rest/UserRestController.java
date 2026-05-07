@@ -3,6 +3,7 @@ package grupo10.olympo_academy.controllers.rest;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -195,6 +196,26 @@ public class UserRestController {
 
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/me/reservations")
+    public ResponseEntity<List<ReservationDTO>> getMyReservations(Principal principal) {
+        try {
+            Optional<User> userOpt = userService.findByEmail(principal.getName());
+
+            if (userOpt.isEmpty()) {
+                throw new RuntimeException("User not found");
+            }
+
+            User user = userOpt.get();
+
+            List<Reservation> reservations = reservationService.getReservationsByUser(user);
+
+            return ResponseEntity.ok(reservationMapper.toDTOs(reservations));
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 

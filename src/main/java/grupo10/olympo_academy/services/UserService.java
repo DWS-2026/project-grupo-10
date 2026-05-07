@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 import grupo10.olympo_academy.model.Image;
+import grupo10.olympo_academy.model.Reservation;
+import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.UserRepository;
 
@@ -338,6 +340,21 @@ public class UserService {
             return null;
         }
 
+    }
+    public boolean userReservation(Reservation reservation, User user) {
+        
+        Long id = user.getId();
+        Long idUserReservation = reservation.getUser().getId();
+        boolean isAdmin = isAdmin(user);
+        if (idUserReservation != id && !isAdmin) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean isAdmin(User user) {
+        return user.getRoles() != null && user.getRoles().contains("ADMIN");
     }
 
 }
