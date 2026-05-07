@@ -167,16 +167,37 @@ public class ReservationService {
 
     public Reservation confirmReservation(Reservation reservation, User user) {
 
-        reservation.setUser(user);
-        reservation.setStatus("Activa");
+    reservation.setUser(user);
+    reservation.setStatus("Activa");
 
-        if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
-            Optional<Classes> classesOpt = classesService.getClassById(reservation.getClasses().getId());
-            classesOpt.ifPresent(reservation::setClasses);
+    if (reservation.getClasses() != null && reservation.getClasses().getId() != null) {
+        Optional<Classes> classesOpt = classesService.getClassById(reservation.getClasses().getId());
+        if (classesOpt.isPresent()) {
+            reservation.setClasses(classesOpt.get());
+            reservation.setDuration(classesOpt.get().getDuration());
+            reservation.setFacility(classesOpt.get().getFacility());
         }
-
-        return reservationRepository.save(reservation);
     }
+
+    return reservationRepository.save(reservation);
+}
+
+public Reservation updateReservation(Long id, Reservation updated) {
+
+    Reservation existing = reservationRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+    existing.setDay(updated.getDay());
+    existing.setStartTime(updated.getStartTime());
+    existing.setDuration(updated.getDuration());
+    existing.setMaterial(updated.getMaterial());
+    existing.setClasses(updated.getClasses());
+    existing.setFacility(updated.getFacility());
+
+    return reservationRepository.save(existing);
+}
+
+
 
     // =====================================================
     // CONFIRM CART

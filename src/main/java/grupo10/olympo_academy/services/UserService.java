@@ -1,4 +1,4 @@
-    package grupo10.olympo_academy.services;
+package grupo10.olympo_academy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,15 +25,15 @@ public class UserService {
 
     // With Spring security, we don´t need to implement the login logic ourselves
 
-    public Optional <User> findByEmail(String email) {
-        Optional <User> userOpt = userRepository.findByEmail(email);
-        if(userOpt.isPresent()){
+    public Optional<User> findByEmail(String email) {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
             User user = userOpt.get();
             return Optional.of(user);
-        }else{
+        } else {
             return Optional.empty();
         }
-        
+
     }
 
     // Method to register a new user
@@ -70,26 +70,44 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
 
         // Check if the new username is already taken by another user
-        if (!user.getUsername().equals(username) && userRepository.findByUsername(username).isPresent()) {
-            throw new Exception("Username ya registrado");
+        if (username != null && !username.isBlank()) {
+            if (!user.getUsername().equals(username) && userRepository.findByUsername(username).isPresent()) {
+                throw new Exception("Username ya registrado");
+            }
+            user.setUsername(username);
         }
 
-        // Check if the new phone number is already taken by another user
-        if (!user.getPhone().equals(phone) && userRepository.findByPhone(phone).isPresent()) {
-            throw new Exception("Número de teléfono ya registrado");
+        if (name != null && !name.isBlank()) {
+                user.setName(name);
         }
 
-        // name and username cant be empty. Phone number is optional
-        if (name == null || name.isEmpty()) {
-            throw new Exception("No puede haber campos vacios");
+        // check if phone is already taken by another user (checking that it can be null)
+        if (phone != null && !phone.isBlank()) {
+            if (!phone.equals(user.getPhone())
+                    && userRepository.findByPhone(phone).isPresent()) {
+                throw new Exception("Número de teléfono ya registrado");
+            }
+            user.setPhone(phone);
         }
-        if (username == null || username.isEmpty()) {
-            throw new Exception("No puede haber campos vacios");
-        }
-        
-        user.setName(name);
-        user.setUsername(username);
-        user.setPhone(phone);
+
+        // // name and username cant be empty. Phone number is optional
+        // if (name == null || name.isEmpty()) {
+
+        // } else {
+        //     user.setName(name);
+        // }
+
+        // if (username == null || username.isEmpty()) {
+
+        // } else {
+        //     user.setUsername(username);
+        // }
+
+        // if (phone == null || phone.isEmpty()) {
+
+        // } else {
+        //     user.setPhone(phone);
+        // }
 
         return userRepository.save(user);
     }
@@ -274,11 +292,12 @@ public class UserService {
     }
 
     public User getUserProfile(String email) throws Exception {
-        Optional <User> userOpt = userRepository.findByEmail(email);
+        Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
             throw new Exception("Usuario no encontrado");
-        }else{
-            return userOpt.get();}
+        } else {
+            return userOpt.get();
+        }
     }
 
     public User updateUserImageFromAdmin(Long id, MultipartFile imageFile) throws Exception {
@@ -315,8 +334,7 @@ public class UserService {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             return user.get();
-        }
-        else {
+        } else {
             return null;
         }
 
