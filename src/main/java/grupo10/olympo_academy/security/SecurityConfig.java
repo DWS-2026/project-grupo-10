@@ -228,6 +228,7 @@ public class SecurityConfig {
                 .hasRole("ADMIN")
 
                 .requestMatchers(HttpMethod.GET,
+                        "/api/v1/users/admin/reservations",
                         "/api/v1/documents/users/**",
                         "/api/v1/users",
                         "/api/v1/users/admin/{id}",

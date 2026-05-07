@@ -273,6 +273,16 @@ public ResponseEntity<UserDetailDTO> getUserProfileAsAdmin(@PathVariable Long id
     }
 }
 
+
+@GetMapping("/admin/reservations")
+public ResponseEntity<List<ReservationDTO>> getAllReservationsAsAdmin() {
+
+    List<Reservation> reservations = reservationService.getAllReservations();
+    List<ReservationDTO> reservationDTOs = reservationMapper.toDTOs(reservations);
+
+    return ResponseEntity.ok(reservationDTOs);
+}
+
 @PutMapping("/admin/reservations/{id}")
 public ResponseEntity<ReservationDTO> updateReservationFromAdmin(
         @PathVariable Long id,
