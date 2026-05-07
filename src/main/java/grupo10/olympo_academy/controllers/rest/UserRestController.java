@@ -28,9 +28,14 @@ import grupo10.olympo_academy.dto.UserMapper;
 import grupo10.olympo_academy.dto.ReviewMapper;
 import grupo10.olympo_academy.dto.UserRegisterDTO;
 import grupo10.olympo_academy.dto.PasswordChangeDTO;
+import grupo10.olympo_academy.dto.ReservationDTO;
+import grupo10.olympo_academy.dto.ReservationMapper;
+import grupo10.olympo_academy.dto.ReservationUpdateDTO;
 import grupo10.olympo_academy.dto.ReviewDTO;
+import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.services.ImageService;
+import grupo10.olympo_academy.services.ReservationService;
 import grupo10.olympo_academy.services.ReviewService;
 import grupo10.olympo_academy.services.UserService;
 import jakarta.validation.Valid;
@@ -53,6 +58,14 @@ public class UserRestController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+     private ReservationService reservationService;
+
+     @Autowired
+     private ReservationMapper reservationMapper;
+
+     // USER ENDPOINTS
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -259,5 +272,32 @@ public ResponseEntity<UserDetailDTO> getUserProfileAsAdmin(@PathVariable Long id
         return ResponseEntity.badRequest().build();
     }
 }
+
+@PutMapping("/admin/reservations/{id}")
+public ResponseEntity<ReservationDTO> updateReservationFromAdmin(
+        @PathVariable Long id,
+        @RequestBody ReservationUpdateDTO dto) {
+
+    try {
+
+        Reservation reservation = reservationService.getById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+
+        reservation.setDay(dto.day());
+        reservation.setStartTime(dto.startTime());
+        reservation.setDuration(dto.duration());
+        reservation.setMaterial(dto.material());
+
+        Reservation saved = reservationService.save(reservation);
+
+        return ResponseEntity.ok(reservationMapper.toDTO(saved));
+
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().build();
+    }
+}
+
+
 
 }

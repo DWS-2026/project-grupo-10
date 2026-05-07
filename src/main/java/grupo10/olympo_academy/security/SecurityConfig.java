@@ -210,7 +210,8 @@ public class SecurityConfig {
                         "/api/v1/facilities/{id}/**",
                         "/api/v1/users/admin/{id}",
                         "/api/v1/users/admin/{id}/image",
-                        "/api/v1/images/{id}/media")
+                        "/api/v1/images/{id}/media",
+                        "/api/v1/users/admin/reservations/{id}")
                 .hasRole("ADMIN")
 
                 .requestMatchers(HttpMethod.DELETE,
