@@ -171,8 +171,7 @@ public class SecurityConfig {
                                 "/api/v1/documents/me",
                                 "/api/v1/documents/me/view",
                                 "/api/v1/reservations",
-                                "/api/v1/reservations/{id}",
-                                "/api/v1/users/me",
+                                        "/api/v1/users/me",
                                 "/api/v1/users/image")
                         .hasAnyRole("USER", "ADMIN")
 
@@ -224,7 +223,8 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET,
                                 "/api/v1/users/admin/reservations",
-                                "/api/v1/documents/users/**",
+                                "/api/v1/reservations/{id}",
+                        "/api/v1/documents/users/**",
                                 "/api/v1/users",
                                 "/api/v1/users/admin/{id}",
                                 "/api/v1/images/{id}/media")
