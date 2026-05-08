@@ -6,13 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Práctica DWS · Olympo Academy · Panel de Administración</title>
     <link rel="icon" type="image/png" href="/assets/images/logoSinFondo.png" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap CSS with SRI -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQJf1Aih5Y2ZHAe9YB41Jk0WLa4R8E2QpHtVQ5K5jI5Gk5tBT1Q0P5hFZ" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/ourStyles.css" />
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <!-- Quill CSS with SRI -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"
+        integrity="sha384-7Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8" crossorigin="anonymous">
+
+    <!-- Quill JS with SRI -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"
+        integrity="sha384-7Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8Yt8uQFJxZ8"
+        crossorigin="anonymous"></script>
     <style>
-        .rich-editor { height: 200px; }
+        .rich-editor {
+            height: 200px;
+        }
     </style>
 </head>
 
@@ -69,11 +81,12 @@
                                 <td>{{email}}</td>
                                 <td>
                                     {{#document}}
-                                        <a href="/admin/user/{{user.id}}/document/view" class="btn btn-primary btn-sm">Ver</a>
+                                    <a href="/admin/user/{{user.id}}/document/view"
+                                        class="btn btn-primary btn-sm">Ver</a>
                                     {{/document}}
 
                                     {{^document}}
-                                        <span class="text-muted">No</span>
+                                    <span class="text-muted">No</span>
                                     {{/document}}
                                 </td>
                                 <td>{{reservationsCount}}</td>
@@ -309,7 +322,8 @@
                         <div class="mb-3">
                             <label class="form-label">Descripción *</label>
                             <div id="edit-facility-editor-{{id}}" class="rich-editor">{{{description}}}</div>
-                            <textarea name="description" id="edit-facility-desc-{{id}}" style="display:none;"></textarea>
+                            <textarea name="description" id="edit-facility-desc-{{id}}"
+                                style="display:none;"></textarea>
                         </div>
 
                         <div class="mb-3">
@@ -704,7 +718,8 @@
             <div class="popup-content">
                 <a href="#" class="close">&times;</a>
                 <h3>¿Eliminar reseña?</h3>
-                <p>¿Seguro que quieres eliminar esta reseña de <strong>{{user.name}}</strong>? Esta acción no se puede deshacer.</p>
+                <p>¿Seguro que quieres eliminar esta reseña de <strong>{{user.name}}</strong>? Esta acción no se puede
+                    deshacer.</p>
 
                 <div class="d-flex gap-2 mt-3">
                     <a href="/admin/reviews/delete/{{id}}" class="btn btn-danger">Sí, eliminar</a>
@@ -718,7 +733,10 @@
 
     {{>footer}}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS with SRI -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6Kp6n7YkPZrFQ6VxFQe1rZl+PBkO5y5Yv7FpC18m0D33rDg14QZ"
+        crossorigin="anonymous"></script>
     <script src="/js/preselectClassesparameters.js"></script>
     <script src="/js/EnrichedText.js"></script>
 

@@ -286,7 +286,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 ## 🛠 **Práctica 3: Incorporación de una API REST a la aplicación web, análisis de vulnerabilidades y contramedidas**
 
 ### **Vídeo de Demostración**
-📹 **[Enlace al vídeo en YouTube](https://www.youtube.com/watch?v=x91MPoITQ3I)**
+📹 **[Enlace al vídeo en YouTube](https://youtu.be/MBX8WVUdKcE)**
 > Video showing the main features of the web application.
 
 ### **Documentación de la API REST**
@@ -295,7 +295,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 📄 **[Especificación OpenAPI (YAML)](/api-docs/api-docs.yaml)**
 
 #### **Documentación HTML**
-📖 **[Documentación API REST (HTML)](https://raw.githack.com/[usuario]/[repositorio]/main/api-docs/api-docs.html)**
+📖 **[Documentación API REST (HTML)](https://raw.githack.com/DWS-2026/project-grupo-10/main/api-docs/api-docs.html)**
 
 > La documentación de la API REST se encuentra en la carpeta `/api-docs` del repositorio. Se ha generado automáticamente con SpringDoc a partir de las anotaciones en el código Java.
 
@@ -303,7 +303,7 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 Diagrama actualizado incluyendo los @RestController y su relación con los @Service compartidos:
 
-![Diagrama de Clases Actualizado](src/main/resources/static/assets/images/Complete-classes-Diagram.jpg )
+![Diagrama de Clases Actualizado](src/main/resources/static/assets/images/Complete-Classes-Diagram-Rest.jpg )
 
 #### **Credenciales de Usuarios de Ejemplo**
 
@@ -359,4 +359,4 @@ Diagrama actualizado incluyendo los @RestController y su relación con los @Serv
 |2| [REST API implementation for reservations](https://github.com/DWS-2026/project-grupo-10/commit/0b1cad331ba6d31bb5f99137136cab9d2353a048)  | [ReservationRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/ReservationRestController.java)   |
 |3| [Document management with file storage on disk implementation](https://github.com/DWS-2026/project-grupo-10/commit/776f7c1cf5e56b19738129ed281e989fa26dfdb5)  | [DocumentRestController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/rest/DocumentRestController.java)<br>[UserController](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/controllers/web/UserController.java)|
 |4| [Secure file upload validation and stored XSS prevention](https://github.com/DWS-2026/project-grupo-10/commit/53e34aa549ae8f80aec80984c6dcfcac67b4203f)  | [DocumentService](https://github.com/DWS-2026/project-grupo-10/blob/main/src/main/java/grupo10/olympo_academy/services/DocumentService.java)   |
-|5| [OpenAPI documentation addition](URL_commit_5)  | [/api-docs](https://github.com/DWS-2026/project-grupo-10/tree/main/api-docs)   |
+|5| [OpenAPI documentation addition](https://github.com/DWS-2026/project-grupo-10/commit/631e4f6d58563064172d558e3275abc5f9cf57c5)  | [/api-docs](https://github.com/DWS-2026/project-grupo-10/tree/main/api-docs)   |

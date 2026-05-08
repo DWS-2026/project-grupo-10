@@ -24,222 +24,225 @@ import grupo10.olympo_academy.security.jwt.UnauthorizedHandlerJwt;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    public RepositoryUserDetailsService userDetailService;
+        @Autowired
+        public RepositoryUserDetailsService userDetailService;
 
-    @Autowired
-    private UnauthorizedHandlerJwt unauthorizedHandlerJwt;
+        @Autowired
+        private UnauthorizedHandlerJwt unauthorizedHandlerJwt;
 
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+        @Autowired
+        private JwtRequestFilter jwtRequestFilter;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+        @Bean
+        public DaoAuthenticationProvider authenticationProvider() {
+                DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailService);
+                authProvider.setPasswordEncoder(passwordEncoder());
+                return authProvider;
+        }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+                return authConfig.getAuthenticationManager();
+        }
 
-    @Bean
-    @Order(2)
-    public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
+        @Bean
+        @Order(2)
+        public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
 
-        http.authenticationProvider(authenticationProvider());
+                http.authenticationProvider(authenticationProvider());
 
-        // CSP protection for web
-        http.headers(headers -> headers
-                .contentSecurityPolicy(csp -> csp
-                        .policyDirectives(
-                                "default-src 'self'; " +
-                                        "script-src 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js https://use.fontawesome.com/releases/v6.3.0/js/all.js; https://cdn.quilljs.com"
-                                        +
-                                        "object-src 'none'; " +
-                                        "base-uri 'self'; " +
-                                        "frame-ancestors 'self'; " +
-                                        "img-src 'self' data:; " +
-                                        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.quilljs.com"
-                                        +
-                                        "font-src 'self' https://fonts.gstatic.com")));
+                // CSP protection for web
+                http.headers(headers -> headers
+                                .contentSecurityPolicy(csp -> csp
+                                                .policyDirectives(
+                                                                "default-src 'self'; " +
+                                                                                "script-src 'self' https://cdn.jsdelivr.net https://use.fontawesome.com https://cdn.quilljs.com; "
+                                                                                +
+                                                                                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdn.quilljs.com; "
+                                                                                +
+                                                                                "font-src 'self' https://fonts.gstatic.com; "
+                                                                                +
+                                                                                "img-src 'self' data:; " +
+                                                                                "object-src 'none'; " +
+                                                                                "base-uri 'self'; " +
+                                                                                "frame-ancestors 'self'; " +
+                                                                                "require-sri-for script style;")));
 
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        // PUBLIC PAGES
-                        .requestMatchers("/", "/index", "/login", "/register", "/error",
-                                "/facilities/{id}", "/classes/{id}")
-                        .permitAll()
+                http
+                                .authorizeHttpRequests(authorize -> authorize
+                                                // PUBLIC PAGES
+                                                .requestMatchers("/", "/index", "/login", "/register", "/error",
+                                                                "/facilities/{id}", "/classes/{id}")
+                                                .permitAll()
 
-                        // STATIC RESOURCES
-                        .requestMatchers(
-                                "/styles.css",
-                                "/ourStyles.css",
-                                "/favicon.ico",
-                                "/css/**",
-                                "/js/**",
-                                "/images/**",
-                                "/assets/**")
-                        .permitAll()
+                                                // STATIC RESOURCES
+                                                .requestMatchers(
+                                                                "/styles.css",
+                                                                "/ourStyles.css",
+                                                                "/favicon.ico",
+                                                                "/css/**",
+                                                                "/js/**",
+                                                                "/images/**",
+                                                                "/assets/**")
+                                                .permitAll()
 
-                        // PROTECTED PAGES
-                        .requestMatchers("/userProfile").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/admin/**", "/adminPanel").hasRole("ADMIN")
+                                                // PROTECTED PAGES
+                                                .requestMatchers("/userProfile").hasAnyRole("USER", "ADMIN")
+                                                .requestMatchers("/admin/**", "/adminPanel").hasRole("ADMIN")
 
-                        .anyRequest().authenticated())
+                                                .anyRequest().authenticated())
 
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .usernameParameter("email")
-                        .defaultSuccessUrl("/")
-                        .failureHandler((request, response, exception) -> {
+                                .formLogin(formLogin -> formLogin
+                                                .loginPage("/login")
+                                                .usernameParameter("email")
+                                                .defaultSuccessUrl("/")
+                                                .failureHandler((request, response, exception) -> {
 
-                            Throwable cause = exception.getCause();
+                                                        Throwable cause = exception.getCause();
 
-                            if (exception instanceof LockedException ||
-                                    (cause != null && cause instanceof LockedException)) {
+                                                        if (exception instanceof LockedException ||
+                                                                        (cause != null && cause instanceof LockedException)) {
 
-                                response.sendRedirect("/login?blocked");
-                            } else {
-                                response.sendRedirect("/login?error");
-                            }
-                        })
-                        .permitAll())
+                                                                response.sendRedirect("/login?blocked");
+                                                        } else {
+                                                                response.sendRedirect("/login?error");
+                                                        }
+                                                })
+                                                .permitAll())
 
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
-                        .permitAll());
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout")
+                                                .logoutSuccessUrl("/")
+                                                .permitAll());
 
-        return http.build();
-    }
+                return http.build();
+        }
 
-    @Bean
-    @Order(1)
-    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+        @Bean
+        @Order(1)
+        public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
-        http.authenticationProvider(authenticationProvider());
+                http.authenticationProvider(authenticationProvider());
 
-        // CSP protection for API
-        http.headers(headers -> headers
-                .contentSecurityPolicy(csp -> csp
-                        .policyDirectives(
-                                "default-src 'none'; " +
-                                        "frame-ancestors 'none';")));
+                // CSP protection for API
+                http.headers(headers -> headers
+                                .contentSecurityPolicy(csp -> csp
+                                                .policyDirectives(
+                                                                "default-src 'none'; " +
+                                                                                "frame-ancestors 'none';")));
 
-        http
-                .securityMatcher("/api/v1/**")
-                .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
+                http
+                                .securityMatcher("/api/v1/**")
+                                .exceptionHandling(
+                                                handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
 
-        http
-                .authorizeHttpRequests(authorize -> authorize
+                http
+                                .authorizeHttpRequests(authorize -> authorize
 
-                        // PUBLIC ENDPOINTS
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/v1/classes/**",
-                                "/api/v1/facilities/**")
-                        .permitAll()
+                                                // PUBLIC ENDPOINTS
+                                                .requestMatchers(HttpMethod.GET,
+                                                                "/api/v1/classes/**",
+                                                                "/api/v1/facilities/**")
+                                                .permitAll()
 
-                        .requestMatchers(HttpMethod.POST,
-                                "/api/v1/auth/login",
-                                "/api/v1/users")
-                        .permitAll()
+                                                .requestMatchers(HttpMethod.POST,
+                                                                "/api/v1/auth/login",
+                                                                "/api/v1/users")
+                                                .permitAll()
 
-                        // USER ENDPOINTS
-                        .requestMatchers(HttpMethod.POST,
-                                "/api/v1/classes/{id}/newReview",
-                                "/api/v1/facilities/{id}/newReview",
-                                "/api/v1/documents/me")
-                        .hasAnyRole("USER", "ADMIN")
+                                                // USER ENDPOINTS
+                                                .requestMatchers(HttpMethod.POST,
+                                                                "/api/v1/classes/{id}/newReview",
+                                                                "/api/v1/facilities/{id}/newReview",
+                                                                "/api/v1/documents/me")
+                                                .hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.DELETE,
-                                "/api/v1/classes/{id}/review/{reviewId}",
-                                "/api/v1/facilities/{id}/review/{reviewId}",
-                                "/api/v1/users/reservations/{id}",
-                                "/api/v1/facilities/{id}/reservations/{idR}",
-                                "/api/v1/classes/{id}/reservations/{idR}")
-                        .hasAnyRole("USER", "ADMIN")
+                                                .requestMatchers(HttpMethod.DELETE,
+                                                                "/api/v1/classes/{id}/review/{reviewId}",
+                                                                "/api/v1/facilities/{id}/review/{reviewId}",
+                                                                "/api/v1/users/reservations/{id}",
+                                                                "/api/v1/facilities/{id}/reservations/{idR}",
+                                                                "/api/v1/classes/{id}/reservations/{idR}")
+                                                .hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/v1/documents/me",
-                                "/api/v1/documents/me/view",
-                                "/api/v1/reservations",
-                                        "/api/v1/users/me",
-                                "/api/v1/users/image")
-                        .hasAnyRole("USER", "ADMIN")
+                                                .requestMatchers(HttpMethod.GET,
+                                                                "/api/v1/documents/me",
+                                                                "/api/v1/documents/me/view",
+                                                                "/api/v1/reservations",
+                                                                "/api/v1/users/me",
+                                                                "/api/v1/users/image")
+                                                .hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.POST,
-                                "/api/v1/auth/logout",
-                                "/api/v1/auth/refresh",
-                                "/api/v1/facilities/{id}/reservations",
-                                "/api/v1/.classes/{id}/reservations")
-                        .hasAnyRole("USER", "ADMIN")
+                                                .requestMatchers(HttpMethod.POST,
+                                                                "/api/v1/auth/logout",
+                                                                "/api/v1/auth/refresh",
+                                                                "/api/v1/facilities/{id}/reservations",
+                                                                "/api/v1/.classes/{id}/reservations")
+                                                .hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.PUT,
-                                "/api/v1/users/{id}",
-                                "/api/v1/users/image")
-                        .hasAnyRole("USER", "ADMIN")
+                                                .requestMatchers(HttpMethod.PUT,
+                                                                "/api/v1/users/{id}",
+                                                                "/api/v1/users/image")
+                                                .hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.PATCH,
-                                "/api/v1/users/{id}/password")
-                        .hasAnyRole("USER", "ADMIN")
+                                                .requestMatchers(HttpMethod.PATCH,
+                                                                "/api/v1/users/{id}/password")
+                                                .hasAnyRole("USER", "ADMIN")
 
-                        // ADMIN ENDPOINTS
-                        .requestMatchers(HttpMethod.POST,
-                                "/api/v1/classes",
-                                "/api/v1/facilities",
-                                "/api/v1/images/{id}/media")
-                        .hasRole("ADMIN")
+                                                // ADMIN ENDPOINTS
+                                                .requestMatchers(HttpMethod.POST,
+                                                                "/api/v1/classes",
+                                                                "/api/v1/facilities",
+                                                                "/api/v1/images/{id}/media")
+                                                .hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.PUT,
-                                "/api/v1/classes/{id}",
-                                "/api/v1/classes/{id}/images",
-                                "/api/v1/facilities/{id}/**",
-                                "/api/v1/users/admin/{id}",
-                                "/api/v1/users/admin/{id}/image",
-                                "/api/v1/images/{id}/media",
-                                "/api/v1/users/admin/reservations/{id}")
-                        .hasRole("ADMIN")
+                                                .requestMatchers(HttpMethod.PUT,
+                                                                "/api/v1/classes/{id}",
+                                                                "/api/v1/classes/{id}/images",
+                                                                "/api/v1/facilities/{id}/**",
+                                                                "/api/v1/users/admin/{id}",
+                                                                "/api/v1/users/admin/{id}/image",
+                                                                "/api/v1/images/{id}/media",
+                                                                "/api/v1/users/admin/reservations/{id}")
+                                                .hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.DELETE,
-                                "/api/v1/classes/{id}",
-                                "/api/v1/classes/{id}/images",
-                                "/api/v1/facilities/{id}",
-                                "/api/v1/facilities/{id}/images",
-                                "/api/v1/users/admin/{id}",
-                                "/api/v1/images/{id}")
-                        .hasRole("ADMIN")
+                                                .requestMatchers(HttpMethod.DELETE,
+                                                                "/api/v1/classes/{id}",
+                                                                "/api/v1/classes/{id}/images",
+                                                                "/api/v1/facilities/{id}",
+                                                                "/api/v1/facilities/{id}/images",
+                                                                "/api/v1/users/admin/{id}",
+                                                                "/api/v1/images/{id}")
+                                                .hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.PATCH,
-                                "/api/v1/users/admin/{id}/*")
-                        .hasRole("ADMIN")
+                                                .requestMatchers(HttpMethod.PATCH,
+                                                                "/api/v1/users/admin/{id}/*")
+                                                .hasRole("ADMIN")
 
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/v1/users/admin/reservations",
-                                "/api/v1/reservations/{id}",
-                        "/api/v1/documents/users/**",
-                                "/api/v1/users",
-                                "/api/v1/users/admin/{id}",
-                                "/api/v1/images/{id}/media")
-                        .hasRole("ADMIN")
+                                                .requestMatchers(HttpMethod.GET,
+                                                                "/api/v1/users/admin/reservations",
+                                                                "/api/v1/reservations/{id}",
+                                                                "/api/v1/documents/users/**",
+                                                                "/api/v1/users",
+                                                                "/api/v1/users/admin/{id}",
+                                                                "/api/v1/images/{id}/media")
+                                                .hasRole("ADMIN")
 
-                        .anyRequest().authenticated());
+                                                .anyRequest().authenticated());
 
-        // REST config
-        http.formLogin(formLogin -> formLogin.disable());
-        http.csrf(csrf -> csrf.disable());
-        http.httpBasic(httpBasic -> httpBasic.disable());
-        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                // REST config
+                http.formLogin(formLogin -> formLogin.disable());
+                http.csrf(csrf -> csrf.disable());
+                http.httpBasic(httpBasic -> httpBasic.disable());
+                http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+                return http.build();
+        }
 }
