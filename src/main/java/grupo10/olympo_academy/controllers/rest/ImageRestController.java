@@ -34,9 +34,7 @@ public class ImageRestController {
     @Autowired
     private ImageMapper imageMapper;
 
-    @GetMapping("/{id}/media") // vulnerabilidad crítica - path traversal
-    // GET /classes/{classId}/images/{imageId}
-    // GET /facilities/{facilityId}/images/{imageId}
+    @GetMapping("/{id}/media") 
     public ResponseEntity<Object> getImageFile(@PathVariable long id)
             throws SQLException, IOException {
         Resource imageFile = imageService.getImageFile(id);
