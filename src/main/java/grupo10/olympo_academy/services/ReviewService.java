@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.ReviewRepository;
+import grupo10.olympo_academy.security.HtmlSanitizer;
 
 import org.springframework.transaction.annotation.Transactional;
 import grupo10.olympo_academy.model.Classes;
@@ -34,11 +35,15 @@ public class ReviewService {
     @Autowired
     private UserService userService;
 
+     @Autowired
+    private HtmlSanitizer htmlSanitizer;
+
     ReviewService(FacilityService facilityService) {
         this.facilityService = facilityService;
     }
 
     public Review saveReview(Review review) {
+        review= sanitize(review);
         return reviewRepository.save(review);
     }
 
@@ -136,6 +141,7 @@ public class ReviewService {
         } else {
             return null;
         }
+        review= sanitize(review);
         return review;
 
     }
@@ -161,7 +167,13 @@ public class ReviewService {
         } else {
             return null;
         }
-
+        review= sanitize(review);
         return review;
+    }
+     private Review sanitize (Review r) {
+        if (r.getComment()!= null) {
+            r.setComment(htmlSanitizer.clean(r.getComment()));
+        }
+        return r;
     }
 }

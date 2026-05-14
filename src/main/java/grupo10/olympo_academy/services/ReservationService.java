@@ -78,17 +78,22 @@ public class ReservationService {
     // =====================================================
 
     public Reservation save(Reservation reservation) {
+        reservation= sanitize(reservation);
         Reservation saved = reservationRepository.save(reservation);
 
         User user = saved.getUser();
         if (user != null) {
             user.getReservations().add(saved);
         }
-
         return saved;
     }
 
     public List<Reservation> saveAll(List<Reservation> reservations) {
+
+        for (Reservation r : reservations){
+            r= sanitize(r);
+        }
+
         List<Reservation> savedList = reservationRepository.saveAll(reservations);
 
         for (Reservation r : savedList) {
@@ -185,6 +190,7 @@ public class ReservationService {
                 reservation.setFacility(classesOpt.get().getFacility());
             }
         }
+        reservation= sanitize(reservation);
 
         return reservationRepository.save(reservation);
     }
@@ -205,7 +211,7 @@ public class ReservationService {
         if(reservation.getMaterial()==null){
             reservation.setMaterial(false);
         }
-
+        reservation = sanitize(reservation);
         return reservationRepository.save(reservation);
     }
 
@@ -223,6 +229,7 @@ public class ReservationService {
         reservation.setName(classes.getName());
         reservation.setMaterial(false);
 
+        reservation= sanitize(reservation);
         return reservationRepository.save(reservation);
     }
 
@@ -237,7 +244,8 @@ public class ReservationService {
         existing.setMaterial(updated.getMaterial());
         existing.setClasses(updated.getClasses());
         existing.setFacility(updated.getFacility());
-
+        
+        existing= sanitize(existing);
         return reservationRepository.save(existing);
     }
 
@@ -248,7 +256,7 @@ public class ReservationService {
     public List<Reservation> confirmCart(List<Reservation> cart, User user) {
 
         for (Reservation r : cart) {
-
+            r=sanitize(r);
             r.setUser(user);
             r.setStatus("Activa");
 
@@ -326,7 +334,7 @@ public class ReservationService {
         cart.remove(index);
     }
 
-    public Reservation sanitize (Reservation reservation) {
+    private Reservation sanitize (Reservation reservation) {
         if (reservation.getDay()!= null) {
             reservation.setDay(htmlSanitizer.clean(reservation.getDay()));
         }

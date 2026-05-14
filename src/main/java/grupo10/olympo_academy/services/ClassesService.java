@@ -10,7 +10,7 @@ import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.repository.ClassesRepository;
-
+import grupo10.olympo_academy.security.HtmlSanitizer;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +20,9 @@ public class ClassesService {
 
     @Autowired
     private ClassesRepository classesRepository;
+    
+    @Autowired
+    private HtmlSanitizer htmlSanitizer;
 
     // WEB + REST
     public List<Classes> getAllClasses() {
@@ -33,6 +36,7 @@ public class ClassesService {
 
     // CREATE / SAVE
     public Classes saveClass(Classes classes) {
+        classes= sanitize(classes);
         return classesRepository.save(classes);
     }
 
@@ -102,6 +106,7 @@ public class ClassesService {
         }
 
         updatedClass.setId(id);
+        updatedClass=sanitize(updatedClass);
         return classesRepository.save(updatedClass);
     }
 
@@ -114,5 +119,28 @@ public class ClassesService {
         Classes classes = classesOpt.get();
         classes.setClassesImage(null);       
     }
+    private Classes sanitize(Classes c) {
+        if (c.getName() != null) {
+            c.setName(htmlSanitizer.clean(c.getName()));
+        }
+        if (c.getDescription() != null) {
+            c.setDescription(htmlSanitizer.clean(c.getDescription()));
+        }
+        if(c.getTrainer()!= null){
+            c.setTrainer(htmlSanitizer.clean(c.getTrainer()));
+        }
+        if(c.getDays()!= null){
+            c.setDays(htmlSanitizer.cleanList(c.getDays()));
+        }
+        if(c.getDifficulty()!= null){
+            c.setDifficulty(htmlSanitizer.cleanList(c.getDifficulty()));
+        }
+        if(c.getStartTime()!= null){
+            c.setStartTime(htmlSanitizer.cleanList(c.getStartTime()));
+        }
+        return c;
+    }
+
+
 }
 

@@ -319,8 +319,6 @@ public ResponseEntity<ReservationDTO> updateReservationFromAdmin(
         reservation.setStartTime(dto.startTime());
         reservation.setDuration(dto.duration());
         reservation.setMaterial(dto.material());
-
-        reservation = reservationService.sanitize(reservation);
         Reservation saved = reservationService.save(reservation);
 
         return ResponseEntity.ok(reservationMapper.toDTO(saved));

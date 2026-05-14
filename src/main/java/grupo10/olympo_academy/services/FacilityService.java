@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.repository.FacilityRepository;
+import grupo10.olympo_academy.security.HtmlSanitizer;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class FacilityService {
     @Autowired
     private FacilityRepository facilityRepository;
+    @Autowired
+    private HtmlSanitizer htmlSanitizer;
 
     public List<Facility> getAllFacilities() {
         return facilityRepository.findAll();
@@ -25,6 +29,7 @@ public class FacilityService {
     }
 
     public Facility saveFacility(Facility facility) {
+        facility= sanitize(facility);
         return facilityRepository.save(facility);
     }
 
@@ -50,6 +55,7 @@ public class FacilityService {
             updatedFacility.setType(oldFacility.getType());
         }
         updatedFacility.setId(id);
+        updatedFacility=sanitize(updatedFacility);
         facilityRepository.save(updatedFacility);
         return updatedFacility;
 
@@ -63,9 +69,24 @@ public class FacilityService {
     public Page<Facility> getFacilities(Pageable pageable) {
         return facilityRepository.findAll(pageable);
     }
-    public void removeImageFacility(Long facId, Image image){
-        Optional <Facility> facilityOpt= facilityRepository.findById(facId);
+
+    public void removeImageFacility(Long facId, Image image) {
+        Optional<Facility> facilityOpt = facilityRepository.findById(facId);
         Facility facility = facilityOpt.get();
-        facility.setFacilityImage(null);       
+        facility.setFacilityImage(null);
     }
+
+    private Facility sanitize(Facility f) {
+        if (f.getName() != null) {
+            f.setName(htmlSanitizer.clean(f.getName()));
+        }
+        if (f.getDescription() != null) {
+            f.setDescription(htmlSanitizer.clean(f.getDescription()));
+        }
+        if(f.getType()!= null){
+            f.setType(htmlSanitizer.clean(f.getType()));
+        }
+        return f;
+    }
+
 }
