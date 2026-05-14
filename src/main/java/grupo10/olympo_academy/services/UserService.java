@@ -11,6 +11,7 @@ import grupo10.olympo_academy.model.Image;
 import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.UserRepository;
+import grupo10.olympo_academy.security.HtmlSanitizer;
 
 @Service
 public class UserService {
@@ -23,6 +24,9 @@ public class UserService {
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private HtmlSanitizer htmlSanitizer;
 
     // With Spring security, we don´t need to implement the login logic ourselves
 
@@ -39,6 +43,35 @@ public class UserService {
 
     // Method to register a new user
     public User register(User user) {
+
+        if (user.getName() != null && !user.getName().isBlank()) {
+            String cleanName = htmlSanitizer.clean(user.getName());
+            if (!cleanName.equals(user.getName())) {
+                throw new RuntimeException("Entrada no válida");
+            }
+            user.setName(user.getName());
+        }
+
+        if (user.getUsername() != null && !user.getUsername().isBlank()) {
+            String cleanUsername = htmlSanitizer.clean(user.getUsername());
+            if (!cleanUsername.equals(user.getUsername())) {
+                throw new RuntimeException("Entrada no válida");
+            }
+        }
+
+        if (user.getEmail() != null && !user.getEmail().isBlank()) {
+            String cleanEmail = htmlSanitizer.clean(user.getEmail());
+            if (!cleanEmail.equals(user.getEmail())) {
+                throw new RuntimeException("Entrada no válida");
+            }
+        }
+
+        if (user.getPhone() != null && !user.getPhone().isBlank()) {
+            String cleanPhone = htmlSanitizer.clean(user.getPhone());
+            if (!cleanPhone.equals(user.getPhone())) {
+                throw new RuntimeException("Entrada no válida");
+            }
+        }
 
         // Check if email is already registered
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -70,23 +103,38 @@ public class UserService {
         User user = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
 
-        // Check if the new username is already taken by another user
         if (username != null && !username.isBlank()) {
+            // Check if the new username is already taken by another user
             if (!user.getUsername().equals(username) && userRepository.findByUsername(username).isPresent()) {
                 throw new Exception("Username ya registrado");
+            }
+            String cleanUsername = htmlSanitizer.clean(username);
+            // if the cleaned username is different from the original, it could be a xss
+            // attempt, so we reject it.
+            if (!cleanUsername.equals(username)) {
+                throw new Exception("Parametro invalido");
             }
             user.setUsername(username);
         }
 
         if (name != null && !name.isBlank()) {
-                user.setName(name);
+            String cleanName = htmlSanitizer.clean(name);
+            if (!cleanName.equals(name)) {
+                throw new Exception("Parametro invalido");
+            }
+            user.setName(name);
         }
 
-        // check if phone is already taken by another user (checking that it can be null)
+        // check if phone is already taken by another user (checking that it can be
+        // null)
         if (phone != null && !phone.isBlank()) {
             if (!phone.equals(user.getPhone())
                     && userRepository.findByPhone(phone).isPresent()) {
                 throw new Exception("Número de teléfono ya registrado");
+            }
+            String cleanPhone = htmlSanitizer.clean(phone);
+            if (!cleanPhone.equals(phone)) {
+                throw new Exception("Parametro invalido");
             }
             user.setPhone(phone);
         }
@@ -177,14 +225,48 @@ public class UserService {
             throw new Exception("Número de teléfono ya registrado");
         }
 
-        if (name != null)
+        if (name != null && !name.isBlank()) {
+            String cleanName = htmlSanitizer.clean(name);
+
+            if (!cleanName.equals(name)) {
+                throw new Exception("Entrada no válida");
+            }
+
             user.setName(name);
-        if (username != null)
+        }
+
+        if (username != null && !username.isBlank()) {
+
+            String cleanUsername = htmlSanitizer.clean(username);
+
+            if (!cleanUsername.equals(username)) {
+                throw new Exception("Entrada no válida");
+            }
+
             user.setUsername(username);
-        if (email != null)
+        }
+
+        if (email != null && !email.isBlank()) {
+
+            String cleanEmail = htmlSanitizer.clean(email);
+
+            if (!cleanEmail.equals(email)) {
+                throw new Exception("Entrada no válida");
+            }
+
             user.setEmail(email);
-        if (phone != null)
+        }
+
+        if (phone != null && !phone.isBlank()) {
+
+            String cleanPhone = htmlSanitizer.clean(phone);
+
+            if (!cleanPhone.equals(phone)) {
+                throw new Exception("Entrada no válida");
+            }
+
             user.setPhone(phone);
+        }
 
         Long previousImageId = null;
 
@@ -321,8 +403,9 @@ public class UserService {
         }
 
     }
+
     public boolean userReservation(Reservation reservation, User user) {
-        
+
         Long id = user.getId();
         Long idUserReservation = reservation.getUser().getId();
         boolean isAdmin = isAdmin(user);
