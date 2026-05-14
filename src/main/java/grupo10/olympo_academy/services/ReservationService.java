@@ -12,6 +12,7 @@ import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Reservation;
 import grupo10.olympo_academy.model.User;
 import grupo10.olympo_academy.repository.ReservationRepository;
+import grupo10.olympo_academy.security.HtmlSanitizer;
 
 @Service
 public class ReservationService {
@@ -24,6 +25,9 @@ public class ReservationService {
 
     @Autowired
     private ClassesService classesService;
+
+    @Autowired
+    private HtmlSanitizer htmlSanitizer;
 
     // =====================================================
     // GETTERS
@@ -320,6 +324,19 @@ public class ReservationService {
 
     public void removeFromCart(List<Reservation> cart, int index) {
         cart.remove(index);
+    }
+
+    public Reservation sanitize (Reservation reservation) {
+        if (reservation.getDay()!= null) {
+            reservation.setDay(htmlSanitizer.clean(reservation.getDay()));
+        }
+        if (reservation.getStartTime()!= null) {
+            reservation.setStartTime(htmlSanitizer.clean(reservation.getStartTime()));
+        }
+        if (reservation.getLevel()!= null) {
+            reservation.setLevel(htmlSanitizer.clean(reservation.getLevel()));
+        }
+        return reservation;
     }
 }
 
