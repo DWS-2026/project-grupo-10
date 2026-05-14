@@ -192,7 +192,6 @@ public class ClassesRestController {
         if (review == null) {
             return ResponseEntity.notFound().build();
         }
-
         Review saved = reviewService.saveReview(review);
         dto = reviewMapper.toDTO(saved);
 
@@ -305,7 +304,6 @@ public class ClassesRestController {
         }
         User user = userOpt.get();
         Reservation reservation = reservationMapper.toDomain(dto);
-        reservation = reservationService.sanitize(reservation);
         reservation= reservationService.confirmClassReservation(id,reservation, user );
         if(reservation == null){
             return ResponseEntity.badRequest().build();

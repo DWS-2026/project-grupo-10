@@ -283,7 +283,6 @@ public class FacilityRestController {
         }
         User user = userOpt.get();
         Reservation reservation = reservationMapper.toDomain(dto);
-        reservation = reservationService.sanitize(reservation);
         reservation = reservationService.confirmFacReservation(id, reservation, user);
         if (reservation == null) {
             return ResponseEntity.badRequest().build();
