@@ -1,6 +1,7 @@
 package grupo10.olympo_academy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import grupo10.olympo_academy.model.Review;
 import grupo10.olympo_academy.model.User;
@@ -8,6 +9,8 @@ import grupo10.olympo_academy.repository.ReviewRepository;
 import grupo10.olympo_academy.security.HtmlSanitizer;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.repository.ClassesRepository;
@@ -176,7 +179,7 @@ public class ReviewService {
             String cleanComment = htmlSanitizer.clean(r.getComment());
 
             if (!cleanComment.equals(r.getComment())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
 
             r.setComment(cleanComment);

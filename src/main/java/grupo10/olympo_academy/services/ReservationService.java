@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
@@ -338,21 +340,21 @@ public class ReservationService {
         if (reservation.getDay()!= null) {
             String cleanDay = htmlSanitizer.clean(reservation.getDay());
             if (!cleanDay.equals(reservation.getDay())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             reservation.setDay(cleanDay);
         }
         if (reservation.getStartTime()!= null) {
             String cleanStartTime = htmlSanitizer.clean(reservation.getStartTime());
             if (!cleanStartTime.equals(reservation.getStartTime())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             reservation.setStartTime(cleanStartTime);
         }
         if (reservation.getLevel()!= null) {
             String cleanLevel = htmlSanitizer.clean(reservation.getLevel());
             if (!cleanLevel.equals(reservation.getLevel())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             reservation.setLevel(cleanLevel);
         }

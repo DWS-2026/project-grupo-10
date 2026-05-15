@@ -3,8 +3,9 @@ package grupo10.olympo_academy.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import grupo10.olympo_academy.model.Classes;
 import grupo10.olympo_academy.model.Facility;
@@ -128,42 +129,42 @@ public class ClassesService {
         if (c.getName() != null) {
             String cleanName = htmlSanitizer.clean(c.getName());
             if (!cleanName.equals(c.getName())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             c.setName(cleanName);
         }
         if (c.getDescription() != null) {
             String cleanDescription = htmlSanitizer.clean(c.getDescription());
             if (!cleanDescription.equals(c.getDescription())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             c.setDescription(cleanDescription);
         }
         if(c.getTrainer()!= null){
             String cleanTrainer = htmlSanitizer.clean(c.getTrainer());
             if (!cleanTrainer.equals(c.getTrainer())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             c.setTrainer(cleanTrainer);
         }
         if(c.getDays()!= null){
             List<String> cleanDays = htmlSanitizer.cleanList(c.getDays());
             if (!cleanDays.equals(c.getDays())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             c.setDays(cleanDays);
         }
         if(c.getDifficulty()!= null){
             List<String> cleanDifficulty = htmlSanitizer.cleanList(c.getDifficulty());
             if (!cleanDifficulty.equals(c.getDifficulty())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             c.setDifficulty(cleanDifficulty);
         }
         if(c.getStartTime()!= null){
             List<String> cleanStartTime = htmlSanitizer.cleanList(c.getStartTime());
             if (!cleanStartTime.equals(c.getStartTime())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             c.setStartTime(cleanStartTime);
         }

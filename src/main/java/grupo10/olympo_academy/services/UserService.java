@@ -1,9 +1,12 @@
 package grupo10.olympo_academy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +41,6 @@ public class UserService {
         } else {
             return Optional.empty();
         }
-
     }
 
     // Method to register a new user
@@ -47,7 +49,7 @@ public class UserService {
         if (user.getName() != null && !user.getName().isBlank()) {
             String cleanName = htmlSanitizer.clean(user.getName());
             if (!cleanName.equals(user.getName())) {
-                throw new RuntimeException("Entrada no válida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             user.setName(user.getName());
         }
@@ -55,31 +57,31 @@ public class UserService {
         if (user.getUsername() != null && !user.getUsername().isBlank()) {
             String cleanUsername = htmlSanitizer.clean(user.getUsername());
             if (!cleanUsername.equals(user.getUsername())) {
-                throw new RuntimeException("Entrada no válida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
         }
 
         if (user.getEmail() != null && !user.getEmail().isBlank()) {
             String cleanEmail = htmlSanitizer.clean(user.getEmail());
             if (!cleanEmail.equals(user.getEmail())) {
-                throw new RuntimeException("Entrada no válida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
         }
 
         if (user.getPhone() != null && !user.getPhone().isBlank()) {
             String cleanPhone = htmlSanitizer.clean(user.getPhone());
             if (!cleanPhone.equals(user.getPhone())) {
-                throw new RuntimeException("Entrada no válida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
         }
 
         // Check if email is already registered
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("Email ya registrado");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email ya registrado");
         }
         // Unique username
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new RuntimeException("Username ya registrado");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username ya registrado");
         }
 
         // set default role if not provided
@@ -101,18 +103,18 @@ public class UserService {
         // we ensure that the user is updating their own profile by using the email from
         // the session (currentUserEmail) to fetch the user from the database.
         User user = userRepository.findByEmail(currentUserEmail)
-                .orElseThrow(() -> new RuntimeException("User trying dangerous things"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User trying dangerous things"));
 
         if (username != null && !username.isBlank()) {
             // Check if the new username is already taken by another user
             if (!user.getUsername().equals(username) && userRepository.findByUsername(username).isPresent()) {
-                throw new Exception("Username ya registrado");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Username ya registrado");
             }
             String cleanUsername = htmlSanitizer.clean(username);
             // if the cleaned username is different from the original, it could be a xss
             // attempt, so we reject it.
             if (!cleanUsername.equals(username)) {
-                throw new Exception("Parametro invalido");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parametro invalido");
             }
             user.setUsername(username);
         }
@@ -120,7 +122,7 @@ public class UserService {
         if (name != null && !name.isBlank()) {
             String cleanName = htmlSanitizer.clean(name);
             if (!cleanName.equals(name)) {
-                throw new Exception("Parametro invalido");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parametro invalido");
             }
             user.setName(name);
         }
@@ -130,11 +132,11 @@ public class UserService {
         if (phone != null && !phone.isBlank()) {
             if (!phone.equals(user.getPhone())
                     && userRepository.findByPhone(phone).isPresent()) {
-                throw new Exception("Número de teléfono ya registrado");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Número de teléfono ya registrado");
             }
             String cleanPhone = htmlSanitizer.clean(phone);
             if (!cleanPhone.equals(phone)) {
-                throw new Exception("Parametro invalido");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parametro invalido");
             }
             user.setPhone(phone);
         }

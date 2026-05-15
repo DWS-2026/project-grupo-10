@@ -3,7 +3,9 @@ package grupo10.olympo_academy.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import grupo10.olympo_academy.model.Facility;
 import grupo10.olympo_academy.model.Image;
@@ -84,21 +86,21 @@ public class FacilityService {
         if (f.getName() != null) {
             String cleanName = htmlSanitizer.clean(f.getName());
             if (!cleanName.equals(f.getName())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             f.setName(cleanName);
         }
         if (f.getDescription() != null) {
             String cleanDescription = htmlSanitizer.clean(f.getDescription());
             if (!cleanDescription.equals(f.getDescription())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             f.setDescription(cleanDescription);
         }
         if(f.getType()!= null){
             String cleanType = htmlSanitizer.clean(f.getType());
             if (!cleanType.equals(f.getType())) {
-                throw new IllegalArgumentException("Entrada no valida");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Entrada no válida");
             }
             f.setType(cleanType);
         }

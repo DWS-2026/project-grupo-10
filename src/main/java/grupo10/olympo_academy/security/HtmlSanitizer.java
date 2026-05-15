@@ -12,7 +12,7 @@ public class HtmlSanitizer {
 
     public String clean(String input) {
         if (input == null) return null;
-        return Jsoup.clean(input, Safelist.relaxed());
+        return Jsoup.clean(input, Safelist.basic());
     }
 
     public List<String> cleanList(List<String> list) {
