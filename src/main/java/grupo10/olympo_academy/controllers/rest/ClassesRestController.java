@@ -75,7 +75,7 @@ public class ClassesRestController {
 
     @Autowired
     private ImageMapper imageMapper;
-    
+
     @Autowired
     private ReservationService reservationService;
 
@@ -126,8 +126,12 @@ public class ClassesRestController {
                     .orElseThrow(() -> new RuntimeException("Facility not found"));
             classes.setFacility(facility);
         }
-
-        Classes saved = classesService.saveClass(classes);
+        Classes saved;
+        try{
+            saved = classesService.saveClass(classes);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
         URI location = fromCurrentRequest().path("/{id}")
                 .buildAndExpand(saved.getId()).toUri();
@@ -146,7 +150,12 @@ public class ClassesRestController {
             updated.setFacility(facility);
         }
 
-        Classes saved = classesService.updateClass(id, updated);
+        Classes saved;
+        try {
+            saved = classesService.updateClass(id, updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.ok(classesMapper.toDTO(saved));
     }
@@ -187,7 +196,12 @@ public class ClassesRestController {
         Principal principal = request.getUserPrincipal();
 
         Review review = reviewMapper.toDomain(dto);
-        review = reviewService.buildReviewC(review, principal.getName(), id);
+
+        try {
+            review = reviewService.buildReviewC(review, principal.getName(), id);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
         if (review == null) {
             return ResponseEntity.notFound().build();
@@ -215,7 +229,7 @@ public class ClassesRestController {
             boolean isOwner = reviewService.userReview(reviewOpt.get(), principal.getName());
 
             if (isOwner) {
-                Review review= reviewOpt.get();
+                Review review = reviewOpt.get();
                 reviewService.deleteReview(reviewId);
                 return ResponseEntity.ok(reviewMapper.toDTO(review));
             } else {
@@ -269,8 +283,8 @@ public class ClassesRestController {
     }
 
     @PutMapping("/{id}/images")
-    public ResponseEntity<Object> replaceClassImage(@PathVariable long id,@RequestParam MultipartFile imageFile) 
-    throws IOException {
+    public ResponseEntity<Object> replaceClassImage(@PathVariable long id, @RequestParam MultipartFile imageFile)
+            throws IOException {
         Optional<Classes> classesOpt = classesService.getClassById(id);
         if (classesOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -284,8 +298,8 @@ public class ClassesRestController {
                 image = imageService.createImage(imageFile.getInputStream());
                 classes.setClassesImage(image);
                 classesService.saveClass(classes);
-            return ResponseEntity.noContent().build();
-            }else{
+                return ResponseEntity.noContent().build();
+            } else {
                 return ResponseEntity.badRequest().build();
             }
         }
@@ -293,10 +307,12 @@ public class ClassesRestController {
         imageService.replaceImageFile(idImage, imageFile.getInputStream());
         return ResponseEntity.noContent().build();
     }
+
     //////////////// Reservations////////
-    /// 
+    ///
     @PostMapping("/{id}/reservations")
-    public ResponseEntity<ReservationDTO> createReservation(@PathVariable Long id ,@RequestBody ReservationDTO dto, Principal principal) {
+    public ResponseEntity<ReservationDTO> createReservation(@PathVariable Long id, @RequestBody ReservationDTO dto,
+            Principal principal) {
 
         Optional<User> userOpt = userService.findByEmail(principal.getName());
         if (userOpt.isEmpty()) {
@@ -304,8 +320,12 @@ public class ClassesRestController {
         }
         User user = userOpt.get();
         Reservation reservation = reservationMapper.toDomain(dto);
-        reservation= reservationService.confirmClassReservation(id,reservation, user );
-        if(reservation == null){
+        try{
+        reservation = reservationService.confirmClassReservation(id, reservation, user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (reservation == null) {
             return ResponseEntity.badRequest().build();
         }
         dto = reservationMapper.toDTO(reservation);
@@ -313,6 +333,7 @@ public class ClassesRestController {
 
         return ResponseEntity.created(location).body(dto);
     }
+
     @DeleteMapping("/{id}/reservations/{idR}")
     public ResponseEntity<ReservationDTO> deleteReservation(@PathVariable Long id, @PathVariable Long idR,
             Principal principal) {

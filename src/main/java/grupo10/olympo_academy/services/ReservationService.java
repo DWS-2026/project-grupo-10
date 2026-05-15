@@ -336,13 +336,25 @@ public class ReservationService {
 
     private Reservation sanitize (Reservation reservation) {
         if (reservation.getDay()!= null) {
-            reservation.setDay(htmlSanitizer.clean(reservation.getDay()));
+            String cleanDay = htmlSanitizer.clean(reservation.getDay());
+            if (!cleanDay.equals(reservation.getDay())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            reservation.setDay(cleanDay);
         }
         if (reservation.getStartTime()!= null) {
-            reservation.setStartTime(htmlSanitizer.clean(reservation.getStartTime()));
+            String cleanStartTime = htmlSanitizer.clean(reservation.getStartTime());
+            if (!cleanStartTime.equals(reservation.getStartTime())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            reservation.setStartTime(cleanStartTime);
         }
         if (reservation.getLevel()!= null) {
-            reservation.setLevel(htmlSanitizer.clean(reservation.getLevel()));
+            String cleanLevel = htmlSanitizer.clean(reservation.getLevel());
+            if (!cleanLevel.equals(reservation.getLevel())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            reservation.setLevel(cleanLevel);
         }
         return reservation;
     }

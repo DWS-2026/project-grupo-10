@@ -33,6 +33,11 @@ public class ClassesService {
     public Optional<Classes> getClassById(Long id) {
         return classesRepository.findById(id);
     }
+    //for Database usage
+    public Classes saveClassDB(Classes classes) {
+        classes= sanitize(classes);
+        return classesRepository.save(classes);
+    }
 
     // CREATE / SAVE
     public Classes saveClass(Classes classes) {
@@ -121,25 +126,50 @@ public class ClassesService {
     }
     private Classes sanitize(Classes c) {
         if (c.getName() != null) {
-            c.setName(htmlSanitizer.clean(c.getName()));
+            String cleanName = htmlSanitizer.clean(c.getName());
+            if (!cleanName.equals(c.getName())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            c.setName(cleanName);
         }
         if (c.getDescription() != null) {
-            c.setDescription(htmlSanitizer.clean(c.getDescription()));
+            String cleanDescription = htmlSanitizer.clean(c.getDescription());
+            if (!cleanDescription.equals(c.getDescription())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            c.setDescription(cleanDescription);
         }
         if(c.getTrainer()!= null){
-            c.setTrainer(htmlSanitizer.clean(c.getTrainer()));
+            String cleanTrainer = htmlSanitizer.clean(c.getTrainer());
+            if (!cleanTrainer.equals(c.getTrainer())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            c.setTrainer(cleanTrainer);
         }
         if(c.getDays()!= null){
-            c.setDays(htmlSanitizer.cleanList(c.getDays()));
+            List<String> cleanDays = htmlSanitizer.cleanList(c.getDays());
+            if (!cleanDays.equals(c.getDays())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            c.setDays(cleanDays);
         }
         if(c.getDifficulty()!= null){
-            c.setDifficulty(htmlSanitizer.cleanList(c.getDifficulty()));
+            List<String> cleanDifficulty = htmlSanitizer.cleanList(c.getDifficulty());
+            if (!cleanDifficulty.equals(c.getDifficulty())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            c.setDifficulty(cleanDifficulty);
         }
         if(c.getStartTime()!= null){
-            c.setStartTime(htmlSanitizer.cleanList(c.getStartTime()));
+            List<String> cleanStartTime = htmlSanitizer.cleanList(c.getStartTime());
+            if (!cleanStartTime.equals(c.getStartTime())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            c.setStartTime(cleanStartTime);
         }
         return c;
     }
+   
 
 
 }

@@ -91,12 +91,12 @@ public class DataBaseUsage {
                 setFacilityImage(facility6, "static/assets/images/instalaciones/futbol.jpeg");
 
                 // Save facilities
-                facilityService.saveFacility(facility1);
-                facilityService.saveFacility(facility2);
-                facilityService.saveFacility(facility3);
-                facilityService.saveFacility(facility4);
-                facilityService.saveFacility(facility5);
-                facilityService.saveFacility(facility6);
+                facilityService.saveFacilityDB(facility1);
+                facilityService.saveFacilityDB(facility2);
+                facilityService.saveFacilityDB(facility3);
+                facilityService.saveFacilityDB(facility4);
+                facilityService.saveFacilityDB(facility5);
+                facilityService.saveFacilityDB(facility6);
             }
 
         if (hasClasses) {

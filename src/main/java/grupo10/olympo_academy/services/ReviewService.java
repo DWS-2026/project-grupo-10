@@ -35,7 +35,7 @@ public class ReviewService {
     @Autowired
     private UserService userService;
 
-     @Autowired
+    @Autowired
     private HtmlSanitizer htmlSanitizer;
 
     ReviewService(FacilityService facilityService) {
@@ -43,7 +43,7 @@ public class ReviewService {
     }
 
     public Review saveReview(Review review) {
-        review= sanitize(review);
+        review = sanitize(review);
         return reviewRepository.save(review);
     }
 
@@ -141,7 +141,7 @@ public class ReviewService {
         } else {
             return null;
         }
-        review= sanitize(review);
+        review = sanitize(review);
         return review;
 
     }
@@ -167,12 +167,19 @@ public class ReviewService {
         } else {
             return null;
         }
-        review= sanitize(review);
+        review = sanitize(review);
         return review;
     }
-     private Review sanitize (Review r) {
+
+    private Review sanitize (Review r){
         if (r.getComment()!= null) {
-            r.setComment(htmlSanitizer.clean(r.getComment()));
+            String cleanComment = htmlSanitizer.clean(r.getComment());
+
+            if (!cleanComment.equals(r.getComment())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+
+            r.setComment(cleanComment);
         }
         return r;
     }

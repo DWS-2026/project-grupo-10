@@ -77,7 +77,6 @@ public class FacilityRestController {
 
     @Autowired
     private UserService userService;
-  
 
     @GetMapping
     public ResponseEntity<Page<FacilityDTO>> getAll(@PageableDefault(size = 4, sort = "id") Pageable pageable) {
@@ -118,7 +117,12 @@ public class FacilityRestController {
     public ResponseEntity<FacilityDTO> create(@RequestBody FacilityDTO dto) {
 
         Facility facility = facilityMapper.toDomain(dto);
-        Facility saved = facilityService.saveFacility(facility);
+        Facility saved;
+        try {
+            saved = facilityService.saveFacility(facility);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
         dto = facilityMapper.toDTO(saved);
 
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(dto.id()).toUri();
@@ -131,7 +135,11 @@ public class FacilityRestController {
         Optional<Facility> existing = facilityService.getFacilityById(id);
         if (existing.isPresent()) {
             Facility updated = facilityMapper.toDomain(dto);
+            try{
             updated = facilityService.updateFacility(id, updated);
+            } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
             return ResponseEntity.ok(facilityMapper.toDTO(updated));
 
         } else {
@@ -172,11 +180,17 @@ public class FacilityRestController {
         Principal principal = request.getUserPrincipal();
 
         Review review = reviewMapper.toDomain(dto);
-        review = reviewService.buildReviewF(review, principal.getName(), id);
+        try {
+            review = reviewService.buildReviewF(review, principal.getName(), id);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
         if (review == null) {
             return ResponseEntity.notFound().build();
         }
         Review reviewSaved = reviewService.saveReview(review);
+
         dto = reviewMapper.toDTO(reviewSaved);
 
         URI location = fromCurrentRequest().path("/{id}").buildAndExpand(dto.id()).toUri();
@@ -283,7 +297,11 @@ public class FacilityRestController {
         }
         User user = userOpt.get();
         Reservation reservation = reservationMapper.toDomain(dto);
+        try{
         reservation = reservationService.confirmFacReservation(id, reservation, user);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
         if (reservation == null) {
             return ResponseEntity.badRequest().build();
         }

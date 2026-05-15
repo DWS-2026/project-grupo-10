@@ -27,6 +27,10 @@ public class FacilityService {
     public Optional<Facility> getFacilityById(Long id) {
         return facilityRepository.findById(id);
     }
+    //for dataBase usage 
+    public Facility saveFacilityDB(Facility facility) {
+        return facilityRepository.save(facility);
+    }
 
     public Facility saveFacility(Facility facility) {
         facility= sanitize(facility);
@@ -78,13 +82,25 @@ public class FacilityService {
 
     private Facility sanitize(Facility f) {
         if (f.getName() != null) {
-            f.setName(htmlSanitizer.clean(f.getName()));
+            String cleanName = htmlSanitizer.clean(f.getName());
+            if (!cleanName.equals(f.getName())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            f.setName(cleanName);
         }
         if (f.getDescription() != null) {
-            f.setDescription(htmlSanitizer.clean(f.getDescription()));
+            String cleanDescription = htmlSanitizer.clean(f.getDescription());
+            if (!cleanDescription.equals(f.getDescription())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            f.setDescription(cleanDescription);
         }
         if(f.getType()!= null){
-            f.setType(htmlSanitizer.clean(f.getType()));
+            String cleanType = htmlSanitizer.clean(f.getType());
+            if (!cleanType.equals(f.getType())) {
+                throw new IllegalArgumentException("Entrada no valida");
+            }
+            f.setType(cleanType);
         }
         return f;
     }
